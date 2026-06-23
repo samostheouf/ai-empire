@@ -1,0 +1,43 @@
+name: CI
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  typecheck:
+    name: Type Check & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prisma generate
+      - run: npx tsc --noEmit --skipLibCheck
+      - run: npx next build
+        env:
+          DATABASE_URL: postgresql://localhost:5432/test
+          GROQ_API_KEY: test
+          OPENAI_API_KEY: test
+          RESEND_API_KEY: test
+          STRIPE_SECRET_KEY: sk_test
+          STRIPE_PUBLISHABLE_KEY: pk_test
+          STRIPE_WEBHOOK_SECRET: whsec_test
+          ADMIN_PASSWORD: admin123
+          NEXT_PUBLIC_APP_URL: https://ai-empire-steel.vercel.app
+
+  prisma-validate:
+    name: Prisma Validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx prisma validate

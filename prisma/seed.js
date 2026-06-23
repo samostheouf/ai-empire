@@ -1,0 +1,182 @@
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
+const templates = [
+  {
+    name: 'NeuraSaaS — Kit Complet SaaS',
+    slug: 'neurasaa-kit-complet',
+    description: 'Kit complet pour lancer votre SaaS en 48h. Auth, dashboard, billing Stripe, landing page, admin panel. Code propre, TypeScript, Next.js 14.',
+    price: 9700,
+    category: 'SaaS',
+    tags: JSON.stringify(['next.js', 'tailwind', 'stripe', 'saas', 'typescript', 'auth']),
+    previewUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    screenshot: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    fileUrl: 'https://example.com/templates/neurasaa.zip',
+    liveDemo: 'https://demo.neuraapi.com/saas',
+    stripeProductId: 'prod_Ujr3VY3VHiMsqf',
+    stripePriceId: 'price_1TkNLgBQ1UgeJKAdI3Folrcs',
+    featured: true,
+    features: JSON.stringify([
+      'Auth complète (login, register, forgot password, OAuth Google/GitHub)',
+      'Dashboard analytics avec graphiques',
+      'Billing Stripe intégré (subscriptions + one-time)',
+      'Admin panel avec gestion users',
+      'Landing page conversion-optimisée',
+      'Email transactionnels (Resend)',
+      'Dark mode + light mode',
+      'TypeScript strict mode',
+      'API routes sécurisées',
+      'Déployable sur Vercel en 1 clic',
+    ]),
+  },
+  {
+    name: 'NeuraCommerce — Template E-commerce IA',
+    slug: 'neuracommerce-ecommerce-ia',
+    description: 'Boutique en ligne propulsée par l\'IA. Recommandations produits, descriptions auto-générées, checkout Stripe, gestion stock intelligente.',
+    price: 12900,
+    category: 'E-commerce',
+    tags: JSON.stringify(['next.js', 'tailwind', 'stripe', 'ecommerce', 'ai', 'openai']),
+    previewUrl: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
+    screenshot: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=800&q=80',
+    fileUrl: 'https://example.com/templates/neuracommerce.zip',
+    stripeProductId: 'prod_Ujr379AB4ixCn8',
+    stripePriceId: 'price_1TkNLlBQ1UgeJKAdxCDatXe3',
+    featured: true,
+    features: JSON.stringify([
+      'Catalogue produits avec recherche IA',
+      'Descriptions auto-générées par GPT-4',
+      'Recommandations personnalisées',
+      'Panier persistant + checkout Stripe',
+      'Gestion des stocks avec alerts',
+      'Reviews et notes clients',
+      'Dashboard admin complet',
+      'Email de confirmation automatique',
+      'SEO optimisé (sitemap, meta tags)',
+      'Multi-devise supporté',
+    ]),
+  },
+  {
+    name: 'NeuraLanding — Kit Landing Pages',
+    slug: 'neuralanding-kit-landing',
+    description: 'Kit de 5 landing pages haute conversion. Hero sections, pricing, testimonials, FAQ. Animations fluides, design premium.',
+    price: 4900,
+    category: 'Landing Page',
+    tags: JSON.stringify(['next.js', 'tailwind', 'landing', 'marketing', 'animations']),
+    previewUrl: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+    screenshot: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
+    fileUrl: 'https://example.com/templates/neuralanding.zip',
+    liveDemo: 'https://demo.neuraapi.com/landing',
+    stripeProductId: 'prod_Ujr3LT7cQn3NrG',
+    stripePriceId: 'price_1TkNLkBQ1UgeJKAdsm9R8XHc',
+    featured: true,
+    features: JSON.stringify([
+      '5 layouts de landing pages inclus',
+      'Hero sections à haute conversion',
+      'Sections pricing avec comparateur',
+      'Testimonials et social proof',
+      'FAQ accordéon animée',
+      'Formulaire de capture email',
+      'Animations au scroll',
+      'A/B testing ready',
+      'Responsive mobile-first',
+      'Score Lighthouse 100/100',
+    ]),
+  },
+  {
+    name: 'NeuraBlog — Moteur de Blog IA',
+    slug: 'neurablog-moteur-blog-ia',
+    description: 'Blog intelligent avec génération d\'articles par IA, SEO automatisé, newsletter intégrée, et analytics avancés.',
+    price: 6900,
+    category: 'Blog',
+    tags: JSON.stringify(['next.js', 'tailwind', 'blog', 'ai', 'seo', 'mdx']),
+    previewUrl: 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=800&q=80',
+    screenshot: 'https://images.unsplash.com/photo-1432821596592-e2c18b78144f?w=800&q=80',
+    fileUrl: 'https://example.com/templates/neurablog.zip',
+    stripeProductId: 'prod_Ujr3f9aFwKVGhP',
+    stripePriceId: 'price_1TkNLiBQ1UgeJKAdhEva8Gl3',
+    features: JSON.stringify([
+      'Génération d\'articles par IA (GPT-4)',
+      'Éditeur Markdown/MDX',
+      'SEO automatisé (meta, sitemap, schema.org)',
+      'Newsletter email intégrée',
+      'Analytics lectures et engagement',
+      'Catégories et tags intelligents',
+      'Recherche full-text',
+      'RSS feed automatique',
+      'Partage social intégré',
+      'Mode lecture optimisé',
+    ]),
+  },
+  {
+    name: 'NeuraDashboard — Admin Panel Premium',
+    slug: 'neuradashboard-admin-panel',
+    description: 'Dashboard administrateur professionnel avec graphiques temps réel, gestion multi-tenants, et intégrations API.',
+    price: 7900,
+    category: 'Dashboard',
+    tags: JSON.stringify(['next.js', 'tailwind', 'dashboard', 'admin', 'charts', 'realtime']),
+    previewUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    screenshot: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    fileUrl: 'https://example.com/templates/neuradashboard.zip',
+    stripeProductId: 'prod_Ujr3ovPsdaikm0',
+    stripePriceId: 'price_1TkNLhBQ1UgeJKAd6W3kckrV',
+    features: JSON.stringify([
+      'Graphiques temps réel (Recharts)',
+      'Multi-tenants avec permissions',
+      'Tableaux avec tri, filtres, pagination',
+      'Gestion des utilisateurs et rôles',
+      'Notifications WebSocket',
+      'Export CSV/PDF/Excel',
+      'Multi-thème (10+ couleurs)',
+      'Responsive tablette et mobile',
+      'Logs d\'activité audit trail',
+      'Intégrations API REST',
+    ]),
+  },
+  {
+    name: 'NeuraAI Studio — Plateforme AI No-Code',
+    slug: 'neurai-studio-plateforme',
+    description: 'Plateforme no-code pour créer des workflows IA. Drag & drop, intégrations OpenAI, pipelines de données, et déploiement en 1 clic.',
+    price: 19900,
+    category: 'SaaS',
+    tags: JSON.stringify(['next.js', 'tailwind', 'ai', 'no-code', 'workflow', 'openai']),
+    previewUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80',
+    screenshot: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&q=80',
+    fileUrl: 'https://example.com/templates/neurai-studio.zip',
+    stripeProductId: 'prod_Ujr4L0OqNHcBBd',
+    stripePriceId: 'price_1TkNMABQ1UgeJKAdotsh0aJU',
+    featured: true,
+    features: JSON.stringify([
+      'Éditeur drag & drop de workflows IA',
+      'Nœuds : OpenAI, HTTP, CSV, Email, Condition',
+      'Exécution temps réel avec logs',
+      'Templates de workflows pré-configurés',
+      'Gestion des variables et secrets',
+      'Historique des exécutions',
+      'Webhooks entrants/sortants',
+      'Monitoring des coûts API',
+      'Partage et collaboration',
+      'API REST pour intégration externe',
+    ]),
+  },
+];
+
+async function main() {
+  console.log('Seeding templates...');
+  for (const template of templates) {
+    await prisma.template.upsert({
+      where: { slug: template.slug },
+      update: template,
+      create: template,
+    });
+  }
+  console.log(`Seeded ${templates.length} templates`);
+}
+
+main()
+  .catch((e) => {
+    console.error(e);
+    process.exit(1);
+  })
+  .finally(async () => {
+    await prisma.$disconnect();
+  });

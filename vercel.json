@@ -1,0 +1,20 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/daily-marketing",
+      "schedule": "0 8 * * *"
+    },
+    {
+      "path": "/api/cron/seo-monitor",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/upsell",
+      "schedule": "0 10 * * 1"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+name: Monitoring
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+jobs:
+  health-check:
+    name: Health Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check homepage
+        id: homepage
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const resp = await fetch('https://ai-empire-steel.vercel.app/', { redirect: 'follow' });
+            const status = resp.status;
+            core.setOutput('status', status);
+            if (status !== 200) {
+              core.setFailed(`Homepage returned ${status}`);
+            }
+            core.info(`Homepage: ${status}`);
+
+      - name: Check API health
+        id: api
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const resp = await fetch('https://ai-empire-steel.vercel.app/api/health');
+            const status = resp.status;
+            core.setOutput('status', status);
+            if (status !== 200) {
+              core.setFailed(`API health returned ${status}`);
+            }
+            core.info(`API health: ${status}`);
+
+      - name: Check monitoring endpoint
+        id: monitoring
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const resp = await fetch('https://ai-empire-steel.vercel.app/api/monitoring');
+            const data = await resp.json();
+            core.setOutput('status', data.status);
+            core.info(`Monitoring status: ${data.status}`);
+            if (data.status === 'unhealthy') {
+              core.setFailed(`System unhealthy: ${JSON.stringify(data)}`);
+            }
+
+      - name: Create issue on failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const homepage = '${{ steps.homepage.outputs.status }}';
+            const api = '${{ steps.api.outputs.status }}';
+            const monitoring = '${{ steps.monitoring.outputs.status }}';
+            const now = new Date().toISOString();
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `[ALERT] Site health check failed at ${now}`,
+              body: `## Health Check Failure\n\n- **Time**: ${now}\n- **Homepage**: HTTP ${homepage}\n- **API Health**: HTTP ${api}\n- **Monitoring Status**: ${monitoring}\n\nPlease investigate immediately.`,
+              labels: ['alert', 'monitoring'],
+            });

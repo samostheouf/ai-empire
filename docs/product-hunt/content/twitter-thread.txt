@@ -1,0 +1,59 @@
+TWEET 1:
+I just launched NeuraAPI on @ProductHunt!
+
+AI APIs + Next.js Templates in 10 languages.
+
+3 AI endpoints, premium templates, free tier.
+
+Support us: https://www.producthunt.com/posts/neuraapi
+
+#ProductHunt #AI #NextJS
+
+---
+
+TWEET 2:
+What NeuraAPI gives you:
+
+- POST /api/ai/generate (text generation)
+- POST /api/ai/code (code generation)
+- POST /api/ai/seo (SEO content)
+
+Powered by Groq, Gemini, OpenAI.
+
+Under 200ms response time.
+
+---
+
+TWEET 3:
+Why it's different:
+
+- Works in 10 languages (FR, EN, ES, DE, IT, PT, JA, ZH, KO, AR)
+- Free tier: 100 credits/month
+- Premium Next.js templates included
+- Instant API key generation
+
+No complex setup needed.
+
+---
+
+TWEET 4:
+The stack:
+
+- Frontend: Next.js 14, TypeScript, Tailwind
+- Backend: Python/FastAPI, PostgreSQL
+- AI: Groq (Llama 3.3), Gemini, OpenAI
+- Payments: Stripe
+- Deploy: Vercel
+
+Built in 3 weeks.
+
+---
+
+TWEET 5:
+Launch offer: Pro plan at EUR19/month (-30%)
+
+First 50 users only.
+
+Try it free: https://ai-empire-steel.vercel.app/launch
+
+RT if this could help someone!

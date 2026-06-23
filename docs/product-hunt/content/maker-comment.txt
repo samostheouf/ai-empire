@@ -1,0 +1,20 @@
+Hey Product Hunt!
+
+I built NeuraAPI because I was frustrated with how hard it is to add AI to apps.
+
+Most AI tools are:
+- English-only
+- Complex to set up
+- Expensive for small projects
+
+NeuraAPI fixes this:
+- Works in 10 languages out of the box
+- 3 API endpoints ready in 5 minutes
+- Free tier with 100 credits/month
+- Premium Next.js templates included
+
+I built this in 3 weeks using Next.js 14, Python/FastAPI, and Groq AI.
+
+What do you think? I'd love your feedback!
+
+Try it free: https://ai-empire-steel.vercel.app/launch

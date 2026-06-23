@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="mainGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="50%" stop-color="#8b5cf6" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+    <linearGradient id="glowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.3" />
+      <stop offset="100%" stop-color="#f472b6" stop-opacity="0.3" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background glow -->
+  <circle cx="100" cy="100" r="85" fill="url(#glowGrad)" />
+  
+  <!-- Outer hexagon with glow -->
+  <polygon points="100,15 175,55 175,145 100,185 25,145 25,55" 
+    stroke="url(#mainGrad)" stroke-width="3" fill="none" filter="url(#glow)" />
+  
+  <!-- Inner hexagon -->
+  <polygon points="100,45 150,68 150,132 100,155 50,132 50,68" 
+    stroke="url(#mainGrad)" stroke-width="2" fill="none" opacity="0.6" />
+  
+  <!-- Central AI brain symbol -->
+  <circle cx="100" cy="100" r="18" fill="url(#mainGrad)" filter="url(#glow)" />
+  
+  <!-- Neural network nodes -->
+  <circle cx="100" cy="100" r="6" fill="white" />
+  
+  <!-- Connecting lines -->
+  <line x1="100" y1="100" x2="100" y2="15" stroke="url(#mainGrad)" stroke-width="1.5" opacity="0.5" />
+  <line x1="100" y1="100" x2="175" y2="55" stroke="url(#mainGrad)" stroke-width="1.5" opacity="0.5" />
+  <line x1="100" y1="100" x2="175" y2="145" stroke="url(#mainGrad)" stroke-width="1.5" opacity="0.5" />
+  <line x1="100" y1="100" x2="100" y2="185" stroke="url(#mainGrad)" stroke-width="1.5" opacity="0.5" />
+  <line x1="100" y1="100" x2="25" y2="145" stroke="url(#mainGrad)" stroke-width="1.5" opacity="0.5" />
+  <line x1="100" y1="100" x2="25" y2="55" stroke="url(#mainGrad)" stroke-width="1.5" opacity="0.5" />
+  
+  <!-- Vertex nodes -->
+  <circle cx="100" cy="15" r="5" fill="url(#mainGrad)" filter="url(#glow)" />
+  <circle cx="175" cy="55" r="5" fill="url(#mainGrad)" filter="url(#glow)" />
+  <circle cx="175" cy="145" r="5" fill="url(#mainGrad)" filter="url(#glow)" />
+  <circle cx="100" cy="185" r="5" fill="url(#mainGrad)" filter="url(#glow)" />
+  <circle cx="25" cy="145" r="5" fill="url(#mainGrad)" filter="url(#glow)" />
+  <circle cx="25" cy="55" r="5" fill="url(#mainGrad)" filter="url(#glow)" />
+  
+  <!-- Small accent dots -->
+  <circle cx="100" cy="45" r="3" fill="url(#mainGrad)" opacity="0.7" />
+  <circle cx="150" cy="68" r="3" fill="url(#mainGrad)" opacity="0.7" />
+  <circle cx="150" cy="132" r="3" fill="url(#mainGrad)" opacity="0.7" />
+  <circle cx="100" cy="155" r="3" fill="url(#mainGrad)" opacity="0.7" />
+  <circle cx="50" cy="132" r="3" fill="url(#mainGrad)" opacity="0.7" />
+  <circle cx="50" cy="68" r="3" fill="url(#mainGrad)" opacity="0.7" />
+</svg>

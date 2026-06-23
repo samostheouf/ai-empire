@@ -1,0 +1,20 @@
+NeuraAPI is a developer platform that makes AI accessible to everyone.
+
+What it does:
+- AI API endpoints (text generation, code, SEO optimization)
+- Premium Next.js templates (SaaS, e-commerce, portfolio)
+- Multi-language support (10 languages including Japanese, Arabic, Korean)
+- Real-time chatbot powered by Groq/OpenAI
+
+Built with:
+Next.js 14, TypeScript, Python/FastAPI, PostgreSQL, Stripe, Groq AI
+
+Why it's different:
+Most AI tools are English-only and require complex setup. NeuraAPI works in 10 languages out of the box, with instant API key generation and a generous free tier.
+
+Pricing:
+- Starter: FREE (100 credits/month)
+- Pro: EUR19/month (10,000 credits) - Launch offer -30%
+- Enterprise: EUR99/month (unlimited)
+
+Try it now: https://ai-empire-steel.vercel.app

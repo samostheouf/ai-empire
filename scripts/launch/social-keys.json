@@ -1,0 +1,29 @@
+{
+  "twitter": {
+    "apiKey": "",
+    "apiSecret": "",
+    "accessToken": "",
+    "accessTokenSecret": "",
+    "note": "Obtenir sur https://developer.twitter.com/en/portal/dashboard — Permissions: Read and Write"
+  },
+  "reddit": {
+    "clientId": "",
+    "clientSecret": "",
+    "username": "",
+    "password": "",
+    "userAgent": "NeuraAPI-Launch/1.0",
+    "note": "Obtenir sur https://www.reddit.com/prefs/apps — Type: script"
+  },
+  "linkedin": {
+    "clientId": "",
+    "clientSecret": "",
+    "accessToken": "",
+    "personId": "",
+    "note": "Obtenir sur https://www.linkedin.com/developers/apps — Permissions: Share on LinkedIn"
+  },
+  "producthunt": {
+    "clientId": "",
+    "clientSecret": "",
+    "note": "Obtenir sur https://www.producthunt.com/v2/oauth/applications"
+  }
+}

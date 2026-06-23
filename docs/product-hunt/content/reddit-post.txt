@@ -1,0 +1,23 @@
+Title: I built an AI API platform + Next.js templates in 10 languages - launching on Product Hunt today
+
+Body:
+Hey r/SaaS!
+
+I just launched NeuraAPI on Product Hunt and wanted to share it with this community.
+
+What it is:
+- AI API endpoints for text generation, code, and SEO
+- Premium Next.js templates for SaaS, e-commerce, portfolios
+- Works in 10 languages (FR, EN, ES, DE, IT, PT, JA, ZH, KO, AR)
+
+The stack:
+- Frontend: Next.js 14, TypeScript, Tailwind CSS
+- Backend: Python/FastAPI, PostgreSQL
+- AI: Groq (Llama 3.3), Gemini, OpenAI
+- Payments: Stripe
+
+Free tier available (100 credits/month). Launch offer: Pro plan at EUR19/month (-30%).
+
+Would love your feedback: https://ai-empire-steel.vercel.app/launch
+
+#SaaS #AI #NextJS #ProductHunt

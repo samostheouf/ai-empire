@@ -1,0 +1,23 @@
+{
+  "twitter": {
+    "apiKey": "",
+    "apiSecret": "",
+    "accessToken": "",
+    "accessTokenSecret": "",
+    "_instructions": "1. Va sur https://developer.twitter.com/en/portal/dashboard 2. Crée un projet 3. Active Read+Write 4. Génère les clés"
+  },
+  "reddit": {
+    "clientId": "",
+    "clientSecret": "",
+    "username": "",
+    "password": "",
+    "userAgent": "NeuraAPI-Launch/1.0 by /u/YOUR_USERNAME",
+    "_instructions": "1. Va sur https://www.reddit.com/prefs/apps 2. Crée app type 'script' 3. Redirect: http://localhost:8080"
+  },
+  "linkedin": {
+    "accessToken": "",
+    "personUrn": "",
+    "_instructions": "1. Va sur https://www.linkedin.com/developers/apps 2. Crée app 3. Active Share on LinkedIn 4. OAuth 2.0 access token"
+  },
+  "_status": "REMPLIS CES CLÉS PUIS LANCE: node scripts/social-media/launch.js"
+}

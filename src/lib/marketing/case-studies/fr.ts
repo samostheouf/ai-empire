@@ -1,0 +1,123 @@
+import type { CaseStudiesByLanguage } from './index'
+
+export const caseStudies: CaseStudiesByLanguage = {
+  saas: {
+    id: 'cs-fr-saas-01',
+    company: 'DataPulse Analytics',
+    companyType: 'saas',
+    industry: 'SaaS Analytique de Données',
+    teamSize: '4 ingénieurs',
+    challenge: 'DataPulse devait lancer son tableau de bord analytique alimenté par l\'IA dans les 6 semaines. Son équipe passait 80% de son temps de développement sur l\'authentification, l\'intégration de facturation Stripe et la construction du panneau d\'administration desde cero. L\'intégration de l\'API IA seule était estimée à 3 semaines avec leur approche actuelle.',
+    solution: 'Adoption du template NeuraDashboard d\'AI Empire avec intégration Groq AI pré-construite, facturation Stripe et contrôle d\'accès basé sur les rôles. L\'équipe a remplacé sa configuration d\'auth personnalisée et l\'intégration Stripe manuelle par les implémentations prêtes pour la production du template.',
+    implementation: [
+      { step: 1, title: 'Cloner et configurer', description: 'Clonage du template NeuraDashboard, configuration des variables d\'environnement avec la clé API Groq et les identifiants Stripe.', duration: '2 heures' },
+      { step: 2, title: 'Personnaliser l\'identité visuelle', description: 'Mise à jour du schéma de couleurs, du logo et de la typographie pour correspondre à l\'identité de marque DataPulse. Modification de la disposition du tableau de bord pour les widgets analytiques.', duration: '1 jour' },
+      { step: 3, title: 'Ajouter les fonctionnalités IA', description: 'Intégration de la fonctionnalité de requête en langage naturel propulsée par Groq dans le tableau de bord analytique via le point de terminaison /api/chat pré-construit.', duration: '2 jours' },
+      { step: 4, title: 'Configurer la facturation', description: 'Mise en place de trois niveaux d\'abonnement (Starter, Pro, Enterprise) grâce à l\'intégration Stripe du template. Activation de la facturation à l\'usage pour les appels API.', duration: '1 jour' },
+      { step: 5, title: 'Déployer et lancer', description: 'Déploiement sur Vercel, connexion du domaine personnalisé et lancement de la bêta auprès des 50 premiers clients.', duration: '1 jour' },
+    ],
+    results: [
+      { metric: 'Délai de mise sur le marché', before: '6 semaines (estimé)', after: '8 jours', improvement: '85% plus rapide' },
+      { metric: 'Coût de développement', before: '12 000€ (estimé)', after: '2 800€', improvement: '77% d\'économies' },
+      { metric: 'Temps de réponse API', before: 'N/A (pas construit)', after: '180ms moy.', improvement: 'Prêt pour la production' },
+      { metric: 'Revenus mensuels', before: '0€', after: '4 200€ MRR', improvement: '+4 200€/mois' },
+    ],
+    testimonial: {
+      quote: 'Nous avons lancé notre SaaS analytique IA en 8 jours au lieu de 6 semaines. L\'intégration Groq était déjà câblée — nous avons simplement ajouté nos prompts spécifiques au domaine. Meilleur investissement que notre startup ait fait.',
+      author: 'Marcus Chen',
+      role: 'CTO, DataPulse Analytics',
+    },
+    templateUsed: 'NeuraDashboard — Panneau Admin',
+    timeToValue: '8 jours',
+  },
+
+  agency: {
+    id: 'cs-fr-agency-01',
+    company: 'Bright Studio',
+    companyType: 'agency',
+    industry: 'Agence Digitale',
+    teamSize: '12 personnes',
+    challenge: 'Bright Studio construisait des solutions SaaS personnalisées pour ses clients mais chaque projet nécessitait 3-4 semaines de configuration de boilerplate. L\'auth, la facturation et l\'intégration IA étaient reconstruites desde cero à chaque fois. Cela réduisait leurs marges projet et retardait les livraisons clients.',
+    solution: 'Standardisation sur les templates AI Empire comme point de départ pour tous les projets clients. Utilisation de NeuraSaaS pour les clients SaaS généralistes, NeuraStore pour les clients e-commerce et NeuraBlog pour les plateformes de contenu. La base de code cohérente d\'AI Empire a réduit le temps d\'intégration des nouveaux membres.',
+    implementation: [
+      { step: 1, title: 'Mise en place de la bibliothèque', description: 'Création d\'une bibliothèque de templates internes basée sur les templates AI Empire avec des personnalisations spécifiques à l\'agence.', duration: '3 jours' },
+      { step: 2, title: 'Processus d\'intégration client', description: 'Définition d\'un flux d\'intégration client standardisé : sélection du template, personnalisation de l\'identité visuelle, cadrage des fonctionnalités.', duration: '1 semaine' },
+      { step: 3, title: 'Formation de l\'équipe', description: 'Formation de tous les développeurs aux patterns du codebase AI Empire. Création de documentation interne pour les personnalisations courantes.', duration: '1 semaine' },
+      { step: 4, title: 'Premier projet client', description: 'Livraison du premier projet client (tableau de bord SaaS) en 5 jours en utilisant NeuraDashboard comme base.', duration: '5 jours' },
+      { step: 5, title: 'Montée en charge', description: 'Application de l\'approche basée sur les templates à 6 projets clients successifs avec des délais de livraison cohérents.', duration: '3 mois' },
+    ],
+    results: [
+      { metric: 'Délai de livraison projet', before: '6-8 semaines', after: '2-3 semaines', improvement: '60% plus rapide' },
+      { metric: 'Satisfaction client', before: '8.2/10', after: '9.5/10', improvement: '+16%' },
+      { metric: 'Revenus mensuels', before: '25 000€', after: '42 000€', improvement: '+68%' },
+      { metric: 'Projets par trimestre', before: '3', after: '6', improvement: '+100%' },
+    ],
+    testimonial: {
+      quote: 'AI Empire a réduit notre temps de configuration de projet de 4 semaines à 3 jours. Nous livrons maintenant des projets SaaS en 2-3 semaines au lieu de 6-8. Nos clients sont plus satisfaits et nos marges sont meilleures.',
+      author: 'Sophie Laurent',
+      role: 'Directrice d\'Agence, Bright Studio',
+    },
+    templateUsed: 'NeuraSaaS, NeuraStore, NeuraBlog',
+    timeToValue: '2 semaines (formation équipe)',
+  },
+
+  freelancer: {
+    id: 'cs-fr-freelancer-01',
+    company: 'Alex Rivera (Indépendant)',
+    companyType: 'freelancer',
+    industry: 'Développement Web',
+    teamSize: '1 personne',
+    challenge: 'Alex était développeur full-stack indépendant construisant des MVP SaaS pour des startups. Chaque projet nécessitait de configurer l\'authentification, le traitement des paiements et les fonctionnalités IA desde cero. Le surcoût consommait 40% du temps de projet, rendant difficile la prise de nouveaux clients ou le développement de projets personnels.',
+    solution: 'Commencé à utiliser les templates AI Empire comme fondation pour tous les MVP clients et projets personnels. Utilisation de NeuraSaaS pour les clients SaaS généralistes et NeuraPortfolio pour la marque personnelle. L\'essai gratuit a permis de tester avant de s\'engager.',
+    implementation: [
+      { step: 1, title: 'Évaluation du template', description: 'Test du template NeuraSaaS avec l\'essai gratuit. Clonage, exploration du codebase, vérification de la fonctionnalité Stripe et auth.', duration: '2 heures' },
+      { step: 2, title: 'Configuration projet client', description: 'Utilisation de NeuraSaaS comme base pour le MVP d\'outil d\'écriture IA d\'un client. Personnalisation de l\'UI et ajout de prompts IA spécifiques.', duration: '3 jours' },
+      { step: 3, title: 'Déploiement et remise', description: 'Déploiement sur Vercel, configuration du domaine personnalisé et remise au client avec documentation.', duration: '1 jour' },
+      { step: 4, title: 'Portfolio personnel', description: 'Création du site portfolio personnel avec le template NeuraPortfolio. Présentation des travaux clients et services.', duration: '1 jour' },
+      { step: 5, title: 'Montée en puissance', description: 'Prise en charge de 3 clients supplémentaires le mois suivant avec l\'approche basée sur les templates.', duration: '1 mois' },
+    ],
+    results: [
+      { metric: 'Délai de livraison MVP', before: '3-4 semaines', after: '5-7 jours', improvement: '75% plus rapide' },
+      { metric: 'Revenus mensuels', before: '3 500€', after: '7 200€', improvement: '+106%' },
+      { metric: 'Projets par mois', before: '2', after: '4-5', improvement: '+125%' },
+      { metric: 'Satisfaction client', before: '8/10', after: '9.5/10', improvement: '+19%' },
+    ],
+    testimonial: {
+      quote: 'En tant que développeur solo, AI Empire change la donne. Je suis passé de 2 MVP livrés par mois à 4-5. L\'intégration Stripe seule me fait gagner une semaine par projet.',
+      author: 'Alex Rivera',
+      role: 'Développeur Full-Stack Indépendant',
+    },
+    templateUsed: 'NeuraSaaS, NeuraPortfolio',
+    timeToValue: '5 jours',
+  },
+
+  enterprise: {
+    id: 'cs-fr-enterprise-01',
+    company: 'Meridian Technologies',
+    companyType: 'enterprise',
+    industry: 'Logiciel Entreprise',
+    teamSize: '45 ingénieurs',
+    challenge: 'Meridian Technologies construisait un outil interne alimenté par l\'IA pour son équipe commerciale. Le projet était estimé à 4 mois avec une équipe de 6 ingénieurs. Ils avaient besoin d\'authentification, de contrôle d\'accès basé sur les rôles, de chat IA, de tableau de bord analytique et de facturation Stripe pour l\'allocation des coûts internes. Le projet risquait des retards en raison de la complexité de l\'intégration de multiples fournisseurs IA.',
+    solution: 'Adoption du template NeuraSaaS d\'AI Empire comme fondation pour l\'outil interne. Utilisation du système d\'auth pré-construit avec contrôle d\'accès basé sur les rôles pour les différents départements. Exploitation de l\'intégration Groq AI pour la fonctionnalité chat et de la facturation Stripe pour le suivi des coûts internes.',
+    implementation: [
+      { step: 1, title: 'Revue architecture', description: 'Examen du codebase AI Empire pour les exigences entreprise : RBAC, journalisation d\'audit, limitation de débit, isolation des données.', duration: '3 jours' },
+      { step: 2, title: 'Configuration RBAC personnalisée', description: 'Extension du système d\'auth du template avec des rôles personnalisés : Admin, Manager, Commercial, Lecture seule. Ajout de l\'isolation des données par département.', duration: '1 semaine' },
+      { step: 3, title: 'Intégration fonctionnalités IA', description: 'Intégration de Groq AI pour l\'analyse de conversations commerciales, le scoring de leads et la rédaction d\'emails. Connexion au CRM interne via API.', duration: '2 semaines' },
+      { step: 4, title: 'Configuration facturation interne', description: 'Configuration de Stripe pour l\'allocation des coûts internes entre départements. Mise en place du suivi d\'utilisation et du reporting mensuel.', duration: '3 jours' },
+      { step: 5, title: 'Pilote et déploiement', description: 'Pilote avec 10 commerciaux pendant 2 semaines. Collecte des retours, ajustements, puis déploiement à l\'ensemble de l\'équipe.', duration: '3 semaines' },
+    ],
+    results: [
+      { metric: 'Délai de mise en production', before: '4 mois (estimé)', after: '6 semaines', improvement: '70% plus rapide' },
+      { metric: 'Coût d\'ingénierie', before: '80 000€ (estimé)', after: '22 000€', improvement: '72% d\'économies' },
+      { metric: 'Productivité équipe commerciale', before: 'Référence', after: '+35%', improvement: '+35%' },
+      { metric: 'Adoption des fonctionnalités IA', before: '0%', after: '89%', improvement: '89% d\'adoption' },
+    ],
+    testimonial: {
+      quote: 'AI Empire nous a fait économiser 3 mois de développement et 58 000€ de coûts d\'ingénierie. L\'auth et l\'intégration IA pré-construites ont permis à notre équipe de se concentrer sur la logique produit plutôt que sur l\'infrastructure.',
+      author: 'James Whitfield',
+      role: 'VP Engineering, Meridian Technologies',
+    },
+    templateUsed: 'NeuraSaaS — Kit Complet SaaS',
+    timeToValue: '6 semaines',
+  },
+}

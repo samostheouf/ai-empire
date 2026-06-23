@@ -1,0 +1,123 @@
+import type { CaseStudiesByLanguage } from './index'
+
+export const caseStudies: CaseStudiesByLanguage = {
+  saas: {
+    id: 'cs-en-saas-01',
+    company: 'DataPulse Analytics',
+    companyType: 'saas',
+    industry: 'Data Analytics SaaS',
+    teamSize: '4 engineers',
+    challenge: 'DataPulse needed to launch their AI-powered analytics dashboard within 6 weeks. Their team was spending 80% of development time on authentication, Stripe billing integration, and building the admin panel from scratch. The AI API integration alone was estimated to take 3 weeks with their current approach of managing multiple provider keys.',
+    solution: 'Adopted AI Empire\'s NeuraDashboard template with pre-built Groq AI integration, Stripe billing, and role-based access control. The team replaced their custom auth setup and manual Stripe integration with the template\'s production-ready implementations.',
+    implementation: [
+      { step: 1, title: 'Clone and configure', description: 'Cloned NeuraDashboard template, configured environment variables with Groq API key and Stripe credentials.', duration: '2 hours' },
+      { step: 2, title: 'Customize branding', description: 'Updated color scheme, logo, and typography to match DataPulse brand identity. Modified dashboard layout for analytics-specific widgets.', duration: '1 day' },
+      { step: 3, title: 'Add AI features', description: 'Integrated Groq-powered natural language query feature into the analytics dashboard using the pre-built /api/chat endpoint.', duration: '2 days' },
+      { step: 4, title: 'Configure billing', description: 'Set up three subscription tiers (Starter, Pro, Enterprise) using the template\'s Stripe integration. Enabled usage-based billing for API calls.', duration: '1 day' },
+      { step: 5, title: 'Deploy and launch', description: 'Deployed to Vercel, connected custom domain, and launched beta to first 50 customers.', duration: '1 day' },
+    ],
+    results: [
+      { metric: 'Time to market', before: '6 weeks (estimated)', after: '8 days', improvement: '85% faster' },
+      { metric: 'Development cost', before: '€12,000 (estimated)', after: '€2,800', improvement: '77% savings' },
+      { metric: 'API response time', before: 'N/A (not built)', after: '180ms avg', improvement: 'Production ready' },
+      { metric: 'Monthly revenue', before: '€0', after: '€4,200 MRR', improvement: '€4,200/month' },
+    ],
+    testimonial: {
+      quote: 'We launched our AI analytics SaaS in 8 days instead of 6 weeks. The Groq integration was already wired up — we just added our domain-specific prompts. Best investment our startup has made.',
+      author: 'Marcus Chen',
+      role: 'CTO, DataPulse Analytics',
+    },
+    templateUsed: 'NeuraDashboard — Admin Panel',
+    timeToValue: '8 days',
+  },
+
+  agency: {
+    id: 'cs-en-agency-01',
+    company: 'Bright Studio',
+    companyType: 'agency',
+    industry: 'Digital Agency',
+    teamSize: '12 people',
+    challenge: 'Bright Studio was building custom SaaS solutions for clients but each project required 3-4 weeks of boilerplate setup. Auth, billing, and AI integration were rebuilt from scratch every time. This reduced their project margins and delayed client deliveries.',
+    solution: 'Standardized on AI Empire templates as the starting point for all client projects. Used NeuraSaaS for general SaaS clients, NeuraStore for e-commerce clients, and NeuraBlog for content platforms. AI Empire\'s consistent codebase reduced onboarding time for new team members.',
+    implementation: [
+      { step: 1, title: 'Template library setup', description: 'Created an internal template library based on AI Empire templates with agency-specific customizations.', duration: '3 days' },
+      { step: 2, title: 'Client onboarding process', description: 'Defined a standardized client onboarding flow: template selection, branding customization, feature scoping.', duration: '1 week' },
+      { step: 3, title: 'Team training', description: 'Trained all developers on AI Empire\'s codebase patterns. Created internal documentation for common customizations.', duration: '1 week' },
+      { step: 4, title: 'First client project', description: 'Delivered first client project (SaaS dashboard) in 5 days using NeuraDashboard as base.', duration: '5 days' },
+      { step: 5, title: 'Scale across projects', description: 'Applied template-based approach to 6 subsequent client projects with consistent delivery times.', duration: '3 months' },
+    ],
+    results: [
+      { metric: 'Project delivery time', before: '6-8 weeks', after: '2-3 weeks', improvement: '60% faster' },
+      { metric: 'Client satisfaction', before: '8.2/10', after: '9.5/10', improvement: '+16%' },
+      { metric: 'Monthly revenue', before: '€25,000', after: '€42,000', improvement: '+68%' },
+      { metric: 'Projects per quarter', before: '3', after: '6', improvement: '+100%' },
+    ],
+    testimonial: {
+      quote: 'AI Empire cut our project setup time from 4 weeks to 3 days. We now deliver SaaS projects in 2-3 weeks instead of 6-8. Our clients are happier and our margins are better.',
+      author: 'Sophie Laurent',
+      role: 'Agency Director, Bright Studio',
+    },
+    templateUsed: 'NeuraSaaS, NeuraStore, NeuraBlog',
+    timeToValue: '2 weeks (team training)',
+  },
+
+  freelancer: {
+    id: 'cs-en-freelancer-01',
+    company: 'Alex Rivera (Independent)',
+    companyType: 'freelancer',
+    industry: 'Web Development',
+    teamSize: '1 person',
+    challenge: 'Alex was a solo full-stack developer building SaaS MVPs for startups. Each project required setting up authentication, payment processing, and AI features from scratch. The overhead consumed 40% of project time, making it hard to take on more clients or build personal projects.',
+    solution: 'Started using AI Empire templates as the foundation for all client MVPs and personal projects. Used NeuraSaaS for general SaaS clients and NeuraPortfolio for personal branding. The free tier allowed testing before committing.',
+    implementation: [
+      { step: 1, title: 'Template evaluation', description: 'Tested NeuraSaaS template with free tier. Cloned, explored codebase, verified Stripe and auth functionality.', duration: '2 hours' },
+      { step: 2, title: 'Client project setup', description: 'Used NeuraSaaS as base for a client\'s AI writing tool MVP. Customized the UI and added client-specific AI prompts.', duration: '3 days' },
+      { step: 3, title: 'Deployment and handoff', description: 'Deployed to Vercel, set up custom domain, and handed off to client with documentation.', duration: '1 day' },
+      { step: 4, title: 'Personal portfolio', description: 'Built personal portfolio site using NeuraPortfolio template. Showcased client work and services.', duration: '1 day' },
+      { step: 5, title: 'Scale freelancing', description: 'Took on 3 additional clients in the following month using template-based approach.', duration: '1 month' },
+    ],
+    results: [
+      { metric: 'MVP delivery time', before: '3-4 weeks', after: '5-7 days', improvement: '75% faster' },
+      { metric: 'Monthly income', before: '€3,500', after: '€7,200', improvement: '+106%' },
+      { metric: 'Projects per month', before: '2', after: '4-5', improvement: '+125%' },
+      { metric: 'Client satisfaction', before: '8/10', after: '9.5/10', improvement: '+19%' },
+    ],
+    testimonial: {
+      quote: 'As a solo developer, AI Empire is a game-changer. I went from delivering 2 MVPs a month to 4-5. The Stripe integration alone saves me a week per project.',
+      author: 'Alex Rivera',
+      role: 'Freelance Full-Stack Developer',
+    },
+    templateUsed: 'NeuraSaaS, NeuraPortfolio',
+    timeToValue: '5 days',
+  },
+
+  enterprise: {
+    id: 'cs-en-enterprise-01',
+    company: 'Meridian Technologies',
+    companyType: 'enterprise',
+    industry: 'Enterprise Software',
+    teamSize: '45 engineers',
+    challenge: 'Meridian Technologies was building an internal AI-powered tool for their sales team. The project was estimated at 4 months with a team of 6 engineers. They needed authentication, role-based access, AI chat, analytics dashboard, and Stripe billing for internal cost allocation. The project was at risk of delays due to the complexity of integrating multiple AI providers.',
+    solution: 'Adopted AI Empire\'s NeuraSaaS template as the foundation for the internal tool. Used the pre-built auth system with role-based access for different departments. Leveraged Groq AI integration for the chat feature and Stripe billing for internal cost tracking.',
+    implementation: [
+      { step: 1, title: 'Architecture review', description: 'Reviewed AI Empire codebase for enterprise requirements: RBAC, audit logging, rate limiting, data isolation.', duration: '3 days' },
+      { step: 2, title: 'Custom RBAC setup', description: 'Extended the template\'s auth system with custom roles: Admin, Manager, Sales Rep, Read-Only. Added department-based data isolation.', duration: '1 week' },
+      { step: 3, title: 'AI feature integration', description: 'Integrated Groq AI for sales conversation analysis, lead scoring, and email drafting. Connected to internal CRM via API.', duration: '2 weeks' },
+      { step: 4, title: 'Internal billing setup', description: 'Configured Stripe for internal cost allocation across departments. Set up usage tracking and monthly reporting.', duration: '3 days' },
+      { step: 5, title: 'Pilot and rollout', description: 'Ran pilot with 10 sales reps for 2 weeks. Gathered feedback, made adjustments, then rolled out to full team.', duration: '3 weeks' },
+    ],
+    results: [
+      { metric: 'Time to production', before: '4 months (estimated)', after: '6 weeks', improvement: '70% faster' },
+      { metric: 'Engineering cost', before: '€80,000 (estimated)', after: '€22,000', improvement: '72% savings' },
+      { metric: 'Sales team productivity', before: 'Baseline', after: '+35%', improvement: '+35%' },
+      { metric: 'AI feature adoption', before: '0%', after: '89%', improvement: '89% adoption' },
+    ],
+    testimonial: {
+      quote: 'AI Empire saved us 3 months of development time and €58,000 in engineering costs. The pre-built auth and AI integration meant our team could focus on the actual product logic instead of infrastructure.',
+      author: 'James Whitfield',
+      role: 'VP Engineering, Meridian Technologies',
+    },
+    templateUsed: 'NeuraSaaS — Kit Complet SaaS',
+    timeToValue: '6 weeks',
+  },
+}

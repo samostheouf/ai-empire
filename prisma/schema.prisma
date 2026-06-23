@@ -1,0 +1,248 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Template {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  description     String
+  price           Int
+  category        String
+  tags            String
+  previewUrl      String
+  screenshot      String
+  features        String
+  fileUrl         String
+  liveDemo        String?
+  stripeProductId String?
+  stripePriceId   String?
+  downloads       Int      @default(0)
+  featured        Boolean  @default(false)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  orders          Order[]
+}
+
+model Order {
+  id         String   @id @default(cuid())
+  email      String
+  sessionId  String   @unique
+  amount     Int
+  status     String   @default("pending")
+  templateId String
+  template   Template @relation(fields: [templateId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model ApiUser {
+  id         String    @id @default(cuid())
+  email      String    @unique
+  apiKey     String    @unique
+  password   String?
+  plan       String    @default("free")
+  credits    Int       @default(100)
+  stripeId   String?
+  createdAt  DateTime  @default(now())
+  usageLogs  UsageLog[]
+}
+
+model UsageLog {
+  id        String  @id @default(cuid())
+  userId    String
+  user      ApiUser @relation(fields: [userId], references: [id])
+  endpoint  String
+  tokens    Int
+  cost      Int
+  createdAt DateTime @default(now())
+}
+
+model Waitlist {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  source    String   @default("landing")
+  createdAt DateTime @default(now())
+}
+
+model Referral {
+  id            String    @id @default(cuid())
+  code          String    @unique
+  referrerEmail String
+  referredEmail String?   @unique
+  referredId    String?
+  status        String    @default("pending")
+  commissionEarned Int    @default(0)
+  creditsAwarded   Int    @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Affiliate {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  trackingCode  String    @unique
+  commissionRate Float   @default(0.30)
+  totalEarned   Int       @default(0)
+  totalReferrals Int      @default(0)
+  totalConversions Int   @default(0)
+  status        String    @default("active")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  referrals     AffiliateReferral[]
+}
+
+model AffiliateReferral {
+  id            String    @id @default(cuid())
+  affiliateId   String
+  affiliate     Affiliate @relation(fields: [affiliateId], references: [id])
+  visitorEmail  String
+  orderId       String?
+  commission    Int       @default(0)
+  converted     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+}
+
+model RecoveryEmail {
+  id            String    @id @default(cuid())
+  email         String
+  templateId    String?
+  sent          Boolean   @default(false)
+  clicked       Boolean   @default(false)
+  converted     Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(cuid())
+  event     String
+  page      String
+  visitorId String
+  data      String?
+  createdAt DateTime @default(now())
+  @@index([event, createdAt])
+  @@index([visitorId, createdAt])
+}
+
+model AnalyticsReport {
+  id             String   @id @default(cuid())
+  week           String
+  totalVisitors  Int      @default(0)
+  totalConversions Int    @default(0)
+  revenue        Int      @default(0)
+  conversionRate Float    @default(0)
+  topPage        String?
+  topReferrer    String?
+  createdAt      DateTime @default(now())
+  @@unique([week])
+}
+
+model ABTestVariant {
+  id           String   @id @default(cuid())
+  testId       String
+  variantName  String
+  visitorId    String
+  assignedAt   DateTime @default(now())
+  converted    Boolean  @default(false)
+  convertedAt  DateTime?
+  @@index([testId, visitorId])
+  @@unique([testId, visitorId])
+}
+
+model ReEngagementEmail {
+  id        String   @id @default(cuid())
+  visitorId String
+  email     String
+  sentAt    DateTime @default(now())
+  @@index([visitorId])
+}
+
+model MarketingPost {
+  id          String   @id @default(cuid())
+  platform    String
+  content     String
+  hashtags    String
+  scheduledAt DateTime
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+}
+
+model BlogIdea {
+  id        String   @id @default(cuid())
+  title     String
+  keywords  String
+  source    String
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+}
+
+model SeoReport {
+  id          String   @id @default(cuid())
+  totalPages  Int
+  pagesOk     Int
+  pagesError  Int
+  brokenLinks String
+  avgLoadTime Float
+  details     String
+  createdAt   DateTime @default(now())
+}
+
+model UpsellEmail {
+  id         String   @id @default(cuid())
+  userId     String
+  email      String
+  sent       Boolean  @default(false)
+  converted  Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  @@index([userId])
+}
+
+model ReferralEarning {
+  id        String   @id @default(cuid())
+  email     String
+  amount    Int
+  month     String
+  createdAt DateTime @default(now())
+  @@unique([email, month])
+}
+
+model WebhookEvent {
+  id        String   @id @default(cuid())
+  eventId   String   @unique
+  provider  String
+  type      String?
+  status    String   @default("pending")
+  retryCount Int     @default(0)
+  lastError String?
+  processed Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  @@index([eventId])
+  @@index([status])
+}
+
+model EmailLog {
+  id        String   @id @default(cuid())
+  to        String
+  subject   String
+  status    String   @default("sent")
+  error     String?
+  sentAt    DateTime @default(now())
+  @@index([to])
+  @@index([sentAt])
+}
+
+model DailyBackup {
+  id          String   @id @default(cuid())
+  date        String   @unique
+  users       Int      @default(0)
+  templates   Int      @default(0)
+  orders      Int      @default(0)
+  totalRevenue Int     @default(0)
+  createdAt   DateTime @default(now())
+}

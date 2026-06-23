@@ -1,0 +1,23 @@
+Title: I built a multi-language AI API platform with Next.js 14 - would love feedback
+
+Body:
+Hey r/webdev!
+
+I've been building NeuraAPI - an AI API platform with premium Next.js templates.
+
+What makes it interesting:
+- AI endpoints (text, code, SEO) with <200ms response times
+- Works in 10 languages out of the box
+- Premium Next.js templates included
+- Free tier with 100 credits/month
+
+Tech stack:
+- Next.js 14 + TypeScript + Tailwind
+- Python/FastAPI backend
+- Groq/Gemini/OpenAI for AI
+- PostgreSQL + Prisma
+- Stripe for payments
+
+Live demo: https://ai-empire-steel.vercel.app
+
+Looking for feedback on the architecture, DX, and pricing. Thanks!

@@ -1,0 +1,15 @@
+I just launched NeuraAPI on Product Hunt!
+
+After 3 weeks of building, here's what NeuraAPI offers:
+
+- AI API endpoints (text, code, SEO)
+- Premium Next.js templates
+- Works in 10 languages out of the box
+- Free tier available
+
+Built with: Next.js 14, TypeScript, Python/FastAPI, Groq AI
+
+If you're a developer looking to add AI to your projects, check it out:
+https://ai-empire-steel.vercel.app/launch
+
+#ProductHunt #AI #NextJS #SaaS #TypeScript
