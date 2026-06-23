@@ -13,6 +13,11 @@ const nextConfig = {
     ],
   },
   optimizePackageImports: ['lucide-react'],
+  async redirects() {
+    return [
+      { source: '/docs', destination: '/api-docs', permanent: false },
+    ]
+  },
   async headers() {
     return [
       {

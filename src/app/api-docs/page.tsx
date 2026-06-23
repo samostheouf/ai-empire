@@ -5,7 +5,7 @@ export default function DocsPage() {
   return (
     <div className="bg-indigo-950 min-h-screen">
       <div className="mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-        <Breadcrumb items={[{ name: 'Documentation', href: '/docs' }]} />
+        <Breadcrumb items={[{ name: 'Documentation', href: '/api-docs' }]} />
 
         <div className="mt-8">
           <h1 className="text-4xl font-bold text-white sm:text-5xl">Documentation API</h1>
