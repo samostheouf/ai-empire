@@ -1,5 +1,14 @@
+import type { Metadata } from 'next'
 import Breadcrumb from '@/components/Breadcrumb'
 import DocsContent from '@/components/client/DocsContent'
+import { generateMetadata as genMeta } from '@/lib/seo'
+
+export const metadata: Metadata = genMeta({
+  title: 'Documentation API — Référence NeuraAPI',
+  description: 'Référence complète de l\'API NeuraAPI. Authentifiez-vous, appelez les endpoints IA (génération, SEO, code, sentiment, chatbot), intégrez en 3 lignes.',
+  path: '/api-docs',
+  keywords: ['documentation api', 'api reference', 'sdk typescript', 'neuraapi docs', 'api ia documentation'],
+})
 
 export default function DocsPage() {
   return (

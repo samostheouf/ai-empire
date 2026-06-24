@@ -1,7 +1,16 @@
+import type { Metadata } from 'next'
 import { Layers, Zap, Timer, BarChart3, ArrowRight } from 'lucide-react'
 import Breadcrumb from '@/components/Breadcrumb'
 import BuildTimeSaved from '@/components/client/BuildTimeSaved'
 import TemplateGrid from '@/components/client/TemplateGrid'
+import { generateMetadata as genMeta } from '@/lib/seo'
+
+export const metadata: Metadata = genMeta({
+  title: 'Templates Premium Next.js & Tailwind — NeuraAPI',
+  description: 'Templates Next.js professionnels prêts à déployer : SaaS, Landing, E-commerce, Blog, Dashboard. Code propre, auth Stripe, IA intégrée. Livraison instantanée.',
+  path: '/templates',
+  keywords: ['template next.js', 'templates premium', 'SaaS template', 'Next.js Tailwind', 'template e-commerce', 'template blog', 'template dashboard'],
+})
 
 const BEFORE_AFTER_COMPARISONS = [
   {

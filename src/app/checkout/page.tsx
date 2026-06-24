@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { useState, Suspense } from 'react';
-import { Loader2, CreditCard } from 'lucide-react';
+import { Loader2, CreditCard, Shield, Lock, RotateCcw, Check } from 'lucide-react';
 
 function CheckoutContent() {
   const searchParams = useSearchParams();
@@ -104,6 +104,25 @@ function CheckoutContent() {
         <p className="text-center text-xs text-gray-400 mt-4">
           Paiement sécurisé par Stripe. Annulation possible à tout moment.
         </p>
+
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
+          <span className="flex items-center gap-1.5">
+            <Shield className="w-3.5 h-3.5 text-green-500" />
+            SSL 256-bit
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Lock className="w-3.5 h-3.5 text-green-500" />
+            Paiement chiffré
+          </span>
+          <span className="flex items-center gap-1.5">
+            <RotateCcw className="w-3.5 h-3.5 text-green-500" />
+            Garantie 30 jours
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Check className="w-3.5 h-5 text-green-500" />
+            Sans engagement
+          </span>
+        </div>
       </div>
     </div>
   );

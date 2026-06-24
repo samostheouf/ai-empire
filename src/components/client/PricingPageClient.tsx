@@ -5,6 +5,7 @@ import { Check, X as XIcon, Shield, Clock, CreditCard, BadgeCheck, ArrowRight, S
 import Link from 'next/link'
 import { useI18n } from '@/i18n'
 import Breadcrumb from '@/components/Breadcrumb'
+import CountdownTimer from '@/components/CountdownTimer'
 
 const COMPARISON_FEATURES = [
   { nameKey: 'pricingCompMonthlyCredits' as const, starter: 'pricingCompStarterCredits' as const, pro: 'pricingCompProCredits' as const, enterprise: 'pricingCompEnterpriseCredits' as const },
@@ -72,6 +73,9 @@ export default function PricingPageClient() {
             <p className="mt-4 text-lg text-indigo-200/70 max-w-2xl mx-auto">
               {t('pricingSubtitle')}. {t('pricingNoCommitment')}, {t('pricingSocialProof').split('.')[0]}.
             </p>
+            <div className="mt-6 flex justify-center">
+              <CountdownTimer />
+            </div>
           </div>
         </div>
       </section>
@@ -184,7 +188,7 @@ export default function PricingPageClient() {
                     aria-label={t(plan.ctaKey)}
                     className={`mt-8 block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all ${
                       plan.popular
-                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/20 hover:scale-105'
+                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/20 hover:scale-105 animate-pulse'
                         : 'border border-white/10 bg-white/5 text-indigo-200 hover:bg-white/10 hover:scale-105'
                     }`}
                   >

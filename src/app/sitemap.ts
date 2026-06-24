@@ -55,6 +55,55 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/register`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/register') },
     { url: `${baseUrl}/dashboard`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/dashboard') },
     { url: `${baseUrl}/tools/social-launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/free`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/free') },
+    { url: `${baseUrl}/cgv`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/mentions-legales`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/politique-confidentialite`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/politique-cookies`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/offre-lancement`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/offre-lancement') },
+    { url: `${baseUrl}/compare`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/compare') },
+
+    // Regional pages
+    { url: `${baseUrl}/en/usa`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: {
+      'en-US': `${baseUrl}/en/usa`,
+      'en-GB': `${baseUrl}/en/uk`,
+      'fr-FR': baseUrl,
+      'x-default': baseUrl,
+    }},
+    { url: `${baseUrl}/en/uk`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: {
+      'en-GB': `${baseUrl}/en/uk`,
+      'en-US': `${baseUrl}/en/usa`,
+      'fr-FR': baseUrl,
+      'x-default': baseUrl,
+    }},
+    { url: `${baseUrl}/de/de`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: {
+      'de-DE': `${baseUrl}/de/de`,
+      'fr-FR': baseUrl,
+      'x-default': baseUrl,
+    }},
+    { url: `${baseUrl}/ja/jp`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: {
+      'ja-JP': `${baseUrl}/ja/jp`,
+      'fr-FR': baseUrl,
+      'x-default': baseUrl,
+    }},
+    { url: `${baseUrl}/pt/br`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: {
+      'pt-BR': `${baseUrl}/pt/br`,
+      'fr-FR': baseUrl,
+      'x-default': baseUrl,
+    }},
+
+    // Regional sub-pages
+    { url: `${baseUrl}/en/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/en/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/en/legal-notice`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/en/privacy-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/en/terms-of-service`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/de/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${baseUrl}/de/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/ja/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${baseUrl}/ja/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/pt/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.5 },
+    { url: `${baseUrl}/pt/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
   ]
 
   return mainPages
