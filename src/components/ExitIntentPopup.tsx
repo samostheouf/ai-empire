@@ -146,6 +146,7 @@ export default function ExitIntentPopup() {
                 />
                 <button
                   type="submit"
+                  aria-label="Envoyer"
                   className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition-all"
                 >
                   <Mail className="w-4 h-4" />
@@ -156,7 +157,7 @@ export default function ExitIntentPopup() {
               </p>
             </form>
           ) : (
-            <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4 text-center">
+            <div className="rounded-xl bg-green-500/10 border border-green-500/20 p-4 text-center" aria-live="polite">
               <div className="flex items-center justify-center gap-2 text-green-400 text-sm font-medium">
                 <Check className="w-4 h-4" />
                 {t('exitThankYou')}

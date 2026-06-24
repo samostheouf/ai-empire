@@ -25,7 +25,7 @@ const Footer = memo(function Footer() {
     }  }
 
   return (
-    <footer className="relative border-t border-white/5 bg-indigo-950">
+    <footer id="footer" className="relative border-t border-white/5 bg-indigo-950" role="contentinfo" aria-label="Pied de page">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -45,7 +45,7 @@ const Footer = memo(function Footer() {
             <form onSubmit={handleNewsletter} className="mt-6">
               <p className="text-sm font-medium text-white mb-3">{t('footerNewsletter')}</p>
               {subscribed ? (
-                <p className="text-sm text-green-400 flex items-center gap-2">
+                <p className="text-sm text-green-400 flex items-center gap-2" aria-live="polite">
                   <Sparkles className="w-4 h-4" /> {t('footerNewsletterSuccess')}
                 </p>
               ) : (
@@ -114,6 +114,7 @@ const Footer = memo(function Footer() {
               <li><Link href="/cgv" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerCGV')}</Link></li>
               <li><Link href="/politique-confidentialite" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerConfidentialite')}</Link></li>
               <li><Link href="/politique-cookies" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerCookies')}</Link></li>
+              <li><Link href="/dpa" className="text-sm text-indigo-300/80 hover:text-white transition-colors">DPA</Link></li>
             </ul>
           </div>
         </div>

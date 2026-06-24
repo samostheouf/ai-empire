@@ -79,7 +79,7 @@ export default function NewsletterPopup() {
         </div>
 
         {success ? (
-          <div className="text-center">
+          <div className="text-center" aria-live="polite">
             <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-green-500/10 border border-green-500/20 mb-4">
               <Check className="w-6 h-6 text-green-400" />
             </div>
@@ -115,6 +115,7 @@ export default function NewsletterPopup() {
               <button
                 type="submit"
                 disabled={loading || !email}
+                aria-label="S'inscrire à la newsletter"
                 className="w-full rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white hover:from-indigo-500 hover:to-purple-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                   {loading ? (

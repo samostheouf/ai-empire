@@ -8,6 +8,7 @@ interface CookiePreferences {
   essential: boolean
   analytics: boolean
   marketing: boolean
+  functional: boolean
 }
 
 const COOKIE_KEY = 'neuraapi_cookie_consent'
@@ -18,6 +19,7 @@ export default function CookieConsent() {
     essential: true,
     analytics: false,
     marketing: false,
+    functional: false,
   })
   const [showDetails, setShowDetails] = useState(false)
   const { t } = useI18n()
@@ -35,11 +37,11 @@ export default function CookieConsent() {
   }
 
   const acceptAll = () => {
-    savePreferences({ essential: true, analytics: true, marketing: true })
+    savePreferences({ essential: true, analytics: true, marketing: true, functional: true })
   }
 
   const rejectAll = () => {
-    savePreferences({ essential: true, analytics: false, marketing: false })
+    savePreferences({ essential: true, analytics: false, marketing: false, functional: false })
   }
 
   const saveCustom = () => {
@@ -63,6 +65,7 @@ export default function CookieConsent() {
               {/* Details toggle */}
               <button
                 onClick={() => setShowDetails(!showDetails)}
+                aria-label="Personnaliser les cookies"
                 className="mt-3 text-sm text-indigo-400 hover:text-white transition-colors underline"
               >
                 {showDetails ? t('cookieHideDetails') : t('cookieCustomize')}
@@ -127,6 +130,29 @@ export default function CookieConsent() {
                       />
                     </button>
                   </div>
+
+                  {/* Functional */}
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="font-semibold text-white text-sm">Cookies fonctionnels</p>
+                      <p className="text-xs text-indigo-300">Améliorent l&apos;expérience utilisateur</p>
+                    </div>
+                    <button
+                      onClick={() => setPreferences(p => ({ ...p, functional: !p.functional }))}
+                      role="switch"
+                      aria-checked={preferences.functional}
+                      aria-label="Cookies fonctionnels"
+                      className={`flex h-6 w-11 items-center rounded-full px-1 transition-colors ${
+                        preferences.functional ? 'bg-indigo-600' : 'bg-indigo-800'
+                      }`}
+                    >
+                      <div
+                        className={`h-4 w-4 rounded-full bg-white shadow transition-transform ${
+                          preferences.functional ? 'translate-x-5' : 'translate-x-0'
+                        }`}
+                      />
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -137,6 +163,7 @@ export default function CookieConsent() {
             {showDetails ? (
               <button
                 onClick={saveCustom}
+                aria-label="Enregistrer les préférences"
                 className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors"
               >
                 {t('cookieSave')}
@@ -144,12 +171,14 @@ export default function CookieConsent() {
             ) : null}
             <button
               onClick={acceptAll}
+              aria-label="Accepter tous les cookies"
               className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors"
             >
               {t('cookieAcceptAll')}
             </button>
             <button
               onClick={rejectAll}
+              aria-label="Refuser les cookies optionnels"
               className="rounded-lg border border-indigo-600 px-4 py-2 text-sm font-medium text-indigo-200 hover:bg-indigo-900/50 transition-colors"
             >
               {t('cookieRejectAll')}
@@ -160,7 +189,14 @@ export default function CookieConsent() {
             >
               {t('cookieLearnMore')}
             </a>
+            <a
+              href="/politique-confidentialite"
+              className="rounded-lg border border-indigo-800 px-4 py-2 text-sm font-medium text-indigo-300 hover:bg-indigo-900/50 transition-colors"
+            >
+              Politique de confidentialité
+            </a>
           </div>
+          <p className="mt-3 text-center text-xs text-indigo-500">Dernière mise à jour : 24 juin 2026</p>
         </div>
       </div>
     </div>

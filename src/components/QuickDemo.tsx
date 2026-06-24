@@ -118,6 +118,7 @@ export default function QuickDemo() {
               <button
                 onClick={handleTest}
                 disabled={loading || !prompt.trim()}
+                aria-label="Tester l'API"
                 className="w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white hover:from-indigo-500 hover:to-purple-500 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 hover:scale-105"
               >
                 {loading ? (
