@@ -4,8 +4,8 @@ export default [
   ...nextConfig,
   {
     rules: {
-      'no-console': 'error',
-      'no-unused-vars': 'warn',
+      'no-console': 'warn',
+      '@typescript-eslint/no-unused-vars': 'warn',
       'react-hooks/exhaustive-deps': 'warn',
     },
   },

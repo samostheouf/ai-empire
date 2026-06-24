@@ -244,7 +244,7 @@ export async function POST(req: NextRequest) {
             status: 'active',
             plan,
             currentPeriodEnd: new Date(
-              (session.subscription as any).current_period_end * 1000
+              (session.subscription as { current_period_end: number }).current_period_end * 1000
             ),
           },
         })

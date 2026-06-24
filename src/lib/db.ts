@@ -12,7 +12,7 @@ function getPrismaClient(): PrismaClient | null {
   return globalForPrisma.prisma
 }
 
-export const prisma: PrismaClient = getPrismaClient() as any
+export const prisma: PrismaClient = getPrismaClient() as PrismaClient
 
 export async function safeQuery<T>(queryFn: () => Promise<T>, fallback: T): Promise<T> {
   if (!process.env.DATABASE_URL) return fallback

@@ -12,7 +12,7 @@ const nextConfig = {
       },
     ],
   },
-  optimizePackageImports: ['lucide-react'],
+  optimizePackageImports: ['lucide-react', 'stripe', 'openai'],
   async redirects() {
     return [
       { source: '/docs', destination: '/api-docs', permanent: false },

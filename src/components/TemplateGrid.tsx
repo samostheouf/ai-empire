@@ -1,3 +1,4 @@
+import { memo } from 'react'
 import TemplateCard from './TemplateCard'
 
 interface Template {
@@ -14,7 +15,7 @@ interface TemplateGridProps {
   templates: Template[];
 }
 
-export default function TemplateGrid({ templates }: TemplateGridProps) {
+const TemplateGrid = memo(function TemplateGridInner({ templates }: TemplateGridProps) {
   if (templates.length === 0) {
     return (
       <div className="text-center py-12">
@@ -30,4 +31,6 @@ export default function TemplateGrid({ templates }: TemplateGridProps) {
       ))}
     </div>
   );
-}
+});
+
+export default TemplateGrid;
