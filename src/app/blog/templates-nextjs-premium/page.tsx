@@ -1,18 +1,27 @@
 import Link from 'next/link'
-import { generateMetadata } from '@/lib/seo'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import ShareButtons from '@/components/ShareButtons'
 import Breadcrumb from '@/components/Breadcrumb'
+import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-export const metadata = generateMetadata({
-  title: "5 templates Next.js pour lancer votre startup rapidement",
-  description: "Découvrez 5 templates Next.js professionnels pour lancer votre startup. Code preview, stack technique, déploiement Vercel.",
-  path: '/blog/templates-nextjs-premium',
-  type: 'article',
-  keywords: ['template next.js', 'startup', 'Next.js', 'développeur web', 'Tailwind CSS', 'templates premium', 'SaaS template'],
-  publishedTime: '2024-06-10',
-  modifiedTime: '2024-12-01',
-})
+export async function generateMetadata() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('blogTemplatesNextjsTitle'),
+    description: t('blogTemplatesNextjsDescription'),
+    path: '/blog/templates-nextjs-premium',
+    type: 'article',
+    keywords: [t('blogTemplatesNextjsKw1'), t('blogTemplatesNextjsKw2'), t('blogTemplatesNextjsKw3'), t('blogTemplatesNextjsKw4'), t('blogTemplatesNextjsKw5'), t('blogTemplatesNextjsKw6'), t('blogTemplatesNextjsKw7')],
+    publishedTime: '2024-06-10',
+    modifiedTime: '2024-12-01',
+  })
+}
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
@@ -20,7 +29,7 @@ const TEMPLATES = [
   {
     name: 'NeuraSaaS',
     slug: 'neurasaa-kit-complet',
-    description: 'Kit complet pour SaaS. Auth, dashboard, billing Stripe, admin panel.',
+    descriptionKey: 'blogTemplatesNextjsNeurasaasDesc',
     price: '97€',
     stack: ['Next.js 14', 'Tailwind', 'Stripe', 'Prisma', 'NextAuth'],
     files: 124,
@@ -44,12 +53,12 @@ export default async function DashboardPage() {
     </DashboardLayout>
   )
 }`,
-    useCase: 'SaaS, applications métier, plateformes B2B',
+    useCaseKey: 'blogTemplatesNextjsNeurasaasUseCase',
   },
   {
     name: 'NeuraLanding',
     slug: 'neuralanding-kit-landing',
-    description: 'Kit de 5 landing pages haute conversion. Hero, pricing, FAQ, témoignages.',
+    descriptionKey: 'blogTemplatesNextjsNeuralandingDesc',
     price: '49€',
     stack: ['Next.js 14', 'Tailwind', 'Framer Motion'],
     files: 45,
@@ -87,12 +96,12 @@ export function PricingSection() {
     </section>
   )
 }`,
-    useCase: 'Landing pages, pages de vente, coming soon',
+    useCaseKey: 'blogTemplatesNextjsNeuralandingUseCase',
   },
   {
     name: 'NeuraBlog',
     slug: 'neurablog-moteur-blog-ia',
-    description: 'Blog intelligent avec génération IA, SEO automatisé, newsletter.',
+    descriptionKey: 'blogTemplatesNextjsNeurablogDesc',
     price: '69€',
     stack: ['Next.js 14', 'Tailwind', 'MDX', 'OpenAI', 'Prisma'],
     files: 68,
@@ -125,12 +134,12 @@ export async function POST(req: Request) {
 
   return NextResponse.json(article)
 }`,
-    useCase: 'Blogs, sites de contenu, documentation',
+    useCaseKey: 'blogTemplatesNextjsNeurablogUseCase',
   },
   {
     name: 'NeuraCommerce',
     slug: 'neuracommerce-ecommerce-ia',
-    description: 'Boutique en ligne IA. Recommandations produits, checkout Stripe.',
+    descriptionKey: 'blogTemplatesNextjsNeuracommerceDesc',
     price: '129€',
     stack: ['Next.js 14', 'Tailwind', 'Stripe', 'Prisma', 'OpenAI'],
     files: 112,
@@ -163,12 +172,12 @@ export async function getRecommendations(productId: string) {
 
   return { similar, aiSuggestions: aiRecs.content }
 }`,
-    useCase: 'E-commerce, boutiques en ligne, marketplaces',
+    useCaseKey: 'blogTemplatesNextjsNeuracommerceUseCase',
   },
   {
     name: 'NeuraDashboard',
     slug: 'neuradashboard-admin-panel',
-    description: 'Dashboard admin avec graphiques temps réel, gestion multi-tenants.',
+    descriptionKey: 'blogTemplatesNextjsNeuradashboardDesc',
     price: '79€',
     stack: ['Next.js 14', 'Tailwind', 'Recharts', 'Prisma', 'shadcn/ui'],
     files: 86,
@@ -199,14 +208,21 @@ export function AnalyticsChart({ period = '7d' }) {
     </div>
   )
 }`,
-    useCase: 'Admin panels, dashboards, backoffices',
+    useCaseKey: 'blogTemplatesNextjsNeuradashboardUseCase',
   },
 ]
 
-export default function TemplatesNextjsPremiumPage() {
+export default async function TemplatesNextjsPremiumPage() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+
   const articleSchema = generateArticleSchema({
-    title: '5 templates Next.js pour lancer votre startup rapidement',
-    description: 'Découvrez 5 templates Next.js professionnels pour lancer votre startup.',
+    title: t('blogTemplatesNextjsTitle'),
+    description: t('blogTemplatesNextjsSchemaDesc'),
     slug: 'templates-nextjs-premium',
     datePublished: '2024-06-10',
     dateModified: '2024-12-01',
@@ -214,8 +230,8 @@ export default function TemplatesNextjsPremiumPage() {
 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
-      { name: 'Blog', path: '/blog' },
-      { name: '5 templates Next.js', path: '/blog/templates-nextjs-premium' },
+      { name: t('blogBreadcrumbBlog'), path: '/blog' },
+      { name: t('blogTemplatesNextjsBreadcrumb'), path: '/blog/templates-nextjs-premium' },
     ],
   })
 
@@ -231,30 +247,30 @@ export default function TemplatesNextjsPremiumPage() {
       />
 
       <article className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-        <Breadcrumb items={[{ name: 'Blog', href: '/blog' }, { name: '5 templates Next.js', href: '/blog/templates-nextjs-premium' }]} />
+        <Breadcrumb items={[{ name: t('blogBreadcrumbBlog'), href: '/blog' }, { name: t('blogTemplatesNextjsBreadcrumb'), href: '/blog/templates-nextjs-premium' }]} />
 
         <div className="mt-8">
           <div className="flex items-center gap-3 mb-6">
             <span className="inline-flex items-center rounded-full bg-indigo-600/20 px-3 py-1 text-xs font-medium text-indigo-300 border border-indigo-600/30">
-              Templates
+              {t('blogTemplatesNextjsTag')}
             </span>
-            <span className="text-sm text-indigo-400">10 Juin 2024</span>
-            <span className="text-sm text-indigo-400">10 min de lecture</span>
+            <span className="text-sm text-indigo-400">{t('blogTemplatesNextjsDate')}</span>
+            <span className="text-sm text-indigo-400">{t('blogTemplatesNextjsReadTime')}</span>
           </div>
 
           <h1 className="text-4xl font-bold text-white sm:text-5xl">
-            5 templates Next.js pour lancer votre startup rapidement
+            {t('blogTemplatesNextjsH1')}
           </h1>
 
           <div className="mt-8">
-            <ShareButtons url={`${baseUrl}/blog/templates-nextjs-premium`} title="5 templates Next.js pour lancer votre startup rapidement" />
+            <ShareButtons url={`${baseUrl}/blog/templates-nextjs-premium`} title={t('blogTemplatesNextjsShareTitle')} />
           </div>
         </div>
 
         <div className="prose prose-invert prose-lg mt-12 max-w-none">
           <div className="space-y-8 text-indigo-200 leading-relaxed">
             <p>
-              Lancer une startup nécessite de valider vite. Le développement from scratch prend des semaines. Les templates Next.js professionnels vous font gagner un temps précieux tout en offrant un code de production. Voici 5 templates concrets, avec un aperçu du code et la stack technique.
+              {t('blogTemplatesNextjsIntro')}
             </p>
 
             {TEMPLATES.map((template, i) => (
@@ -266,7 +282,7 @@ export default function TemplatesNextjsPremiumPage() {
                   <h2 className="text-2xl font-bold text-white">{template.name}</h2>
                   <span className="text-indigo-400 font-mono text-sm">{template.price}</span>
                 </div>
-                <p>{template.description}</p>
+                <p>{t(template.descriptionKey)}</p>
 
                 {/* Stack technique */}
                 <div className="flex flex-wrap gap-2 my-4">
@@ -279,15 +295,15 @@ export default function TemplatesNextjsPremiumPage() {
 
                 {/* Stats */}
                 <div className="flex items-center gap-4 text-sm text-indigo-400 my-4">
-                  <span>{template.files} fichiers</span>
-                  <span>{template.components} composants</span>
-                  <span>Utilisation : {template.useCase}</span>
+                  <span>{template.files} {t('blogTemplatesNextjsFiles')}</span>
+                  <span>{template.components} {t('blogTemplatesNextjsComponents')}</span>
+                  <span>{t('blogTemplatesNextjsUseCase')}: {t(template.useCaseKey)}</span>
                 </div>
 
                 {/* Code preview */}
                 <div className="rounded-xl bg-indigo-950/80 border border-indigo-800/30 overflow-hidden my-4">
                   <div className="px-4 py-2 bg-indigo-900/50 border-b border-indigo-800/30">
-                    <span className="text-xs text-indigo-400 font-mono">Aperçu du code</span>
+                    <span className="text-xs text-indigo-400 font-mono">{t('blogTemplatesNextjsCodePreview')}</span>
                   </div>
                   <pre className="p-4 text-sm text-indigo-200 overflow-x-auto whitespace-pre-wrap leading-relaxed">
                     {template.code}
@@ -298,66 +314,66 @@ export default function TemplatesNextjsPremiumPage() {
                   href={`/templates/${template.slug}`}
                   className="inline-flex items-center gap-2 text-indigo-400 hover:text-white text-sm font-medium transition-colors"
                 >
-                  Voir le template complet →
+                  {t('blogTemplatesNextjsViewTemplate')}
                 </Link>
               </div>
             ))}
 
-            <h2 className="text-2xl font-bold text-white mt-12">Comment choisir le bon template ?</h2>
+            <h2 className="text-2xl font-bold text-white mt-12">{t('blogTemplatesNextjsH2HowToChoose')}</h2>
             <p>
-              Le choix du template dépend de votre projet. Voici un guide rapide :
+              {t('blogTemplatesNextjsPHowToChoose')}
             </p>
             <div className="space-y-3 my-6">
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-4">
-                <h3 className="text-white font-semibold text-sm">Vous lancez un SaaS ?</h3>
-                <p className="text-sm text-indigo-300 mt-1">NeuraSaaS est le choix évident. Il inclut tout ce dont vous avez besoin : auth, billing, dashboard.</p>
+                <h3 className="text-white font-semibold text-sm">{t('blogTemplatesNextjsChooseSaasTitle')}</h3>
+                <p className="text-sm text-indigo-300 mt-1">{t('blogTemplatesNextjsChooseSaasDesc')}</p>
               </div>
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-4">
-                <h3 className="text-white font-semibold text-sm">Vous avez besoin d&apos;une landing page ?</h3>
-                <p className="text-sm text-indigo-300 mt-1">NeuraLanding avec ses 5 variantes vous couvre. Haute conversion, animations fluides.</p>
+                <h3 className="text-white font-semibold text-sm">{t('blogTemplatesNextjsChooseLandingTitle')}</h3>
+                <p className="text-sm text-indigo-300 mt-1">{t('blogTemplatesNextjsChooseLandingDesc')}</p>
               </div>
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-4">
-                <h3 className="text-white font-semibold text-sm">Vous voulez un blog ?</h3>
-                <p className="text-sm text-indigo-300 mt-1">NeuraBlog intègre la génération IA et le SEO automatisé. Parfait pour le content marketing.</p>
+                <h3 className="text-white font-semibold text-sm">{t('blogTemplatesNextjsChooseBlogTitle')}</h3>
+                <p className="text-sm text-indigo-300 mt-1">{t('blogTemplatesNextjsChooseBlogDesc')}</p>
               </div>
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-4">
-                <h3 className="text-white font-semibold text-sm">Vous vendez des produits ?</h3>
-                <p className="text-sm text-indigo-300 mt-1">NeuraCommerce avec les recommandations IA et Stripe est conçu pour ça.</p>
+                <h3 className="text-white font-semibold text-sm">{t('blogTemplatesNextjsChooseEcommerceTitle')}</h3>
+                <p className="text-sm text-indigo-300 mt-1">{t('blogTemplatesNextjsChooseEcommerceDesc')}</p>
               </div>
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-4">
-                <h3 className="text-white font-semibold text-sm">Vous avez besoin d&apos;un backoffice ?</h3>
-                <p className="text-sm text-indigo-300 mt-1">NeuraDashboard offre graphiques temps réel et gestion multi-tenants.</p>
+                <h3 className="text-white font-semibold text-sm">{t('blogTemplatesNextjsChooseDashboardTitle')}</h3>
+                <p className="text-sm text-indigo-300 mt-1">{t('blogTemplatesNextjsChooseDashboardDesc')}</p>
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-white mt-12">Conclusion</h2>
+            <h2 className="text-2xl font-bold text-white mt-12">{t('blogTemplatesNextjsH2Conclusion')}</h2>
             <p>
-              Un bon template vous fait gagner des semaines de développement. Les 5 templates présentés ici couvrent les cas d&apos;usage les plus courants pour une startup : SaaS, landing page, blog, e-commerce et dashboard admin.
+              {t('blogTemplatesNextjsPConclusion1')}
             </p>
             <p>
-              Chaque template est conçu avec Next.js 14, Tailwind CSS et des libraries éprouvées. Le code est propre, documenté et prêt pour la production.
+              {t('blogTemplatesNextjsPConclusion2')}
             </p>
           </div>
 
           <div className="mt-16 rounded-2xl bg-indigo-900/50 border border-indigo-700/50 p-8 text-center">
             <h3 className="text-2xl font-bold text-white">
-              Explorez tous les templates
+              {t('blogTemplatesNextjsCtaTitle')}
             </h3>
             <p className="mt-3 text-indigo-200">
-              10 templates Next.js professionnels. Code preview, stack technique, déploiement Vercel.
+              {t('blogTemplatesNextjsCtaDesc')}
             </p>
             <div className="mt-6 flex items-center justify-center gap-4">
               <Link
                 href="/templates"
                 className="rounded-lg bg-indigo-600 px-6 py-3 text-base font-semibold text-white hover:bg-indigo-500 transition-all"
               >
-                Explorer les templates
+                {t('blogTemplatesNextjsCtaExplore')}
               </Link>
               <Link
                 href="/pricing"
                 className="rounded-lg border border-indigo-500 px-6 py-3 text-base font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all"
               >
-                Voir les tarifs
+                {t('blogViewPricing')}
               </Link>
             </div>
           </div>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { Activity, CheckCircle, AlertTriangle, XCircle, RefreshCw, BarChart3, Calendar, ChevronDown } from 'lucide-react'
+import { useI18n } from '@/i18n'
 
 interface MetricStats {
   count: number
@@ -23,22 +24,6 @@ interface VitalsData {
   lastUpdated: string
 }
 
-const METRIC_LABELS: Record<string, { name: string; unit: string; target: string; description: string }> = {
-  LCP: { name: 'Largest Contentful Paint', unit: 'ms', target: '< 2500ms', description: 'Temps que met le contenu principal à apparaître' },
-  INP: { name: 'Interaction to Next Paint', unit: 'ms', target: '< 200ms', description: 'Temps de réponse aux interactions' },
-  CLS: { name: 'Cumulative Layout Shift', unit: '', target: '< 0.1', description: 'Stabilité visuelle de la page' },
-  TTFB: { name: 'Time to First Byte', unit: 'ms', target: '< 800ms', description: 'Temps de réponse du serveur' },
-  FCP: { name: 'First Contentful Paint', unit: 'ms', target: '< 1800ms', description: 'Premier rendu de contenu' },
-}
-
-const RANGES = [
-  { label: '1 heure', value: '1h' },
-  { label: '6 heures', value: '6h' },
-  { label: '24 heures', value: '24h' },
-  { label: '7 jours', value: '7d' },
-  { label: '30 jours', value: '30d' },
-]
-
 function getRatingIcon(ratio: number) {
   if (ratio >= 0.9) return <CheckCircle className="w-5 h-5 text-green-400" />
   if (ratio >= 0.7) return <AlertTriangle className="w-5 h-5 text-yellow-400" />
@@ -58,12 +43,29 @@ function getBarColor(ratio: number) {
 }
 
 export default function CWVDashboard() {
+  const { t, locale } = useI18n()
   const [data, setData] = useState<VitalsData | null>(null)
   const [loading, setLoading] = useState(true)
   const [range, setRange] = useState('24h')
   const [customFrom, setCustomFrom] = useState('')
   const [customTo, setCustomTo] = useState('')
   const [showCustom, setShowCustom] = useState(false)
+
+  const METRIC_LABELS: Record<string, { name: string; unit: string; target: string; description: string }> = {
+    LCP: { name: 'Largest Contentful Paint', unit: 'ms', target: '< 2500ms', description: t('webVitalsLcp') },
+    INP: { name: 'Interaction to Next Paint', unit: 'ms', target: '< 200ms', description: t('webVitalsInp') },
+    CLS: { name: 'Cumulative Layout Shift', unit: '', target: '< 0.1', description: t('webVitalsCls') },
+    TTFB: { name: 'Time to First Byte', unit: 'ms', target: '< 800ms', description: t('webVitalsTtfb') },
+    FCP: { name: 'First Contentful Paint', unit: 'ms', target: '< 1800ms', description: t('webVitalsFcp') },
+  }
+
+  const RANGES = [
+    { label: t('webVitalsRange1h'), value: '1h' },
+    { label: t('webVitalsRange6h'), value: '6h' },
+    { label: t('webVitalsRange24h'), value: '24h' },
+    { label: t('webVitalsRange7d'), value: '7d' },
+    { label: t('webVitalsRange30d'), value: '30d' },
+  ]
 
   const fetchData = async () => {
     setLoading(true)
@@ -97,7 +99,7 @@ export default function CWVDashboard() {
                 Performance monitoring — {data?.period || '24h'}
                 {data?.from && data?.to && (
                   <span className="ml-2 text-indigo-400">
-                    {new Date(data.from).toLocaleString('fr-FR')} → {new Date(data.to).toLocaleString('fr-FR')}
+                    {new Date(data.from).toLocaleString(locale)} → {new Date(data.to).toLocaleString(locale)}
                   </span>
                 )}
               </p>
@@ -105,7 +107,7 @@ export default function CWVDashboard() {
             <div className="flex items-center gap-2">
               <button onClick={fetchData} disabled={loading} className="flex items-center gap-2 rounded-lg border border-indigo-700 px-4 py-2 text-sm text-indigo-200 hover:bg-indigo-900/50 transition-colors">
                 <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-                Actualiser
+                {t('webVitalsRefresh')}
               </button>
             </div>
           </div>
@@ -115,7 +117,7 @@ export default function CWVDashboard() {
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-indigo-400" />
-                <span className="text-sm font-medium text-white">Période :</span>
+                <span className="text-sm font-medium text-white">{t('webVitalsPeriod')}</span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {RANGES.map((r) => (
@@ -139,7 +141,7 @@ export default function CWVDashboard() {
                       : 'bg-indigo-950/50 text-indigo-300 hover:bg-indigo-800/50'
                   }`}
                 >
-                  Personnalisé
+                  {t('webVitalsCustom')}
                   <ChevronDown className={`w-3 h-3 transition-transform ${showCustom ? 'rotate-180' : ''}`} />
                 </button>
               </div>
@@ -169,11 +171,11 @@ export default function CWVDashboard() {
               <Activity className="h-8 w-8" />
               <div>
                 <p className="text-3xl font-bold">{data?.score || 0}/100</p>
-                <p className="text-sm opacity-80">Score global performance</p>
+                <p className="text-sm opacity-80">{t('webVitalsScore')}</p>
               </div>
             </div>
             <p className="text-sm text-indigo-400 mt-2">
-              {data?.totalSamples || 0} échantillons collectés
+              {data?.totalSamples || 0} {t('webVitalsSamples')}
             </p>
           </div>
 
@@ -197,7 +199,7 @@ export default function CWVDashboard() {
                   {stats ? (
                     <div className="space-y-2">
                       <div className="flex justify-between text-xs">
-                        <span className="text-indigo-400">Bon</span>
+                        <span className="text-indigo-400">{t('webVitalsGood')}</span>
                         <span className={getScoreColor(goodRatio >= 0.9 ? 90 : goodRatio >= 0.7 ? 70 : 0).split(' ')[0]}>
                           {Math.round(goodRatio * 100)}%
                         </span>
@@ -209,10 +211,10 @@ export default function CWVDashboard() {
                         <span>P50: {stats.p50}{info.unit}</span>
                         <span>P95: {stats.p95}{info.unit}</span>
                       </div>
-                      <p className="text-xs text-indigo-500">{stats.count} échantillons</p>
+                      <p className="text-xs text-indigo-500">{stats.count} {t('webVitalsSamples')}</p>
                     </div>
                   ) : (
-                    <p className="text-xs text-indigo-500 italic">Pas encore de données</p>
+                    <p className="text-xs text-indigo-500 italic">{t('webVitalsNoData')}</p>
                   )}
                 </div>
               )
@@ -222,7 +224,7 @@ export default function CWVDashboard() {
           {/* Top Pages */}
           {data?.topPages && data.topPages.length > 0 && (
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/30 p-6">
-              <h2 className="text-lg font-semibold text-white mb-4">Pages les plus visitées</h2>
+              <h2 className="text-lg font-semibold text-white mb-4">{t('webVitalsTopPages')}</h2>
               <div className="space-y-3">
                 {data.topPages.map((item, i) => (
                   <div key={i} className="flex items-center justify-between rounded-lg bg-indigo-950/50 p-3">
@@ -240,12 +242,12 @@ export default function CWVDashboard() {
 
           {/* Setup Guide */}
           <div className="mt-8 rounded-xl border border-indigo-800/50 bg-indigo-900/30 p-6">
-            <h2 className="text-lg font-semibold text-white mb-3">Comment ça marche</h2>
+            <h2 className="text-lg font-semibold text-white mb-3">{t('webVitalsHowItWorks')}</h2>
             <div className="text-sm text-indigo-300 space-y-2">
-              <p>1. Le composant <code className="bg-indigo-950 px-1 rounded">CoreWebVitals</code> est chargé dans le layout (lazy loaded)</p>
-              <p>2. Il utilise la lib <code className="bg-indigo-950 px-1 rounded">web-vitals</code> pour mesurer LCP, INP, CLS, TTFB, FCP</p>
-              <p>3. Les métriques sont envoyées à <code className="bg-indigo-950 px-1 rounded">/api/analytics/web-vitals</code></p>
-              <p>4. Ce dashboard agrège les données selon la période sélectionnée</p>
+              <p>1. {t('webVitalsStep1')}</p>
+              <p>2. {t('webVitalsStep2')}</p>
+              <p>3. {t('webVitalsStep3')}</p>
+              <p>4. {t('webVitalsStep4')}</p>
             </div>
           </div>
         </div>

@@ -1,26 +1,42 @@
 import Link from 'next/link'
 import { Clock, Calendar, Tag } from 'lucide-react'
-import { generateMetadata } from '@/lib/seo'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import ShareButtons from '@/components/ShareButtons'
 import Breadcrumb from '@/components/Breadcrumb'
+import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-export const metadata = generateMetadata({
-  title: "Comment créer un SaaS avec Next.js en 48h",
-  description: "Guide complet : créez un SaaS fonctionnel avec Next.js 14 en 48 heures. Auth, dashboard, Stripe, IA intégrée. Code copiable à chaque étape.",
-  path: '/blog/nextjs-saas-starter',
-  type: 'article',
-  keywords: ['SaaS Next.js', 'Next.js 14', 'template SaaS', 'créer un SaaS', 'lancer un SaaS', 'template next.js', 'Stripe', 'développeur web'],
-  publishedTime: '2026-06-20',
-  modifiedTime: '2026-06-20',
-})
+export async function generateMetadata() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('blogNextjsSaasStarterTitle'),
+    description: t('blogNextjsSaasStarterDescription'),
+    path: '/blog/nextjs-saas-starter',
+    type: 'article',
+    keywords: [t('blogNextjsSaasStarterKw1'), t('blogNextjsSaasStarterKw2'), t('blogNextjsSaasStarterKw3'), t('blogNextjsSaasStarterKw4'), t('blogNextjsSaasStarterKw5'), t('blogNextjsSaasStarterKw6'), t('blogNextjsSaasStarterKw7'), t('blogNextjsSaasStarterKw8')],
+    publishedTime: '2026-06-20',
+    modifiedTime: '2026-06-20',
+  })
+}
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
-export default function NextjsSaasStarterPage() {
+export default async function NextjsSaasStarterPage() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+
   const articleSchema = generateArticleSchema({
-    title: 'Comment créer un SaaS avec Next.js en 48h',
-    description: 'Guide complet : créez un SaaS fonctionnel avec Next.js 14 en 48 heures.',
+    title: t('blogNextjsSaasStarterTitle'),
+    description: t('blogNextjsSaasStarterSchemaDesc'),
     slug: 'nextjs-saas-starter',
     datePublished: '2026-06-20',
     dateModified: '2026-06-20',
@@ -28,8 +44,8 @@ export default function NextjsSaasStarterPage() {
 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
-      { name: 'Blog', path: '/blog' },
-      { name: 'SaaS avec Next.js en 48h', path: '/blog/nextjs-saas-starter' },
+      { name: t('blogBreadcrumbBlog'), path: '/blog' },
+      { name: t('blogNextjsSaasStarterBreadcrumb'), path: '/blog/nextjs-saas-starter' },
     ],
   })
 
@@ -44,53 +60,53 @@ export default function NextjsSaasStarterPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <Breadcrumb items={[{ name: 'Blog', href: '/blog' }, { name: 'SaaS Next.js 48h', href: '/blog/nextjs-saas-starter' }]} />
+        <Breadcrumb items={[{ name: t('blogBreadcrumbBlog'), href: '/blog' }, { name: t('blogNextjsSaasStarterBreadcrumbShort'), href: '/blog/nextjs-saas-starter' }]} />
 
         <div className="mt-8">
           <div className="flex items-center gap-3 mb-6">
             <span className="inline-flex items-center gap-1 rounded-full bg-indigo-600/20 px-3 py-1 text-xs font-medium text-indigo-300 border border-indigo-600/30">
-              <Tag className="w-3 h-3" /> Guide
+              <Tag className="w-3 h-3" /> {t('blogNextjsSaasStarterTag')}
             </span>
-            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Calendar className="w-4 h-4" /> 20 juin 2026</span>
-            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Clock className="w-4 h-4" /> 15 min de lecture</span>
+            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Calendar className="w-4 h-4" /> {t('blogNextjsSaasStarterDate')}</span>
+            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Clock className="w-4 h-4" /> {t('blogNextjsSaasStarterReadTime')}</span>
           </div>
 
           <h1 className="text-4xl font-bold text-white leading-tight sm:text-5xl">
-            Comment créer un SaaS avec Next.js en 48h
+            {t('blogNextjsSaasStarterH1')}
           </h1>
 
           <div className="mt-6">
-            <ShareButtons url={`${baseUrl}/blog/nextjs-saas-starter`} title="Comment créer un SaaS avec Next.js en 48h" />
+            <ShareButtons url={`${baseUrl}/blog/nextjs-saas-starter`} title={t('blogNextjsSaasStarterShareTitle')} />
           </div>
         </div>
 
         <div className="mt-12 space-y-8 text-indigo-200/80 leading-relaxed">
           <p className="text-lg">
-            Le SaaS (Software as a Service) est le modèle économique dominant pour les produits numériques. Mais créer un SaaS from scratch peut sembler intimidant. La bonne nouvelle ? Avec Next.js 14, Stripe, Prisma et Vercel, vous pouvez avoir un produit fonctionnel en 48 heures. Ce guide détaille chaque étape, du premier commit au déploiement.
+            {t('blogNextjsSaasStarterIntro')}
           </p>
 
           <div className="rounded-xl bg-indigo-900/30 border border-indigo-800/50 p-6 my-8">
-            <h3 className="text-white font-semibold mb-2">Prérequis</h3>
+            <h3 className="text-white font-semibold mb-2">{t('blogNextjsSaasStarterPrereqTitle')}</h3>
             <ul className="list-disc list-inside space-y-1 text-indigo-300 text-sm">
-              <li>Connaissances de base en React et TypeScript</li>
-              <li>Node.js 18+ installé</li>
-              <li>Un compte Vercel (gratuit)</li>
-              <li>Un compte Stripe (gratuit en mode test)</li>
-              <li>Un compte NeuraAPI pour l&apos;intégration IA</li>
+              <li>{t('blogNextjsSaasStarterPrereq1')}</li>
+              <li>{t('blogNextjsSaasStarterPrereq2')}</li>
+              <li>{t('blogNextjsSaasStarterPrereq3')}</li>
+              <li>{t('blogNextjsSaasStarterPrereq4')}</li>
+              <li>{t('blogNextjsSaasStarterPrereq5')}</li>
             </ul>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Pourquoi Next.js pour un SaaS ?</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2WhyNextjs')}</h2>
           <p>
-            Next.js 14 combine le rendu serveur (SSR), le rendu statique (SSG) et les API routes dans un seul framework. Pour un SaaS, c&apos;est idéal : votre landing page est ultra-rapide (SSG), votre dashboard est dynamique (SSR), et vos endpoints d&apos;authentification vivent dans le même projet (API routes). Pas besoin de monter un backend séparé.
+            {t('blogNextjsSaasStarterPWhyNextjs1')}
           </p>
           <p>
-            Le App Router de Next.js 14 offre en plus le streaming server-side, les layouts imbriqués et les Server Components. Résultat : moins de JavaScript côté client, des performances meilleures, et une architecture plus propre.
+            {t('blogNextjsSaasStarterPWhyNextjs2')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 1 — Initialiser le projet (Heure 0-1)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Step1')}</h2>
           <p>
-            Créez votre projet avec la CLI officielle. Nous utilisons TypeScript, Tailwind CSS, ESLint et le App Router :
+            {t('blogNextjsSaasStarterPStep1')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -108,12 +124,12 @@ npm install @neuraapi/sdk`}</code>
             </pre>
           </div>
           <p>
-            <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">zod</code> servira à valider les formulaires, <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">react-hook-form</code> pour gérer l&apos;état des formulaires, et <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">@neuraapi/sdk</code> pour intégrer l&apos;IA.
+            <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">zod</code> {t('blogNextjsSaasStarterPStep1b')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">react-hook-form</code> {t('blogNextjsSaasStarterPStep1c')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">@neuraapi/sdk</code> {t('blogNextjsSaasStarterPStep1d')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 2 — Configurer la base de données (Heure 1-3)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Step2')}</h2>
           <p>
-            Prisma est l&apos;ORM standard pour les projets Next.js. Initialisez-le avec PostgreSQL :
+            {t('blogNextjsSaasStarterPStep2')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -121,7 +137,7 @@ npm install @neuraapi/sdk`}</code>
             </pre>
           </div>
           <p>
-            Définissez votre schéma de base de données. Pour un SaaS minimal, vous avez besoin d&apos;un modèle User et d&apos;un modèle Subscription :
+            {t('blogNextjsSaasStarterPStep2b')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -169,12 +185,12 @@ model Subscription {
             </pre>
           </div>
           <p>
-            Ce schéma couvre l&apos;essentiel : un utilisateur, ses projets, et son abonnement Stripe. Vous l&apos;étendrez naturellement au fur et à mesure que votre SaaS grandira.
+            {t('blogNextjsSaasStarterPStep2c')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 3 — Implémenter l&apos;authentification (Heure 3-8)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Step3')}</h2>
           <p>
-            NextAuth.js est la solution standard pour l&apos;auth dans Next.js. Configurez-le avec credentials (email + mot de passe) :
+            {t('blogNextjsSaasStarterPStep3')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -210,12 +226,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             </pre>
           </div>
           <p>
-            Créez ensuite les pages <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">/login</code> et <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">/register</code> avec des formulaires utilisant <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">react-hook-form</code> et <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">zod</code> pour la validation côté serveur.
+            {t('blogNextjsSaasStarterPStep3b')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">/login</code> {t('blogNextjsSaasStarterPStep3c')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">/register</code> {t('blogNextjsSaasStarterPStep3d')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">react-hook-form</code> {t('blogNextjsSaasStarterPStep3e')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">zod</code> {t('blogNextjsSaasStarterPStep3f')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 4 — Construire le dashboard (Heure 8-16)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Step4')}</h2>
           <p>
-            Le dashboard est le cœur de votre SaaS. Utilisez les layouts imbriqués de Next.js 14 pour une navigation fluide :
+            {t('blogNextjsSaasStarterPStep4')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -242,12 +258,12 @@ export default async function DashboardLayout({
             </pre>
           </div>
           <p>
-            Le layout protège automatiquement toutes les routes enfants. Si l&apos;utilisateur n&apos;est pas connecté, il est redirigé vers <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">/login</code>. La sidebar affiche la navigation et les informations de l&apos;utilisateur.
+            {t('blogNextjsSaasStarterPStep4b')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">/login</code>. {t('blogNextjsSaasStarterPStep4c')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 5 — Intégrer la facturation Stripe (Heure 16-28)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Step5')}</h2>
           <p>
-            Stripe est l&apos;épine dorsale de votre monétisation. Créez d&apos;abord les plans dans votre dashboard Stripe, puis intégrez le checkout :
+            {t('blogNextjsSaasStarterPStep5')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -291,12 +307,12 @@ export async function POST(req: NextRequest) {
             </pre>
           </div>
           <p>
-            N&apos;oubliez pas de configurer les webhooks Stripe pour synchroniser les changements d&apos;abonnement avec votre base de données. Le webhook <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">checkout.session.completed</code> active l&apos;abonnement, et <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">customer.subscription.deleted</code> le désactive.
+            {t('blogNextjsSaasStarterPStep5b')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">checkout.session.completed</code> {t('blogNextjsSaasStarterPStep5c')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">customer.subscription.deleted</code> {t('blogNextjsSaasStarterPStep5d')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 6 — Ajouter l&apos;IA avec NeuraAPI (Heure 28-36)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Step6')}</h2>
           <p>
-            C&apos;est ici que votre SaaS se différencie. NeuraAPI vous donne accès à des modèles IA (GPT-4, Claude, etc.) via une API unique. Intégrez-la dans votre produit :
+            {t('blogNextjsSaasStarterPStep6')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -325,12 +341,12 @@ export async function generateContent(prompt: string, userId: string) {
             </pre>
           </div>
           <p>
-            Ajoutez une route API Next.js pour exposer cette fonctionnalité à votre frontend. Vos utilisateurs pourront générer du contenu, des emails, des descriptions de produits — tout en restant dans votre application.
+            {t('blogNextjsSaasStarterPStep6b')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 7 — Déployer sur Vercel (Heure 36-44)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Step7')}</h2>
           <p>
-            Vercel est le déploiment natif pour Next.js. Un seul fichier de config et vous êtes en production :
+            {t('blogNextjsSaasStarterPStep7')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -352,33 +368,33 @@ vercel --prod`}</code>
             </pre>
           </div>
           <p>
-            Configurez aussi votre nom de domaine personnalisé dans les paramètres du projet Vercel. Le SSL est géré automatiquement.
+            {t('blogNextjsSaasStarterPStep7b')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 8 — Finaliser et lancer (Heure 44-48)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Step8')}</h2>
           <p>
-            Les dernières heures sont dédiées aux finitions :
+            {t('blogNextjsSaasStarterPStep8')}
           </p>
           <ul className="list-disc list-inside space-y-2 text-indigo-300">
-            <li>Ajoutez une landing page avec les avantages de votre SaaS</li>
-            <li>Configurez les emails transactionnels (welcome, reset password, invoice)</li>
-            <li>Ajoutez Google Analytics et les meta tags SEO</li>
-            <li>Testez le flux complet : inscription → login → paiement → utilisation</li>
-            <li>Vérifiez les performances avec Lighthouse (ciblez 90+ partout)</li>
-            <li>Configurez les alertes d&apos;erreur (Sentry ou Vercel Analytics)</li>
+            <li>{t('blogNextjsSaasStarterLi8a')}</li>
+            <li>{t('blogNextjsSaasStarterLi8b')}</li>
+            <li>{t('blogNextjsSaasStarterLi8c')}</li>
+            <li>{t('blogNextjsSaasStarterLi8d')}</li>
+            <li>{t('blogNextjsSaasStarterLi8e')}</li>
+            <li>{t('blogNextjsSaasStarterLi8f')}</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Récapitulatif des 48 heures</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogNextjsSaasStarterH2Recap')}</h2>
           <div className="rounded-2xl glass-card p-6 space-y-3">
             {[
-              { step: '1', time: 'Heures 0-1', desc: 'Setup projet, dépendances, configuration' },
-              { step: '2', time: 'Heures 1-3', desc: 'Base de données Prisma, schéma, migrations' },
-              { step: '3', time: 'Heures 3-8', desc: 'Authentification NextAuth, register, login' },
-              { step: '4', time: 'Heures 8-16', desc: 'Dashboard, layout, navigation, settings' },
-              { step: '5', time: 'Heures 16-28', desc: 'Stripe checkout, webhooks, gestion d\'abonnement' },
-              { step: '6', time: 'Heures 28-36', desc: 'Intégration IA NeuraAPI, routes, frontend' },
-              { step: '7', time: 'Heures 36-44', desc: 'Déploiement Vercel, variables, domaine' },
-              { step: '8', time: 'Heures 44-48', desc: 'Landing, emails, SEO, tests, monitoring' },
+              { step: '1', time: t('blogNextjsSaasStarterRecap1Time'), desc: t('blogNextjsSaasStarterRecap1Desc') },
+              { step: '2', time: t('blogNextjsSaasStarterRecap2Time'), desc: t('blogNextjsSaasStarterRecap2Desc') },
+              { step: '3', time: t('blogNextjsSaasStarterRecap3Time'), desc: t('blogNextjsSaasStarterRecap3Desc') },
+              { step: '4', time: t('blogNextjsSaasStarterRecap4Time'), desc: t('blogNextjsSaasStarterRecap4Desc') },
+              { step: '5', time: t('blogNextjsSaasStarterRecap5Time'), desc: t('blogNextjsSaasStarterRecap5Desc') },
+              { step: '6', time: t('blogNextjsSaasStarterRecap6Time'), desc: t('blogNextjsSaasStarterRecap6Desc') },
+              { step: '7', time: t('blogNextjsSaasStarterRecap7Time'), desc: t('blogNextjsSaasStarterRecap7Desc') },
+              { step: '8', time: t('blogNextjsSaasStarterRecap8Time'), desc: t('blogNextjsSaasStarterRecap8Desc') },
             ].map((item) => (
               <div key={item.step} className="flex items-center gap-4">
                 <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 text-xs font-bold flex items-center justify-center text-white">
@@ -392,32 +408,32 @@ vercel --prod`}</code>
           </div>
 
           <div className="rounded-2xl bg-indigo-900/30 border border-indigo-500/20 p-6 mt-8">
-            <h3 className="text-lg font-semibold text-white mb-2">Raccourci : le template NeuraSaaS</h3>
+            <h3 className="text-lg font-semibold text-white mb-2">{t('blogNextjsSaasStarterCtaTitle')}</h3>
             <p className="text-indigo-200/70 mb-4">
-              Tout ce guide est pré-configuré dans le template <Link href="/templates/neurasaa-kit-complet" className="font-semibold text-indigo-400 hover:text-indigo-300 underline">NeuraSaaS</Link> : auth, dashboard, Stripe, landing page, intégration IA. Gagnez 40h de développement.
+              {t('blogNextjsSaasStarterCtaDesc')} <Link href="/templates/neurasaa-kit-complet" className="font-semibold text-indigo-400 hover:text-indigo-300 underline">NeuraSaaS</Link>: {t('blogNextjsSaasStarterCtaDesc2')}
             </p>
             <Link
               href="/pricing"
               className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300"
             >
-              Voir les tarifs →
+              {t('blogViewPricing')}
             </Link>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-4">Articles connexes</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">{t('blogRelatedArticles')}</h3>
           <ul className="space-y-3">
             <li>
               <Link href="/blog/ai-api-integration" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Intégrer une API IA dans votre application en 5 minutes
+                {t('blogRelatedAiApiIntegration')}
               </Link>
             </li>
             <li>
               <Link href="/blog/stripe-billing-nextjs" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Configurer Stripe Billing dans Next.js 14
+                {t('blogRelatedStripeBilling')}
               </Link>
             </li>
           </ul>

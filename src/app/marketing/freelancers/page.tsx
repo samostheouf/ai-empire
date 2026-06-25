@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { Zap, Rocket, ArrowRight, Check, Star, DollarSign, Cpu, Globe } from 'lucide-react'
+import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
 export const metadata = {
   title: 'NeuraAPI pour les freelances — Livrez 3x plus vite',
@@ -11,7 +12,14 @@ export const metadata = {
   },
 }
 
-export default function FreelancersLandingPage() {
+export default async function FreelancersLandingPage() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+
   return (
     <div className="bg-indigo-950">
       {/* Hero */}
@@ -20,21 +28,21 @@ export default function FreelancersLandingPage() {
         <div className="relative mx-auto max-w-4xl text-center">
           <div className="inline-flex items-center gap-2 rounded-full bg-indigo-900/50 px-4 py-1.5 text-sm text-indigo-300 border border-indigo-800/50 mb-8">
             <Rocket className="w-4 h-4" />
-            Pour les freelances
+            {t('freelancersHeroTag')}
           </div>
           <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl">
-            Livrez des projets <span className="text-indigo-400">3x plus vite</span>
+            {t('freelancersHeroTitle')} <span className="text-indigo-400">{t('freelancersHeroTitleHighlight')}</span>
           </h1>
           <p className="mt-6 text-lg leading-8 text-indigo-200 max-w-2xl mx-auto">
-            Gagnez du temps sur chaque mission. Intégrez l&apos;IA dans vos prestations avec NeuraAPI et proposez des services différenciants à vos clients.
+            {t('freelancersHeroDesc')}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link href="/templates" className="rounded-lg bg-indigo-600 px-6 py-3 text-base font-semibold text-white shadow-lg hover:bg-indigo-500 transition-all flex items-center gap-2">
-              Voir les templates
+              {t('freelancersHeroCta1')}
               <ArrowRight className="w-4 h-4" />
             </Link>
             <Link href="/docs" className="rounded-lg border border-indigo-500 px-6 py-3 text-base font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
-              Explorer la doc
+              {t('freelancersHeroCta2')}
             </Link>
           </div>
         </div>
@@ -43,27 +51,27 @@ export default function FreelancersLandingPage() {
       {/* Features */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-center text-3xl font-bold text-white">Ce que NeuraAPI change pour vous</h2>
+          <h2 className="text-center text-3xl font-bold text-white">{t('freelancersBenefitsTitle')}</h2>
           <div className="mt-16 grid gap-8 sm:grid-cols-3">
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
               <Zap className="h-10 w-10 text-indigo-400" />
-              <h3 className="mt-4 text-xl font-semibold text-white">Génération de contenu en quelques secondes</h3>
+              <h3 className="mt-4 text-xl font-semibold text-white">{t('freelancersBenefit1Title')}</h3>
               <p className="mt-2 text-indigo-300">
-                Produisez du texte, des descriptions de produits, des articles de blog et des emails marketing en un clic. Fini les heures de rédaction à blanc.
+                {t('freelancersBenefit1Desc')}
               </p>
             </div>
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
               <Cpu className="h-10 w-10 text-indigo-400" />
-              <h3 className="mt-4 text-xl font-semibold text-white">API IA documentée et rapide</h3>
+              <h3 className="mt-4 text-xl font-semibold text-white">{t('freelancersBenefit2Title')}</h3>
               <p className="mt-2 text-indigo-300">
-                Un SDK TypeScript unique, des endpoints clairs, un temps de réponse sous 200ms. Intégrez l&apos;IA dans n&apos;importe quel projet sans expertise ML.
+                {t('freelancersBenefit2Desc')}
               </p>
             </div>
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
               <DollarSign className="h-10 w-10 text-indigo-400" />
-              <h3 className="mt-4 text-xl font-semibold text-white">Tarification transparente</h3>
+              <h3 className="mt-4 text-xl font-semibold text-white">{t('freelancersBenefit3Title')}</h3>
               <p className="mt-2 text-indigo-300">
-                Payez ce que vous utilisez. 100 crédits gratuits par mois, puis des plans adaptés aux freelances. Pas de surprise, pas d&apos;engagement.
+                {t('freelancersBenefit3Desc')}
               </p>
             </div>
           </div>
@@ -73,15 +81,15 @@ export default function FreelancersLandingPage() {
       {/* Use Cases */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-center text-3xl font-bold text-white mb-12">Cas d&apos;usage concrets pour freelances</h2>
+          <h2 className="text-center text-3xl font-bold text-white mb-12">{t('freelancersUseCasesTitle')}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             {[
-              'Rédaction d\'articles de blog SEO optimisés en 10 minutes au lieu de 2 heures',
-              'Génération de descriptions de produits e-commerce à grande échelle',
-              'Création de templates de emails marketing personnalisés par client',
-              'Automatisation de réponses support client avec l&apos;IA conversationnelle',
-              'Traduction de contenus en 10 langues pour des clients internationaux',
-              'Analyse de sentiment et de feedback clients en temps réel',
+              t('freelancersUseCase1'),
+              t('freelancersUseCase2'),
+              t('freelancersUseCase3'),
+              t('freelancersUseCase4'),
+              t('freelancersUseCase5'),
+              t('freelancersUseCase6'),
             ].map((useCase, i) => (
               <div key={i} className="flex items-center gap-3 rounded-lg border border-indigo-800/50 bg-indigo-900/30 p-4">
                 <Check className="w-5 h-5 text-indigo-400 flex-shrink-0" />
@@ -95,8 +103,8 @@ export default function FreelancersLandingPage() {
       {/* Testimonials */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-center text-3xl font-bold text-white">Témoignages</h2>
-          <p className="text-center mt-4 text-indigo-300">Témoignages bientôt disponibles</p>
+          <h2 className="text-center text-3xl font-bold text-white">{t('freelancersTestimonialsTitle')}</h2>
+          <p className="text-center mt-4 text-indigo-300">{t('freelancersTestimonialsSubtitle')}</p>
           <div className="mt-16 grid gap-8 sm:grid-cols-2">
             <div className="rounded-2xl border border-indigo-800/30 bg-indigo-900/20 p-8 opacity-60">
               <div className="flex gap-1 mb-4">
@@ -104,7 +112,7 @@ export default function FreelancersLandingPage() {
                   <Star key={j} className="w-4 h-4 text-indigo-600" />
                 ))}
               </div>
-              <p className="text-indigo-400 italic">&quot;Avis bientôt disponible&quot;</p>
+              <p className="text-indigo-400 italic">{t('freelancersTestimonial1Quote')}</p>
             </div>
             <div className="rounded-2xl border border-indigo-800/30 bg-indigo-900/20 p-8 opacity-60">
               <div className="flex gap-1 mb-4">
@@ -112,7 +120,7 @@ export default function FreelancersLandingPage() {
                   <Star key={j} className="w-4 h-4 text-indigo-600" />
                 ))}
               </div>
-              <p className="text-indigo-400 italic">&quot;Avis bientôt disponible&quot;</p>
+              <p className="text-indigo-400 italic">{t('freelancersTestimonial2Quote')}</p>
             </div>
           </div>
         </div>
@@ -121,16 +129,16 @@ export default function FreelancersLandingPage() {
       {/* Pricing Preview */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl">
-          <h2 className="text-center text-3xl font-bold text-white mb-12">Un aperçu de nos tarifs</h2>
+          <h2 className="text-center text-3xl font-bold text-white mb-12">{t('freelancersPricingTitle')}</h2>
           <div className="grid gap-8 sm:grid-cols-3">
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
-              <h3 className="text-lg font-semibold text-white">Gratuit</h3>
+              <h3 className="text-lg font-semibold text-white">{t('freelancersPricingFree')}</h3>
               <div className="mt-4">
-                <span className="text-4xl font-bold text-white">0€</span>
+                <span className="text-4xl font-bold text-white">{t('freelancersPricingFreePrice')}</span>
                 <span className="text-indigo-300">/mois</span>
               </div>
               <ul className="mt-6 space-y-3">
-                {['100 crédits/mois', 'Accès aux modèles de base', 'Support communautaire'].map((item, i) => (
+                {[t('freelancersPricingFreeF1'), t('freelancersPricingFreeF2'), t('freelancersPricingFreeF3')].map((item, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-indigo-300">
                     <Check className="w-4 h-4 text-indigo-400" />
                     {item}
@@ -138,17 +146,17 @@ export default function FreelancersLandingPage() {
                 ))}
               </ul>
               <Link href="/register" className="mt-8 block rounded-lg border border-indigo-500 px-4 py-2 text-center text-sm font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
-                Commencer
+                {t('freelancersPricingFreeCta')}
               </Link>
             </div>
             <div className="rounded-2xl border border-indigo-600 bg-indigo-900/40 p-8 ring-2 ring-indigo-600/50">
-              <h3 className="text-lg font-semibold text-white">Pro</h3>
+              <h3 className="text-lg font-semibold text-white">{t('freelancersPricingPro')}</h3>
               <div className="mt-4">
-                <span className="text-4xl font-bold text-white">19€</span>
+                <span className="text-4xl font-bold text-white">{t('freelancersPricingProPrice')}</span>
                 <span className="text-indigo-300">/mois</span>
               </div>
               <ul className="mt-6 space-y-3">
-                {['1 000 crédits/mois', 'Tous les modèles IA', 'Support prioritaire', 'Analytics détaillés'].map((item, i) => (
+                {[t('freelancersPricingProF1'), t('freelancersPricingProF2'), t('freelancersPricingProF3'), t('freelancersPricingProF4')].map((item, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-indigo-200">
                     <Check className="w-4 h-4 text-indigo-400" />
                     {item}
@@ -156,17 +164,17 @@ export default function FreelancersLandingPage() {
                 ))}
               </ul>
               <Link href="/register" className="mt-8 block rounded-lg bg-indigo-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-500 transition-all">
-                Choisir Pro
+                {t('freelancersPricingProCta')}
               </Link>
             </div>
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
-              <h3 className="text-lg font-semibold text-white">Entreprise</h3>
+              <h3 className="text-lg font-semibold text-white">{t('freelancersPricingEnterprise')}</h3>
               <div className="mt-4">
-                <span className="text-4xl font-bold text-white">79€</span>
+                <span className="text-4xl font-bold text-white">{t('freelancersPricingEnterprisePrice')}</span>
                 <span className="text-indigo-300">/mois</span>
               </div>
               <ul className="mt-6 space-y-3">
-                {['10 000 crédits/mois', 'Modèles premium (GPT-4, Claude)', 'Support dédié', 'SLA 99.9%', 'Facturation personnalisée'].map((item, i) => (
+                {[t('freelancersPricingEnterpriseF1'), t('freelancersPricingEnterpriseF2'), t('freelancersPricingEnterpriseF3'), t('freelancersPricingEnterpriseF4'), t('freelancersPricingEnterpriseF5')].map((item, i) => (
                   <li key={i} className="flex items-center gap-2 text-sm text-indigo-300">
                     <Check className="w-4 h-4 text-indigo-400" />
                     {item}
@@ -174,7 +182,7 @@ export default function FreelancersLandingPage() {
                 ))}
               </ul>
               <Link href="mailto:contact@neuraapi.com" className="mt-8 block rounded-lg border border-indigo-500 px-4 py-2 text-center text-sm font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
-                Contacter
+                {t('freelancersPricingEnterpriseCta')}
               </Link>
             </div>
           </div>
@@ -185,16 +193,16 @@ export default function FreelancersLandingPage() {
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl rounded-3xl bg-indigo-900/50 p-12 text-center border border-indigo-700/50">
           <Globe className="mx-auto h-12 w-12 text-indigo-400" />
-          <h2 className="mt-6 text-3xl font-bold text-white">Prêt à booster vos missions ?</h2>
+          <h2 className="mt-6 text-3xl font-bold text-white">{t('freelancersCtaTitle')}</h2>
           <p className="mt-4 text-indigo-200">
-            Créez votre compte gratuit et testez NeuraAPI sur votre prochain projet. 100 crédits offerts, sans engagement.
+            {t('freelancersCtaDesc')}
           </p>
           <div className="mt-8 flex items-center justify-center gap-4">
             <Link href="/register" className="rounded-lg bg-indigo-600 px-8 py-4 text-lg font-semibold text-white hover:bg-indigo-500 transition-all">
-              Créer un compte gratuit
+              {t('freelancersCta1')}
             </Link>
             <Link href="/pricing" className="rounded-lg border border-indigo-500 px-8 py-4 text-lg font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
-              Voir les tarifs
+              {t('freelancersCta2')}
             </Link>
           </div>
         </div>

@@ -1,26 +1,42 @@
 import Link from 'next/link'
 import { Clock, Calendar, Tag } from 'lucide-react'
-import { generateMetadata } from '@/lib/seo'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import ShareButtons from '@/components/ShareButtons'
 import Breadcrumb from '@/components/Breadcrumb'
+import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-export const metadata = generateMetadata({
-  title: "Configurer Stripe Billing dans Next.js 14",
-  description: "Guide étape par étape : intégrez Stripe Billing dans votre application Next.js 14. Checkout, webhooks, gestion d'abonnement, portail client.",
-  path: '/blog/stripe-billing-nextjs',
-  type: 'article',
-  keywords: ['Stripe Billing', 'Next.js 14', 'abonnement SaaS', 'paiement en ligne', 'Stripe checkout', 'webhooks Stripe', 'billing SaaS'],
-  publishedTime: '2026-06-20',
-  modifiedTime: '2026-06-20',
-})
+export async function generateMetadata() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('blogStripeBillingTitle'),
+    description: t('blogStripeBillingDescription'),
+    path: '/blog/stripe-billing-nextjs',
+    type: 'article',
+    keywords: [t('blogStripeBillingKw1'), t('blogStripeBillingKw2'), t('blogStripeBillingKw3'), t('blogStripeBillingKw4'), t('blogStripeBillingKw5'), t('blogStripeBillingKw6'), t('blogStripeBillingKw7')],
+    publishedTime: '2026-06-20',
+    modifiedTime: '2026-06-20',
+  })
+}
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
-export default function StripeBillingNextjsPage() {
+export default async function StripeBillingNextjsPage() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+
   const articleSchema = generateArticleSchema({
-    title: 'Configurer Stripe Billing dans Next.js 14',
-    description: 'Guide étape par étape : intégrez Stripe Billing dans votre application Next.js 14.',
+    title: t('blogStripeBillingTitle'),
+    description: t('blogStripeBillingSchemaDesc'),
     slug: 'stripe-billing-nextjs',
     datePublished: '2026-06-20',
     dateModified: '2026-06-20',
@@ -28,8 +44,8 @@ export default function StripeBillingNextjsPage() {
 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
-      { name: 'Blog', path: '/blog' },
-      { name: 'Stripe Billing Next.js', path: '/blog/stripe-billing-nextjs' },
+      { name: t('blogBreadcrumbBlog'), path: '/blog' },
+      { name: t('blogStripeBillingBreadcrumb'), path: '/blog/stripe-billing-nextjs' },
     ],
   })
 
@@ -44,44 +60,44 @@ export default function StripeBillingNextjsPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <Breadcrumb items={[{ name: 'Blog', href: '/blog' }, { name: 'Stripe Billing Next.js', href: '/blog/stripe-billing-nextjs' }]} />
+        <Breadcrumb items={[{ name: t('blogBreadcrumbBlog'), href: '/blog' }, { name: t('blogStripeBillingBreadcrumb'), href: '/blog/stripe-billing-nextjs' }]} />
 
         <div className="mt-8">
           <div className="flex items-center gap-3 mb-6">
             <span className="inline-flex items-center gap-1 rounded-full bg-indigo-600/20 px-3 py-1 text-xs font-medium text-indigo-300 border border-indigo-600/30">
-              <Tag className="w-3 h-3" /> Guide
+              <Tag className="w-3 h-3" /> {t('blogStripeBillingTag')}
             </span>
-            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Calendar className="w-4 h-4" /> 20 juin 2026</span>
-            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Clock className="w-4 h-4" /> 14 min de lecture</span>
+            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Calendar className="w-4 h-4" /> {t('blogStripeBillingDate')}</span>
+            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Clock className="w-4 h-4" /> {t('blogStripeBillingReadTime')}</span>
           </div>
 
           <h1 className="text-4xl font-bold text-white leading-tight sm:text-5xl">
-            Configurer Stripe Billing dans Next.js 14
+            {t('blogStripeBillingH1')}
           </h1>
 
           <div className="mt-6">
-            <ShareButtons url={`${baseUrl}/blog/stripe-billing-nextjs`} title="Configurer Stripe Billing dans Next.js 14" />
+            <ShareButtons url={`${baseUrl}/blog/stripe-billing-nextjs`} title={t('blogStripeBillingShareTitle')} />
           </div>
         </div>
 
         <div className="mt-12 space-y-8 text-indigo-200/80 leading-relaxed">
           <p className="text-lg">
-            Stripe Billing est la solution standard pour monétiser un SaaS. Il gère les abonnements, les factures, les renouvellements automatiques et les changements de plan. Ce guide détaille l&apos;intégration complète dans Next.js 14, du premier checkout au portail client.
+            {t('blogStripeBillingIntro')}
           </p>
 
           <div className="rounded-xl bg-indigo-900/30 border border-indigo-800/50 p-6 my-8">
-            <h3 className="text-white font-semibold mb-2">Prérequis</h3>
+            <h3 className="text-white font-semibold mb-2">{t('blogStripeBillingPrereqTitle')}</h3>
             <ul className="list-disc list-inside space-y-1 text-indigo-300 text-sm">
-              <li>Un projet Next.js 14 avec App Router</li>
-              <li>Un compte Stripe (mode test)</li>
-              <li>Stripe CLI installé (pour les webhooks en local)</li>
-              <li>Auth configurée (NextAuth ou autre)</li>
+              <li>{t('blogStripeBillingPrereq1')}</li>
+              <li>{t('blogStripeBillingPrereq2')}</li>
+              <li>{t('blogStripeBillingPrereq3')}</li>
+              <li>{t('blogStripeBillingPrereq4')}</li>
             </ul>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 1 — Configurer Stripe dans votre projet</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2Step1')}</h2>
           <p>
-            Installez le SDK Stripe et configurez les variables d&apos;environnement :
+            {t('blogStripeBillingPStep1')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -89,7 +105,7 @@ export default function StripeBillingNextjsPage() {
             </pre>
           </div>
           <p>
-            Ajoutez dans votre fichier <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">.env.local</code> :
+            {t('blogStripeBillingPStep1b')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">.env.local</code>:
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -100,22 +116,22 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000`}</code>
             </pre>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 2 — Créer les produits et prix dans Stripe</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2Step2')}</h2>
           <p>
-            Avant de coder, configurez vos plans dans le dashboard Stripe. Pour chaque plan, créez un Product puis un Price en mode récurrent :
+            {t('blogStripeBillingPStep2')}
           </p>
           <ul className="list-disc list-inside space-y-2 text-indigo-300">
-            <li><strong className="text-white">Starter</strong> — 19€/mois, 1 000 crédits</li>
-            <li><strong className="text-white">Pro</strong> — 49€/mois, 5 000 crédits</li>
-            <li><strong className="text-white">Entreprise</strong> — 99€/mois, 20 000 crédits</li>
+            <li><strong className="text-white">Starter</strong> — 19€{t('blogStripeBillingPerMonth')}, 1 000 {t('blogStripeBillingCredits')}</li>
+            <li><strong className="text-white">Pro</strong> — 49€{t('blogStripeBillingPerMonth')}, 5 000 {t('blogStripeBillingCredits')}</li>
+            <li><strong className="text-white">Entreprise</strong> — 99€{t('blogStripeBillingPerMonth')}, 20 000 {t('blogStripeBillingCredits')}</li>
           </ul>
           <p>
-            Notez les <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">price_id</code> de chaque prix. Vous en aurez besoin pour le checkout.
+            {t('blogStripeBillingPStep2b')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">price_id</code> {t('blogStripeBillingPStep2c')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 3 — Créer la route de checkout</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2Step3')}</h2>
           <p>
-            La route de checkout redirige l&apos;utilisateur vers la page de paiement Stripe. Elle crée une session de checkout avec le bon prix et les métadonnées :
+            {t('blogStripeBillingPStep3')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -186,12 +202,12 @@ export async function POST(req: NextRequest) {
             </pre>
           </div>
           <p>
-            Le <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">metadata</code> est crucial : il sera transmis au webhook pour associer l&apos;abonnement à l&apos;utilisateur dans votre base de données.
+            {t('blogStripeBillingPStep3b')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">metadata</code> {t('blogStripeBillingPStep3c')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 4 — Configurer les webhooks Stripe</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2Step4')}</h2>
           <p>
-            Les webhooks sont le mécanisme par lequel Stripe vous notifie des événements (paiement réussi, abonnement annulé, carte expirée...). C&apos;est la partie la plus critique de l&apos;intégration :
+            {t('blogStripeBillingPStep4')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -306,12 +322,12 @@ export async function POST(req: NextRequest) {
             </pre>
           </div>
           <p>
-            Ce webhook gère les 4 événements principaux : checkout réussi, mise à jour d&apos;abonnement, annulation, et échec de paiement. Chaque événement met à jour votre base de données en conséquence.
+            {t('blogStripeBillingPStep4b')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 5 — Tester les webhooks en local</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2Step5')}</h2>
           <p>
-            Stripe CLI vous permet de tester les webhooks sans les déployer en production :
+            {t('blogStripeBillingPStep5')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -330,12 +346,12 @@ stripe trigger customer.subscription.deleted`}</code>
             </pre>
           </div>
           <p>
-            Le CLI affiche un <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">webhook signing secret</code> que vous utilisez en tant que <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">STRIPE_WEBHOOK_SECRET</code> en local.
+            {t('blogStripeBillingPStep5b')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">webhook signing secret</code> {t('blogStripeBillingPStep5c')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">STRIPE_WEBHOOK_SECRET</code> {t('blogStripeBillingPStep5d')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 6 — Créer le portail client Stripe</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2Step6')}</h2>
           <p>
-            Le portail client Stripe permet à vos utilisateurs de gérer leur abonnement (changer de plan, mettre à jour la carte, annuler) sans que vous ayez à coder une seule page :
+            {t('blogStripeBillingPStep6')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -365,12 +381,12 @@ export async function POST() {
             </pre>
           </div>
           <p>
-            Stripe gère toute l&apos;UI du portail : formulaire de carte, historique de factures, options de downgrade/upgrade. Vous n&apos;avez rien à maintenir.
+            {t('blogStripeBillingPStep6b')}
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Étape 7 — Afficher le statut d&apos;abonnement</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2Step7')}</h2>
           <p>
-            Dans votre dashboard, affichez le plan actuel de l&apos;utilisateur et un bouton pour gérer l&apos;abonnement :
+            {t('blogStripeBillingPStep7')}
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -425,75 +441,75 @@ export function SubscriptionStatus({ plan, status, currentPeriodEnd }: Props) {
             </pre>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Bonnes pratiques</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2BestPractices')}</h2>
           <div className="space-y-4">
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-              <h3 className="text-white font-semibold mb-2">Toujours valider la signature des webhooks</h3>
-              <p className="text-sm text-indigo-300">Ne faites jamais confiance au contenu brut d&apos;une requête webhook. Stripe fournit une signature que vous devez vérifier avec <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">constructEvent()</code> pour vous assurer que la requête vient bien de Stripe.</p>
+              <h3 className="text-white font-semibold mb-2">{t('blogStripeBillingBp1Title')}</h3>
+              <p className="text-sm text-indigo-300">{t('blogStripeBillingBp1Desc')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">constructEvent()</code> {t('blogStripeBillingBp1Desc2')}</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-              <h3 className="text-white font-semibold mb-2">Traiter les webhooks de manière idempotente</h3>
-              <p className="text-sm text-indigo-300">Stripe peut renvoyer un même webhook plusieurs fois. Votre handler doit pouvoir être exécuté plusieurs fois sans effets de bord. Utilisez <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">updateMany</code> ou vérifiez l&apos;état avant de modifier.</p>
+              <h3 className="text-white font-semibold mb-2">{t('blogStripeBillingBp2Title')}</h3>
+              <p className="text-sm text-indigo-300">{t('blogStripeBillingBp2Desc')} <code className="rounded bg-indigo-800/50 px-2 py-0.5 text-indigo-200 font-mono text-sm">updateMany</code> {t('blogStripeBillingBp2Desc2')}</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-              <h3 className="text-white font-semibold mb-2">Utiliser le mode test avant de passer en production</h3>
-              <p className="text-sm text-indigo-300">Testez chaque scénario en mode test : checkout réussi, annulation, échec de paiement, downgrade. Stripe fournit des cartes de test spécifiques pour chaque cas.</p>
+              <h3 className="text-white font-semibold mb-2">{t('blogStripeBillingBp3Title')}</h3>
+              <p className="text-sm text-indigo-300">{t('blogStripeBillingBp3Desc')}</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-              <h3 className="text-white font-semibold mb-2">Envoyer des emails transactionnels</h3>
-              <p className="text-sm text-indigo-300">Configurez les emails Stripe (factures, rappels de paiement) dans le dashboard. Cela réduit le support client et améliore le taux de rétention.</p>
+              <h3 className="text-white font-semibold mb-2">{t('blogStripeBillingBp4Title')}</h3>
+              <p className="text-sm text-indigo-300">{t('blogStripeBillingBp4Desc')}</p>
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">Récapitulatif</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">{t('blogStripeBillingH2Recap')}</h2>
           <div className="rounded-2xl glass-card p-6 space-y-3">
             {[
-              { step: '1', desc: 'Installer le SDK Stripe et configurer les variables' },
-              { step: '2', desc: 'Créer les produits et prix dans le dashboard Stripe' },
-              { step: '3', desc: 'Route API checkout pour créer les sessions de paiement' },
-              { step: '4', desc: 'Route webhook pour synchroniser les statuts' },
-              { step: '5', desc: 'Tester les webhooks en local avec Stripe CLI' },
-              { step: '6', desc: 'Portail client pour l\'autogestion des abonnements' },
-              { step: '7', desc: 'Afficher le statut dans le dashboard utilisateur' },
+              { step: '1', desc: t('blogStripeBillingRecap1') },
+              { step: '2', desc: t('blogStripeBillingRecap2') },
+              { step: '3', desc: t('blogStripeBillingRecap3') },
+              { step: '4', desc: t('blogStripeBillingRecap4') },
+              { step: '5', desc: t('blogStripeBillingRecap5') },
+              { step: '6', desc: t('blogStripeBillingRecap6') },
+              { step: '7', desc: t('blogStripeBillingRecap7') },
             ].map((item) => (
               <div key={item.step} className="flex items-center gap-4">
                 <span className="flex-shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 text-xs font-bold flex items-center justify-center text-white">
                   {item.step}
                 </span>
                 <span className="text-sm text-indigo-200">
-                  <strong className="text-white">Étape {item.step}</strong> — {item.desc}
+                  <strong className="text-white">{t('blogStripeBillingRecapStep')} {item.step}</strong> — {item.desc}
                 </span>
               </div>
             ))}
           </div>
 
           <div className="rounded-2xl bg-indigo-900/30 border border-indigo-500/20 p-6 mt-8">
-            <h3 className="text-lg font-semibold text-white mb-2">Besoin d&apos;un raccourci ?</h3>
+            <h3 className="text-lg font-semibold text-white mb-2">{t('blogStripeBillingCtaTitle')}</h3>
             <p className="text-indigo-200/70 mb-4">
-              Le template <Link href="/templates/neurasaa-kit-complet" className="font-semibold text-indigo-400 hover:text-indigo-300 underline">NeuraSaaS</Link> inclut toute l&apos;intégration Stripe Billing pré-configurée : checkout, webhooks, portail client, gestion des plans. Gagnez 20h de développement.
+              {t('blogStripeBillingCtaDesc')} <Link href="/templates/neurasaa-kit-complet" className="font-semibold text-indigo-400 hover:text-indigo-300 underline">NeuraSaaS</Link> {t('blogStripeBillingCtaDesc2')}
             </p>
             <Link
               href="/pricing"
               className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300"
             >
-              Voir les tarifs →
+              {t('blogViewPricing')}
             </Link>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-4">Articles connexes</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">{t('blogRelatedArticles')}</h3>
           <ul className="space-y-3">
             <li>
               <Link href="/blog/nextjs-saas-starter" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Comment créer un SaaS avec Next.js en 48h
+                {t('blogRelatedNextjsSaasStarter')}
               </Link>
             </li>
             <li>
               <Link href="/blog/ai-api-integration" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Intégrer une API IA dans votre application en 5 minutes
+                {t('blogRelatedAiApiIntegration')}
               </Link>
             </li>
           </ul>

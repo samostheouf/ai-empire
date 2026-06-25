@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useI18n } from '@/i18n'
 import { Users, ShoppingCart, TrendingUp, Eye, MousePointer, BarChart3 } from 'lucide-react'
 import { formatPrice } from '@/lib/utils'
 
@@ -27,6 +28,7 @@ interface StatsData {
 }
 
 export default function AnalyticsPage() {
+  const { t, locale } = useI18n()
   const [data, setData] = useState<StatsData | null>(null)
   const [loading, setLoading] = useState(true)
   const [period, setPeriod] = useState('7d')
@@ -65,7 +67,7 @@ export default function AnalyticsPage() {
       <div className="min-h-screen bg-gray-950 flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-400">Chargement des analytics...</p>
+          <p className="text-gray-400">{t('adminAnalyticsLoading')}</p>
         </div>
       </div>
     )
@@ -74,7 +76,7 @@ export default function AnalyticsPage() {
   if (!data) {
     return (
       <div className="min-h-screen bg-gray-950 flex items-center justify-center">
-        <p className="text-gray-400">Erreur lors du chargement des données</p>
+        <p className="text-gray-400">{t('adminAnalyticsError')}</p>
       </div>
     )
   }
@@ -84,49 +86,49 @@ export default function AnalyticsPage() {
   const yesterdayVisitors = data.last7Days[data.last7Days.length - 2]?.visitors || 1
 
   const funnelSteps = [
-    { label: 'Visiteurs', value: data.funnel.visitors, color: 'bg-indigo-500' },
-    { label: 'Inscription', value: data.funnel.registerStarts, color: 'bg-purple-500' },
-    { label: 'Checkout', value: data.funnel.checkoutStarts, color: 'bg-pink-500' },
-    { label: 'Achat', value: data.funnel.checkoutCompletes, color: 'bg-green-500' },
+    { label: t('adminAnalyticsFunnelVisitors'), value: data.funnel.visitors, color: 'bg-indigo-500' },
+    { label: t('adminAnalyticsFunnelRegister'), value: data.funnel.registerStarts, color: 'bg-purple-500' },
+    { label: t('adminAnalyticsFunnelCheckout'), value: data.funnel.checkoutStarts, color: 'bg-pink-500' },
+    { label: t('adminAnalyticsFunnelPurchase'), value: data.funnel.checkoutCompletes, color: 'bg-green-500' },
   ]
   const maxFunnel = Math.max(...funnelSteps.map(s => s.value), 1)
 
   const statCards = [
     {
-      label: 'Visiteurs aujourd\'hui',
+      label: t('adminAnalyticsVisitorsToday'),
       value: todayVisitors,
       icon: Users,
       color: 'text-indigo-400',
       bg: 'bg-indigo-500/10',
       border: 'border-indigo-500/20',
-      change: `${Math.round(((todayVisitors - yesterdayVisitors) / Math.max(yesterdayVisitors, 1)) * 100)}% vs hier`,
+      change: `${Math.round(((todayVisitors - yesterdayVisitors) / Math.max(yesterdayVisitors, 1)) * 100)}% ${t('adminAnalyticsVsYesterday')}`,
     },
     {
-      label: 'Conversions aujourd\'hui',
+      label: t('adminAnalyticsConversionsToday'),
       value: todayConversions,
       icon: ShoppingCart,
       color: 'text-green-400',
       bg: 'bg-green-500/10',
       border: 'border-green-500/20',
-      change: `${data.funnel.conversionRate} taux total`,
+      change: `${data.funnel.conversionRate} ${t('adminAnalyticsTotalRate')}`,
     },
     {
-      label: 'Pages vues totales',
+      label: t('adminAnalyticsTotalPageViews'),
       value: data.totalPageViews.toLocaleString(),
       icon: Eye,
       color: 'text-purple-400',
       bg: 'bg-purple-500/10',
       border: 'border-purple-500/20',
-      change: `${data.totalEvents} événements`,
+      change: `${data.totalEvents} ${t('adminAnalyticsEvents')}`,
     },
     {
-      label: 'Taux de conversion',
+      label: t('adminAnalyticsConversionRate'),
       value: data.funnel.conversionRate,
       icon: TrendingUp,
       color: 'text-amber-400',
       bg: 'bg-amber-500/10',
       border: 'border-amber-500/20',
-      change: `${data.funnel.checkoutCompletes} achats`,
+      change: `${data.funnel.checkoutCompletes} ${t('adminAnalyticsPurchases')}`,
     },
   ]
 
@@ -137,11 +139,11 @@ export default function AnalyticsPage() {
     <div className="min-h-screen bg-gray-950 p-4 sm:p-8">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-2xl font-bold text-white">Analytics en temps réel</h1>
-          <p className="text-gray-400 mt-1">Tableau de bord de conversion et d&apos;engagement</p>
+          <h1 className="text-2xl font-bold text-white">{t('adminAnalyticsTitle')}</h1>
+          <p className="text-gray-400 mt-1">{t('adminAnalyticsSubtitle')}</p>
           {lastUpdated && (
             <p className="text-xs text-gray-600 mt-1">
-              Dernière mise à jour : {lastUpdated.toLocaleTimeString('fr-FR')} · Actualisation auto 15s
+              {t('adminAnalyticsLastUpdate')} : {lastUpdated.toLocaleTimeString(locale)} · {t('adminAnalyticsAutoRefresh')}
             </p>
           )}
         </div>
@@ -156,7 +158,7 @@ export default function AnalyticsPage() {
                   : 'bg-gray-800 text-gray-400 hover:bg-gray-700 border border-gray-700'
               }`}
             >
-              {p === '7d' ? '7 jours' : p === '30d' ? '30 jours' : '90 jours'}
+              {p === '7d' ? t('adminAnalytics7days') : p === '30d' ? t('adminAnalytics30days') : t('adminAnalytics90days')}
             </button>
           ))}
         </div>
@@ -181,7 +183,7 @@ export default function AnalyticsPage() {
         <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <BarChart3 className="w-5 h-5 text-indigo-400" />
-            Entonnoir de conversion
+            {t('adminAnalyticsConversionFunnel')}
           </h2>
           <div className="space-y-3">
             {funnelSteps.map((step, i) => (
@@ -210,7 +212,7 @@ export default function AnalyticsPage() {
         <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <MousePointer className="w-5 h-5 text-green-400" />
-            Profondeur de défilement
+            {t('adminAnalyticsScrollDepth')}
           </h2>
           <div className="space-y-3">
             {[25, 50, 75, 100].map((depth) => (
@@ -233,14 +235,14 @@ export default function AnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div className="lg:col-span-2 bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
-          <h2 className="text-lg font-semibold text-white mb-4">Top pages</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">{t('adminAnalyticsTopPages')}</h2>
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr className="text-left text-xs text-gray-500 uppercase border-b border-gray-800">
-                  <th className="pb-3 pr-4">Page</th>
-                  <th className="pb-3 pr-4 text-right">Vues</th>
-                  <th className="pb-3 text-right">Visiteurs uniques</th>
+                  <th className="pb-3 pr-4">{t('adminAnalyticsPage')}</th>
+                  <th className="pb-3 pr-4 text-right">{t('adminAnalyticsViews')}</th>
+                  <th className="pb-3 text-right">{t('adminAnalyticsUniqueVisitors')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -258,7 +260,7 @@ export default function AnalyticsPage() {
                   </tr>
                 ))}
                 {data.topPages.length === 0 && (
-                  <tr><td colSpan={3} className="py-8 text-center text-gray-500">Aucune donnée disponible</td></tr>
+                  <tr><td colSpan={3} className="py-8 text-center text-gray-500">{t('adminAnalyticsNoData')}</td></tr>
                 )}
               </tbody>
             </table>
@@ -266,7 +268,7 @@ export default function AnalyticsPage() {
         </div>
 
         <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
-          <h2 className="text-lg font-semibold text-white mb-4">Temps sur la page</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">{t('adminAnalyticsTimeOnPage')}</h2>
           <div className="space-y-3">
             {Object.entries(data.timeDistribution).map(([range, count]) => (
               <div key={range}>
@@ -288,7 +290,7 @@ export default function AnalyticsPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
-          <h2 className="text-lg font-semibold text-white mb-4">Clics CTA</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">{t('adminAnalyticsCTAClicks')}</h2>
           <div className="space-y-2">
             {Object.entries(data.ctaClickRates)
               .sort(([, a], [, b]) => b - a)
@@ -300,13 +302,13 @@ export default function AnalyticsPage() {
                 </div>
               ))}
             {Object.keys(data.ctaClickRates).length === 0 && (
-              <p className="text-sm text-gray-500 text-center py-4">Aucun clic CTA</p>
+              <p className="text-sm text-gray-500 text-center py-4">{t('adminAnalyticsNoCTAClicks')}</p>
             )}
           </div>
         </div>
 
         <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
-          <h2 className="text-lg font-semibold text-white mb-4">Appareils</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">{t('adminAnalyticsDevices')}</h2>
           <div className="space-y-3">
             {Object.entries(data.deviceBreakdown.devices)
               .sort(([, a], [, b]) => b - a)
@@ -325,7 +327,7 @@ export default function AnalyticsPage() {
                 )
               })}
           </div>
-          <h3 className="text-sm font-semibold text-gray-400 mt-5 mb-3">Navigateurs</h3>
+          <h3 className="text-sm font-semibold text-gray-400 mt-5 mb-3">{t('adminAnalyticsBrowsers')}</h3>
           <div className="space-y-2">
             {Object.entries(data.deviceBreakdown.browsers)
               .sort(([, a], [, b]) => b - a)
@@ -339,10 +341,10 @@ export default function AnalyticsPage() {
         </div>
 
         <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
-          <h2 className="text-lg font-semibold text-white mb-4">Trafic UTM</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">{t('adminAnalyticsUTMTraffic')}</h2>
           <div className="space-y-4">
             <div>
-              <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">Source</h3>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">{t('adminAnalyticsSource')}</h3>
               {Object.entries(data.utmTraffic.source)
                 .sort(([, a], [, b]) => b - a)
                 .slice(0, 4)
@@ -353,11 +355,11 @@ export default function AnalyticsPage() {
                   </div>
                 ))}
               {Object.keys(data.utmTraffic.source).length === 0 && (
-                <p className="text-xs text-gray-600">Aucune source</p>
+                <p className="text-xs text-gray-600">{t('adminAnalyticsNoSource')}</p>
               )}
             </div>
             <div>
-              <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">Média</h3>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase mb-2">{t('adminAnalyticsMedium')}</h3>
               {Object.entries(data.utmTraffic.medium)
                 .sort(([, a], [, b]) => b - a)
                 .slice(0, 4)
@@ -368,7 +370,7 @@ export default function AnalyticsPage() {
                   </div>
                 ))}
               {Object.keys(data.utmTraffic.medium).length === 0 && (
-                <p className="text-xs text-gray-600">Aucun média</p>
+                <p className="text-xs text-gray-600">{t('adminAnalyticsNoMedium')}</p>
               )}
             </div>
           </div>
@@ -376,7 +378,7 @@ export default function AnalyticsPage() {
       </div>
 
       <div className="bg-gray-900/80 backdrop-blur-sm rounded-xl p-6 border border-gray-800">
-        <h2 className="text-lg font-semibold text-white mb-4">Tendance — 7 derniers jours</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">{t('adminAnalyticsTrend')}</h2>
         <div className="flex items-end gap-2 h-32">
           {data.last7Days.map((day) => {
             const maxV = Math.max(...data.last7Days.map(d => d.visitors), 1)
@@ -391,7 +393,7 @@ export default function AnalyticsPage() {
                   )}
                 </div>
                 <span className="text-[10px] text-gray-500">
-                  {new Date(day.date).toLocaleDateString('fr-FR', { weekday: 'short' })}
+                  {new Date(day.date).toLocaleDateString(locale, { weekday: 'short' })}
                 </span>
               </div>
             )
@@ -400,11 +402,11 @@ export default function AnalyticsPage() {
         <div className="flex items-center gap-4 mt-4 text-xs text-gray-500">
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-3 bg-indigo-500 rounded-sm" />
-            <span>Visiteurs</span>
+            <span>{t('adminAnalyticsVisitorsLegend')}</span>
           </div>
           <div className="flex items-center gap-1.5">
             <div className="w-3 h-3 bg-green-500 rounded-sm" />
-            <span>Conversions</span>
+            <span>{t('adminAnalyticsConversionsLegend')}</span>
           </div>
         </div>
       </div>

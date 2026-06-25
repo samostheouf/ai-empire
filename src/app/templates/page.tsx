@@ -4,13 +4,22 @@ import Breadcrumb from '@/components/Breadcrumb'
 import BuildTimeSaved from '@/components/client/BuildTimeSaved'
 import TemplateGrid from '@/components/client/TemplateGrid'
 import { generateMetadata as genMeta } from '@/lib/seo'
+import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-export const metadata: Metadata = genMeta({
-  title: 'Templates Premium Next.js & Tailwind — NeuraAPI',
-  description: 'Templates Next.js professionnels prêts à déployer : SaaS, Landing, E-commerce, Blog, Dashboard. Code propre, auth Stripe, IA intégrée. Livraison instantanée.',
-  path: '/templates',
-  keywords: ['template next.js', 'templates premium', 'SaaS template', 'Next.js Tailwind', 'template e-commerce', 'template blog', 'template dashboard'],
-})
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('templatesMetaTitle'),
+    description: t('templatesMetaDescription'),
+    path: '/templates',
+    keywords: ['template next.js', 'templates premium', 'SaaS template', 'Next.js Tailwind', 'template e-commerce', 'template blog', 'template dashboard'],
+  })
+}
 
 const BEFORE_AFTER_COMPARISONS = [
   {
@@ -64,7 +73,13 @@ const API_METRICS = [
   { label: 'Gemini Pro', speed: '~200 tokens/sec', color: 'from-amber-400 to-orange-500' },
 ]
 
-export default function TemplatesPage() {
+export default async function TemplatesPage() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
   return (
     <div className="min-h-screen bg-[#0f0a2e]">
       <script
@@ -89,15 +104,15 @@ export default function TemplatesPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-600/10 to-transparent" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-500/5 rounded-full blur-3xl" />
         <div className="relative mx-auto max-w-4xl text-center">
-          <Breadcrumb items={[{ name: 'Templates', href: '/templates' }]} />
+          <Breadcrumb items={[{ name: t('templatesBreadcrumb'), href: '/templates' }]} />
           <div className="mt-8">
             <h1 className="text-4xl font-bold text-white sm:text-5xl lg:text-6xl">
               <Layers className="w-10 h-10 text-indigo-400 inline mr-3" />
-              Templates{' '}
-              <span className="text-gradient">Premium</span>
+              {t('templatesTitle')}{' '}
+              <span className="text-gradient">{t('templatesTitleHighlight')}</span>
             </h1>
             <p className="mt-4 text-lg text-indigo-200/70 max-w-2xl mx-auto">
-              Templates professionnels Next.js + Tailwind. Code propre, documentation incluse, prêt à déployer.
+              {t('templatesSubtitle')}
             </p>
           </div>
         </div>
@@ -106,28 +121,28 @@ export default function TemplatesPage() {
       <div className="mx-auto max-w-7xl px-4 pb-24 sm:px-6 lg:px-8">
         {/* Build Time Saved Counter */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white text-center mb-2">The Impact</h2>
-          <p className="text-indigo-300/60 text-center mb-8">Real numbers from developers using AI Empire templates</p>
+          <h2 className="text-2xl font-bold text-white text-center mb-2">{t('templatesImpactTitle')}</h2>
+          <p className="text-indigo-300/60 text-center mb-8">{t('templatesImpactSubtitle')}</p>
           <BuildTimeSaved />
         </div>
 
         {/* Before/After Code Comparison */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white text-center mb-2">Before vs After</h2>
-          <p className="text-indigo-300/60 text-center mb-8">See how much boilerplate you skip with AI Empire</p>
+          <h2 className="text-2xl font-bold text-white text-center mb-2">{t('templatesBeforeAfterTitle')}</h2>
+          <p className="text-indigo-300/60 text-center mb-8">{t('templatesBeforeAfterSubtitle')}</p>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {BEFORE_AFTER_COMPARISONS.map((comparison) => (
               <div key={comparison.id} className="glass-card rounded-2xl overflow-hidden group">
                 <div className="px-5 py-3 border-b border-white/5 flex items-center justify-between">
                   <span className="text-sm font-medium text-white">{comparison.label}</span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400">
-                    <Zap className="h-3 w-3" />
-                    {comparison.timeSaved} saved
+                    <span className="inline-flex items-center gap-1 rounded-full bg-green-500/10 px-2.5 py-0.5 text-xs font-medium text-green-400">
+                     <Zap className="h-3 w-3" />
+                     {comparison.timeSaved} {t('templatesSaved')}
                   </span>
                 </div>
                 <div className="p-4">
                   <div className="mb-3">
-                    <span className="text-xs font-medium text-red-400/80 uppercase tracking-wider">Without AI Empire</span>
+                    <span className="text-xs font-medium text-red-400/80 uppercase tracking-wider">{t('templatesWithoutLabel')}</span>
                     <pre className="mt-1.5 rounded-lg bg-red-500/5 border border-red-500/10 p-3 text-xs text-red-300/70 overflow-x-auto max-h-32 leading-relaxed">
                       <code>{comparison.before}</code>
                     </pre>
@@ -136,7 +151,7 @@ export default function TemplatesPage() {
                     <ArrowRight className="w-5 h-5 text-green-400" />
                   </div>
                   <div>
-                    <span className="text-xs font-medium text-green-400/80 uppercase tracking-wider">With AI Empire</span>
+                    <span className="text-xs font-medium text-green-400/80 uppercase tracking-wider">{t('templatesWithLabel')}</span>
                     <pre className="mt-1.5 rounded-lg bg-green-500/5 border border-green-500/10 p-3 text-xs text-green-300/70 overflow-x-auto max-h-32 leading-relaxed">
                       <code>{comparison.after}</code>
                     </pre>
@@ -149,8 +164,8 @@ export default function TemplatesPage() {
 
         {/* API Response Time Showcase */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white text-center mb-2">API Performance</h2>
-          <p className="text-indigo-300/60 text-center mb-8">Lightning-fast inference via Groq — no GPU required</p>
+          <h2 className="text-2xl font-bold text-white text-center mb-2">{t('templatesApiPerformanceTitle')}</h2>
+          <p className="text-indigo-300/60 text-center mb-8">{t('templatesApiPerformanceSubtitle')}</p>
           <div className="glass-card rounded-2xl p-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {API_METRICS.map((metric) => (
@@ -168,15 +183,15 @@ export default function TemplatesPage() {
             </div>
             <div className="mt-4 flex items-center justify-center gap-2 text-xs text-indigo-300/50">
               <BarChart3 className="w-3.5 h-3.5" />
-              <span>All benchmarks measured with AI Empire&apos;s unified API — no provider key management needed</span>
+              <span>{t('templatesApiBenchmarkNote')}</span>
             </div>
           </div>
         </div>
 
         {/* Developer Testimonials */}
         <div className="mb-12">
-          <h2 className="text-2xl font-bold text-white text-center mb-2">What Developers Say</h2>
-          <p className="text-indigo-300/60 text-center mb-8">Real feedback from developers shipping with AI Empire</p>
+          <h2 className="text-2xl font-bold text-white text-center mb-2">{t('templatesTestimonialsTitle')}</h2>
+          <p className="text-indigo-300/60 text-center mb-8">{t('templatesTestimonialsSubtitle')}</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {TESTIMONIALS.map((testimonial) => (
               <div key={testimonial.author} className="glass-card rounded-2xl p-6 group hover:border-indigo-500/30 transition-all">

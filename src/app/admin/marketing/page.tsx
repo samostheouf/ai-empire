@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useI18n } from '@/i18n'
 import {
   Calendar,
   Mail,
@@ -91,6 +92,7 @@ interface ReferralData {
 }
 
 export default function MarketingDashboard() {
+  const { t, locale } = useI18n()
   const [activeTab, setActiveTab] = useState<'overview' | 'scheduler' | 'campaigns' | 'seo' | 'referrals'>('overview')
   const [campaigns, setCampaigns] = useState<Campaign[]>([])
   const [campaignStats, setCampaignStats] = useState<CampaignStats | null>(null)
@@ -192,7 +194,7 @@ export default function MarketingDashboard() {
             name: newCampaign.name,
             subject: newCampaign.subject,
             body: newCampaign.body,
-            ctaText: newCampaign.ctaText || 'En savoir plus',
+            ctaText: newCampaign.ctaText || t('adminMarketingLearnMore'),
             ctaUrl: newCampaign.ctaUrl || '/',
           },
         }),
@@ -245,19 +247,19 @@ export default function MarketingDashboard() {
   }
 
   const tabs: { id: 'overview' | 'scheduler' | 'campaigns' | 'seo' | 'referrals'; label: string; icon: typeof BarChart3 }[] = [
-    { id: 'overview', label: 'Vue d\'ensemble', icon: BarChart3 },
-    { id: 'scheduler', label: 'Planificateur', icon: Calendar },
-    { id: 'campaigns', label: 'Campagnes Email', icon: Mail },
-    { id: 'seo', label: 'SEO', icon: Search },
-    { id: 'referrals', label: 'Parrainage', icon: Users },
+    { id: 'overview', label: t('adminMarketingOverview'), icon: BarChart3 },
+    { id: 'scheduler', label: t('adminMarketingScheduler'), icon: Calendar },
+    { id: 'campaigns', label: t('adminMarketingCampaigns'), icon: Mail },
+    { id: 'seo', label: t('adminMarketingSEO'), icon: Search },
+    { id: 'referrals', label: t('adminMarketingReferrals'), icon: Users },
   ]
 
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Marketing Automatisé</h1>
-          <p className="text-gray-500 mt-1">Gérez vos campagnes, planificateur et SEO</p>
+          <h1 className="text-2xl font-bold text-gray-900">{t('adminMarketingTitle')}</h1>
+          <p className="text-gray-500 mt-1">{t('adminMarketingSubtitle')}</p>
         </div>
 
         <div className="flex space-x-1 mb-6 bg-white rounded-lg p-1 shadow-sm border border-gray-200">
@@ -289,7 +291,7 @@ export default function MarketingDashboard() {
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-gray-500">Campagnes actives</p>
+                        <p className="text-sm text-gray-500">{t('adminMarketingActiveCampaigns')}</p>
                         <p className="text-2xl font-bold text-gray-900 mt-1">
                           {campaignStats?.activeCampaigns || 0}
                         </p>
@@ -301,7 +303,7 @@ export default function MarketingDashboard() {
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-gray-500">Emails envoyés</p>
+                        <p className="text-sm text-gray-500">{t('adminMarketingEmailsSent')}</p>
                         <p className="text-2xl font-bold text-gray-900 mt-1">
                           {campaignStats?.totalEmailsSent || 0}
                         </p>
@@ -313,7 +315,7 @@ export default function MarketingDashboard() {
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-gray-500">Taux d'ouverture</p>
+                        <p className="text-sm text-gray-500">{t('adminMarketingOpenRate')}</p>
                         <p className="text-2xl font-bold text-gray-900 mt-1">
                           {campaignStats?.averageOpenRate || 0}%
                         </p>
@@ -325,7 +327,7 @@ export default function MarketingDashboard() {
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-sm text-gray-500">Posts planifiés</p>
+                        <p className="text-sm text-gray-500">{t('adminMarketingScheduledPosts')}</p>
                         <p className="text-2xl font-bold text-gray-900 mt-1">
                           {scheduleStats?.pending.length || 0}
                         </p>
@@ -337,7 +339,7 @@ export default function MarketingDashboard() {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Campagnes récentes</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingRecentCampaigns')}</h3>
                     <div className="space-y-3">
                       {campaigns.slice(0, 5).map((campaign) => (
                         <div key={campaign.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -357,7 +359,7 @@ export default function MarketingDashboard() {
                   </div>
 
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Derniers posts</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingLatestPosts')}</h3>
                     <div className="space-y-3">
                       {scheduledPosts.slice(0, 5).map((post) => (
                         <div key={post.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -373,7 +375,7 @@ export default function MarketingDashboard() {
                           <span className={`px-2 py-1 text-xs rounded-full ${
                             post.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'
                           }`}>
-                            {post.status === 'pending' ? 'En attente' : 'Publié'}
+                            {post.status === 'pending' ? t('adminMarketingPending') : t('adminMarketingPublished')}
                           </span>
                         </div>
                       ))}
@@ -386,10 +388,10 @@ export default function MarketingDashboard() {
             {activeTab === 'scheduler' && (
               <div className="space-y-6">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Planifier un post</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingSchedulePost')}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Plateforme</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingPlatform')}</label>
                       <select
                         value={newPost.platform}
                         onChange={(e) => setNewPost({ ...newPost, platform: e.target.value })}
@@ -398,11 +400,11 @@ export default function MarketingDashboard() {
                         <option value="twitter">Twitter</option>
                         <option value="linkedin">LinkedIn</option>
                         <option value="facebook">Facebook</option>
-                        <option value="all">Toutes les plateformes</option>
+                        <option value="all">{t('adminMarketingAllPlatforms')}</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Hashtags (séparés par virgule)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingHashtags')}</label>
                       <input
                         type="text"
                         value={newPost.hashtags}
@@ -412,12 +414,12 @@ export default function MarketingDashboard() {
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Contenu</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingContent')}</label>
                       <textarea
                         value={newPost.content}
                         onChange={(e) => setNewPost({ ...newPost, content: e.target.value })}
                         rows={4}
-                        placeholder="Rédigez votre post ici..."
+                        placeholder={t('adminMarketingPostPlaceholder')}
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </div>
@@ -427,7 +429,7 @@ export default function MarketingDashboard() {
                         className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2"
                       >
                         <Send className="w-4 h-4" />
-                        Planifier le post
+                        {t('adminMarketingSchedulePostButton')}
                       </button>
                     </div>
                   </div>
@@ -435,11 +437,11 @@ export default function MarketingDashboard() {
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200">
                   <div className="p-6 border-b border-gray-200">
-                    <h3 className="text-lg font-semibold text-gray-900">Posts planifiés</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">{t('adminMarketingScheduledPostsList')}</h3>
                   </div>
                   <div className="divide-y divide-gray-100">
                     {scheduledPosts.length === 0 ? (
-                      <div className="p-6 text-center text-gray-500">Aucun post planifié</div>
+                      <div className="p-6 text-center text-gray-500">{t('adminMarketingNoScheduledPosts')}</div>
                     ) : (
                       scheduledPosts.map((post) => (
                         <div key={post.id} className="p-4 flex items-center justify-between hover:bg-gray-50">
@@ -450,7 +452,7 @@ export default function MarketingDashboard() {
                             <div>
                               <p className="text-sm font-medium text-gray-900 line-clamp-1">{post.content}</p>
                               <p className="text-xs text-gray-500 mt-1">
-                                {new Date(post.scheduledAt).toLocaleString('fr-FR')}
+                                {new Date(post.scheduledAt).toLocaleString(locale)}
                               </p>
                             </div>
                           </div>
@@ -458,12 +460,12 @@ export default function MarketingDashboard() {
                             <span className={`px-2 py-1 text-xs rounded-full ${
                               post.status === 'pending' ? 'bg-yellow-100 text-yellow-700' : 'bg-green-100 text-green-700'
                             }`}>
-                              {post.status === 'pending' ? 'En attente' : 'Publié'}
+                              {post.status === 'pending' ? t('adminMarketingPending') : t('adminMarketingPublished')}
                             </span>
                             <button
                               onClick={() => deletePost(post.id)}
                               className="p-1 text-gray-400 hover:text-red-500"
-                              aria-label="Supprimer le post"
+                              aria-label={t('adminMarketingDeletePost')}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -479,63 +481,63 @@ export default function MarketingDashboard() {
             {activeTab === 'campaigns' && (
               <div className="space-y-6">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Créer une campagne</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingCreateCampaign')}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Type de campagne</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingCampaignType')}</label>
                       <select
                         value={newCampaign.type}
                         onChange={(e) => setNewCampaign({ ...newCampaign, type: e.target.value })}
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       >
-                        <option value="newsletter">Newsletter</option>
-                        <option value="welcome">Bienvenue</option>
-                        <option value="abandoned-cart">Panier abandonné</option>
-                        <option value="reengagement">Réengagement</option>
+                        <option value="newsletter">{t('adminMarketingNewsletter')}</option>
+                        <option value="welcome">{t('adminMarketingWelcome')}</option>
+                        <option value="abandoned-cart">{t('adminMarketingAbandonedCart')}</option>
+                        <option value="reengagement">{t('adminMarketingReengagement')}</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Nom de la campagne</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingCampaignName')}</label>
                       <input
                         type="text"
                         value={newCampaign.name}
                         onChange={(e) => setNewCampaign({ ...newCampaign, name: e.target.value })}
-                        placeholder="Newsletter Juin 2025"
+                        placeholder="Newsletter June 2025"
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Sujet</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingSubject')}</label>
                       <input
                         type="text"
                         value={newCampaign.subject}
                         onChange={(e) => setNewCampaign({ ...newCampaign, subject: e.target.value })}
-                        placeholder="Objet de l'email"
+                        placeholder={t('adminMarketingSubjectPlaceholder')}
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Contenu</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingContent')}</label>
                       <textarea
                         value={newCampaign.body}
                         onChange={(e) => setNewCampaign({ ...newCampaign, body: e.target.value })}
                         rows={4}
-                        placeholder="Contenu de l'email..."
+                        placeholder={t('adminMarketingContentPlaceholder')}
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Texte du bouton</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingButtonText')}</label>
                       <input
                         type="text"
                         value={newCampaign.ctaText}
                         onChange={(e) => setNewCampaign({ ...newCampaign, ctaText: e.target.value })}
-                        placeholder="Découvrir"
+                        placeholder="Discover"
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">URL du bouton</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingButtonUrl')}</label>
                       <input
                         type="text"
                         value={newCampaign.ctaUrl}
@@ -550,7 +552,7 @@ export default function MarketingDashboard() {
                         className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2"
                       >
                         <Plus className="w-4 h-4" />
-                        Créer la campagne
+                        {t('adminMarketingCreateCampaignButton')}
                       </button>
                     </div>
                   </div>
@@ -558,11 +560,11 @@ export default function MarketingDashboard() {
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200">
                   <div className="p-6 border-b border-gray-200">
-                    <h3 className="text-lg font-semibold text-gray-900">Campagnes existantes</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">{t('adminMarketingExistingCampaigns')}</h3>
                   </div>
                   <div className="divide-y divide-gray-100">
                     {campaigns.length === 0 ? (
-                      <div className="p-6 text-center text-gray-500">Aucune campagne</div>
+                      <div className="p-6 text-center text-gray-500">{t('adminMarketingNoCampaigns')}</div>
                     ) : (
                       campaigns.map((campaign) => (
                         <div key={campaign.id} className="p-4 flex items-center justify-between hover:bg-gray-50">
@@ -573,7 +575,7 @@ export default function MarketingDashboard() {
                             <div>
                               <p className="text-sm font-medium text-gray-900">{campaign.name}</p>
                               <p className="text-xs text-gray-500 mt-1">
-                                {campaign.type} • {campaign.emailsSent} emails • {campaign.openRate}% ouverture
+                                {campaign.type} • {campaign.emailsSent} emails • {campaign.openRate}% {t('adminMarketingOpenRate')}
                               </p>
                             </div>
                           </div>
@@ -581,12 +583,12 @@ export default function MarketingDashboard() {
                             <span className={`px-2 py-1 text-xs rounded-full ${
                               campaign.status === 'active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
                             }`}>
-                              {campaign.status === 'active' ? 'Active' : 'Pausée'}
+                              {campaign.status === 'active' ? t('adminMarketingActive') : t('adminMarketingPaused')}
                             </span>
                             <button
                               onClick={() => deleteCampaign(campaign.id)}
                               className="p-1 text-gray-400 hover:text-red-500"
-                              aria-label="Supprimer la campagne"
+                              aria-label={t('adminMarketingDeleteCampaign')}
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -602,23 +604,23 @@ export default function MarketingDashboard() {
             {activeTab === 'seo' && (
               <div className="space-y-6">
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Générateur SEO</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingSEOGenerator')}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Type de contenu</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingContentType')}</label>
                       <select
                         value={seoData.type}
                         onChange={(e) => setSeoData({ ...seoData, type: e.target.value })}
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                       >
-                        <option value="meta">Meta descriptions</option>
-                        <option value="outline">Plan d'article</option>
-                        <option value="keywords">Analyse de mots-clés</option>
-                        <option value="full">Contenu complet</option>
+                        <option value="meta">{t('adminMarketingMetaDescriptions')}</option>
+                        <option value="outline">{t('adminMarketingArticleOutline')}</option>
+                        <option value="keywords">{t('adminMarketingKeywordAnalysis')}</option>
+                        <option value="full">{t('adminMarketingFullContent')}</option>
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Sujet</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingTopic')}</label>
                       <input
                         type="text"
                         value={seoData.topic}
@@ -628,7 +630,7 @@ export default function MarketingDashboard() {
                       />
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Mots-clés (séparés par virgule)</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-2">{t('adminMarketingKeywords')}</label>
                       <input
                         type="text"
                         value={seoData.keywords}
@@ -643,7 +645,7 @@ export default function MarketingDashboard() {
                         className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2"
                       >
                         <Search className="w-4 h-4" />
-                        Générer
+                        {t('adminMarketingGenerate')}
                       </button>
                     </div>
                   </div>
@@ -651,29 +653,29 @@ export default function MarketingDashboard() {
 
                 {seoResult && (
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Résultat</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingResult')}</h3>
                     <div className="space-y-4">
                       {seoResult.title && (
                         <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-sm font-medium text-gray-700 mb-1">Titre</p>
+                          <p className="text-sm font-medium text-gray-700 mb-1">{t('adminMarketingTitle2')}</p>
                           <p className="text-gray-900">{seoResult.title}</p>
                         </div>
                       )}
                       {seoResult.metaDescription && (
                         <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-sm font-medium text-gray-700 mb-1">Meta Description</p>
+                          <p className="text-sm font-medium text-gray-700 mb-1">{t('adminMarketingMetaDescription')}</p>
                           <p className="text-gray-900">{seoResult.metaDescription}</p>
                         </div>
                       )}
                       {seoResult.slug && (
                         <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-sm font-medium text-gray-700 mb-1">Slug</p>
+                          <p className="text-sm font-medium text-gray-700 mb-1">{t('adminMarketingSlug')}</p>
                           <p className="text-gray-900">{seoResult.slug}</p>
                         </div>
                       )}
                       {seoResult.score !== undefined && (
                         <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-sm font-medium text-gray-700 mb-1">Score SEO</p>
+                          <p className="text-sm font-medium text-gray-700 mb-1">{t('adminMarketingSEOScore')}</p>
                           <div className="flex items-center gap-2">
                             <div className="flex-1 bg-gray-200 rounded-full h-2">
                               <div
@@ -687,7 +689,7 @@ export default function MarketingDashboard() {
                       )}
                       {seoResult.outline && (
                         <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-sm font-medium text-gray-700 mb-2">Plan de l'article</p>
+                          <p className="text-sm font-medium text-gray-700 mb-2">{t('adminMarketingArticlePlan')}</p>
                           <div className="space-y-2">
                             {seoResult.outline.sections?.map((section, i) => (
                               <div key={i} className="flex items-start gap-2">
@@ -705,12 +707,12 @@ export default function MarketingDashboard() {
                       )}
                       {seoResult.analysis && (
                         <div className="p-4 bg-gray-50 rounded-lg">
-                          <p className="text-sm font-medium text-gray-700 mb-2">Analyse des mots-clés</p>
+                          <p className="text-sm font-medium text-gray-700 mb-2">{t('adminMarketingKeywordAnalysisTitle')}</p>
                           <div className="space-y-2">
                             {seoResult.analysis.map((kw, i) => (
                               <div key={i} className="flex items-center justify-between p-2 bg-white rounded">
                                 <span className="text-sm font-medium text-gray-900">{kw.keyword}</span>
-                                <span className="text-sm text-gray-500">{kw.density}% ({kw.occurrences} fois)</span>
+                                <span className="text-sm text-gray-500">{kw.density}% ({kw.occurrences} {t('adminMarketingOccurrences')})</span>
                               </div>
                             ))}
                           </div>
@@ -727,7 +729,7 @@ export default function MarketingDashboard() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <p className="text-sm text-gray-500">Total parrainages</p>
+                      <p className="text-sm text-gray-500">{t('adminMarketingTotalReferrals')}</p>
                       <Users className="w-5 h-5 text-indigo-500" />
                     </div>
                     <p className="text-2xl font-bold text-gray-900">
@@ -737,7 +739,7 @@ export default function MarketingDashboard() {
 
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <p className="text-sm text-gray-500">Crédits gagnés</p>
+                      <p className="text-sm text-gray-500">{t('adminMarketingCreditsEarned')}</p>
                       <Zap className="w-5 h-5 text-amber-500" />
                     </div>
                     <p className="text-2xl font-bold text-gray-900">
@@ -747,17 +749,17 @@ export default function MarketingDashboard() {
 
                   <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                     <div className="flex items-center justify-between mb-4">
-                      <p className="text-sm text-gray-500">Badge actuel</p>
+                      <p className="text-sm text-gray-500">{t('adminMarketingCurrentBadge')}</p>
                       <Target className="w-5 h-5 text-violet-500" />
                     </div>
                     <p className="text-lg font-bold text-gray-900">
-                      {referralData?.badge || '🆕 Nouveau'}
+                      {referralData?.badge || t('adminMarketingNewBadge')}
                     </p>
                   </div>
                 </div>
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Votre lien de parrainage</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingReferralLink')}</h3>
                   <div className="flex items-center gap-2">
                     <input
                       type="text"
@@ -772,13 +774,13 @@ export default function MarketingDashboard() {
                       className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2"
                     >
                       <Copy className="w-4 h-4" />
-                      Copier
+                      {t('adminMarketingCopy')}
                     </button>
                   </div>
                 </div>
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Récompenses</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingRewards')}</h3>
                   <div className="space-y-3">
                     {referralData?.rewards?.map((reward, i) => (
                       <div key={i} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
@@ -793,7 +795,7 @@ export default function MarketingDashboard() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-gray-900">{reward.description}</p>
-                          <p className="text-xs text-gray-500">{reward.type === 'credits' ? `+${reward.value} crédits` : `${reward.value}% réduction`}</p>
+                          <p className="text-xs text-gray-500">{reward.type === 'credits' ? t('adminMarketingCreditsCount', { count: reward.value }) : t('adminMarketingDiscountCount', { count: reward.value })}</p>
                         </div>
                       </div>
                     ))}
@@ -801,7 +803,7 @@ export default function MarketingDashboard() {
                 </div>
 
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4">Partager sur les réseaux</h3>
+                  <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminMarketingShareOnSocial')}</h3>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     {referralData?.shareableContent?.map((content, i) => (
                       <div key={i} className="p-4 border border-gray-200 rounded-lg">
@@ -817,7 +819,7 @@ export default function MarketingDashboard() {
                           className="mt-3 text-sm text-indigo-600 hover:text-indigo-700 flex items-center gap-1"
                         >
                           <Copy className="w-3 h-3" />
-                          Copier
+                          {t('adminMarketingCopy')}
                         </button>
                       </div>
                     ))}

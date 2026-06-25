@@ -1,83 +1,91 @@
 import Link from 'next/link'
 import { Calendar, Tag, ArrowRight } from 'lucide-react'
+import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-const releases = [
-  {
-    version: '1.0.0',
-    date: '23 Juin 2026',
-    title: 'Lancement officiel',
-    changes: [
-      '🤖 Chatbot IA réel (Groq/OpenAI)',
-      '📝 Blog avec 4 articles SEO',
-      '📧 Newsletter subscription',
-      '🌍 10 langues supportées',
-      '📊 Dashboard monitoring (/status)',
-      '🔒 CI/CD Pipeline GitHub Actions',
-      '🛡️ Error pages (404, 500, loading)',
-      '🚀 Page de lancement Product Hunt',
-      '👥 Inscription beta testers',
-      '💰 Offre Early Adopter -30%',
-    ],
-  },
-  {
-    version: '0.9.0',
-    date: '19 Juin 2026',
-    title: 'Marketing i18n & fix Vercel 404',
-    changes: [
-      '🌍 Marketing traduit en 10 langues',
-      '📝 4 articles de blog avec JSON-LD',
-      '🔧 Fix du 404 Vercel (dossier app/ fantôme)',
-      '📰 Newsletter avec formulaire',
-      '🔗 Social sharing buttons',
-      '📋 Sitemap mis à jour',
-    ],
-  },
-  {
-    version: '0.8.0',
-    date: '18 Juin 2026',
-    title: 'Sécurité & Rate Limiting',
-    changes: [
-      '🔑 API key authentication sur tous les services',
-      '⏱️ Rate limiting (100 req/min, 10 req/min AI)',
-      '🛡️ Security headers (CSP, HSTS)',
-      '📊 67 tests passants',
-    ],
-  },
-  {
-    version: '0.7.0',
-    date: '17 Juin 2026',
-    title: 'Backend microservices',
-    changes: [
-      '🤖 AI/ML Service (FastAPI, port 8000)',
-      '⚙️ Core Services (Workflow Engine, port 8001)',
-      '📊 Observability Service (port 8002)',
-      '💼 Business Operations (port 8003)',
-      '🐳 Configuration Docker',
-    ],
-  },
-  {
-    version: '0.6.0',
-    date: '16 Juin 2026',
-    title: 'Frontend complet',
-    changes: [
-      '🏠 Homepage avec i18n',
-      '💰 Page pricing avec Stripe',
-      '📚 Documentation API',
-      '🛒 Checkout avec paiement',
-      '👤 Dashboard utilisateur',
-      '📝 Mentions légales françaises',
-    ],
-  },
-]
+export default async function ChangelogPage() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
 
-export default function ChangelogPage() {
+  const releases = [
+    {
+      version: '1.0.0',
+      date: t('changelogEntry1Date'),
+      title: t('changelogEntry1Title'),
+      changes: [
+        t('changelogEntry1Change1'),
+        t('changelogEntry1Change2'),
+        t('changelogEntry1Change3'),
+        t('changelogEntry1Change4'),
+        t('changelogEntry1Change5'),
+        t('changelogEntry1Change6'),
+        t('changelogEntry1Change7'),
+        t('changelogEntry1Change8'),
+        t('changelogEntry1Change9'),
+        t('changelogEntry1Change10'),
+      ],
+    },
+    {
+      version: '0.9.0',
+      date: t('changelogEntry2Date'),
+      title: t('changelogEntry2Title'),
+      changes: [
+        t('changelogEntry2Change1'),
+        t('changelogEntry2Change2'),
+        t('changelogEntry2Change3'),
+        t('changelogEntry2Change4'),
+        t('changelogEntry2Change5'),
+        t('changelogEntry2Change6'),
+      ],
+    },
+    {
+      version: '0.8.0',
+      date: t('changelogEntry3Date'),
+      title: t('changelogEntry3Title'),
+      changes: [
+        t('changelogEntry3Change1'),
+        t('changelogEntry3Change2'),
+        t('changelogEntry3Change3'),
+        t('changelogEntry3Change4'),
+      ],
+    },
+    {
+      version: '0.7.0',
+      date: t('changelogEntry4Date'),
+      title: t('changelogEntry4Title'),
+      changes: [
+        t('changelogEntry4Change1'),
+        t('changelogEntry4Change2'),
+        t('changelogEntry4Change3'),
+        t('changelogEntry4Change4'),
+        t('changelogEntry4Change5'),
+      ],
+    },
+    {
+      version: '0.6.0',
+      date: t('changelogEntry5Date'),
+      title: t('changelogEntry5Title'),
+      changes: [
+        t('changelogEntry5Change1'),
+        t('changelogEntry5Change2'),
+        t('changelogEntry5Change3'),
+        t('changelogEntry5Change4'),
+        t('changelogEntry5Change5'),
+        t('changelogEntry5Change6'),
+      ],
+    },
+  ]
+
   return (
     <div className="bg-indigo-950 min-h-screen">
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl font-bold text-white mb-4">Changelog</h1>
+          <h1 className="text-4xl font-bold text-white mb-4">{t('changelogTitle')}</h1>
           <p className="text-indigo-300 mb-12">
-            Historique des mises à jour de NeuraAPI.
+            {t('changelogSubtitle')}
           </p>
 
           <div className="space-y-12">
@@ -121,7 +129,7 @@ export default function ChangelogPage() {
               href="/docs"
               className="inline-flex items-center gap-2 text-indigo-400 hover:text-white transition-colors"
             >
-              Voir la documentation
+              {t('changelogViewDocs')}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>

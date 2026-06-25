@@ -3,8 +3,10 @@
 import { useSearchParams } from 'next/navigation';
 import { useState, Suspense } from 'react';
 import { Loader2, CreditCard, Shield, Lock, RotateCcw, Check } from 'lucide-react';
+import { useI18n } from '@/i18n';
 
 function CheckoutContent() {
+  const { t, locale } = useI18n();
   const searchParams = useSearchParams();
   const template = searchParams.get('template');
   const [email, setEmail] = useState('');
@@ -41,11 +43,11 @@ function CheckoutContent() {
       if (data.url) {
         window.location.href = data.url;
       } else {
-        setError('Erreur lors de la création de la session');
+        setError(t('checkoutErrorSession'));
         setLoading(false);
       }
     } catch (err) {
-      setError('Erreur réseau');
+      setError(t('checkoutErrorNetwork'));
       setLoading(false);
     }
   };
@@ -55,16 +57,16 @@ function CheckoutContent() {
       <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full">
         <div className="text-center mb-6">
           <CreditCard className="w-12 h-12 text-indigo-600 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold">Paiement sécurisé</h1>
+          <h1 className="text-2xl font-bold">{t('checkoutTitle')}</h1>
           <p className="text-gray-500 mt-2">
-            {plan.name} — {plan.price / 100}€/mois
+            {plan.name} — {plan.price / 100}€{t('checkoutPerMonth')}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Email (pour la facturation)
+              {t('checkoutEmailLabel')}
             </label>
             <input
               type="email"
@@ -90,37 +92,37 @@ function CheckoutContent() {
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Redirection vers Stripe...
+                {t('checkoutRedirect')}
               </>
             ) : (
               <>
                 <CreditCard className="w-4 h-4" />
-                Payer {plan.price / 100}€/mois
+                {t('checkoutPay')} {plan.price / 100}€{t('checkoutPerMonth')}
               </>
             )}
           </button>
         </form>
 
         <p className="text-center text-xs text-gray-400 mt-4">
-          Paiement sécurisé par Stripe. Annulation possible à tout moment.
+          {t('checkoutFooter')}
         </p>
 
         <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-xs text-gray-500">
           <span className="flex items-center gap-1.5">
             <Shield className="w-3.5 h-3.5 text-green-500" />
-            SSL 256-bit
+            {t('checkoutBadgeSsl')}
           </span>
           <span className="flex items-center gap-1.5">
             <Lock className="w-3.5 h-3.5 text-green-500" />
-            Paiement chiffré
+            {t('checkoutBadgeEncrypted')}
           </span>
           <span className="flex items-center gap-1.5">
             <RotateCcw className="w-3.5 h-3.5 text-green-500" />
-            Garantie 30 jours
+            {t('checkoutBadgeGuarantee')}
           </span>
           <span className="flex items-center gap-1.5">
             <Check className="w-3.5 h-5 text-green-500" />
-            Sans engagement
+            {t('checkoutBadgeNoCommitment')}
           </span>
         </div>
       </div>
