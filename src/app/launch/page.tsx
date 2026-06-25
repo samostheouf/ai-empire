@@ -4,10 +4,12 @@ import Link from 'next/link'
 import { ArrowRight, Sparkles, Zap, Globe, Star, Code, ExternalLink, Download, Check, Trophy, Rocket, BarChart3 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import Breadcrumb from '@/components/Breadcrumb'
+import { useI18n } from '@/i18n'
 
 const PH_WIDGET_SCRIPT = 'https://widgets.producthunt.com/widgets/frame/embed/v1/featured'
 
 export default function ProductHuntPage() {
+  const { t, locale } = useI18n()
   const [stats, setStats] = useState<{ userCount: number; templateCount: number; totalDownloads: number } | null>(null)
 
   useEffect(() => {
@@ -25,16 +27,16 @@ export default function ProductHuntPage() {
       <section className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8">
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-900/20 to-transparent" />
         <div className="relative mx-auto max-w-4xl text-center">
-          <Breadcrumb items={[{ name: 'Lancement', href: '/launch' }]} />
+          <Breadcrumb items={[{ name: t('launchBreadcrumb'), href: '/launch' }]} />
           <div className="inline-flex items-center gap-2 rounded-full bg-orange-500/20 px-4 py-1.5 text-sm text-orange-300 border border-orange-500/30 mb-8">
             <Star className="w-4 h-4 fill-orange-400 text-orange-400" />
-            Lancement Product Hunt
+            {t('launchBadge')}
           </div>
           <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl">
-            NeuraAPI est <span className="text-orange-400">en ligne</span>
+            {t('launchTitle')} <span className="text-orange-400">{t('launchTitleHighlight')}</span>
           </h1>
           <p className="mt-6 text-lg leading-8 text-indigo-200 max-w-2xl mx-auto">
-            APIs IA + Templates Next.js Premium pour développeurs. Intelligence artificielle, SEO, code generation — le tout en 10 langues.
+            {t('launchSubtitle')}
           </p>
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <Link
@@ -42,30 +44,30 @@ export default function ProductHuntPage() {
               className="rounded-lg bg-orange-500 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-orange-400 transition-all flex items-center gap-2"
             >
               <Sparkles className="w-5 h-5" />
-              Essayer gratuitement
+              {t('launchCta')}
               <ArrowRight className="w-5 h-5" />
             </Link>
             <Link
               href="/pricing"
               className="rounded-lg border border-indigo-500 px-8 py-4 text-lg font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all"
             >
-              Voir les tarifs
+              {t('launchPricingLink')}
             </Link>
           </div>
 
           {stats && (
             <div className="mt-12 grid grid-cols-3 gap-8 max-w-md mx-auto">
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">{stats.userCount.toLocaleString('fr-FR')}</div>
-                <div className="text-xs text-indigo-400">Utilisateurs</div>
+                <div className="text-2xl font-bold text-white">{stats.userCount.toLocaleString(locale)}</div>
+                <div className="text-xs text-indigo-400">{t('launchUsers')}</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-white">{stats.templateCount}</div>
-                <div className="text-xs text-indigo-400">Templates</div>
+                <div className="text-xs text-indigo-400">{t('launchTemplates')}</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-white">{stats.totalDownloads.toLocaleString('fr-FR')}</div>
-                <div className="text-xs text-indigo-400">Téléchargements</div>
+                <div className="text-2xl font-bold text-white">{stats.totalDownloads.toLocaleString(locale)}</div>
+                <div className="text-xs text-indigo-400">{t('launchDownloads')}</div>
               </div>
             </div>
           )}
@@ -77,8 +79,8 @@ export default function ProductHuntPage() {
         <div className="mx-auto max-w-4xl">
           <div className="rounded-2xl border border-orange-500/30 bg-orange-500/5 p-8 text-center">
             <Trophy className="mx-auto h-10 w-10 text-orange-400 mb-4" />
-            <h2 className="text-xl font-bold text-white mb-2">Votez pour nous sur Product Hunt</h2>
-            <p className="text-indigo-300 mb-6">Aidez-nous à devenir le top product du jour</p>
+            <h2 className="text-xl font-bold text-white mb-2">{t('launchVoteTitle')}</h2>
+            <p className="text-indigo-300 mb-6">{t('launchVoteText')}</p>
             <a
               href="https://www.producthunt.com/products/neuraapi"
               target="_blank"
@@ -86,7 +88,7 @@ export default function ProductHuntPage() {
               className="inline-flex items-center gap-2 rounded-lg bg-orange-500 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-400 transition-all"
             >
               <ExternalLink className="w-4 h-4" />
-              Voir sur Product Hunt
+              {t('launchVoteCta')}
             </a>
           </div>
         </div>
@@ -95,12 +97,12 @@ export default function ProductHuntPage() {
       {/* What we offer */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
-          <h2 className="text-center text-3xl font-bold text-white mb-16">Ce que NeuraAPI vous offre</h2>
+          <h2 className="text-center text-3xl font-bold text-white mb-16">{t('launchOfferTitle')}</h2>
           <div className="grid gap-8 sm:grid-cols-3">
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
               <Zap className="h-10 w-10 text-indigo-400 mb-4" />
               <h3 className="text-xl font-semibold text-white mb-2">AI API</h3>
-              <p className="text-indigo-300">Génération de texte, code, SEO. Connecté à Groq, Gemini, OpenAI. Prêt à l&apos;emploi.</p>
+              <p className="text-indigo-300">{t('launchFeatureAiDesc')}</p>
               <code className="mt-4 block rounded-lg bg-indigo-950 p-3 text-xs text-indigo-400 font-mono">
                 POST /api/ai/generate<br/>
                 {'{ "prompt": "...", "maxTokens": 1000 }'}
@@ -109,7 +111,7 @@ export default function ProductHuntPage() {
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
               <Code className="h-10 w-10 text-indigo-400 mb-4" />
               <h3 className="text-xl font-semibold text-white mb-2">Templates Next.js</h3>
-              <p className="text-indigo-300">SaaS, e-commerce, landing pages, portfolios. Production-ready avec Stripe intégré.</p>
+              <p className="text-indigo-300">{t('launchFeatureTemplatesDesc')}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {['SaaS', 'E-commerce', 'Blog', 'Dashboard'].map(tag => (
                   <span key={tag} className="rounded-full bg-indigo-800/50 px-3 py-1 text-xs text-indigo-300">{tag}</span>
@@ -118,8 +120,8 @@ export default function ProductHuntPage() {
             </div>
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
               <Globe className="h-10 w-10 text-indigo-400 mb-4" />
-              <h3 className="text-xl font-semibold text-white mb-2">10 Langues</h3>
-              <p className="text-indigo-300">Site et docs traduits en FR, EN, ES, DE, IT, PT, JA, ZH, KO, AR.</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{t('launchFeatureLangsTitle')}</h3>
+              <p className="text-indigo-300">{t('launchFeatureLangsDesc')}</p>
               <div className="mt-4 flex flex-wrap gap-2">
                 {['🇫🇷', '🇬🇧', '🇪🇸', '🇩🇪', '🇮🇹', '🇵🇹', '🇯🇵', '🇨🇳', '🇰🇷', '🇸🇦'].map(flag => (
                   <span key={flag} className="text-xl">{flag}</span>
@@ -133,26 +135,26 @@ export default function ProductHuntPage() {
       {/* Feature Comparison */}
       <section className="px-4 py-24 sm:px-6 lg:px-8 border-t border-indigo-800/50">
         <div className="mx-auto max-w-4xl">
-          <h2 className="text-center text-3xl font-bold text-white mb-4">Pourquoi NeuraAPI ?</h2>
-          <p className="text-center text-indigo-300 mb-12">Comparaison avec les alternatives existantes</p>
+          <h2 className="text-center text-3xl font-bold text-white mb-4">{t('launchCompareTitle')}</h2>
+          <p className="text-center text-indigo-300 mb-12">{t('launchCompareSubtitle')}</p>
           <div className="border border-indigo-800/50 rounded-2xl overflow-hidden">
             <table className="w-full text-sm">
               <thead>
                 <tr className="bg-indigo-900/50">
-                  <th className="text-left px-6 py-4 font-medium text-indigo-200">Fonctionnalité</th>
+                  <th className="text-left px-6 py-4 font-medium text-indigo-200">{t('launchCompareFeature')}</th>
                   <th className="text-center px-6 py-4 font-medium text-orange-400">NeuraAPI</th>
-                  <th className="text-center px-6 py-4 font-medium text-indigo-400">Autres</th>
+                  <th className="text-center px-6 py-4 font-medium text-indigo-400">{t('launchCompareOthers')}</th>
                 </tr>
               </thead>
               <tbody className="text-indigo-200">
                 {[
-                  ['API IA + Templates', true, 'Séparé'],
-                  ['SDK TypeScript', true, 'Non'],
-                  ['10 langues', true, '1-2'],
-                  ['Gratuit pour commencer', true, 'Non'],
-                  ['Stripe intégré', true, 'Variable'],
-                  ['Mises à jour gratuites', true, 'Payant'],
-                  ['Docs complètes', true, 'Variable'],
+                  [t('launchCompareRow1'), true, t('launchCompareRow1Other')],
+                  [t('launchCompareRow2'), true, t('launchCompareRow2Other')],
+                  [t('launchCompareRow3'), true, t('launchCompareRow3Other')],
+                  [t('launchCompareRow4'), true, t('launchCompareRow4Other')],
+                  [t('launchCompareRow5'), true, t('launchCompareRow5Other')],
+                  [t('launchCompareRow6'), true, t('launchCompareRow6Other')],
+                  [t('launchCompareRow7'), true, t('launchCompareRow7Other')],
                 ].map(([feat, ours, other], i) => (
                   <tr key={i} className="border-t border-indigo-800/50">
                     <td className="px-6 py-3">{feat as string}</td>
@@ -169,57 +171,57 @@ export default function ProductHuntPage() {
       {/* Pricing */}
       <section className="px-4 py-24 sm:px-6 lg:px-8 border-t border-indigo-800/50">
         <div className="mx-auto max-w-4xl">
-          <h2 className="text-center text-3xl font-bold text-white mb-4">Offre de lancement</h2>
-          <p className="text-center text-indigo-300 mb-12">Tarifs de lancement disponibles.</p>
+          <h2 className="text-center text-3xl font-bold text-white mb-4">{t('launchPricingTitle')}</h2>
+          <p className="text-center text-indigo-300 mb-12">{t('launchPricingSubtitle')}</p>
           <div className="grid gap-8 sm:grid-cols-3">
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
-              <h3 className="text-xl font-semibold text-white">Starter</h3>
-              <p className="mt-2 text-indigo-300 text-sm">Pour tester et expérimenter.</p>
+              <h3 className="text-xl font-semibold text-white">{t('launchStarter')}</h3>
+              <p className="mt-2 text-indigo-300 text-sm">{t('launchStarterDesc')}</p>
               <div className="mt-6"><span className="text-4xl font-bold text-white">0€</span></div>
               <ul className="mt-6 space-y-3 text-sm text-indigo-200">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> 100 crédits/mois</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Tous les endpoints IA</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Documentation</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Support communautaire</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchStarterCredits')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchStarterEndpoints')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchStarterDocs')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchStarterSupport')}</li>
               </ul>
               <Link href="/register" className="mt-8 block w-full rounded-lg py-3 text-center border border-indigo-600 text-indigo-200 font-semibold hover:bg-indigo-900/50 transition-colors">
-                Commencer
+                {t('launchStarterCta')}
               </Link>
             </div>
             <div className="relative rounded-2xl border border-orange-500 bg-indigo-900/50 p-8">
               <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-orange-500 px-4 py-1 text-xs font-bold text-white">
-                🔥 Offre lancement -30%
+                {t('launchProBadge')}
               </div>
-              <h3 className="text-xl font-semibold text-white">Pro</h3>
-              <p className="mt-2 text-indigo-300 text-sm">Pour les projets sérieux.</p>
+              <h3 className="text-xl font-semibold text-white">{t('launchPro')}</h3>
+              <p className="mt-2 text-indigo-300 text-sm">{t('launchProDesc')}</p>
               <div className="mt-6">
                 <span className="text-4xl font-bold text-white">19€</span>
-                <span className="text-sm text-indigo-300 ml-1">/mois</span>
+                <span className="text-sm text-indigo-300 ml-1">/{t('launchPerMonth')}</span>
               </div>
               <ul className="mt-6 space-y-3 text-sm text-indigo-200">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> 10 000 crédits/mois</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Tous les endpoints IA</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Templates premium</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Support prioritaire</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Analytics avancés</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchProCredits')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchProEndpoints')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchProTemplates')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchProSupport')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchProAnalytics')}</li>
               </ul>
               <Link href="/register" className="mt-8 block w-full rounded-lg py-3 text-center bg-orange-500 text-white font-semibold hover:bg-orange-400 transition-colors">
-                Profiter de l&apos;offre
+                {t('launchProCta')}
               </Link>
             </div>
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
-              <h3 className="text-xl font-semibold text-white">Enterprise</h3>
-              <p className="mt-2 text-indigo-300 text-sm">Pour les équipes et les besoins critiques.</p>
-              <div className="mt-6"><span className="text-4xl font-bold text-white">99€</span><span className="text-sm text-indigo-300 ml-1">/mois</span></div>
+              <h3 className="text-xl font-semibold text-white">{t('launchEnterprise')}</h3>
+              <p className="mt-2 text-indigo-300 text-sm">{t('launchEnterpriseDesc')}</p>
+              <div className="mt-6"><span className="text-4xl font-bold text-white">99€</span><span className="text-sm text-indigo-300 ml-1">/{t('launchPerMonth')}</span></div>
               <ul className="mt-6 space-y-3 text-sm text-indigo-200">
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Crédits illimités</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> SLA garanti</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Support dédié 24/7</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Templates personnalisés</li>
-                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> Intégration sur mesure</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchEnterpriseCredits')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchEnterpriseSla')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchEnterpriseSupport')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchEnterpriseTemplates')}</li>
+                <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchEnterpriseIntegration')}</li>
               </ul>
               <Link href="/contact" className="mt-8 block w-full rounded-lg py-3 text-center border border-indigo-600 text-indigo-200 font-semibold hover:bg-indigo-900/50 transition-colors">
-                Contacter l&apos;équipe
+                {t('launchEnterpriseCta')}
               </Link>
             </div>
           </div>
@@ -229,7 +231,7 @@ export default function ProductHuntPage() {
       {/* Tech Stack */}
       <section className="px-4 py-24 sm:px-6 lg:px-8 border-t border-indigo-800/50">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-bold text-white mb-8">Stack technique</h2>
+          <h2 className="text-3xl font-bold text-white mb-8">{t('launchTechStack')}</h2>
           <div className="flex flex-wrap justify-center gap-4">
             {['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Prisma', 'Stripe', 'Groq AI', 'OpenAI', 'Resend', 'Vercel', 'PostgreSQL'].map(tech => (
               <span key={tech} className="rounded-full border border-indigo-800/50 bg-indigo-900/30 px-4 py-2 text-sm text-indigo-200">
@@ -243,23 +245,23 @@ export default function ProductHuntPage() {
       {/* Press Kit */}
       <section className="px-4 py-24 sm:px-6 lg:px-8 border-t border-indigo-800/50">
         <div className="mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">Kit Presse</h2>
-          <p className="text-indigo-300 mb-8">Ressources pour les journalistes et blogueurs</p>
+          <h2 className="text-3xl font-bold text-white mb-4">{t('launchPressTitle')}</h2>
+          <p className="text-indigo-300 mb-8">{t('launchPressSubtitle')}</p>
           <div className="grid gap-6 sm:grid-cols-3">
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/30 p-6">
               <Download className="mx-auto h-8 w-8 text-indigo-400 mb-3" />
-              <h3 className="font-semibold text-white mb-1">Logo & Branding</h3>
-              <p className="text-sm text-indigo-300">Logo SVG, guidelines couleur, polices</p>
+              <h3 className="font-semibold text-white mb-1">{t('launchPressBranding')}</h3>
+              <p className="text-sm text-indigo-300">{t('launchPressBrandingDesc')}</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/30 p-6">
               <BarChart3 className="mx-auto h-8 w-8 text-indigo-400 mb-3" />
-              <h3 className="font-semibold text-white mb-1">Chiffres clés</h3>
-              <p className="text-sm text-indigo-300">Stats users, templates, revenus (à venir)</p>
+              <h3 className="font-semibold text-white mb-1">{t('launchPressStats')}</h3>
+              <p className="text-sm text-indigo-300">{t('launchPressStatsDesc')}</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/30 p-6">
               <Rocket className="mx-auto h-8 w-8 text-indigo-400 mb-3" />
-              <h3 className="font-semibold text-white mb-1">Description</h3>
-              <p className="text-sm text-indigo-300">Pitch 1 ligne, 1 paragraphe, long form</p>
+              <h3 className="font-semibold text-white mb-1">{t('launchPressDesc')}</h3>
+              <p className="text-sm text-indigo-300">{t('launchPressDescDesc')}</p>
             </div>
           </div>
         </div>
@@ -269,15 +271,15 @@ export default function ProductHuntPage() {
       <section className="px-4 pb-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl rounded-3xl bg-orange-500/10 border border-orange-500/30 p-12 text-center">
           <Sparkles className="mx-auto h-12 w-12 text-orange-400 mb-4" />
-          <h2 className="text-3xl font-bold text-white">Plan Pro à 19€/mois</h2>
-          <p className="mt-4 text-indigo-200">Zéro engagement, annulation libre.</p>
+          <h2 className="text-3xl font-bold text-white">{t('launchFinalTitle')}</h2>
+          <p className="mt-4 text-indigo-200">{t('launchFinalText')}</p>
           <div className="mt-8">
             <Link
               href="/register"
               className="rounded-lg bg-orange-500 px-8 py-4 text-lg font-semibold text-white shadow-lg hover:bg-orange-400 transition-all inline-flex items-center gap-2"
             >
               <Sparkles className="w-5 h-5" />
-              Rejoindre maintenant
+              {t('launchFinalCta')}
               <ArrowRight className="w-5 h-5" />
             </Link>
           </div>

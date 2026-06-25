@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useI18n } from '@/i18n'
 import {
   Bot,
   Play,
@@ -62,6 +63,7 @@ interface RevenueMetrics {
 }
 
 export default function AgentsDashboard() {
+  const { t, locale } = useI18n()
   const [agents, setAgents] = useState<Agent[]>([])
   const [executions, setExecutions] = useState<Execution[]>([])
   const [tasks, setTasks] = useState<ScheduledTask[]>([])
@@ -231,16 +233,16 @@ export default function AgentsDashboard() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <Bot className="w-8 h-8 text-indigo-600" />
-            <h1 className="text-2xl font-bold text-gray-900">Dashboard Agents Autonomes</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('adminAgentsDashboardTitle')}</h1>
           </div>
-          <p className="text-gray-500">Gérez et exécutez vos agents de revenus autonomes</p>
+          <p className="text-gray-500">{t('adminAgentsDashboardSubtitle')}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Revenus Totaux</p>
+                <p className="text-sm text-gray-500">{t('adminAgentsDashboardRevenue')}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">{revenueMetrics.totalRevenue.toLocaleString()}€</p>
               </div>
               <DollarSign className="w-8 h-8 text-emerald-500" />
@@ -248,56 +250,56 @@ export default function AgentsDashboard() {
             <div className="mt-2 flex items-center text-sm">
               <TrendingUp className="w-4 h-4 text-emerald-500 mr-1" />
               <span className="text-emerald-600">+{revenueMetrics.monthlyGrowth}%</span>
-              <span className="text-gray-500 ml-1">ce mois</span>
+              <span className="text-gray-500 ml-1">{t('adminAgentsDashboardThisMonth')}</span>
             </div>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Agents Actifs</p>
+                <p className="text-sm text-gray-500">{t('adminAgentsDashboardActiveAgents')}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">{agents.length}</p>
               </div>
               <Bot className="w-8 h-8 text-indigo-500" />
             </div>
             <div className="mt-2 text-sm text-gray-500">
-              {agents.filter(a => a.status === 'actif').length} en cours d'exécution
+              {agents.filter(a => a.status === 'actif').length} {t('adminAgentsDashboardRunning')}
             </div>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Exécutions</p>
+                <p className="text-sm text-gray-500">{t('adminAgentsDashboardExecutions')}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">{executions.length}</p>
               </div>
               <Activity className="w-8 h-8 text-violet-500" />
             </div>
             <div className="mt-2 text-sm text-gray-500">
-              {executions.filter(e => e.status === 'success').length} réussies
+              {executions.filter(e => e.status === 'success').length} {t('adminAgentsDashboardSuccessful')}
             </div>
           </div>
 
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Tâches Planifiées</p>
+                <p className="text-sm text-gray-500">{t('adminAgentsDashboardScheduledTasks')}</p>
                 <p className="text-2xl font-bold text-gray-900 mt-1">{tasks.length}</p>
               </div>
               <Calendar className="w-8 h-8 text-amber-500" />
             </div>
             <div className="mt-2 text-sm text-gray-500">
-              {tasks.filter(t => t.status === 'termine').length} terminées
+              {tasks.filter(t => t.status === 'termine').length} {t('adminAgentsDashboardCompleted')}
             </div>
           </div>
         </div>
 
         <div className="flex space-x-1 mb-6 bg-white rounded-lg p-1 shadow-sm border border-gray-200">
           {[
-            { id: 'overview', label: 'Vue d\'ensemble', icon: BarChart3 },
-            { id: 'execute', label: 'Exécuter', icon: Play },
-            { id: 'schedule', label: 'Planifier', icon: Calendar },
-            { id: 'history', label: 'Historique', icon: Timer }
+            { id: 'overview', label: t('adminAgentsDashboardOverview'), icon: BarChart3 },
+            { id: 'execute', label: t('adminAgentsDashboardExecute'), icon: Play },
+            { id: 'schedule', label: t('adminAgentsDashboardSchedule'), icon: Calendar },
+            { id: 'history', label: t('adminAgentsDashboardHistory'), icon: Timer }
           ].map(({ id, label, icon: Icon }) => (
             <button
               key={id}
@@ -317,7 +319,7 @@ export default function AgentsDashboard() {
         {activeTab === 'overview' && (
           <div className="space-y-6">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Agents Disponibles</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminAgentsDashboardAvailableAgents')}</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {agents.map(agent => (
                   <div
@@ -340,8 +342,8 @@ export default function AgentsDashboard() {
                     </div>
                     <p className="text-sm text-gray-600 mb-3">{agent.description}</p>
                     <div className="flex items-center justify-between text-sm">
-                      <span className="text-gray-500">{agent.executions} exécutions</span>
-                      <span className="text-gray-500">{agent.successRate}% réussite</span>
+                      <span className="text-gray-500">{agent.executions} {t('adminAgentsDashboardExecutions2')}</span>
+                      <span className="text-gray-500">{agent.successRate}% {t('adminAgentsDashboardSuccessRate')}</span>
                     </div>
                     <div className="mt-3 flex gap-2">
                       <button
@@ -352,12 +354,12 @@ export default function AgentsDashboard() {
                         className="flex-1 bg-indigo-600 text-white px-3 py-2 rounded-lg text-sm hover:bg-indigo-700 transition-colors flex items-center justify-center gap-1"
                       >
                         <Play className="w-3 h-3" />
-                        Exécuter
+                        {t('adminAgentsDashboardExecuteButton')}
                       </button>
                       <button
                         onClick={() => scheduleTask(agent.id, 'quotidien')}
                         className="px-3 py-2 border border-gray-200 rounded-lg text-sm hover:bg-gray-50 transition-colors"
-                        aria-label="Planifier tâche quotidienne"
+                        aria-label={t('adminAgentsDashboardScheduleDaily')}
                       >
                         <Calendar className="w-4 h-4" />
                       </button>
@@ -368,9 +370,9 @@ export default function AgentsDashboard() {
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Dernières Exécutions</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminAgentsDashboardLatestExecutions')}</h2>
               {executions.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">Aucune exécution pour le moment</p>
+                <p className="text-gray-500 text-center py-8">{t('adminAgentsDashboardNoExecutions')}</p>
               ) : (
                 <div className="space-y-3">
                   {executions.slice(0, 5).map(exec => (
@@ -383,7 +385,7 @@ export default function AgentsDashboard() {
                         <div>
                           <p className="font-medium text-gray-900">{exec.agentName}</p>
                           <p className="text-sm text-gray-500">
-                            {new Date(exec.executedAt).toLocaleString('fr-FR')}
+                            {new Date(exec.executedAt).toLocaleString(locale)}
                           </p>
                         </div>
                       </div>
@@ -401,19 +403,19 @@ export default function AgentsDashboard() {
 
         {activeTab === 'execute' && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Exécuter un Agent</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminAgentsDashboardExecuteAgent')}</h2>
 
             <div className="space-y-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Agent
+                  {t('adminAgentsDashboardAgent')}
                 </label>
                 <select
                   value={selectedAgent}
                   onChange={(e) => setSelectedAgent(e.target.value)}
                   className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 >
-                  <option value="">Sélectionner un agent</option>
+                  <option value="">{t('adminAgentsDashboardSelectAgent')}</option>
                   {agents.map(agent => (
                     <option key={agent.id} value={agent.id}>
                       {agent.name} - {agent.description}
@@ -424,7 +426,7 @@ export default function AgentsDashboard() {
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Paramètres (JSON)
+                  {t('adminAgentsDashboardParameters')}
                 </label>
                 <textarea
                   value={agentInput}
@@ -443,12 +445,12 @@ export default function AgentsDashboard() {
                 {executingAgent === selectedAgent ? (
                   <>
                     <RefreshCw className="w-4 h-4 animate-spin" />
-                    Exécution en cours...
+                    {t('adminAgentsDashboardExecuting')}
                   </>
                 ) : (
                   <>
                     <Play className="w-4 h-4" />
-                    Exécuter l'agent
+                    {t('adminAgentsDashboardExecuteAgentButton')}
                   </>
                 )}
               </button>
@@ -456,7 +458,7 @@ export default function AgentsDashboard() {
 
             {executions.filter(e => e.agentId === selectedAgent).length > 0 && (
               <div className="mt-6 pt-6 border-t border-gray-200">
-                <h3 className="font-medium text-gray-900 mb-3">Dernière exécution</h3>
+                <h3 className="font-medium text-gray-900 mb-3">{t('adminAgentsDashboardLastExecution')}</h3>
                 <div className="bg-gray-50 rounded-lg p-4">
                   <pre className="text-sm text-gray-700 overflow-auto max-h-64">
                     {JSON.stringify(
@@ -474,7 +476,7 @@ export default function AgentsDashboard() {
         {activeTab === 'schedule' && (
           <div className="space-y-6">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Planifier une Tâche</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminAgentsDashboardScheduleTask')}</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {agents.map(agent => (
@@ -491,19 +493,19 @@ export default function AgentsDashboard() {
                         onClick={() => scheduleTask(agent.id, 'quotidien')}
                         className="flex-1 px-2 py-1 text-xs bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition-colors"
                       >
-                        Quotidien
+                        {t('adminAgentsDashboardDaily')}
                       </button>
                       <button
                         onClick={() => scheduleTask(agent.id, 'hebdomadaire')}
                         className="flex-1 px-2 py-1 text-xs bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition-colors"
                       >
-                        Hebdo
+                        {t('adminAgentsDashboardWeekly')}
                       </button>
                       <button
                         onClick={() => scheduleTask(agent.id, 'mensuel')}
                         className="flex-1 px-2 py-1 text-xs bg-indigo-100 text-indigo-700 rounded hover:bg-indigo-200 transition-colors"
                       >
-                        Mensuel
+                        {t('adminAgentsDashboardMonthly')}
                       </button>
                     </div>
                   </div>
@@ -512,9 +514,9 @@ export default function AgentsDashboard() {
             </div>
 
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Tâches Planifiées</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminAgentsDashboardScheduledTasksList')}</h2>
               {tasks.length === 0 ? (
-                <p className="text-gray-500 text-center py-8">Aucune tâche planifiée</p>
+                <p className="text-gray-500 text-center py-8">{t('adminAgentsDashboardNoScheduledTasks')}</p>
               ) : (
                 <div className="space-y-3">
                   {tasks.map(task => (
@@ -534,24 +536,24 @@ export default function AgentsDashboard() {
                       <div className="flex items-center gap-4">
                         <div className="text-right">
                           <p className="text-sm text-gray-500">
-                            Prochaine: {new Date(task.nextExecution).toLocaleString('fr-FR')}
+                            {t('adminAgentsDashboardNext')}: {new Date(task.nextExecution).toLocaleString(locale)}
                           </p>
                           <p className="text-xs text-gray-400">
-                            {task.executionCount} exécution(s)
+                            {task.executionCount} {t('adminAgentsDashboardExecutions3')}
                           </p>
                         </div>
                         <div className="flex gap-2">
                           <button
                             onClick={() => executeTask(task.id)}
                             className="p-2 text-indigo-600 hover:bg-indigo-100 rounded-lg transition-colors"
-                            aria-label="Exécuter la tâche"
+                            aria-label={t('adminAgentsDashboardExecuteTask')}
                           >
                             <Play className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => deleteTask(task.id)}
                             className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors"
-                            aria-label="Supprimer la tâche"
+                            aria-label={t('adminAgentsDashboardDeleteTask')}
                           >
                             <Trash2 className="w-4 h-4" />
                           </button>
@@ -567,19 +569,19 @@ export default function AgentsDashboard() {
 
         {activeTab === 'history' && (
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">Historique des Exécutions</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">{t('adminAgentsDashboardExecutionHistory')}</h2>
             {executions.length === 0 ? (
-              <p className="text-gray-500 text-center py-8">Aucune exécution enregistrée</p>
+              <p className="text-gray-500 text-center py-8">{t('adminAgentsDashboardNoExecutionHistory')}</p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Agent</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Statut</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Date</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Durée</th>
-                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">Tokens</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('adminAgentsDashboardAgent')}</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('adminAgentsDashboardStatus')}</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('adminAgentsDashboardDate')}</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('adminAgentsDashboardDuration')}</th>
+                      <th className="text-left py-3 px-4 text-sm font-medium text-gray-500">{t('adminAgentsDashboardTokens')}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -594,11 +596,11 @@ export default function AgentsDashboard() {
                         <td className="py-3 px-4">
                           <span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(exec.status)}`}>
                             {getStatusIcon(exec.status)}
-                            {exec.status === 'success' ? 'Réussi' : 'Erreur'}
+                            {exec.status === 'success' ? t('adminAgentsDashboardSuccess') : t('adminAgentsDashboardError')}
                           </span>
                         </td>
                         <td className="py-3 px-4 text-sm text-gray-500">
-                          {new Date(exec.executedAt).toLocaleString('fr-FR')}
+                          {new Date(exec.executedAt).toLocaleString(locale)}
                         </td>
                         <td className="py-3 px-4 text-sm text-gray-900">{exec.duration}ms</td>
                         <td className="py-3 px-4 text-sm text-gray-500">{exec.tokensUsed}</td>

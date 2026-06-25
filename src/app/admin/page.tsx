@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { formatPrice } from '@/lib/utils'
+import { useI18n } from '@/i18n'
 import { Users, ShoppingCart, FileCode, TrendingUp, ExternalLink, RefreshCw } from 'lucide-react'
 
 export default function AdminDashboard() {
+  const { t } = useI18n()
   const [stats, setStats] = useState({ users: 0, orders: 0, templates: 0, revenue: 0 })
   const [syncing, setSyncing] = useState(false)
   const [syncMessage, setSyncMessage] = useState<string | null>(null)
@@ -17,15 +19,15 @@ export default function AdminDashboard() {
   }, [])
 
   const statCards = [
-    { label: 'Utilisateurs', value: stats.users, icon: Users, color: 'text-blue-500' },
-    { label: 'Commandes', value: stats.orders, icon: ShoppingCart, color: 'text-green-500' },
-    { label: 'Templates', value: stats.templates, icon: FileCode, color: 'text-purple-500' },
-    { label: 'Revenus', value: formatPrice(stats.revenue), icon: TrendingUp, color: 'text-yellow-500' },
+    { label: t('adminStatUsers'), value: stats.users, icon: Users, color: 'text-blue-500' },
+    { label: t('adminStatOrders'), value: stats.orders, icon: ShoppingCart, color: 'text-green-500' },
+    { label: t('adminStatTemplates'), value: stats.templates, icon: FileCode, color: 'text-purple-500' },
+    { label: t('adminStatRevenue'), value: formatPrice(stats.revenue), icon: TrendingUp, color: 'text-yellow-500' },
   ]
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
-      <h1 className="text-3xl font-bold mb-8">Dashboard Admin</h1>
+      <h1 className="text-3xl font-bold mb-8">{t('adminDashboardTitle')}</h1>
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
         {statCards.map((stat) => (
           <div key={stat.label} className="bg-white rounded-xl p-6 shadow-sm">
@@ -44,7 +46,7 @@ export default function AdminDashboard() {
             href="https://dashboard.stripe.com"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Ouvrir le tableau de bord Stripe"
+            aria-label={t('adminStripeDashboardLabel')}
             className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-500 font-medium"
           >
             <ExternalLink className="w-4 h-4" />
@@ -57,19 +59,19 @@ export default function AdminDashboard() {
               try {
                 const res = await fetch('/api/admin/stripe-products', { method: 'POST' })
                 const data = await res.json()
-                setSyncMessage(res.ok ? 'Synchronisation réussie.' : data.error ?? 'Erreur lors de la synchronisation.')
+                setSyncMessage(res.ok ? t('adminStripeSyncSuccess') : data.error ?? t('adminStripeSyncError'))
               } catch {
-                setSyncMessage('Erreur lors de la synchronisation.')
+                setSyncMessage(t('adminStripeSyncError'))
               } finally {
                 setSyncing(false)
               }
             }}
             disabled={syncing}
-            aria-label="Synchroniser les produits Stripe"
+            aria-label={t('adminStripeSyncLabel')}
             className="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500 disabled:opacity-50 transition-all"
           >
             <RefreshCw className={`w-4 h-4 ${syncing ? 'animate-spin' : ''}`} />
-            {syncing ? 'Synchronisation…' : 'Synchroniser Stripe'}
+            {syncing ? t('adminStripeSyncing') : t('adminStripeSync')}
           </button>
         </div>
         {syncMessage && (

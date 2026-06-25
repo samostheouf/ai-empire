@@ -4,8 +4,10 @@ import { useState } from 'react'
 import { Sparkles, ArrowRight, LogIn, Shield, Zap, Code } from 'lucide-react'
 import Link from 'next/link'
 import Breadcrumb from '@/components/Breadcrumb'
+import { useI18n } from '@/i18n'
 
 export default function LoginPage() {
+  const { t, locale } = useI18n()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -28,10 +30,10 @@ export default function LoginPage() {
         localStorage.setItem('neura_api_key', data.apiKey)
         window.location.href = `/dashboard?email=${encodeURIComponent(email)}`
       } else {
-        setError(data.error || 'Erreur lors de la connexion')
+        setError(data.error || t('loginError'))
       }
     } catch {
-      setError('Erreur lors de la connexion')
+      setError(t('loginError'))
     }
     setLoading(false)
   }
@@ -55,15 +57,15 @@ export default function LoginPage() {
           </Link>
 
           <h2 className="text-3xl font-bold text-white mb-8">
-            Bienvenue sur<br />
+            {t('loginTitle')}<br />
             <span className="text-gradient">NeuraAPI</span>
           </h2>
 
           <div className="space-y-6">
             {[
-              { icon: Zap, text: '8+ endpoints IA instantanés' },
-              { icon: Code, text: 'SDK TypeScript en 3 lignes' },
-              { icon: Shield, text: '100 crédits/mois gratuits' },
+              { icon: Zap, text: t('loginFeature1') },
+              { icon: Code, text: t('loginFeature2') },
+              { icon: Shield, text: t('loginFeature3') },
             ].map((item, i) => (
               <div key={i} className="flex items-center gap-4 glass-card rounded-xl p-4">
                 <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-indigo-500/20 border border-white/5 flex items-center justify-center">
@@ -86,7 +88,7 @@ export default function LoginPage() {
             </Link>
           </div>
           <div className="mb-4 hidden lg:block">
-            <Breadcrumb items={[{ name: 'Connexion', href: '/login' }]} />
+            <Breadcrumb items={[{ name: t('loginBreadcrumb'), href: '/login' }]} />
           </div>
 
           <div className="glass-card rounded-2xl p-8">
@@ -94,8 +96,8 @@ export default function LoginPage() {
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-indigo-500/20">
                 <LogIn className="w-7 h-7 text-white" />
               </div>
-              <h1 className="text-2xl font-bold text-white">Se connecter</h1>
-              <p className="text-indigo-300/60 mt-2">Accédez à votre espace NeuraAPI</p>
+              <h1 className="text-2xl font-bold text-white">{t('loginFormTitle')}</h1>
+              <p className="text-indigo-300/60 mt-2">{t('loginSubtitle')}</p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -105,7 +107,7 @@ export default function LoginPage() {
                 </div>
               )}
               <div>
-                <label className="block text-sm font-medium text-indigo-200 mb-1.5">Email</label>
+                <label className="block text-sm font-medium text-indigo-200 mb-1.5">{t('loginEmail')}</label>
                 <input
                   type="email"
                   required
@@ -116,7 +118,7 @@ export default function LoginPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-indigo-200 mb-1.5">Mot de passe</label>
+                <label className="block text-sm font-medium text-indigo-200 mb-1.5">{t('loginPassword')}</label>
                 <input
                   type="password"
                   required
@@ -136,7 +138,7 @@ export default function LoginPage() {
                   <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 ) : (
                   <>
-                    Se connecter
+                    {t('loginFormTitle')}
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -144,8 +146,8 @@ export default function LoginPage() {
             </form>
 
             <p className="text-center text-sm text-indigo-300/50 mt-6">
-              Pas encore de compte ?{' '}
-              <Link href="/register" className="text-indigo-400 hover:text-indigo-300 transition-colors font-medium">Créer un compte</Link>
+              {t('loginNoAccount')}{' '}
+              <Link href="/register" className="text-indigo-400 hover:text-indigo-300 transition-colors font-medium">{t('loginCreateAccount')}</Link>
             </p>
           </div>
         </div>

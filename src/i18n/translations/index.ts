@@ -1,6 +1,6 @@
-import { Locale, TranslationKeys } from '../config'
+import { Locale } from '../config'
 
-const translationLoaders: Record<Locale, () => Promise<{ default: TranslationKeys }>> = {
+const translationLoaders: Record<Locale, () => Promise<{ default: Record<string, string> }>> = {
   fr: () => import('./fr'),
   en: () => import('./en'),
   es: () => import('./es'),
@@ -13,7 +13,7 @@ const translationLoaders: Record<Locale, () => Promise<{ default: TranslationKey
   ar: () => import('./ar'),
 }
 
-export async function loadTranslations(locale: Locale): Promise<TranslationKeys> {
+export async function loadTranslations(locale: Locale): Promise<Record<string, string>> {
   const loader = translationLoaders[locale] || translationLoaders.fr
   const mod = await loader()
   return mod.default

@@ -2,9 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { formatPrice } from '@/lib/utils'
+import { useI18n } from '@/i18n'
 import type { Template } from '@/types'
 
 export default function AdminTemplatesPage() {
+  const { t } = useI18n()
   const [templates, setTemplates] = useState<Template[]>([])
 
   useEffect(() => {
@@ -16,15 +18,15 @@ export default function AdminTemplatesPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Templates</h1>
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('adminTemplatesTitle')}</h1>
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-gray-100">
-              <th className="text-left px-6 py-3 font-medium text-gray-500">Nom</th>
-              <th className="text-left px-6 py-3 font-medium text-gray-500">Catégorie</th>
-              <th className="text-left px-6 py-3 font-medium text-gray-500">Prix</th>
-              <th className="text-left px-6 py-3 font-medium text-gray-500">Téléchargements</th>
+              <th className="text-left px-6 py-3 font-medium text-gray-500">{t('adminTemplatesName')}</th>
+              <th className="text-left px-6 py-3 font-medium text-gray-500">{t('adminTemplatesCategory')}</th>
+              <th className="text-left px-6 py-3 font-medium text-gray-500">{t('adminTemplatesPrice')}</th>
+              <th className="text-left px-6 py-3 font-medium text-gray-500">{t('adminTemplatesDownloads')}</th>
             </tr>
           </thead>
           <tbody>

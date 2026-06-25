@@ -1,25 +1,41 @@
 import Link from 'next/link'
-import { generateMetadata } from '@/lib/seo'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import ShareButtons from '@/components/ShareButtons'
 import Breadcrumb from '@/components/Breadcrumb'
+import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-export const metadata = generateMetadata({
-  title: "Comparaison des providers IA gratuits : Groq vs Gemini vs OpenAI",
-  description: "Comparaison honnête et détaillée des providers IA gratuits pour développeurs. Performances, prix, limites et cas d'usage.",
-  path: '/blog/comparaison-providers-ia-gratuits',
-  type: 'article',
-  keywords: ['Groq', 'Gemini', 'OpenAI', 'IA gratuite', 'comparaison', 'providers IA', 'développeur web', 'API ia'],
-  publishedTime: '2024-06-20',
-  modifiedTime: '2024-12-01',
-})
+export async function generateMetadata() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('blogComparaisonProvidersTitle'),
+    description: t('blogComparaisonProvidersDescription'),
+    path: '/blog/comparaison-providers-ia-gratuits',
+    type: 'article',
+    keywords: [t('blogComparaisonProvidersKw1'), t('blogComparaisonProvidersKw2'), t('blogComparaisonProvidersKw3'), t('blogComparaisonProvidersKw4'), t('blogComparaisonProvidersKw5'), t('blogComparaisonProvidersKw6'), t('blogComparaisonProvidersKw7'), t('blogComparaisonProvidersKw8')],
+    publishedTime: '2024-06-20',
+    modifiedTime: '2024-12-01',
+  })
+}
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
-export default function ComparaisonProvidersIaPage() {
+export default async function ComparaisonProvidersIaPage() {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+
   const articleSchema = generateArticleSchema({
-    title: 'Comparaison des providers IA gratuits : Groq vs Gemini vs OpenAI',
-    description: 'Comparaison honnête des providers IA gratuits pour développeurs.',
+    title: t('blogComparaisonProvidersTitle'),
+    description: t('blogComparaisonProvidersSchemaDesc'),
     slug: 'comparaison-providers-ia-gratuits',
     datePublished: '2024-06-20',
     dateModified: '2024-12-01',
@@ -27,8 +43,8 @@ export default function ComparaisonProvidersIaPage() {
 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
-      { name: 'Blog', path: '/blog' },
-      { name: 'Comparaison providers IA', path: '/blog/comparaison-providers-ia-gratuits' },
+      { name: t('blogBreadcrumbBlog'), path: '/blog' },
+      { name: t('blogComparaisonProvidersBreadcrumb'), path: '/blog/comparaison-providers-ia-gratuits' },
     ],
   })
 
@@ -44,46 +60,46 @@ export default function ComparaisonProvidersIaPage() {
       />
 
       <article className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
-        <Breadcrumb items={[{ name: 'Blog', href: '/blog' }, { name: 'Comparaison providers IA', href: '/blog/comparaison-providers-ia-gratuits' }]} />
+        <Breadcrumb items={[{ name: t('blogBreadcrumbBlog'), href: '/blog' }, { name: t('blogComparaisonProvidersBreadcrumb'), href: '/blog/comparaison-providers-ia-gratuits' }]} />
 
         <div className="mt-8">
           <div className="flex items-center gap-3 mb-6">
             <span className="inline-flex items-center rounded-full bg-indigo-600/20 px-3 py-1 text-xs font-medium text-indigo-300 border border-indigo-600/30">
-              Comparaison
+              {t('blogComparaisonProvidersTag')}
             </span>
-            <span className="text-sm text-indigo-400">20 Juin 2024</span>
-            <span className="text-sm text-indigo-400">15 min de lecture</span>
+            <span className="text-sm text-indigo-400">{t('blogComparaisonProvidersDate')}</span>
+            <span className="text-sm text-indigo-400">{t('blogComparaisonProvidersReadTime')}</span>
           </div>
 
           <h1 className="text-4xl font-bold text-white sm:text-5xl">
-            Comparaison des providers IA gratuits : Groq vs Gemini vs OpenAI
+            {t('blogComparaisonProvidersH1')}
           </h1>
 
           <div className="mt-8">
-            <ShareButtons url={`${baseUrl}/blog/comparaison-providers-ia-gratuits`} title="Comparaison des providers IA gratuits" />
+            <ShareButtons url={`${baseUrl}/blog/comparaison-providers-ia-gratuits`} title={t('blogComparaisonProvidersShareTitle')} />
           </div>
         </div>
 
         <div className="prose prose-invert prose-lg mt-12 max-w-none">
           <div className="space-y-8 text-indigo-200 leading-relaxed">
             <p>
-              Choisir le bon provider IA est une décision critique pour les développeurs. Les offres gratuites permettent de tester sans risque financier, mais chaque provider a ses forces et faiblesses. Voici une comparaison honnête basée sur des tests réels.
+              {t('blogComparaisonProvidersIntro')}
             </p>
 
             <div className="rounded-xl bg-indigo-900/30 border border-indigo-800/50 p-6 my-8">
-              <h3 className="text-white font-semibold mb-2">Méthodologie</h3>
+              <h3 className="text-white font-semibold mb-2">{t('blogComparaisonProvidersMethodTitle')}</h3>
               <p className="text-sm text-indigo-300">
-                Cette comparaison est basée sur des tests effectués en décembre 2024. Les prix et les limites des tiers offerts peuvent changer. Nous avons testé chaque provider avec les mêmes prompts pour comparer les résultats.
+                {t('blogComparaisonProvidersMethodDesc')}
               </p>
             </div>
 
-            <h2 className="text-2xl font-bold text-white mt-12">Vue d&apos;ensemble</h2>
+            <h2 className="text-2xl font-bold text-white mt-12">{t('blogComparaisonProvidersH2Overview')}</h2>
 
             <div className="overflow-x-auto my-8">
               <table className="w-full min-w-[600px] text-sm">
                 <thead>
                   <tr className="border-b border-indigo-800/50">
-                    <th className="py-3 text-left text-indigo-400 font-semibold">Critère</th>
+                    <th className="py-3 text-left text-indigo-400 font-semibold">{t('blogComparaisonProvidersTableCriteria')}</th>
                     <th className="py-3 text-center text-indigo-400 font-semibold">Groq</th>
                     <th className="py-3 text-center text-indigo-400 font-semibold">Gemini</th>
                     <th className="py-3 text-center text-indigo-400 font-semibold">OpenAI</th>
@@ -91,49 +107,49 @@ export default function ComparaisonProvidersIaPage() {
                 </thead>
                 <tbody className="text-indigo-200">
                   <tr className="border-b border-indigo-800/30">
-                    <td className="py-3 font-medium text-white">Tier gratuit</td>
-                    <td className="py-3 text-center">Oui</td>
-                    <td className="py-3 text-center">Oui</td>
-                    <td className="py-3 text-center">Limité</td>
+                    <td className="py-3 font-medium text-white">{t('blogComparaisonProvidersRowFreeTier')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowYes')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowYes')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowLimited')}</td>
                   </tr>
                   <tr className="border-b border-indigo-800/30">
-                    <td className="py-3 font-medium text-white">Modèles disponibles</td>
+                    <td className="py-3 font-medium text-white">{t('blogComparaisonProvidersRowModels')}</td>
                     <td className="py-3 text-center">Llama 3.3, Mixtral</td>
                     <td className="py-3 text-center">Gemini 1.5 Flash, Pro</td>
                     <td className="py-3 text-center">GPT-4o mini, GPT-4o</td>
                   </tr>
                   <tr className="border-b border-indigo-800/30">
-                    <td className="py-3 font-medium text-white">Vitesse</td>
-                    <td className="py-3 text-center text-green-400 font-semibold">Très rapide</td>
-                    <td className="py-3 text-center">Rapide</td>
-                    <td className="py-3 text-center">Moyenne</td>
+                    <td className="py-3 font-medium text-white">{t('blogComparaisonProvidersRowSpeed')}</td>
+                    <td className="py-3 text-center text-green-400 font-semibold">{t('blogComparaisonProvidersRowVeryFast')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowFast')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowAverage')}</td>
                   </tr>
                   <tr className="border-b border-indigo-800/30">
-                    <td className="py-3 font-medium text-white">Qualité (prompt moyen)</td>
-                    <td className="py-3 text-center">Bonne</td>
-                    <td className="py-3 text-center text-green-400 font-semibold">Très bonne</td>
-                    <td className="py-3 text-center text-green-400 font-semibold">Excellente</td>
+                    <td className="py-3 font-medium text-white">{t('blogComparaisonProvidersRowQuality')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowGood')}</td>
+                    <td className="py-3 text-center text-green-400 font-semibold">{t('blogComparaisonProvidersRowVeryGood')}</td>
+                    <td className="py-3 text-center text-green-400 font-semibold">{t('blogComparaisonProvidersRowExcellent')}</td>
                   </tr>
                   <tr className="border-b border-indigo-800/30">
-                    <td className="py-3 font-medium text-white">Contexte (tokens)</td>
+                    <td className="py-3 font-medium text-white">{t('blogComparaisonProvidersRowContext')}</td>
                     <td className="py-3 text-center">128K</td>
                     <td className="py-3 text-center text-green-400 font-semibold">1M</td>
                     <td className="py-3 text-center">128K</td>
                   </tr>
                   <tr className="border-b border-indigo-800/30">
-                    <td className="py-3 font-medium text-white">Function calling</td>
-                    <td className="py-3 text-center">Oui</td>
-                    <td className="py-3 text-center">Oui</td>
-                    <td className="py-3 text-center">Oui</td>
+                    <td className="py-3 font-medium text-white">{t('blogComparaisonProvidersRowFunctionCalling')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowYes')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowYes')}</td>
+                    <td className="py-3 text-center">{t('blogComparaisonProvidersRowYes')}</td>
                   </tr>
                   <tr className="border-b border-indigo-800/30">
-                    <td className="py-3 font-medium text-white">Vision</td>
-                    <td className="py-3 text-center text-red-400">Non</td>
-                    <td className="py-3 text-center text-green-400">Oui</td>
-                    <td className="py-3 text-center text-green-400">Oui</td>
+                    <td className="py-3 font-medium text-white">{t('blogComparaisonProvidersRowVision')}</td>
+                    <td className="py-3 text-center text-red-400">{t('blogComparaisonProvidersRowNo')}</td>
+                    <td className="py-3 text-center text-green-400">{t('blogComparaisonProvidersRowYes')}</td>
+                    <td className="py-3 text-center text-green-400">{t('blogComparaisonProvidersRowYes')}</td>
                   </tr>
                   <tr>
-                    <td className="py-3 font-medium text-white">Langages supportés</td>
+                    <td className="py-3 font-medium text-white">{t('blogComparaisonProvidersRowLanguages')}</td>
                     <td className="py-3 text-center">Python, JS</td>
                     <td className="py-3 text-center">Python, JS, Go</td>
                     <td className="py-3 text-center">Python, JS, +</td>
@@ -142,15 +158,15 @@ export default function ComparaisonProvidersIaPage() {
               </table>
             </div>
 
-            <h2 className="text-2xl font-bold text-white mt-12">Groq — La vitesse comme avantage</h2>
+            <h2 className="text-2xl font-bold text-white mt-12">{t('blogComparaisonProvidersH2Groq')}</h2>
             <p>
-              Groq se distingue par sa vitesse exceptionnelle. Les réponses sont quasi-instantanées, ce qui en fait le provider idéal pour les applications nécessitant un retour rapide : chatbots, autocomplete, suggestions en temps réel.
+              {t('blogComparaisonProvidersPGroq1')}
             </p>
             <p>
-              <strong className="text-white">Points forts :</strong> Vitesse impressionnante (jusqu&apos;à 500 tokens/seconde), API compatible OpenAI, modèle Llama 3.3 70B performant, tier gratuit généreux.
+              <strong className="text-white">{t('blogComparaisonProvidersStrongPros')}</strong> {t('blogComparaisonProvidersPGroqPros')}
             </p>
             <p>
-              <strong className="text-white">Points faibles :</strong> Pas de vision, modèles limités à ceux de Meta/Mistral, moins performant que GPT-4 sur des tâches complexes.
+              <strong className="text-white">{t('blogComparaisonProvidersStrongCons')}</strong> {t('blogComparaisonProvidersPGroqCons')}
             </p>
             <div className="rounded-xl bg-indigo-950/80 p-4 border border-indigo-800/30 my-4">
               <pre className="text-sm text-indigo-200 overflow-x-auto">{`// Exemple avec Groq (API compatible OpenAI)
@@ -168,15 +184,15 @@ const response = await groq.chat.completions.create({
 console.log(response.choices[0].message.content)`}</pre>
             </div>
 
-            <h2 className="text-2xl font-bold text-white mt-12">Gemini — Le géant de Google</h2>
+            <h2 className="text-2xl font-bold text-white mt-12">{t('blogComparaisonProvidersH2Gemini')}</h2>
             <p>
-              Google Gemini offre un tier gratuit avec un contexte de 1 million de tokens, ce qui est inégalé. La capacité à traiter de très longs documents en fait un choix intéressant pour l&apos;analyse de données et la recherche documentaire.
+              {t('blogComparaisonProvidersPGemini1')}
             </p>
             <p>
-              <strong className="text-white">Points forts :</strong> Contexte million de tokens, vision intégrée, performance solide, SDK officiels pour plusieurs langages, intégration native avec l&apos;écosystème Google.
+              <strong className="text-white">{t('blogComparaisonProvidersStrongPros')}</strong> {t('blogComparaisonProvidersPGeminiPros')}
             </p>
             <p>
-              <strong className="text-white">Points faibles :</strong> API parfois instable, documentation parfois incomplète, latence plus élevée que Groq, fonction calling moins fiable.
+              <strong className="text-white">{t('blogComparaisonProvidersStrongCons')}</strong> {t('blogComparaisonProvidersPGeminiCons')}
             </p>
             <div className="rounded-xl bg-indigo-950/80 p-4 border border-indigo-800/30 my-4">
               <pre className="text-sm text-indigo-200 overflow-x-auto">{`// Exemple avec Google Gemini
@@ -189,15 +205,15 @@ const result = await model.generateContent('Explique le machine learning')
 console.log(result.response.text())`}</pre>
             </div>
 
-            <h2 className="text-2xl font-bold text-white mt-12">OpenAI — La référence</h2>
+            <h2 className="text-2xl font-bold text-white mt-12">{t('blogComparaisonProvidersH2Openai')}</h2>
             <p>
-              OpenAI reste la référence en matière de qualité de réponse. GPT-4o est le modèle le plus performant disponible, mais le tier gratuit est très limité. Le GPT-4o mini offre un bon compromis qualité/prix.
+              {t('blogComparaisonProvidersPOpenai1')}
             </p>
             <p>
-              <strong className="text-white">Points forts :</strong> Meilleure qualité de réponse, écosystème mature, documentation excellente, large communauté, function calling fiable, vision et audio.
+              <strong className="text-white">{t('blogComparaisonProvidersStrongPros')}</strong> {t('blogComparaisonProvidersPOpenaiPros')}
             </p>
             <p>
-              <strong className="text-white">Points faibles :</strong> Tier gratuit quasi inexistant, GPT-4o coûteux, latence variable, dépendance à un seul fournisseur.
+              <strong className="text-white">{t('blogComparaisonProvidersStrongCons')}</strong> {t('blogComparaisonProvidersPOpenaiCons')}
             </p>
             <div className="rounded-xl bg-indigo-950/80 p-4 border border-indigo-800/30 my-4">
               <pre className="text-sm text-indigo-200 overflow-x-auto">{`// Exemple avec OpenAI
@@ -212,57 +228,57 @@ const response = await openai.chat.completions.create({
 console.log(response.choices[0].message.content)`}</pre>
             </div>
 
-            <h2 className="text-2xl font-bold text-white mt-12">Notre recommandation</h2>
+            <h2 className="text-2xl font-bold text-white mt-12">{t('blogComparaisonProvidersH2Recommendation')}</h2>
             <p>
-              Il n&apos;y a pas de provider universellement meilleur. Le choix dépend de votre cas d&apos;usage :
+              {t('blogComparaisonProvidersPRecommendation')}
             </p>
             <div className="space-y-3 my-6">
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-                <h3 className="text-white font-semibold mb-1">Pour la vitesse et le coût</h3>
-                <p className="text-sm text-indigo-300">Groq est imbattable. La vitesse de réponse et le tier gratuit en font le choix idéal pour les prototypes et les applications temps réel.</p>
+                <h3 className="text-white font-semibold mb-1">{t('blogComparaisonProvidersRecSpeedTitle')}</h3>
+                <p className="text-sm text-indigo-300">{t('blogComparaisonProvidersRecSpeedDesc')}</p>
               </div>
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-                <h3 className="text-white font-semibold mb-1">Pour les documents longs</h3>
-                <p className="text-sm text-indigo-300">Gemini avec son contexte de 1M tokens est le seul choix viable pour analyser de très longs documents ou des piles de données.</p>
+                <h3 className="text-white font-semibold mb-1">{t('blogComparaisonProvidersRecLongDocsTitle')}</h3>
+                <p className="text-sm text-indigo-300">{t('blogComparaisonProvidersRecLongDocsDesc')}</p>
               </div>
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-                <h3 className="text-white font-semibold mb-1">Pour la qualité maximale</h3>
-                <p className="text-sm text-indigo-300">GPT-4o reste le meilleur modèle. Si la qualité est primordiale et que le budget le permet, c&apos;est le choix sûr.</p>
+                <h3 className="text-white font-semibold mb-1">{t('blogComparaisonProvidersRecQualityTitle')}</h3>
+                <p className="text-sm text-indigo-300">{t('blogComparaisonProvidersRecQualityDesc')}</p>
               </div>
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-                <h3 className="text-white font-semibold mb-1">Pour simplifier le tout</h3>
-                <p className="text-sm text-indigo-300">NeuraAPI unifie Groq et OpenAI derrière une seule API. Vous changez de provider sans modifier votre code.</p>
+                <h3 className="text-white font-semibold mb-1">{t('blogComparaisonProvidersRecSimplifyTitle')}</h3>
+                <p className="text-sm text-indigo-300">{t('blogComparaisonProvidersRecSimplifyDesc')}</p>
               </div>
             </div>
 
-            <h2 className="text-2xl font-bold text-white mt-12">Conclusion</h2>
+            <h2 className="text-2xl font-bold text-white mt-12">{t('blogComparaisonProvidersH2Conclusion')}</h2>
             <p>
-              Chaque provider a sa place. Groq domine la vitesse, Gemini excelle sur les documents longs, OpenAI mène sur la qualité. L&apos;approche la plus pragmatique est de commencer par le provider le mieux adapté à votre cas d&apos;usage, puis d&apos;évaluer si un changement est nécessaire au fil de la croissance.
+              {t('blogComparaisonProvidersPConclusion1')}
             </p>
             <p>
-              Avec NeuraAPI, vous n&apos;avez pas à choisir. Une seule clé API, accès à plusieurs providers, facturation unifiée. Testez不同的 providers et trouvez celui qui correspond à vos besoins.
+              {t('blogComparaisonProvidersPConclusion2')}
             </p>
           </div>
 
           <div className="mt-16 rounded-2xl bg-indigo-900/50 border border-indigo-700/50 p-8 text-center">
             <h3 className="text-2xl font-bold text-white">
-              Essayez NeuraAPI
+              {t('blogComparaisonProvidersCtaTitle')}
             </h3>
             <p className="mt-3 text-indigo-200">
-              Accédez à Groq et OpenAI via une seule API. 100 crédits gratuits.
+              {t('blogComparaisonProvidersCtaDesc')}
             </p>
             <div className="mt-6 flex items-center justify-center gap-4">
               <Link
                 href="/register"
                 className="rounded-lg bg-indigo-600 px-6 py-3 text-base font-semibold text-white hover:bg-indigo-500 transition-all"
               >
-                Commencer gratuitement
+                {t('blogCtaStartFree')}
               </Link>
               <Link
                 href="/docs"
                 className="rounded-lg border border-indigo-500 px-6 py-3 text-base font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all"
               >
-                Lire la doc
+                {t('blogCtaReadDocs')}
               </Link>
             </div>
           </div>

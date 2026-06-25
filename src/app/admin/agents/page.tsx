@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useI18n } from '@/i18n'
 import {
   Bot,
   TrendingUp,
@@ -68,6 +69,7 @@ interface Summary {
 }
 
 export default function AgentsDashboard() {
+  const { t } = useI18n()
   const [agents, setAgents] = useState<AgentScore[]>([])
   const [criteria, setCriteria] = useState<ScoreCriteria[]>([])
   const [summary, setSummary] = useState<Summary | null>(null)
@@ -75,18 +77,18 @@ export default function AgentsDashboard() {
   const [selectedAgent, setSelectedAgent] = useState<AgentScore | null>(null)
   const [activeTab, setActiveTab] = useState<'overview' | 'details' | 'improvement' | 'architects'>('overview')
   const [architectAgents] = useState([
-    { id: 'architect-security', name: 'Architecte Sécurité', description: 'Audite les routes API, middleware et requêtes DB pour les failles de sécurité', score: 8.5, auditsCompleted: 12, lastAudit: '2024-03-15', status: 'actif' },
-    { id: 'architect-quality', name: 'Architecte Qualité', description: 'Audite la qualité du code: TypeScript, duplication, erreurs, performance, accessibilité', score: 7.8, auditsCompleted: 8, lastAudit: '2024-03-14', status: 'actif' }
+    { id: 'architect-security', name: t('adminAgentsAgentArchitectSecurite'), description: t('adminAgentsAgentArchitectSecuriteDesc'), score: 8.5, auditsCompleted: 12, lastAudit: '2024-03-15', status: t('adminDashboardFilterActive') },
+    { id: 'architect-quality', name: t('adminAgentsAgentArchitectQualite'), description: t('adminAgentsAgentArchitectQualiteDesc'), score: 7.8, auditsCompleted: 8, lastAudit: '2024-03-14', status: t('adminDashboardFilterActive') }
   ])
   const [auditHistory] = useState([
-    { id: 'audit-1', agentName: 'Architecte Sécurité', type: 'sécurité', score: 8.5, route: '/api/orders', date: '2024-03-15', vulnerabilities: 2 },
-    { id: 'audit-2', agentName: 'Architecte Qualité', type: 'qualité', score: 7.8, route: 'src/app/admin/agents/page.tsx', date: '2024-03-14', issues: 5 },
-    { id: 'audit-3', agentName: 'Architecte Sécurité', type: 'sécurité', score: 9.0, route: '/api/users', date: '2024-03-13', vulnerabilities: 0 },
-    { id: 'audit-4', agentName: 'Architecte Qualité', type: 'qualité', score: 8.2, route: 'src/lib/db.ts', date: '2024-03-12', issues: 3 }
+    { id: 'audit-1', agentName: t('adminAgentsAgentArchitectSecurite'), type: t('adminAgentsSecurite'), score: 8.5, route: '/api/orders', date: '2024-03-15', vulnerabilities: 2 },
+    { id: 'audit-2', agentName: t('adminAgentsAgentArchitectQualite'), type: t('adminAgentsQualite'), score: 7.8, route: 'src/app/admin/agents/page.tsx', date: '2024-03-14', issues: 5 },
+    { id: 'audit-3', agentName: t('adminAgentsAgentArchitectSecurite'), type: t('adminAgentsSecurite'), score: 9.0, route: '/api/users', date: '2024-03-13', vulnerabilities: 0 },
+    { id: 'audit-4', agentName: t('adminAgentsAgentArchitectQualite'), type: t('adminAgentsQualite'), score: 8.2, route: 'src/lib/db.ts', date: '2024-03-12', issues: 3 }
   ])
   const [teamStatus] = useState({
-    name: 'Équipe Sécurité & Qualité',
-    members: ['Architecte Sécurité', 'Architecte Qualité'],
+    name: t('adminAgentsTeamSecuriteQualite'),
+    members: [t('adminAgentsAgentArchitectSecurite'), t('adminAgentsAgentArchitectQualite')],
     progress: 60,
     version: 2,
     lastEvolution: '2024-03-15'
@@ -165,12 +167,12 @@ export default function AgentsDashboard() {
 
   function getCriteriaLabel(name: string): string {
     const labels: Record<string, string> = {
-      accuracy: 'Précision',
-      speed: 'Vitesse',
-      creativity: 'Créativité',
-      reliability: 'Fiabilité',
-      efficiency: 'Efficacité',
-      innovation: 'Innovation'
+      accuracy: t('adminAgentsCriteriaAccuracy'),
+      speed: t('adminAgentsCriteriaSpeed'),
+      creativity: t('adminAgentsCriteriaCreativity'),
+      reliability: t('adminAgentsCriteriaReliability'),
+      efficiency: t('adminAgentsCriteriaEfficiency'),
+      innovation: t('adminAgentsCriteriaInnovation')
     }
     return labels[name] || name
   }
@@ -189,9 +191,9 @@ export default function AgentsDashboard() {
         <div className="mb-8">
           <div className="flex items-center gap-3 mb-2">
             <Bot className="w-8 h-8 text-indigo-600" />
-            <h1 className="text-2xl font-bold text-gray-900">Système d'Évolution des Agents</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('adminAgentsTitle')}</h1>
           </div>
-          <p className="text-gray-500">Surveillance en temps réel et amélioration continue vers 9.99/10</p>
+          <p className="text-gray-500">{t('adminAgentsSubtitle')}</p>
         </div>
 
         {summary && (
@@ -199,7 +201,7 @@ export default function AgentsDashboard() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Total Agents</p>
+                  <p className="text-sm text-gray-500">{t('adminAgentsTotal')}</p>
                   <p className="text-2xl font-bold text-gray-900 mt-1">{summary.totalAgents}</p>
                 </div>
                 <Bot className="w-8 h-8 text-indigo-500" />
@@ -209,7 +211,7 @@ export default function AgentsDashboard() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Score Moyen</p>
+                  <p className="text-sm text-gray-500">{t('adminAgentsAverageScore')}</p>
                   <p className={`text-2xl font-bold mt-1 ${getScoreColor(summary.averageScore)}`}>
                     {summary.averageScore}/10
                   </p>
@@ -221,7 +223,7 @@ export default function AgentsDashboard() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Meilleur Agent</p>
+                  <p className="text-sm text-gray-500">{t('adminAgentsTopPerformer')}</p>
                   <p className="text-lg font-bold text-gray-900 mt-1 truncate">
                     {summary.topPerformer}
                   </p>
@@ -233,7 +235,7 @@ export default function AgentsDashboard() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm text-gray-500">Total Requêtes</p>
+                  <p className="text-sm text-gray-500">{t('adminAgentsTotalRequests')}</p>
                   <p className="text-2xl font-bold text-gray-900 mt-1">
                     {summary.totalRequests.toLocaleString()}
                   </p>
@@ -246,10 +248,10 @@ export default function AgentsDashboard() {
 
         <div className="flex space-x-1 mb-6 bg-white rounded-lg p-1 shadow-sm border border-gray-200">
           {[
-            { id: 'overview', label: 'Vue d\'ensemble', icon: BarChart3 },
-            { id: 'details', label: 'Détails Agent', icon: Settings },
-            { id: 'improvement', label: 'Amélioration', icon: Target },
-            { id: 'architects', label: 'Architectes', icon: Shield }
+            { id: 'overview', label: t('adminAgentsOverview'), icon: BarChart3 },
+            { id: 'details', label: t('adminAgentsDetails'), icon: Settings },
+            { id: 'improvement', label: t('adminAgentsImprovement'), icon: Target },
+            { id: 'architects', label: t('adminAgentsArchitects'), icon: Shield }
           ].map(({ id, label, icon: Icon }) => (
             <button
               key={id}
@@ -300,7 +302,7 @@ export default function AgentsDashboard() {
                 <div className="grid grid-cols-2 gap-4 mb-4">
                   <div className="flex items-center gap-2 text-sm">
                     <CheckCircle className="w-4 h-4 text-emerald-500" />
-                    <span className="text-gray-600">{agent.stats.successRate}% réussite</span>
+                    <span className="text-gray-600">{agent.stats.successRate}% {t('adminAgentsSuccessRate')}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Clock className="w-4 h-4 text-indigo-500" />
@@ -312,7 +314,7 @@ export default function AgentsDashboard() {
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Activity className="w-4 h-4 text-violet-500" />
-                    <span className="text-gray-600">{agent.stats.totalRequests} req.</span>
+                    <span className="text-gray-600">{agent.stats.totalRequests} {t('adminAgentsRequests')}</span>
                   </div>
                 </div>
 
@@ -348,7 +350,7 @@ export default function AgentsDashboard() {
                   <div className={`text-4xl font-bold ${getScoreColor(selectedAgent.score)}`}>
                     {selectedAgent.score.toFixed(2)}
                   </div>
-                  <p className="text-sm text-gray-500">Score Composite</p>
+                  <p className="text-sm text-gray-500">{t('adminAgentsCompositeScore')}</p>
                 </div>
               </div>
 
@@ -372,65 +374,65 @@ export default function AgentsDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Performance</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">{t('adminAgentsPerformance')}</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Taux de réussite</span>
+                    <span className="text-gray-500">{t('adminAgentsSuccessRateLabel')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.stats.successRate}%</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Temps moyen</span>
+                    <span className="text-gray-500">{t('adminAgentsAverageTime')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.stats.averageResponseTime}ms</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Taux d'erreur</span>
+                    <span className="text-gray-500">{t('adminAgentsErrorRate')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.stats.errorRate}%</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Disponibilité</span>
+                    <span className="text-gray-500">{t('adminAgentsUptime')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.stats.uptime}%</span>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Feedback</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">{t('adminAgentsFeedback')}</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Note moyenne</span>
+                    <span className="text-gray-500">{t('adminAgentsAverageRating')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.feedback.averageRating}/5</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Total avis</span>
+                    <span className="text-gray-500">{t('adminAgentsTotalFeedback')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.feedback.totalFeedback}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Tendance</span>
+                    <span className="text-gray-500">{t('adminAgentsTrend')}</span>
                     <span className="font-medium text-gray-900 capitalize">
-                      {selectedAgent.feedback.trend === 'improving' ? 'En hausse' :
-                       selectedAgent.feedback.trend === 'declining' ? 'En baisse' : 'Stable'}
+                      {selectedAgent.feedback.trend === 'improving' ? t('adminAgentsTrendUp') :
+                       selectedAgent.feedback.trend === 'declining' ? t('adminAgentsTrendDown') : t('adminAgentsTrendStable')}
                     </span>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Temps Réel</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">{t('adminAgentsRealTime')}</h3>
                 <div className="space-y-3">
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Requêtes actives</span>
+                    <span className="text-gray-500">{t('adminAgentsActiveRequests')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.realTime.activeRequests}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Req./minute</span>
+                    <span className="text-gray-500">{t('adminAgentsRequestsPerMinute')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.realTime.requestsPerMinute}</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Latence moy.</span>
+                    <span className="text-gray-500">{t('adminAgentsAverageLatency')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.realTime.averageLatency}ms</span>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Erreurs</span>
+                    <span className="text-gray-500">{t('adminAgentsErrors')}</span>
                     <span className="font-medium text-gray-900">{selectedAgent.realTime.errorPercentage}%</span>
                   </div>
                 </div>
@@ -443,14 +445,14 @@ export default function AgentsDashboard() {
                 className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center gap-2"
               >
                 <Zap className="w-4 h-4" />
-                Déclencher l'amélioration
+                {t('adminAgentsTriggerImprovement')}
               </button>
               <button
                 onClick={() => createImprovementPlan(selectedAgent.role)}
                 className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition-colors flex items-center gap-2"
               >
                 <Target className="w-4 h-4" />
-                Créer un plan
+                {t('adminAgentsCreatePlan')}
               </button>
               <button
                 onClick={async () => {
@@ -470,7 +472,7 @@ export default function AgentsDashboard() {
                 className="bg-amber-100 text-amber-700 px-4 py-2 rounded-lg hover:bg-amber-200 transition-colors flex items-center gap-2"
               >
                 <RefreshCw className="w-4 h-4" />
-                Rollback
+                {t('adminAgentsRollback')}
               </button>
             </div>
           </div>
@@ -479,9 +481,9 @@ export default function AgentsDashboard() {
         {activeTab === 'improvement' && (
           <div className="space-y-6">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Objectif: 9.99/10</h3>
+              <h3 className="text-lg font-semibold text-gray-900 mb-4">{t('adminAgentsGoal')}</h3>
               <p className="text-gray-600 mb-6">
-                Chaque agent est évalué et amélioré continuellement pour atteindre le score parfait de 9.99/10.
+                {t('adminAgentsGoalDescription')}
               </p>
 
               <div className="space-y-4">
@@ -510,8 +512,8 @@ export default function AgentsDashboard() {
                       <button
                         onClick={() => triggerImprovement(agent.role)}
                         className="p-2 text-gray-400 hover:text-indigo-600 transition-colors"
-                        title="Améliorer"
-                        aria-label="Améliorer l'agent"
+                        title={t('adminAgentsImprove')}
+                        aria-label={t('adminAgentsImproveLabel')}
                       >
                         <ArrowUpRight className="w-4 h-4" />
                       </button>
@@ -523,14 +525,14 @@ export default function AgentsDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Processus d'Amélioration</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">{t('adminAgentsImprovementProcess')}</h3>
                 <div className="space-y-4">
                   {[
-                    { step: '1', title: 'Collecte de données', desc: 'Mesure des performances en temps réel' },
-                    { step: '2', title: 'Analyse des retours', desc: 'Évaluation des feedbacks utilisateurs' },
-                    { step: '3', title: 'Identification des axes', desc: 'Détection des faiblesses prioritaires' },
-                    { step: '4', title: 'Optimisation', desc: 'Ajustement des prompts et paramètres' },
-                    { step: '5', title: 'Validation', desc: 'Tests A/B et mesure d\'impact' }
+                    { step: '1', title: t('adminAgentsStep1Title'), desc: t('adminAgentsStep1Desc') },
+                    { step: '2', title: t('adminAgentsStep2Title'), desc: t('adminAgentsStep2Desc') },
+                    { step: '3', title: t('adminAgentsStep3Title'), desc: t('adminAgentsStep3Desc') },
+                    { step: '4', title: t('adminAgentsStep4Title'), desc: t('adminAgentsStep4Desc') },
+                    { step: '5', title: t('adminAgentsStep5Title'), desc: t('adminAgentsStep5Desc') }
                   ].map(({ step, title, desc }) => (
                     <div key={step} className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold">
@@ -546,11 +548,11 @@ export default function AgentsDashboard() {
               </div>
 
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Statistiques Globales</h3>
+                <h3 className="font-semibold text-gray-900 mb-4">{t('adminAgentsGlobalStats')}</h3>
                 <div className="space-y-4">
                   <div className="p-4 bg-indigo-50 rounded-lg">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-indigo-700">Score moyen actuel</span>
+                      <span className="text-sm text-indigo-700">{t('adminAgentsCurrentAverage')}</span>
                       <span className="text-lg font-bold text-indigo-900">
                         {summary?.averageScore || 0}/10
                       </span>
@@ -558,15 +560,15 @@ export default function AgentsDashboard() {
                   </div>
                   <div className="p-4 bg-emerald-50 rounded-lg">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-emerald-700">Objectif cible</span>
+                      <span className="text-sm text-emerald-700">{t('adminAgentsTargetGoal')}</span>
                       <span className="text-lg font-bold text-emerald-900">9.99/10</span>
                     </div>
                   </div>
                   <div className="p-4 bg-amber-50 rounded-lg">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm text-amber-700">Écart à combler</span>
+                      <span className="text-sm text-amber-700">{t('adminAgentsGapToClose')}</span>
                       <span className="text-lg font-bold text-amber-900">
-                        {((9.99 - (summary?.averageScore || 0)).toFixed(2))} pts
+                        {((9.99 - (summary?.averageScore || 0)).toFixed(2))} {t('adminAgentsPts')}
                       </span>
                     </div>
                   </div>
@@ -581,7 +583,7 @@ export default function AgentsDashboard() {
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center gap-3 mb-6">
                 <Shield className="w-6 h-6 text-indigo-600" />
-                <h3 className="text-lg font-semibold text-gray-900">Agents Architectes</h3>
+                <h3 className="text-lg font-semibold text-gray-900">{t('adminAgentsArchitectAgents')}</h3>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -609,7 +611,7 @@ export default function AgentsDashboard() {
                     <div className="flex items-center gap-4 text-sm">
                       <div className="flex items-center gap-1 text-gray-500">
                         <CheckCircle className="w-4 h-4 text-emerald-500" />
-                        {agent.auditsCompleted} audits
+                        {agent.auditsCompleted} {t('adminAgentsAudit')}
                       </div>
                       <div className="flex items-center gap-1 text-gray-500">
                         <Clock className="w-4 h-4 text-indigo-500" />
@@ -625,13 +627,13 @@ export default function AgentsDashboard() {
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <FileCheck className="w-5 h-5 text-indigo-600" />
-                  <h3 className="font-semibold text-gray-900">Historique des Audits</h3>
+                  <h3 className="font-semibold text-gray-900">{t('adminAgentsAuditHistory')}</h3>
                 </div>
                 <div className="space-y-3">
                   {auditHistory.map(audit => (
                     <div key={audit.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                       <div className="flex items-center gap-3">
-                        <div className={`w-2 h-2 rounded-full ${audit.type === 'sécurité' ? 'bg-emerald-500' : 'bg-indigo-500'}`} />
+                        <div className={`w-2 h-2 rounded-full ${audit.type === t('adminAgentsSecurite') ? 'bg-emerald-500' : 'bg-indigo-500'}`} />
                         <div>
                           <p className="text-sm font-medium text-gray-900">{audit.agentName}</p>
                           <p className="text-xs text-gray-500">{audit.route} • {audit.date}</p>
@@ -640,7 +642,7 @@ export default function AgentsDashboard() {
                       <div className="text-right">
                         <span className={`font-bold ${getScoreColor(audit.score)}`}>{audit.score.toFixed(1)}</span>
                         <p className="text-xs text-gray-500">
-                          {audit.type === 'sécurité' ? `${audit.vulnerabilities} vuln.` : `${audit.issues} issues`}
+                          {audit.type === t('adminAgentsSecurite') ? `${audit.vulnerabilities} ${t('adminAgentsVuln')}` : `${audit.issues} issues`}
                         </p>
                       </div>
                     </div>
@@ -651,7 +653,7 @@ export default function AgentsDashboard() {
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <Users className="w-5 h-5 text-indigo-600" />
-                  <h3 className="font-semibold text-gray-900">Statut de l'Équipe</h3>
+                  <h3 className="font-semibold text-gray-900">{t('adminAgentsTeamStatus')}</h3>
                 </div>
                 <div className="space-y-4">
                   <div className="p-4 bg-indigo-50 rounded-lg">
@@ -665,7 +667,7 @@ export default function AgentsDashboard() {
                         style={{ width: `${teamStatus.progress}%` }}
                       />
                     </div>
-                    <p className="text-xs text-indigo-600 mt-1">{teamStatus.progress}% progression</p>
+                    <p className="text-xs text-indigo-600 mt-1">{teamStatus.progress}% {t('adminAgentsProgression')}</p>
                   </div>
 
                   <div className="space-y-2">
@@ -673,14 +675,14 @@ export default function AgentsDashboard() {
                       <div key={i} className="flex items-center gap-2 text-sm">
                         <CheckCircle className="w-4 h-4 text-emerald-500" />
                         <span className="text-gray-700">{member}</span>
-                        <span className="text-xs text-gray-400 ml-auto">actif</span>
+                        <span className="text-xs text-gray-400 ml-auto">{t('adminAgentsActive')}</span>
                       </div>
                     ))}
                   </div>
 
                   <div className="pt-3 border-t border-gray-100">
                     <div className="flex justify-between text-sm">
-                      <span className="text-gray-500">Dernière évolution</span>
+                      <span className="text-gray-500">{t('adminAgentsLastEvolution')}</span>
                       <span className="text-gray-900">{teamStatus.lastEvolution}</span>
                     </div>
                   </div>
