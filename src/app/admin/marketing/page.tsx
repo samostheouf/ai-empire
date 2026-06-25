@@ -795,7 +795,7 @@ export default function MarketingDashboard() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-gray-900">{reward.description}</p>
-                          <p className="text-xs text-gray-500">{reward.type === 'credits' ? t('adminMarketingCreditsCount', { count: reward.value }) : t('adminMarketingDiscountCount', { count: reward.value })}</p>
+                          <p className="text-xs text-gray-500">{reward.type === 'credits' ? t('adminMarketingCreditsCount') : t('adminMarketingDiscountCount')}</p>
                         </div>
                       </div>
                     ))}
