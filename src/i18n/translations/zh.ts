@@ -227,6 +227,8 @@ const zh: TranslationKeys = {
   blogCtaDesc: '加入数千名使用NeuraAPI的开发者。',
   blogCta1: '立即开始',
   blogCta2: '查看价格',
+  cookieFunctional: '功能性Cookie',
+  cookieFunctionalDesc: '改善用户体验',
 
   // Homepage - Hero
   heroTagline: 'AI API和高级模板 — 2026',

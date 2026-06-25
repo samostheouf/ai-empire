@@ -227,6 +227,8 @@ const ko: TranslationKeys = {
   blogCtaDesc: 'NeuraAPI를 사용하는 수천 명의 개발자와 함께하세요.',
   blogCta1: '지금 시작하기',
   blogCta2: '가격 보기',
+  cookieFunctional: '기능 쿠키',
+  cookieFunctionalDesc: '사용자 경험 향상',
 
   // Homepage - Hero
   heroTagline: 'AI API & 프리미엄 템플릿 — 2026',

@@ -1421,4 +1421,8 @@ export type TranslationKeys = {
   compareSetup2_4weeks: string
   compareCustomDev: string
   compareEconomyText: string
+
+  // Cookie Consent
+  cookieFunctional: string
+  cookieFunctionalDesc: string
 }

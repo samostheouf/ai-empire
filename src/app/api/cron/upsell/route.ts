@@ -1,15 +1,15 @@
+import { verifyCronAuth } from '@/lib/auth'
 import { NextRequest, NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
-const CRON_SECRET = process.env.CRON_SECRET
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 export async function GET(request: NextRequest) {
   try {
-    const authHeader = request.headers.get('authorization')
-    if (!CRON_SECRET || authHeader !== `Bearer ${CRON_SECRET}`) {
+    
+    if (!verifyCronAuth(request)) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     }
 

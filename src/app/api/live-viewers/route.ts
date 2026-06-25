@@ -2,15 +2,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
 
 const activeVisitors = new Map<string, number>()
+const VISITOR_TIMEOUT = 30000
 
-setInterval(() => {
+function getActiveCount(): number {
   const now = Date.now()
-  for (const [key, timestamp] of Array.from(activeVisitors)) {
-    if (now - timestamp > 30000) {
+  for (const [key, timestamp] of activeVisitors) {
+    if (now - timestamp > VISITOR_TIMEOUT) {
       activeVisitors.delete(key)
     }
   }
-}, 10000)
+  return activeVisitors.size
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -18,12 +20,12 @@ export async function POST(request: NextRequest) {
     const { visitorId } = body
 
     if (!visitorId || typeof visitorId !== 'string') {
-      return NextResponse.json({ count: activeVisitors.size })
+      return NextResponse.json({ count: getActiveCount() })
     }
 
     activeVisitors.set(visitorId, Date.now())
 
-    return NextResponse.json({ count: activeVisitors.size })
+    return NextResponse.json({ count: getActiveCount() })
   } catch {
     return NextResponse.json({ count: activeVisitors.size })
   }
@@ -42,7 +44,7 @@ export async function GET() {
       })
     }, 0)
 
-    const memoryCount = activeVisitors.size
+    const memoryCount = getActiveCount()
     const count = Math.max(memoryCount, Math.min(dbCount, 50))
 
     return NextResponse.json({

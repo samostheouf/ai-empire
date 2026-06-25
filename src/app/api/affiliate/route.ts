@@ -20,7 +20,7 @@ function generateTrackingCode(): string {
 export async function POST(request: NextRequest) {
   try {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
-    const rl = rateLimit(`affiliate:${ip}`, 10, 60_000)
+    const rl = await rateLimit(`affiliate:${ip}`, 10, 60_000)
     const rlHeaders = getRateLimitHeaders(rl, 10)
     if (!rl.allowed) {
       return NextResponse.json({ error: 'Trop de requêtes' }, { status: 429, headers: rlHeaders })

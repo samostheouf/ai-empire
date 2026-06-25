@@ -1,15 +1,22 @@
-import fr from './fr'
-import en from './en'
-import es from './es'
-import de from './de'
-import it from './it'
-import pt from './pt'
-import ja from './ja'
-import zh from './zh'
-import ko from './ko'
-import ar from './ar'
 import { Locale, TranslationKeys } from '../config'
 
-const translations: Record<Locale, TranslationKeys> = { fr, en, es, de, it, pt, ja, zh, ko, ar }
+const translationLoaders: Record<Locale, () => Promise<{ default: TranslationKeys }>> = {
+  fr: () => import('./fr'),
+  en: () => import('./en'),
+  es: () => import('./es'),
+  de: () => import('./de'),
+  it: () => import('./it'),
+  pt: () => import('./pt'),
+  ja: () => import('./ja'),
+  zh: () => import('./zh'),
+  ko: () => import('./ko'),
+  ar: () => import('./ar'),
+}
 
-export default translations
+export async function loadTranslations(locale: Locale): Promise<TranslationKeys> {
+  const loader = translationLoaders[locale] || translationLoaders.fr
+  const mod = await loader()
+  return mod.default
+}
+
+export default translationLoaders

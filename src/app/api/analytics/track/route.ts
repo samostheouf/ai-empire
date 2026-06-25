@@ -53,7 +53,9 @@ export async function POST(request: NextRequest) {
       })
     }, null)
 
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true }, {
+      headers: { 'Cache-Control': 'no-store' },
+    })
   } catch {
     return NextResponse.json({ error: 'Requête invalide' }, { status: 400 })
   }

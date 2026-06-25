@@ -1,0 +1,16 @@
+# Default owner for everything
+* @samilaboulette21
+
+# Security-sensitive files require explicit review
+src/middleware.ts @samilaboulette21
+src/lib/auth.ts @samilaboulette21
+src/lib/session.ts @samilaboulette21
+src/app/api/auth/ @samilaboulette21
+src/app/api/webhooks/ @samilaboulette21
+src/lib/csrf.ts @samilaboulette21
+.env* @samilaboulette21
+
+# Infrastructure
+.github/ @samilaboulette21
+Dockerfile* @samilaboulette21
+docker-compose* @samilaboulette21

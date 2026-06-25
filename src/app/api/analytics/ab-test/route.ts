@@ -1,58 +1,65 @@
-import { NextRequest, NextResponse } from 'next/server'
-import { assignVariant, recordConversion, getTestResults } from '@/lib/ab-testing'
+import { NextResponse } from 'next/server'
+import { safeQuery } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
-const TEST_CONFIGS: Record<string, { variants: string[]; weights?: number[] }> = {
-  'hero-cta-color': { variants: ['blue', 'green', 'orange'] },
-  'pricing-layout': { variants: ['horizontal', 'vertical'] },
-  'register-flow': { variants: ['email-first', 'oauth-first'] },
-}
-
-export async function GET(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url)
-    const testId = searchParams.get('testId')
-    const visitorId = searchParams.get('visitorId')
-    const action = searchParams.get('action')
-
-    if (!testId) {
-      return NextResponse.json({ error: 'testId requis' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
-    }
-
-    if (action === 'results') {
-      const results = await getTestResults(testId)
-      return NextResponse.json({ testId, results }, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
-    }
-
-    if (!visitorId) {
-      return NextResponse.json({ error: 'visitorId requis' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
-    }
-
-    const config = TEST_CONFIGS[testId]
-    if (!config) {
-      return NextResponse.json({ error: 'Test non trouvé' }, { status: 404, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
-    }
-
-    const variant = await assignVariant({ testId, ...config }, visitorId)
-    return NextResponse.json({ testId, variant }, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
-  } catch {
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
-  }
-}
-
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const body = await request.json()
-    const { testId, visitorId } = body
+    const { testName, variant, visitorId } = body
 
-    if (!testId || !visitorId) {
-      return NextResponse.json({ error: 'testId et visitorId requis' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    if (!testName || !variant) {
+      return NextResponse.json({ error: 'Missing testName or variant' }, { status: 400 })
     }
 
-    const success = await recordConversion(testId, visitorId)
-    return NextResponse.json({ ok: true, recorded: success }, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    const id = visitorId || crypto.randomUUID()
+
+    await safeQuery(async () => {
+      const { prisma } = await import('@/lib/db')
+      await prisma.aBTestVariant.upsert({
+        where: { testId_visitorId: { testId: testName, visitorId: id } },
+        create: { testId: testName, variantName: variant, visitorId: id },
+        update: { variantName: variant },
+      })
+    }, null)
+
+    return NextResponse.json({ ok: true })
   } catch {
-    return NextResponse.json({ error: 'Requête invalide' }, { status: 400, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    return NextResponse.json({ error: 'Failed to track' }, { status: 500 })
   }
+}
+
+export async function GET() {
+  const data = await safeQuery(async () => {
+    const { prisma } = await import('@/lib/db')
+
+    const variants = await prisma.aBTestVariant.groupBy({
+      by: ['testId', 'variantName'],
+      _count: { id: true },
+    })
+
+    const results: Record<string, { variants: Record<string, number>; total: number; winner: string }> = {}
+
+    for (const row of variants) {
+      if (!results[row.testId]) {
+        results[row.testId] = { variants: {}, total: 0, winner: '' }
+      }
+      results[row.testId].variants[row.variantName] = row._count.id
+      results[row.testId].total += row._count.id
+    }
+
+    for (const test of Object.values(results)) {
+      let maxCount = 0
+      for (const [variant, count] of Object.entries(test.variants)) {
+        if (count > maxCount) {
+          maxCount = count
+          test.winner = variant
+        }
+      }
+    }
+
+    return results
+  }, {} as Record<string, { variants: Record<string, number>; total: number; winner: string }>)
+
+  return NextResponse.json({ tests: data, lastUpdated: new Date().toISOString() })
 }

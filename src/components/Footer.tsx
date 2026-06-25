@@ -33,7 +33,7 @@ const Footer = memo(function Footer() {
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="relative">
-                <Sparkles className="h-5 w-5 text-indigo-400" />
+                <img src="/logo.jpg" alt="NeuraAPI" className="h-6 w-6 rounded object-cover" />
                 <div className="absolute inset-0 blur-md bg-indigo-500/30" />
               </div>
               <span className="text-lg font-bold text-white">NeuraAPI</span>

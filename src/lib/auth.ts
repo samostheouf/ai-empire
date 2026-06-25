@@ -44,3 +44,13 @@ export async function authenticateApiKey(request: Request): Promise<AuthResult> 
 
   return { user, error: null }
 }
+
+export function verifyCronAuth(request: Request): boolean {
+  const authHeader = request.headers.get('authorization') || ''
+  const expected = `Bearer ${process.env.CRON_SECRET || ''}`
+  if (!authHeader || !expected) return false
+  const a = Buffer.from(authHeader)
+  const b = Buffer.from(expected)
+  if (a.length !== b.length) return false
+  return crypto.timingSafeEqual(a, b)
+}

@@ -1,6 +1,6 @@
 import { cookies, headers } from 'next/headers'
 import { Locale, defaultLocale, locales } from './config'
-import translations from './translations'
+import { loadTranslations } from './translations'
 
 const COOKIE_NAME = 'neuralocale'
 
@@ -44,6 +44,6 @@ export function getLocaleFromCookies(): Locale {
   return defaultLocale
 }
 
-export function getTranslations(locale: Locale) {
-  return translations[locale] || translations[defaultLocale]
+export async function getTranslations(locale: Locale) {
+  return await loadTranslations(locale)
 }

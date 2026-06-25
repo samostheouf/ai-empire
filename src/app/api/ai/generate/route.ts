@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { safeQuery } from '@/lib/db';
 import { callAI, isDemoMode } from '@/lib/ai';
 import { trackApiCall } from '@/lib/server-analytics';
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit';
 
 const DEMO_RESPONSES: Record<string, string> = {
   generate: `[Mode Démo] Voici un exemple de contenu généré par IA pour votre prompt.\n\nPour activer la génération réelle, configurez GROQ_API_KEY ou GEMINI_API_KEY.\n\n---\nContenu généré :\n\nL'intelligence artificielle transforme profondément notre façon de travailler.`,
@@ -27,6 +28,14 @@ export async function POST(request: Request) {
 
     if (!user) {
       return NextResponse.json({ error: 'Clé API invalide' }, { status: 401 });
+    }
+
+    const rl = await rateLimit(`ai-gen:${user.id}`, 20, 60_000)
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, {
+        status: 429,
+        headers: getRateLimitHeaders(rl, 20),
+      })
     }
 
     if (user.credits <= 0) {

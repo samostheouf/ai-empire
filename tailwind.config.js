@@ -52,26 +52,26 @@ module.exports = {
       },
       keyframes: {
         float: {
-          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)', willChange: 'transform' },
-          '33%': { transform: 'translateY(-12px) rotate(2deg)', willChange: 'transform' },
-          '66%': { transform: 'translateY(-6px) rotate(-1deg)', willChange: 'transform' },
+          '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+          '33%': { transform: 'translateY(-12px) rotate(2deg)' },
+          '66%': { transform: 'translateY(-6px) rotate(-1deg)' },
         },
         glow: {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.3)', willChange: 'box-shadow' },
-          '50%': { boxShadow: '0 0 40px rgba(99, 102, 241, 0.6), 0 0 80px rgba(168, 85, 247, 0.2)', willChange: 'box-shadow' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.3)' },
+          '50%': { boxShadow: '0 0 40px rgba(99, 102, 241, 0.6), 0 0 80px rgba(168, 85, 247, 0.2)' },
         },
         'gradient-shift': {
-          '0%': { backgroundPosition: '0% 50%', willChange: 'background-position' },
-          '50%': { backgroundPosition: '100% 50%', willChange: 'background-position' },
-          '100%': { backgroundPosition: '0% 50%', willChange: 'background-position' },
+          '0%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+          '100%': { backgroundPosition: '0% 50%' },
         },
         shimmer: {
           '0%': { backgroundPosition: '-200% 0' },
           '100%': { backgroundPosition: '200% 0' },
         },
         'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.3)', willChange: 'box-shadow' },
-          '50%': { boxShadow: '0 0 40px rgba(99, 102, 241, 0.6)', willChange: 'box-shadow' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(99, 102, 241, 0.3)' },
+          '50%': { boxShadow: '0 0 40px rgba(99, 102, 241, 0.6)' },
         },
         'confetti-fall': {
           '0%': { transform: 'translateY(-100vh) rotate(0deg)', opacity: '1' },

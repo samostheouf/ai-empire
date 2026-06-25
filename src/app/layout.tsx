@@ -2,10 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { I18nProvider } from '@/i18n'
-import { isRTL, type Locale } from '@/i18n/config'
+import { isRTL, defaultLocale, type Locale } from '@/i18n/config'
 import dynamic from 'next/dynamic'
-import { headers } from 'next/headers'
-import { getLocaleFromCookies } from '@/i18n/server'
 import {
   generateSoftwareApplicationSchema,
   generateOrganizationSchema,
@@ -66,7 +64,8 @@ export const metadata: Metadata = {
     images: [`${baseUrl}/api/og?title=NeuraAPI&subtitle=APIs+IA+%26+Templates+Premium+Next.js`],
   },
   icons: {
-    icon: '/favicon.svg',
+    icon: '/logo.jpg',
+    apple: '/logo.jpg',
   },
   alternates: {
     canonical: baseUrl,
@@ -97,8 +96,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const nonce = headers().get('x-nonce') || ''
-  const locale = getLocaleFromCookies()
+  const locale = defaultLocale
   const rtl = isRTL(locale as Locale)
 
   return (
@@ -108,26 +106,25 @@ export default function RootLayout({
         <link rel="preconnect" href="https://js.stripe.com" />
         <link rel="preconnect" href="https://api.stripe.com" />
         <link rel="preconnect" href="https://checkout.stripe.com" />
+        <link rel="dns-prefetch" href="https://api.groq.com" />
+        <link rel="dns-prefetch" href="https://generativelanguage.googleapis.com" />
+        <link rel="dns-prefetch" href="https://api.openai.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <meta name="theme-color" content="#4F46E5" />
         <script
-          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(generateSoftwareApplicationSchema()) }}
         />
         <script
-          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(generateFAQSchema(faqItems)) }}
         />
         <script
-          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(generateOrganizationSchema()) }}
         />
         <script
-          nonce={nonce}
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(generateWebSiteSchema()) }}
         />

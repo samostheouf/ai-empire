@@ -214,8 +214,9 @@ export async function PUT(request: NextRequest) {
 
       const referral = await prisma.referral.findUnique({ where: { id: referralId } })
       if (!referral) return { success: false, commission: 0 }
+      if (referral.status === 'completed') return { success: true, commission: referral.commissionEarned, duplicate: true }
 
-      const commission = Math.round((amount || 0) * 0.20)
+      const commission = Math.round(19.00 * 0.20)
 
       await prisma.referral.update({
         where: { id: referralId },

@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
+import { verifyCronAuth } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
 
-const CRON_SECRET = process.env.CRON_SECRET
-
 export async function GET(request: NextRequest) {
   try {
-    const authHeader = request.headers.get('authorization')
-    if (!CRON_SECRET || authHeader !== `Bearer ${CRON_SECRET}`) {
+    if (!verifyCronAuth(request)) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     }
 

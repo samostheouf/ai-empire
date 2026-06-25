@@ -41,29 +41,33 @@ export default function RealSocialProof() {
   useEffect(() => {
     if (!stats || stats.userCount === 0) return
 
+    let mounted = true
     const interval = setInterval(() => {
+      if (!mounted) return
       const message = TOAST_MESSAGES[Math.floor(Math.random() * TOAST_MESSAGES.length)]
       const id = Date.now()
       setToasts(prev => [...prev.slice(-2), { id, message }])
       setTimeout(() => {
-        setToasts(prev => prev.filter(t => t.id !== id))
+        if (mounted) setToasts(prev => prev.filter(t => t.id !== id))
       }, 5000)
     }, 45000)
 
     const initialTimeout = setTimeout(() => {
+      if (!mounted) return
       const message = TOAST_MESSAGES[Math.floor(Math.random() * TOAST_MESSAGES.length)]
       const id = Date.now()
       setToasts([{ id, message }])
       setTimeout(() => {
-        setToasts(prev => prev.filter(t => t.id !== id))
+        if (mounted) setToasts(prev => prev.filter(t => t.id !== id))
       }, 5000)
     }, 10000)
 
     return () => {
+      mounted = false
       clearInterval(interval)
       clearTimeout(initialTimeout)
     }
-  }, [stats])
+  }, [stats?.userCount])
 
   if (!stats) return null
 

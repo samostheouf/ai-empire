@@ -67,29 +67,35 @@ export async function callAI(
   for (const provider of PROVIDERS) {
     if (!provider.apiKey || provider.apiKey.startsWith('sk-placeholder')) continue;
 
-    try {
-      const client = new OpenAI({
-        apiKey: provider.apiKey,
-        baseURL: provider.baseURL,
-      });
+    for (let attempt = 0; attempt < 2; attempt++) {
+      try {
+        const client = new OpenAI({
+          apiKey: provider.apiKey,
+          baseURL: provider.baseURL,
+        });
 
-      const model = modelOverride && provider.name === 'openai'
-        ? modelOverride
-        : provider.model;
+        const model = modelOverride && provider.name === 'openai'
+          ? modelOverride
+          : provider.model;
 
-      const completion = await client.chat.completions.create({
-        model,
-        messages,
-        max_tokens: maxTokens,
-      });
+        const completion = await client.chat.completions.create({
+          model,
+          messages,
+          max_tokens: maxTokens,
+        }, { signal: AbortSignal.timeout(15000) });
 
-      return {
-        content: completion.choices[0]?.message?.content || '',
-        tokensUsed: completion.usage?.total_tokens || 0,
-        provider: provider.name,
-      };
-    } catch (error) {
-      continue;
+        return {
+          content: completion.choices[0]?.message?.content || '',
+          tokensUsed: completion.usage?.total_tokens || 0,
+          provider: provider.name,
+        };
+      } catch (error) {
+        if (attempt === 0) {
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          continue;
+        }
+        continue;
+      }
     }
   }
 

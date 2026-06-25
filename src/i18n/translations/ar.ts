@@ -227,6 +227,8 @@ const ar: TranslationKeys = {
   blogCtaDesc: 'انضم إلى آلاف المطورين الذين يستخدمون NeuraAPI.',
   blogCta1: 'ابدأ الآن',
   blogCta2: 'عرض الأسعار',
+  cookieFunctional: 'ملفات تعريف الارتباط الوظيفية',
+  cookieFunctionalDesc: 'تحسين تجربة المستخدم',
 
   // Homepage - Hero
   heroTagline: 'واجهات برمجة ذكاء اصطناعي وقوالب متميزة — 2026',

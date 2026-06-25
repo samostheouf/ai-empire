@@ -1,50 +1,65 @@
-interface RateLimitEntry {
-  count: number
-  resetTime: number
+import { prisma, safeQuery } from '@/lib/db'
+
+interface RateLimitResult {
+  allowed: boolean
+  remaining: number
+  resetIn: number
 }
 
-const store = new Map<string, RateLimitEntry>()
-
-function cleanupExpiredEntries() {
-  const now = Date.now()
-  const keysToDelete: string[] = []
-  store.forEach((entry, key) => {
-    if (now > entry.resetTime) {
-      keysToDelete.push(key)
-    }
-  })
-  for (const key of keysToDelete) {
-    store.delete(key)
-  }
-}
-
-export function rateLimit(
-  ip: string,
+export async function rateLimit(
+  key: string,
   limit: number = 100,
   windowMs: number = 60_000
-): { allowed: boolean; remaining: number; resetIn: number } {
-  cleanupExpiredEntries()
+): Promise<RateLimitResult> {
+  const windowSeconds = Math.ceil(windowMs / 1000)
 
-  const now = Date.now()
-  const entry = store.get(ip)
+  const rows = await safeQuery(
+    async () => {
+      return prisma.$queryRaw<{ count: number; resetAt: Date }[]>`
+        INSERT INTO "RateLimit" (key, count, "resetAt")
+        VALUES (${key}, 1, NOW() + (${windowSeconds} || ' seconds')::INTERVAL)
+        ON CONFLICT (key) DO UPDATE SET
+          count = CASE
+            WHEN "RateLimit"."resetAt" < NOW() THEN 1
+            ELSE "RateLimit".count + 1
+          END,
+          "resetAt" = CASE
+            WHEN "RateLimit"."resetAt" < NOW() THEN NOW() + (${windowSeconds} || ' seconds')::INTERVAL
+            ELSE "RateLimit"."resetAt"
+          END
+        RETURNING count, "resetAt"
+      `
+    },
+    [] as { count: number; resetAt: Date }[]
+  )
 
-  if (!entry || now > entry.resetTime) {
-    store.set(ip, { count: 1, resetTime: now + windowMs })
-    return { allowed: true, remaining: limit - 1, resetIn: windowMs }
+  if (rows.length === 0) {
+    return { allowed: true, remaining: limit - 1, resetIn: Math.ceil(windowMs / 1000) }
   }
 
-  if (entry.count >= limit) {
-    const resetIn = Math.ceil((entry.resetTime - now) / 1000)
+  const row = rows[0]
+  const now = Date.now()
+  const resetAt = new Date(row.resetAt).getTime()
+  const resetIn = Math.ceil(Math.max(0, resetAt - now) / 1000)
+
+  if (row.count > limit) {
     return { allowed: false, remaining: 0, resetIn }
   }
 
-  entry.count++
-  const resetIn = Math.ceil((entry.resetTime - now) / 1000)
-  return { allowed: true, remaining: limit - entry.count, resetIn }
+  return { allowed: true, remaining: limit - row.count, resetIn }
+}
+
+export async function resetRateLimit(key: string): Promise<void> {
+  await safeQuery(
+    async () => {
+      await prisma.$executeRaw`DELETE FROM "RateLimit" WHERE key = ${key}`
+    },
+    undefined
+  )
 }
 
 export function getRateLimitHeaders(
-  result: ReturnType<typeof rateLimit>,
+  result: RateLimitResult,
   limit: number
 ): Record<string, string> {
   return {

@@ -90,6 +90,12 @@ export default function FAQPage() {
   const [openIdx, setOpenIdx] = useState<string | null>(null)
   const [search, setSearch] = useState('')
 
+  const faqSchema = faqs.flatMap(cat => cat.items.map(item => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })))
+
   const filtered = faqs.map(cat => ({
     ...cat,
     items: cat.items.filter(
@@ -101,6 +107,12 @@ export default function FAQPage() {
 
   return (
     <div className="bg-indigo-950 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faqSchema }),
+        }}
+      />
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <h1 className="text-4xl font-bold text-white sm:text-5xl">Questions fréquentes</h1>

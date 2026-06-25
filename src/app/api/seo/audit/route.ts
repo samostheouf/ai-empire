@@ -140,7 +140,7 @@ function checkTwitterCard(html: string): AuditCheck {
 
 export async function GET(request: Request) {
   const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
-  const rl = rateLimit(`seo-audit:${ip}`, 10, 60_000)
+  const rl = await rateLimit(`seo-audit:${ip}`, 10, 60_000)
   const rlHeaders = getRateLimitHeaders(rl, 10)
 
   if (!rl.allowed) {

@@ -14,20 +14,14 @@ export async function POST(request: Request) {
     const result = await safeQuery(async () => {
       const { prisma } = await import('@/lib/db')
       const existing = await prisma.waitlist.findUnique({ where: { email: validEmail } })
-      if (existing) {
-        return { success: true, message: 'Déjà inscrit' }
+      if (!existing) {
+        await prisma.waitlist.create({
+          data: { email: validEmail, source: 'newsletter' },
+        })
       }
-      await prisma.waitlist.create({
-        data: { email: validEmail, source: 'newsletter' },
-      })
-      return { success: true, message: 'Inscription réussie' }
     }, null)
 
-    if (!result) {
-      return NextResponse.json({ success: true, message: 'Inscription réussie' })
-    }
-
-    return NextResponse.json(result)
+    return NextResponse.json({ success: true, message: 'Inscription réussie' })
   } catch {
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }

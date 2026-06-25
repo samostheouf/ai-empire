@@ -227,6 +227,8 @@ const de: TranslationKeys = {
   blogCtaDesc: 'Schließen Sie sich Tausenden von Entwicklern an.',
   blogCta1: 'Jetzt starten',
   blogCta2: 'Preise ansehen',
+  cookieFunctional: 'Funktionale Cookies',
+  cookieFunctionalDesc: 'Verbessern die Benutzererfahrung',
 
   // Homepage - Hero
   heroTagline: 'KI-APIs & Premium-Vorlagen — 2026',

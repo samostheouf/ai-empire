@@ -4,8 +4,17 @@ import { safeQuery } from '@/lib/db';
 import { sendOrderConfirmation } from '@/lib/email';
 import { trackWebhookComplete } from '@/lib/server-analytics';
 import { logger } from '@/lib/logger';
+import { Resend } from 'resend';
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app';
+
+let resendClient: Resend | null = null
+function getResendClient(): Resend {
+  if (!resendClient) {
+    resendClient = new Resend(process.env.RESEND_API_KEY)
+  }
+  return resendClient
+}
 
 export async function POST(request: NextRequest) {
   const webhookErrors: string[] = []
@@ -44,8 +53,10 @@ export async function POST(request: NextRequest) {
 
   await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
-    await prisma.webhookEvent.create({
-      data: { eventId: event.id, provider: 'stripe', type: event.type, status: 'processing' },
+    await prisma.webhookEvent.upsert({
+      where: { eventId: event.id },
+      update: { status: 'processing' },
+      create: { eventId: event.id, provider: 'stripe', type: event.type, status: 'processing' },
     });
   }, null);
 
@@ -56,11 +67,11 @@ export async function POST(request: NextRequest) {
         const { templateId, email } = session.metadata || {};
 
         if (templateId && email) {
-          await safeQuery(async () => {
+          const dbResult = await safeQuery(async () => {
             const { prisma } = await import('@/lib/db');
             const existing = await prisma.order.findUnique({ where: { sessionId: session.id } });
             if (existing) {
-              return;
+              return { skipped: true } as const;
             }
 
             const template = await prisma.template.findUnique({ where: { id: templateId } });
@@ -81,6 +92,7 @@ export async function POST(request: NextRequest) {
             });
 
             let existingUser = await prisma.apiUser.findUnique({ where: { email } });
+            let newApiKey: string | null = null;
             if (!existingUser) {
               const crypto = await import('crypto');
               const apiKey = 'napi_' + crypto.randomUUID().replace(/-/g, '');
@@ -92,78 +104,73 @@ export async function POST(request: NextRequest) {
                   credits: 100,
                 },
               });
-              try {
-                const { sendApiKeyEmail } = await import('@/lib/email');
-                const apiKeyResult = await sendApiKeyEmail({ to: email, apiKey, plan: 'starter' });
-                await safeQuery(async () => {
-                  const { prisma } = await import('@/lib/db');
-                  await prisma.emailLog.create({
-                    data: {
-                      to: email,
-                      subject: 'API Key',
-                      status: apiKeyResult.success ? 'sent' : 'failed',
-                      error: apiKeyResult.success ? null : JSON.stringify(apiKeyResult.error),
-                    },
-                  });
-                }, null);
-              } catch (e) {
-                webhookErrors.push('api_key_email: ' + (e instanceof Error ? e.message : String(e)));
-                await safeQuery(async () => {
-                  const { prisma } = await import('@/lib/db');
-                  await prisma.emailLog.create({
-                    data: {
-                      to: email,
-                      subject: 'API Key',
-                      status: 'failed',
-                      error: e instanceof Error ? e.message : String(e),
-                    },
-                  });
-                }, null);
-              }
+              newApiKey = apiKey;
             }
 
-            if (template) {
-              const downloadUrl = template.fileUrl || `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id=${session.id}&template_id=${templateId}`;
-              try {
-                const emailResult = await sendOrderConfirmation({
-                  to: email,
-                  templateName: template.name,
-                  templatePrice: template.price,
-                  downloadUrl,
+            await handleReferralCommission(email, session.amount_total || 0, webhookErrors);
+            await handleAffiliateCommission(email, session.id, session.amount_total || 0, session.metadata || {});
+            await autoAssignReferralProgram(email, webhookErrors);
+            await scheduleUpsellEmail(email);
+
+            return {
+              skipped: false,
+              template,
+              newApiKey,
+              downloadUrl: template?.fileUrl || `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id=${session.id}&template_id=${templateId}`,
+            };
+          }, null as { skipped: true } | { skipped: false; template: { name: string; price: number } | null; newApiKey: string | null; downloadUrl: string } | null);
+
+          if (!dbResult || dbResult.skipped) break;
+
+          try {
+            if (dbResult.newApiKey) {
+              const { sendApiKeyEmail } = await import('@/lib/email');
+              const apiKeyResult = await sendApiKeyEmail({ to: email, apiKey: dbResult.newApiKey, plan: 'starter' });
+              await safeQuery(async () => {
+                const { prisma } = await import('@/lib/db');
+                await prisma.emailLog.create({
+                  data: {
+                    to: email,
+                    subject: 'API Key',
+                    status: apiKeyResult.success ? 'sent' : 'failed',
+                    error: apiKeyResult.success ? null : JSON.stringify(apiKeyResult.error),
+                  },
                 });
-                await safeQuery(async () => {
-                  const { prisma } = await import('@/lib/db');
-                  await prisma.emailLog.create({
-                    data: {
-                      to: email,
-                      subject: `Order confirmation: ${template.name}`,
-                      status: emailResult.success ? 'sent' : 'failed',
-                      error: emailResult.success ? null : JSON.stringify(emailResult.error),
-                    },
-                  });
-                }, null);
-              } catch (emailError) {
-                logger.error('webhook', 'Order confirmation email failed', { email, error: emailError instanceof Error ? emailError.message : String(emailError) });
-                await safeQuery(async () => {
-                  const { prisma } = await import('@/lib/db');
-                  await prisma.emailLog.create({
-                    data: {
-                      to: email,
-                      subject: `Order confirmation: ${template.name}`,
-                      status: 'failed',
-                      error: emailError instanceof Error ? emailError.message : String(emailError),
-                    },
-                  });
-                }, null);
-              }
-
-              await handleReferralCommission(email, session.amount_total || 0, webhookErrors);
-              await handleAffiliateCommission(email, session.id, session.amount_total || 0, session.metadata || {});
-              await sendWelcomeSequence(email, template.name);
-              await autoAssignReferralProgram(email, webhookErrors);
-              await scheduleUpsellEmail(email);
+              }, null);
             }
-          }, null);
+          } catch (e) {
+            webhookErrors.push('api_key_email: ' + (e instanceof Error ? e.message : String(e)));
+          }
+
+          if (dbResult.template) {
+            try {
+              const emailResult = await sendOrderConfirmation({
+                to: email,
+                templateName: dbResult.template.name,
+                templatePrice: dbResult.template.price,
+                downloadUrl: dbResult.downloadUrl,
+              });
+              await safeQuery(async () => {
+                const { prisma } = await import('@/lib/db');
+                await prisma.emailLog.create({
+                  data: {
+                    to: email,
+                    subject: `Order confirmation: ${dbResult.template!.name}`,
+                    status: emailResult.success ? 'sent' : 'failed',
+                    error: emailResult.success ? null : JSON.stringify(emailResult.error),
+                  },
+                });
+              }, null);
+            } catch (emailError) {
+              webhookErrors.push('order_confirmation_email: ' + (emailError instanceof Error ? emailError.message : String(emailError)));
+            }
+
+            try {
+              await sendWelcomeSequence(email, dbResult.template.name);
+            } catch (e) {
+              webhookErrors.push('welcome_email: ' + (e instanceof Error ? e.message : String(e)));
+            }
+          }
         }
         break;
       }
@@ -205,7 +212,7 @@ export async function POST(request: NextRequest) {
 }
 
 async function handleReferralCommission(email: string, amount: number, errors: string[]) {
-  await safeQuery(async () => {
+  const result = await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     const referral = await prisma.referral.findFirst({
       where: { referredEmail: email, status: 'signup' },
@@ -225,39 +232,42 @@ async function handleReferralCommission(email: string, amount: number, errors: s
         });
       }
 
-      try {
-        const { Resend } = await import('resend');
-        const resend = new Resend(process.env.RESEND_API_KEY);
-        const commissionEuros = (commission / 100).toFixed(2);
-        await resend.emails.send({
-          from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
-          to: referral.referrerEmail,
-          subject: '🎉 Votre filleul a effectué un achat !',
-          html: `
-            <!DOCTYPE html>
-            <html><body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
-              <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
-                  <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
-                  <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Commission gagnée !</p>
-                </div>
-                <div style="padding: 32px;">
-                  <h2 style="margin: 0 0 16px; color: #1e293b;">Félicitations ! 🎉</h2>
-                  <p style="color: #64748b; margin: 0 0 16px;">Votre filleul vient d'effectuer un achat. Vous avez gagné <strong>${commissionEuros}€</strong> de commission !</p>
-                  <p style="color: #64748b; margin: 0 0 8px;">+50 crédits bonus ajoutés à votre compte.</p>
-                  <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 24px;">
-                    Voir mon tableau de bord
-                  </a>
-                </div>
-              </div>
-            </body></html>
-          `,
-        });
-      } catch (e) {
-        errors.push('referral_commission_email: ' + (e instanceof Error ? e.message : String(e)));
-      }
+      return { referrerEmail: referral.referrerEmail, commission };
     }
+    return null;
   }, null);
+
+  if (result) {
+    try {
+      const commissionEuros = (result.commission / 100).toFixed(2);
+      await getResendClient().emails.send({
+        from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+        to: result.referrerEmail,
+        subject: '🎉 Votre filleul a effectué un achat !',
+        html: `
+          <!DOCTYPE html>
+          <html><body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+              <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
+                <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
+                <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Commission gagnée !</p>
+              </div>
+              <div style="padding: 32px;">
+                <h2 style="margin: 0 0 16px; color: #1e293b;">Félicitations ! 🎉</h2>
+                <p style="color: #64748b; margin: 0 0 16px;">Votre filleul vient d'effectuer un achat. Vous avez gagné <strong>${commissionEuros}€</strong> de commission !</p>
+                <p style="color: #64748b; margin: 0 0 8px;">+50 crédits bonus ajoutés à votre compte.</p>
+                <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 24px;">
+                  Voir mon tableau de bord
+                </a>
+              </div>
+            </div>
+          </body></html>
+        `,
+      });
+    } catch (e) {
+      errors.push('referral_commission_email: ' + (e instanceof Error ? e.message : String(e)));
+    }
+  }
 }
 
 async function handleAffiliateCommission(
@@ -296,107 +306,104 @@ async function handleAffiliateCommission(
 }
 
 async function sendWelcomeSequence(email: string, templateName: string) {
-  await safeQuery(async () => {
-    const { Resend } = await import('resend');
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
-      to: email,
-      subject: '🚀 Bienvenue ! Votre guide de démarrage rapide',
-      html: `
-        <!DOCTYPE html>
-        <html>
-        <head><meta charset="utf-8"></head>
-        <body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
-          <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-            <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
-              <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
-              <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Bienvenue dans l'aventure !</p>
-            </div>
-            <div style="padding: 32px;">
-              <h2 style="color: #1e293b; margin: 0 0 16px;">Merci pour votre achat de ${templateName} !</h2>
-              <p style="color: #64748b; margin: 0 0 16px;">Voici les prochaines étapes pour démarrer :</p>
-              <div style="background: #f8fafc; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-                <p style="color: #1e293b; margin: 0 0 8px;"><strong>1.</strong> Téléchargez votre template</p>
-                <p style="color: #1e293b; margin: 0 0 8px;"><strong>2.</strong> Installez-le avec npx create-next-app</p>
-                <p style="color: #1e293b; margin: 0 0 8px;"><strong>3.</strong> Configurez vos APIs dans .env.local</p>
-                <p style="color: #1e293b; margin: 0;"><strong>4.</strong> Déployez sur Vercel</p>
-              </div>
-              <a href="${appUrl}/docs" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 16px;">
-                📖 Voir la documentation
-              </a>
-              <a href="${appUrl}/templates" style="display: block; background: white; color: #4F46E5; border: 1px solid #4F46E5; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-                🛒 Découvrir d'autres templates
-              </a>
-            </div>
+  await getResendClient().emails.send({
+    from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+    to: email,
+    subject: '🚀 Bienvenue ! Votre guide de démarrage rapide',
+    html: `
+      <!DOCTYPE html>
+      <html>
+      <head><meta charset="utf-8"></head>
+      <body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
+        <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+          <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
+            <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
+            <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Bienvenue dans l'aventure !</p>
           </div>
-        </body>
-        </html>
-      `,
-    });
-  }, null);
+          <div style="padding: 32px;">
+            <h2 style="color: #1e293b; margin: 0 0 16px;">Merci pour votre achat de ${templateName} !</h2>
+            <p style="color: #64748b; margin: 0 0 16px;">Voici les prochaines étapes pour démarrer :</p>
+            <div style="background: #f8fafc; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+              <p style="color: #1e293b; margin: 0 0 8px;"><strong>1.</strong> Téléchargez votre template</p>
+              <p style="color: #1e293b; margin: 0 0 8px;"><strong>2.</strong> Installez-le avec npx create-next-app</p>
+              <p style="color: #1e293b; margin: 0 0 8px;"><strong>3.</strong> Configurez vos APIs dans .env.local</p>
+              <p style="color: #1e293b; margin: 0;"><strong>4.</strong> Déployez sur Vercel</p>
+            </div>
+            <a href="${appUrl}/docs" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 16px;">
+              📖 Voir la documentation
+            </a>
+            <a href="${appUrl}/templates" style="display: block; background: white; color: #4F46E5; border: 1px solid #4F46E5; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+              🛒 Découvrir d'autres templates
+            </a>
+          </div>
+        </div>
+      </body>
+      </html>
+    `,
+  });
 }
 
 async function autoAssignReferralProgram(email: string, errors: string[]) {
-  await safeQuery(async () => {
+  const code = await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     const existing = await prisma.referral.findFirst({ where: { referrerEmail: email } });
     if (!existing) {
       const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
-      let code = 'ref_';
+      let newCode = 'ref_';
       for (let i = 0; i < 8; i++) {
-        code += chars.charAt(Math.floor(Math.random() * chars.length));
+        newCode += chars.charAt(Math.floor(Math.random() * chars.length));
       }
 
       await prisma.referral.create({
-        data: { code, referrerEmail: email },
+        data: { code: newCode, referrerEmail: email },
       });
 
-      try {
-        const { Resend } = await import('resend');
-        const resend = new Resend(process.env.RESEND_API_KEY);
-
-        await resend.emails.send({
-          from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
-          to: email,
-          subject: '🎁 Vous êtes maintenant dans le programme de parrainage !',
-          html: `
-            <!DOCTYPE html>
-            <html>
-            <head><meta charset="utf-8"></head>
-            <body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
-              <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
-                  <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
-                  <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Programme de parrainage</p>
-                </div>
-                <div style="padding: 32px;">
-                  <h2 style="color: #1e293b; margin: 0 0 16px;">Recommandez et gagnez ! 💰</h2>
-                  <p style="color: #64748b; margin: 0 0 16px;">Votre code de parrainage :</p>
-                  <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 16px; text-align: center; margin-bottom: 24px;">
-                    ${code}
-                  </div>
-                  <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-                    <p style="color: #166534; margin: 0 0 8px;"><strong>Comment ça marche :</strong></p>
-                    <p style="color: #166534; margin: 0 0 4px;">✅ Partagez votre lien : ${appUrl}?ref=${code}</p>
-                    <p style="color: #166534; margin: 0 0 4px;">✅ Votre filleul s'inscrit et achète</p>
-                    <p style="color: #166534; margin: 0;">✅ Vous gagnez 20% de commission</p>
-                  </div>
-                  <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
-                    Voir mon tableau de bord
-                  </a>
-                </div>
-              </div>
-            </body>
-            </html>
-          `,
-        });
-      } catch (e) {
-        errors.push('referral_program_email: ' + (e instanceof Error ? e.message : String(e)));
-      }
+      return newCode;
     }
+    return null;
   }, null);
+
+  if (code) {
+    try {
+      await getResendClient().emails.send({
+        from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+        to: email,
+        subject: '🎁 Vous êtes maintenant dans le programme de parrainage !',
+        html: `
+          <!DOCTYPE html>
+          <html>
+          <head><meta charset="utf-8"></head>
+          <body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
+            <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+              <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
+                <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
+                <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Programme de parrainage</p>
+              </div>
+              <div style="padding: 32px;">
+                <h2 style="color: #1e293b; margin: 0 0 16px;">Recommandez et gagnez ! 💰</h2>
+                <p style="color: #64748b; margin: 0 0 16px;">Votre code de parrainage :</p>
+                <div style="background: #f1f5f9; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 16px; text-align: center; margin-bottom: 24px;">
+                  ${code}
+                </div>
+                <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+                  <p style="color: #166534; margin: 0 0 8px;"><strong>Comment ça marche :</strong></p>
+                  <p style="color: #166534; margin: 0 0 4px;">✅ Partagez votre lien : ${appUrl}?ref=${code}</p>
+                  <p style="color: #166534; margin: 0 0 4px;">✅ Votre filleul s'inscrit et achète</p>
+                  <p style="color: #166534; margin: 0;">✅ Vous gagnez 20% de commission</p>
+                </div>
+                <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
+                  Voir mon tableau de bord
+                </a>
+              </div>
+            </div>
+          </body>
+          </html>
+        `,
+      });
+    } catch (e) {
+      errors.push('referral_program_email: ' + (e instanceof Error ? e.message : String(e)));
+    }
+  }
 }
 
 async function scheduleUpsellEmail(email: string) {
