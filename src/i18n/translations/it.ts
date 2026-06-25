@@ -866,7 +866,7 @@ const it: Record<string, string> = {
   demoCreateAccount: 'Crea un account gratuito per testare con crediti reali.',
   demoErrorDefault: 'Si è verificato un errore. Riprova.',
   demoErrorNetwork: "Impossibile contattare l'API. Controlla la connessione.",
-  freeFeatures: ['Next.js 14 App Router', 'Tailwind CSS', 'Autenticazione base', 'Dashboard responsive', 'Modulo di contatto', 'SEO ottimizzato', 'TypeScript', 'Deployment Vercel in 1 clic'],
+  freeFeatures: 'Next.js 14 App Router, Tailwind CSS'
   notFoundBack: 'Torna alla home',
 
   // QuickDemo example prompts

@@ -866,7 +866,7 @@ const ja: Record<string, string> = {
   demoCreateAccount: '無料アカウントを作成して、実際のクレジットでテスト。',
   demoErrorDefault: 'エラーが発生しました。もう一度お試しください。',
   demoErrorNetwork: 'APIに接続できません。接続を確認してください。',
-  freeFeatures: ['Next.js 14 App Router', 'Tailwind CSS', '基本認証', 'レスポンシブダッシュボード', 'お問い合わせフォーム', 'SEO最適化', 'TypeScript', 'Vercelワンクリックデプロイ'],
+  freeFeatures: 'Next.js 14 App Router, Tailwind CSS'
   notFoundBack: 'ホームに戻る',
 
   // QuickDemo example prompts
