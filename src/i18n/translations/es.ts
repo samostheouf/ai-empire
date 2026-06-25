@@ -2396,7 +2396,7 @@ const es: Record<string, string> = {
   cgvArticle5Section1Title: 'Disponibilité',
   cgvArticle5Section2Content: 'Les conditions de résiliation sont les suivantes :',
   cgvArticle5Section2Item1: 'Résiliation à tout moment par le client',
-  cgvArticle5Section2Item2: 'Accès maintenu jusqu\\'à la fin de la période payée',
+  cgvArticle5Section2Item2: 'Accès maintenu jusqu\'à la fin de la période payée',
   cgvArticle5Section2Item3: 'Pas de frais de résiliation',
   cgvArticle5Section2Title: 'Résiliation',
   cgvArticle5Section3Content: 'NeuraAPI se réserve le droit de résilier le contrat en cas de manquement aux CGV.',
