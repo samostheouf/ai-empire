@@ -2075,7 +2075,7 @@ const ja: Record<string, string> = {
   loginEmail: 'メール',
   loginError: 'Invalid email or password.',
   loginFormTitle: 'Log in to your account',
-  loginNoAccount: 'Don\\'t have an account?',
+  loginNoAccount: 'Don\'t have an account?',
   loginPassword: 'パスワード',
   loginSubtitle: 'Access your dashboard, API keys, and orders.',
   loginTitle: 'Welcome back',
