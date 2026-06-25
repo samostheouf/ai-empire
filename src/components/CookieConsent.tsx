@@ -134,8 +134,8 @@ export default function CookieConsent() {
                   {/* Functional */}
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="font-semibold text-white text-sm">Cookies fonctionnels</p>
-                      <p className="text-xs text-indigo-300">Améliorent l&apos;expérience utilisateur</p>
+                      <p className="font-semibold text-white text-sm">{t('cookieFunctional')}</p>
+                      <p className="text-xs text-indigo-300">{t('cookieFunctionalDesc')}</p>
                     </div>
                     <button
                       onClick={() => setPreferences(p => ({ ...p, functional: !p.functional }))}

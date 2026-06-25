@@ -3,6 +3,7 @@ import { stripe } from '@/lib/stripe'
 import { safeQuery } from '@/lib/db'
 import { validateEmail, validateId, validateString } from '@/lib/input-validation'
 import type Stripe from 'stripe'
+import { createHash } from 'crypto'
 
 const PROMO_CODES: Record<string, { discount: number; description: string }> = {
   LANCEMENT30: { discount: 0.30, description: 'Offre de lancement -30%' },
@@ -89,7 +90,14 @@ export async function POST(request: NextRequest) {
       }]
     }
 
-    const session = await stripe.checkout.sessions.create(sessionParams as Stripe.Checkout.SessionCreateParams)
+    const idempotencyKey = createHash('sha256')
+      .update(`${email}:${templateId}:${promoCode || ''}`)
+      .digest('hex')
+
+    const session = await stripe.checkout.sessions.create(
+      sessionParams as Stripe.Checkout.SessionCreateParams,
+      { idempotencyKey }
+    )
 
     return NextResponse.json({
       url: session.url,

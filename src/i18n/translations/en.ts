@@ -220,6 +220,8 @@ const en: TranslationKeys = {
   blogCtaDesc: 'Join thousands of developers using NeuraAPI.',
   blogCta1: 'Get started now',
   blogCta2: 'View pricing',
+  cookieFunctional: 'Functional cookies',
+  cookieFunctionalDesc: 'Improve user experience',
 
   // Homepage - Hero
   heroTagline: 'AI APIs & Premium Templates — 2026',

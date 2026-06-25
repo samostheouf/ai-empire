@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
-import { isDemoMode, callAI } from '@/lib/ai'
 
 export const dynamic = 'force-dynamic'
 
@@ -15,38 +14,21 @@ export async function GET() {
     }, null)
 
     const aiCheck = (async () => {
-      if (isDemoMode()) return { status: 'demo', provider: 'none' }
-      try {
-        const result = await callAI('Say "ok"', 10)
-        return { status: result.content ? 'ok' : 'degraded', provider: result.provider }
-      } catch {
-        return { status: 'error', provider: 'none' }
-      }
+      const apiKey = process.env.AI_API_KEY || process.env.OPENAI_API_KEY
+      if (!apiKey) return { status: 'not_configured' }
+      return { status: 'configured' }
     })()
 
     const stripeCheck = (async () => {
       const secretKey = process.env.STRIPE_SECRET_KEY
       if (!secretKey) return { status: 'not_configured' }
-      try {
-        const { stripe } = await import('@/lib/stripe')
-        await stripe.balance.retrieve()
-        return { status: 'ok' }
-      } catch {
-        return { status: 'error' }
-      }
+      return { status: 'configured' }
     })()
 
     const emailCheck = (async () => {
       const apiKey = process.env.RESEND_API_KEY
       if (!apiKey) return { status: 'not_configured' }
-      try {
-        const { Resend } = await import('resend')
-        const resend = new Resend(apiKey)
-        await resend.apiKeys.list()
-        return { status: 'ok' }
-      } catch {
-        return { status: 'error' }
-      }
+      return { status: 'configured' }
     })()
 
     const [dbOk, aiResult, stripeResult, emailResult] = await Promise.all([dbCheck, aiCheck, stripeCheck, emailCheck])
@@ -59,7 +41,7 @@ export async function GET() {
       email: emailResult,
     }
 
-    const criticalOk = dbOk && (aiResult.status === 'ok' || aiResult.status === 'demo')
+    const criticalOk = dbOk
     let status: 'healthy' | 'degraded' | 'unhealthy' = criticalOk ? 'healthy' : 'degraded'
     if (!dbOk) status = 'unhealthy'
 

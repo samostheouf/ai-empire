@@ -67,6 +67,23 @@ const API_METRICS = [
 export default function TemplatesPage() {
   return (
     <div className="min-h-screen bg-[#0f0a2e]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'ItemList',
+            name: 'NeuraAPI Templates',
+            description: 'Premium Next.js templates for SaaS, e-commerce, and portfolios',
+            numberOfItems: 10,
+            itemListElement: [
+              { '@type': 'SoftwareApplication', name: 'NeuraSaaS', applicationCategory: 'DeveloperApplication', offers: { '@type': 'Offer', price: '97', priceCurrency: 'EUR' } },
+              { '@type': 'SoftwareApplication', name: 'NeuraCommerce', applicationCategory: 'DeveloperApplication', offers: { '@type': 'Offer', price: '129', priceCurrency: 'EUR' } },
+              { '@type': 'SoftwareApplication', name: 'NeuraBlog', applicationCategory: 'DeveloperApplication', offers: { '@type': 'Offer', price: '59', priceCurrency: 'EUR' } },
+            ],
+          }),
+        }}
+      />
       {/* Hero */}
       <div className="relative overflow-hidden px-4 pt-24 pb-12 sm:px-6 lg:px-8">
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-600/10 to-transparent" />

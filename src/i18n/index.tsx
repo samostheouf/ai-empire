@@ -1,15 +1,15 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, ReactNode } from 'react'
-import { Locale, defaultLocale } from './config'
-import translations from './translations'
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react'
+import { Locale, defaultLocale, TranslationKeys } from './config'
+import { loadTranslations } from './translations'
 
 const COOKIE_NAME = 'neuralocale'
 
 interface I18nContextValue {
   locale: Locale
   setLocale: (locale: Locale) => void
-  t: (key: keyof typeof translations['fr']) => string
+  t: (key: keyof TranslationKeys) => string
   isRTL: boolean
 }
 
@@ -23,6 +23,11 @@ export function I18nProvider({
   initialLocale: Locale
 }) {
   const [locale, setLocaleState] = useState<Locale>(initialLocale)
+  const [dict, setDict] = useState<Record<string, unknown> | null>(null)
+
+  useEffect(() => {
+    loadTranslations(locale).then((t) => setDict(t as unknown as Record<string, unknown>))
+  }, [locale])
 
   const setLocale = useCallback((newLocale: Locale) => {
     setLocaleState(newLocale)
@@ -30,12 +35,12 @@ export function I18nProvider({
   }, [])
 
   const t = useCallback(
-    (key: keyof typeof translations['fr']): string => {
-      const dict = translations[locale] || translations[defaultLocale]
-      const val = dict[key] ?? translations[defaultLocale][key] ?? key
-      return Array.isArray(val) ? val.join(', ') : val
+    (key: keyof TranslationKeys): string => {
+      if (!dict) return String(key)
+      const val = dict[key] ?? key
+      return Array.isArray(val) ? val.join(', ') : String(val)
     },
-    [locale]
+    [dict]
   )
 
   const isRTL = locale === 'ar'

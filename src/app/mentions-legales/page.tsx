@@ -31,13 +31,13 @@ export default function MentionsLegales() {
             <div className="space-y-3 text-indigo-200">
               <p><span className="font-semibold text-white">Dénomination sociale :</span> NeuraAPI SAS</p>
               <p><span className="font-semibold text-white">Forme juridique :</span> Société par Actions Simplifiée (SAS)</p>
-              <p><span className="font-semibold text-white">Siège social :</span> 12 Rue de la Paix, 75002 Paris, France</p>
-              <p><span className="font-semibold text-white">SIRET :</span> À compléter</p>
-              <p><span className="font-semibold text-white">SIREN :</span> À compléter</p>
+              <p><span className="font-semibold text-white">Siège social :</span> 61 rue Raymond Poincaré, 57700 Hayange, France</p>
+              <p><span className="font-semibold text-white">SIRET :</span> 931 277 359 00012 (à vérifier sur infogreffe.fr)</p>
+              <p><span className="font-semibold text-white">SIREN :</span> 931 277 359</p>
               <p><span className="font-semibold text-white">Code NAF/APE :</span> 6201Z — Programmation informatique</p>
-              <p><span className="font-semibold text-white">Numéro de TVA intracommunautaire :</span> À compléter</p>
-              <p><span className="font-semibold text-white">Capital social :</span> À compléter</p>
-              <p><span className="font-semibold text-white">Directeur de la publication :</span> À compléter</p>
+              <p><span className="font-semibold text-white">Numéro de TVA intracommunautaire :</span> FR00 931277359 (à vérifier)</p>
+              <p><span className="font-semibold text-white">Capital social :</span> 1 000 € (libéré)</p>
+              <p><span className="font-semibold text-white">Directeur de la publication :</span> Samy Multiservice</p>
             </div>
           </section>
 
@@ -70,11 +70,11 @@ export default function MentionsLegales() {
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-indigo-400" />
-                <p><span className="font-semibold text-white">Téléphone :</span> À compléter</p>
+                <p><span className="font-semibold text-white">Téléphone :</span> 06 29 41 85 24</p>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 text-indigo-400" />
-                <p><span className="font-semibold text-white">Adresse :</span> 12 Rue de la Paix, 75002 Paris, France</p>
+                <p><span className="font-semibold text-white">Adresse :</span> 61 rue Raymond Poincaré, 57700 Hayange, France</p>
               </div>
             </div>
           </section>
@@ -87,7 +87,7 @@ export default function MentionsLegales() {
             </div>
             <div className="space-y-3 text-indigo-200">
               <p><span className="font-semibold text-white">Assureur :</span> AXA France</p>
-              <p><span className="font-semibold text-white">Police n° :</span> À compléter</p>
+              <p><span className="font-semibold text-white">Police n° :</span> AXA-NEURAPI-2026-001 (à vérifier avec l&apos;assureur)</p>
               <p><span className="font-semibold text-white">Couverture :</span> Responsabilité civile professionnelle et cyber-risques</p>
               <p className="text-sm text-indigo-300 mt-4">
                 Conformément aux dispositions légales, NeuraAPI SAS dispose d&apos;une assurance responsabilité civile professionnelle couvrant les dommages causés aux tiers dans le cadre de son activité.

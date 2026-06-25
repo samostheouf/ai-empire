@@ -3,10 +3,11 @@ import Breadcrumb from '@/components/Breadcrumb'
 import GuideContent from '@/components/client/GuideContent'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-export default function GuidePage() {
+export default async function GuidePage() {
   const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
   const t = (key: string) => {
-    const dict = getTranslations(locale) as unknown as Record<string, string>
+    const dict = translations as unknown as Record<string, string>
     return dict[key] || key
   }
 

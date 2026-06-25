@@ -60,37 +60,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/mentions-legales`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/politique-confidentialite`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/politique-cookies`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
+    { url: `${baseUrl}/dpa`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/offre-lancement`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/offre-lancement') },
     { url: `${baseUrl}/compare`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/compare') },
 
     // Regional pages
-    { url: `${baseUrl}/en/usa`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: {
-      'en-US': `${baseUrl}/en/usa`,
-      'en-GB': `${baseUrl}/en/uk`,
-      'fr-FR': baseUrl,
-      'x-default': baseUrl,
-    }},
-    { url: `${baseUrl}/en/uk`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: {
-      'en-GB': `${baseUrl}/en/uk`,
-      'en-US': `${baseUrl}/en/usa`,
-      'fr-FR': baseUrl,
-      'x-default': baseUrl,
-    }},
-    { url: `${baseUrl}/de/de`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: {
-      'de-DE': `${baseUrl}/de/de`,
-      'fr-FR': baseUrl,
-      'x-default': baseUrl,
-    }},
-    { url: `${baseUrl}/ja/jp`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: {
-      'ja-JP': `${baseUrl}/ja/jp`,
-      'fr-FR': baseUrl,
-      'x-default': baseUrl,
-    }},
-    { url: `${baseUrl}/pt/br`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: {
-      'pt-BR': `${baseUrl}/pt/br`,
-      'fr-FR': baseUrl,
-      'x-default': baseUrl,
-    }},
+    { url: `${baseUrl}/en/usa`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: buildAlternates('/en/usa') },
+    { url: `${baseUrl}/en/uk`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: buildAlternates('/en/uk') },
+    { url: `${baseUrl}/de/de`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/de/de') },
+    { url: `${baseUrl}/ja/jp`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/ja/jp') },
+    { url: `${baseUrl}/pt/br`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/pt/br') },
 
     // Regional sub-pages
     { url: `${baseUrl}/en/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },

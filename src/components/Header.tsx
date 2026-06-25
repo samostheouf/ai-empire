@@ -58,7 +58,7 @@ const Header = memo(function HeaderInner() {
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative">
-              <Sparkles className="h-6 w-6 text-indigo-400 transition-transform group-hover:scale-110" />
+              <img src="/logo.jpg" alt="NeuraAPI" className="h-8 w-8 rounded-lg object-cover transition-transform group-hover:scale-110" />
               <div className="absolute inset-0 blur-md bg-indigo-500/30 group-hover:bg-indigo-500/50 transition-colors" />
             </div>
             <span className="text-xl font-bold text-white">NeuraAPI</span>

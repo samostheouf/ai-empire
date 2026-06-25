@@ -28,8 +28,8 @@ export default function PolitiqueConfidentialite() {
             </div>
             <div className="space-y-3 text-indigo-200 text-sm">
               <p><span className="font-semibold text-white">Responsable :</span> NeuraAPI SAS</p>
-              <p><span className="font-semibold text-white">Siège social :</span> 12 Rue de la Paix, 75002 Paris, France</p>
-              <p><span className="font-semibold text-white">SIRET :</span> À compléter</p>
+              <p><span className="font-semibold text-white">Siège social :</span> 61 rue Raymond Poincaré, 57700 Hayange, France</p>
+              <p><span className="font-semibold text-white">SIRET :</span> 931 277 359 00012</p>
               <p><span className="font-semibold text-white">Délégué à la Protection des Données (DPO) :</span></p>
               <div className="ml-4">
                 <div className="flex items-center gap-2">
@@ -38,7 +38,7 @@ export default function PolitiqueConfidentialite() {
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <MapPin className="h-4 w-4 text-indigo-400" />
-                  <p>12 Rue de la Paix, 75002 Paris, France</p>
+                  <p>61 rue Raymond Poincaré, 57700 Hayange, France</p>
                 </div>
               </div>
             </div>
@@ -265,7 +265,7 @@ export default function PolitiqueConfidentialite() {
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-indigo-400" />
-                  <span>Adresse : NeuraAPI SAS — DPO, 12 Rue de la Paix, 75002 Paris, France</span>
+                  <span>Adresse : NeuraAPI SAS — DPO, 61 rue Raymond Poincaré, 57700 Hayange, France</span>
                 </div>
               </div>
               <p className="mt-4">

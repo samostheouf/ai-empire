@@ -2,10 +2,11 @@ import Breadcrumb from '@/components/Breadcrumb'
 import StatusContent from '@/components/client/StatusContent'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-export default function StatusPage() {
+export default async function StatusPage() {
   const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
   const t = (key: string) => {
-    const dict = getTranslations(locale) as unknown as Record<string, string>
+    const dict = translations as unknown as Record<string, string>
     return dict[key] || key
   }
 

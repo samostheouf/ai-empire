@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { safeQuery } from '@/lib/db';
 import { callAI, isDemoMode } from '@/lib/ai';
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit';
 
 const DEMO_CODE = `// [Mode Démo] Code généré par NeuraAPI
 // Pour activer le vrai code, configurez GROQ_API_KEY ou GEMINI_API_KEY
@@ -69,6 +70,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Clé API invalide' }, { status: 401 });
     }
 
+    const rl = await rateLimit(`ai-code:${user.id}`, 20, 60_000)
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, {
+        status: 429,
+        headers: getRateLimitHeaders(rl, 20),
+      })
+    }
+
     if (user.credits <= 0) {
       return NextResponse.json({ error: 'Crédits insuffisants' }, { status: 402 });
     }
@@ -84,6 +93,12 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'La description ne doit pas dépasser 4000 caractères' }, { status: 400 });
     }
 
+    const ALLOWED_LANGUAGES = ['typescript', 'javascript', 'python', 'rust', 'go', 'java', 'php', 'ruby', 'csharp', 'swift', 'html', 'css', 'sql', 'bash'];
+    const ALLOWED_FRAMEWORKS = ['react', 'nextjs', 'vue', 'angular', 'svelte', 'express', 'fastapi', 'django', 'flask', 'laravel', 'rails', 'spring', ''];
+
+    const safeLanguage = ALLOWED_LANGUAGES.includes(language.toLowerCase()) ? language.toLowerCase() : 'typescript';
+    const safeFramework = ALLOWED_FRAMEWORKS.includes(framework.toLowerCase()) ? framework.toLowerCase() : '';
+
     if (isDemoMode()) {
       return NextResponse.json({
         code: DEMO_CODE,
@@ -94,8 +109,8 @@ export async function POST(request: Request) {
       });
     }
 
-    const frameworkInfo = framework ? ` dans le framework ${framework}` : '';
-    const prompt = `Tu es un développeur expert. Génère du code ${language}${frameworkInfo} basé sur cette description:\n"${description}"\nRetourne uniquement le code, sans explications.`;
+    const frameworkInfo = safeFramework ? ` dans le framework ${safeFramework}` : '';
+    const prompt = `Tu es un développeur expert. Génère du code ${safeLanguage}${frameworkInfo} basé sur cette description:\n"${description}"\nRetourne uniquement le code, sans explications.`;
 
     const result = await callAI(prompt, 2000);
 

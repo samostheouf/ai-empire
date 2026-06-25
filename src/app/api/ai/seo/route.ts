@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { safeQuery } from '@/lib/db';
 import { callAI, isDemoMode } from '@/lib/ai';
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit';
 
 const DEMO_SEO = {
   title: "Guide Complet - Tout Ce Qu'il Faut Savoir en 2025",
@@ -42,6 +43,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Clé API invalide' }, { status: 401 });
     }
 
+    const rl = await rateLimit(`ai-seo:${user.id}`, 20, 60_000)
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, {
+        status: 429,
+        headers: getRateLimitHeaders(rl, 20),
+      })
+    }
+
     if (user.credits <= 0) {
       return NextResponse.json({ error: 'Crédits insuffisants' }, { status: 402 });
     }
@@ -53,9 +62,14 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Le champ topic est requis' }, { status: 400 });
     }
 
-    if (typeof topic === 'string' && topic.length > 4000) {
-      return NextResponse.json({ error: 'Le topic ne doit pas dépasser 4000 caractères' }, { status: 400 });
+    if (typeof topic !== 'string' || topic.length > 4000) {
+      return NextResponse.json({ error: 'Le topic doit être une chaîne de caractères de max 4000 caractères' }, { status: 400 });
     }
+
+    const safeTopic = topic.replace(/[<>'"]/g, '').substring(0, 2000);
+    const safeKeywords = Array.isArray(keywords) 
+      ? keywords.filter((k: unknown) => typeof k === 'string').slice(0, 20).map((k: string) => k.replace(/[<>'"]/g, '').substring(0, 100))
+      : [];
 
     const maxTokensValue = Math.min(Math.max(1, Number(maxTokens) || 2000), 4000);
 
@@ -68,8 +82,8 @@ export async function POST(request: Request) {
       });
     }
 
-    const prompt = `Tu es un expert en SEO. Génère du contenu optimisé pour le référencement naturel sur le sujet: "${topic}".
-Mots-clés à inclure: ${keywords.join(', ') || 'non spécifié'}.
+    const prompt = `Tu es un expert en SEO. Génère du contenu optimisé pour le référencement naturel sur le sujet: "${safeTopic}".
+Mots-clés à inclure: ${safeKeywords.join(', ') || 'non spécifié'}.
 Retourne un JSON avec: title, metaDescription, content.`;
 
     const result = await callAI(prompt, maxTokensValue);

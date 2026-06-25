@@ -2,8 +2,8 @@ import Link from 'next/link'
 import {
   Sparkles, Zap, Shield, Check, CreditCard,
   Code, Rocket, Search, MessageSquare, HeadphonesIcon, ShieldCheck,
-  BarChart3, ArrowRight, Clock, TrendingUp,
-  Timer, Globe, Download, Users, Briefcase, Building2, Lightbulb,
+  BarChart3, ArrowRight, Clock,
+  Globe, Download, Users, Briefcase, Building2, Lightbulb,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { CtaLink, LiveUserCountBadge, EndpointCopyButton } from '@/components/HomeInteractive'
@@ -14,14 +14,16 @@ const AnimatedCounter = dynamic(() => import('@/components/AnimatedCounter'), { 
 const RealTestimonials = dynamic(() => import('@/components/RealTestimonials'), { ssr: false })
 const QuickDemo = dynamic(() => import('@/components/QuickDemo'), { ssr: false })
 const TemplateCarousel = dynamic(() => import('@/components/HomeInteractive').then(mod => ({ default: mod.TemplateCarousel })), { ssr: false })
+const EarlyAdopterBanner = dynamic(() => import('@/components/EarlyAdopterBanner'), { ssr: false })
 const CountdownTimer = dynamic(() => import('@/components/CountdownTimer'), { ssr: false })
 const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'), { ssr: false })
 const ABTest = dynamic(() => import('@/components/ABTest').then(mod => ({ default: mod.ABTest })), { ssr: false })
 
-export default function Home() {
+export default async function Home() {
   const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
   const t = (key: string) => {
-    const dict = getTranslations(locale) as unknown as Record<string, string>
+    const dict = translations as unknown as Record<string, string>
     return dict[key] || key
   }
 
@@ -95,6 +97,10 @@ export default function Home() {
 
           <div className="mt-6 mb-6">
             <HomeCountdown />
+          </div>
+
+          <div className="mb-8">
+            <EarlyAdopterBanner />
           </div>
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up animate-delay-300">
@@ -279,7 +285,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm text-indigo-300 mb-4 backdrop-blur-sm">
-              <TrendingUp className="w-4 h-4" />
+              <BarChart3 className="w-4 h-4" />
               {t('roiBadge')}
             </span>
             <h2 className="text-3xl font-bold text-white sm:text-4xl">
@@ -291,7 +297,7 @@ export default function Home() {
           </div>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[
-              { icon: Timer, value: '200h+', label: t('roiHoursSaved'), desc: t('roiHoursDesc'), color: 'text-orange-400' },
+              { icon: Clock, value: '200h+', label: t('roiHoursSaved'), desc: t('roiHoursDesc'), color: 'text-orange-400' },
               { icon: Clock, value: '48h', label: t('roiLaunchTime'), desc: t('roiLaunchDesc'), color: 'text-indigo-400' },
               { icon: Code, value: '3 lignes', label: t('roiIntegrateAI'), desc: t('roiIntegrateDesc'), color: 'text-green-400' },
               { icon: Globe, value: '100%', label: t('roiMaintainable'), desc: t('roiMaintainableDesc'), color: 'text-purple-400' },

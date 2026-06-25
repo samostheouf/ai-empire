@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
     
     const response = await fetch(url, {
       headers: { 'Content-Type': 'application/json' },
+      signal: AbortSignal.timeout(10000),
     })
     const data = await response.json()
     return NextResponse.json(data)
@@ -35,6 +36,7 @@ export async function POST(request: NextRequest) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),
+      signal: AbortSignal.timeout(10000),
     })
     const data = await response.json()
     return NextResponse.json(data)

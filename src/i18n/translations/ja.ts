@@ -227,6 +227,8 @@ const ja: TranslationKeys = {
   blogCtaDesc: 'NeuraAPIを使う開発者の仲間に入りましょう。',
   blogCta1: '今すぐ始める',
   blogCta2: '料金を見る',
+  cookieFunctional: '機能クッキー',
+  cookieFunctionalDesc: 'ユーザーエクスペリエンスを向上',
 
   // Homepage - Hero
   heroTagline: 'AI API＆プレミアムテンプレート — 2026',

@@ -4,17 +4,6 @@ import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
-function parseUserAgent(ua: string | null): { device: string; browser: string } {
-  if (!ua) return { device: 'Inconnu', browser: 'Inconnu' }
-  const isMobile = /Mobile|Android|iPhone|iPad/i.test(ua)
-  let browser = 'Autre'
-  if (ua.includes('Chrome') && !ua.includes('Edg')) browser = 'Chrome'
-  else if (ua.includes('Safari') && !ua.includes('Chrome')) browser = 'Safari'
-  else if (ua.includes('Firefox')) browser = 'Firefox'
-  else if (ua.includes('Edg')) browser = 'Edge'
-  return { device: isMobile ? 'Mobile' : 'Desktop', browser }
-}
-
 export async function GET(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization')
@@ -38,169 +27,174 @@ export async function GET(request: NextRequest) {
     const data = await safeQuery(async () => {
       const { prisma } = await import('@/lib/db')
 
-      const baseWhere = { createdAt: { gte: fromDate, lte: toDate } }
+      const baseWhere = `createdAt >= '${fromDate.toISOString()}' AND createdAt <= '${toDate.toISOString()}'`
+      const pvWhere = `${baseWhere} AND event = 'page_view'`
 
-      const [totalPageViews, uniqueVisitorResult, uniquePageViewVisitorResult] = await Promise.all([
-        prisma.analyticsEvent.count({ where: { ...baseWhere, event: 'page_view' } }),
-        prisma.analyticsEvent.findMany({
-          where: baseWhere,
-          select: { visitorId: true },
-          distinct: ['visitorId'],
-        }),
-        prisma.analyticsEvent.findMany({
-          where: { ...baseWhere, event: 'page_view' },
-          select: { visitorId: true },
-          distinct: ['visitorId'],
-        }),
-      ])
+      const countsResult = await prisma.$queryRawUnsafe<{ total: bigint }[]>(`
+        SELECT COUNT(*) AS total FROM "AnalyticsEvent" WHERE ${pvWhere}
+      `)
+      const totalPageViews = Number(countsResult[0]?.total ?? 0)
 
-      const uniqueVisitors = uniqueVisitorResult.length
-      const uniquePageViewVisitors = uniquePageViewVisitorResult.length
+      const uniqueVisitorsResult = await prisma.$queryRawUnsafe<{ cnt: bigint }[]>(`
+        SELECT COUNT(DISTINCT "visitorId") AS cnt FROM "AnalyticsEvent" WHERE ${pvWhere}
+      `)
+      const uniquePageViewVisitors = Number(uniqueVisitorsResult[0]?.cnt ?? 0)
 
-      const pageViewGroup = await prisma.analyticsEvent.groupBy({
-        by: ['page'],
-        where: { ...baseWhere, event: 'page_view' },
-        _count: { id: true },
-        orderBy: { _count: { id: 'desc' } },
-        take: 20,
-      })
+      const topPages = await prisma.$queryRawUnsafe<{ page: string; views: bigint; unique_visitors: bigint }[]>(`
+        SELECT
+          page,
+          COUNT(*) AS views,
+          COUNT(DISTINCT "visitorId") AS unique_visitors
+        FROM "AnalyticsEvent"
+        WHERE ${pvWhere} AND page IS NOT NULL
+        GROUP BY page
+        ORDER BY views DESC
+        LIMIT 20
+      `)
 
-      const topPages = await Promise.all(
-        pageViewGroup
-          .filter((g): g is typeof g & { page: string } => g.page !== null)
-          .map(async (g) => {
-            const visitors = await prisma.analyticsEvent.findMany({
-              where: { ...baseWhere, event: 'page_view', page: g.page },
-              select: { visitorId: true },
-              distinct: ['visitorId'],
-            })
-            return { page: g.page, views: g._count.id, uniqueVisitors: visitors.length }
-          })
-      )
+      const topPagesMapped = topPages.map((p) => ({
+        page: p.page,
+        views: Number(p.views),
+        uniqueVisitors: Number(p.unique_visitors),
+      }))
 
       const pageViewsFiltered = pageFilter
-        ? await prisma.analyticsEvent.findMany({
-            where: { ...baseWhere, event: 'page_view', page: pageFilter },
-            select: { data: true, visitorId: true },
-          })
+        ? await prisma.$queryRawUnsafe<{ data: string | null; visitorId: string }[]>(`
+            SELECT data, "visitorId" FROM "AnalyticsEvent"
+            WHERE ${pvWhere} AND page = ${pageFilter}
+          `)
         : []
 
-      const timeEvents = await prisma.analyticsEvent.findMany({
-        where: { ...baseWhere, event: 'time_on_page' },
-        select: { data: true },
-      })
-
-      let avgTimeOnPage = 0
-      const timeDistribution = { '0-10s': 0, '10-30s': 0, '30-60s': 0, '60s+': 0 }
-      let totalTime = 0
-      for (const e of timeEvents) {
-        try {
-          const parsed = e.data ? JSON.parse(e.data) : null
-          const secs = parsed?.seconds || 0
-          totalTime += secs
-          if (secs <= 10) timeDistribution['0-10s']++
-          else if (secs <= 30) timeDistribution['10-30s']++
-          else if (secs <= 60) timeDistribution['30-60s']++
-          else timeDistribution['60s+']++
-        } catch (err) {
-          logger.error('analytics', 'Failed to parse time distribution', { error: err instanceof Error ? err.message : String(err) })
-        }
+      const timeResult = await prisma.$queryRawUnsafe<{ avg_secs: number | null; bucket_0_10: bigint; bucket_10_30: bigint; bucket_30_60: bigint; bucket_60_plus: bigint }[]>(`
+        SELECT
+          AVG(CASE WHEN (data::json->>'seconds')::numeric IS NOT NULL THEN (data::json->>'seconds')::numeric ELSE 0 END) AS avg_secs,
+          COUNT(*) FILTER (WHERE (data::json->>'seconds')::numeric <= 10) AS bucket_0_10,
+          COUNT(*) FILTER (WHERE (data::json->>'seconds')::numeric > 10 AND (data::json->>'seconds')::numeric <= 30) AS bucket_10_30,
+          COUNT(*) FILTER (WHERE (data::json->>'seconds')::numeric > 30 AND (data::json->>'seconds')::numeric <= 60) AS bucket_30_60,
+          COUNT(*) FILTER (WHERE (data::json->>'seconds')::numeric > 60) AS bucket_60_plus
+        FROM "AnalyticsEvent"
+        WHERE ${baseWhere} AND event = 'time_on_page'
+      `)
+      const timeRow = timeResult[0]
+      const avgTimeOnPage = timeRow ? Math.round(Number(timeRow.avg_secs) || 0) : 0
+      const timeDistribution = {
+        '0-10s': Number(timeRow?.bucket_0_10 ?? 0),
+        '10-30s': Number(timeRow?.bucket_10_30 ?? 0),
+        '30-60s': Number(timeRow?.bucket_30_60 ?? 0),
+        '60s+': Number(timeRow?.bucket_60_plus ?? 0),
       }
-      if (timeEvents.length > 0) avgTimeOnPage = Math.round(totalTime / timeEvents.length)
 
-      const ctaEvents = await prisma.analyticsEvent.findMany({
-        where: { ...baseWhere, event: 'cta_click' },
-        select: { data: true },
-      })
+      const ctaEvents = await prisma.$queryRawUnsafe<{ label: string; cnt: bigint }[]>(`
+        SELECT
+          COALESCE(data::json->>'label', 'inconnu') AS label,
+          COUNT(*) AS cnt
+        FROM "AnalyticsEvent"
+        WHERE ${baseWhere} AND event = 'cta_click'
+        GROUP BY label
+      `)
       const ctaCounts: Record<string, number> = {}
-      for (const e of ctaEvents) {
-        try {
-          const parsed = e.data ? JSON.parse(e.data) : null
-          const label = parsed?.label || 'inconnu'
-          ctaCounts[label] = (ctaCounts[label] || 0) + 1
-        } catch {
-          ctaCounts['inconnu'] = (ctaCounts['inconnu'] || 0) + 1
-        }
+      for (const row of ctaEvents) {
+        ctaCounts[row.label] = Number(row.cnt)
       }
 
-      const [registerStarts, registerCompletes, checkoutStarts, checkoutCompletes] = await Promise.all([
-        prisma.analyticsEvent.count({ where: { ...baseWhere, event: 'register_start' } }),
-        prisma.analyticsEvent.count({ where: { ...baseWhere, event: 'register_complete' } }),
-        prisma.analyticsEvent.count({ where: { ...baseWhere, event: 'checkout_start' } }),
-        prisma.analyticsEvent.count({ where: { ...baseWhere, event: 'checkout_complete' } }),
-      ])
+      const funnelResult = await prisma.$queryRawUnsafe<{ event: string; cnt: bigint }[]>(`
+        SELECT event, COUNT(*) AS cnt
+        FROM "AnalyticsEvent"
+        WHERE ${baseWhere} AND event IN ('register_start', 'register_complete', 'checkout_start', 'checkout_complete')
+        GROUP BY event
+      `)
+      const funnelMap: Record<string, number> = {}
+      for (const row of funnelResult) {
+        funnelMap[row.event] = Number(row.cnt)
+      }
+      const registerStarts = funnelMap['register_start'] ?? 0
+      const registerCompletes = funnelMap['register_complete'] ?? 0
+      const checkoutStarts = funnelMap['checkout_start'] ?? 0
+      const checkoutCompletes = funnelMap['checkout_complete'] ?? 0
 
-      const scrollEvents = await prisma.analyticsEvent.findMany({
-        where: { ...baseWhere, event: 'scroll_depth' },
-        select: { data: true },
-      })
+      const scrollResult = await prisma.$queryRawUnsafe<{ depth: string; cnt: bigint }[]>(`
+        SELECT
+          data::json->>'depth' AS depth,
+          COUNT(*) AS cnt
+        FROM "AnalyticsEvent"
+        WHERE ${baseWhere} AND event = 'scroll_depth'
+          AND (data::json->>'depth')::int IN (25, 50, 75, 100)
+        GROUP BY depth
+      `)
       const scrollStats: Record<number, number> = { 25: 0, 50: 0, 75: 0, 100: 0 }
-      for (const e of scrollEvents) {
-        try {
-          const parsed = e.data ? JSON.parse(e.data) : null
-          const depth = parsed?.depth
-          if (depth && depth in scrollStats) scrollStats[depth]++
-        } catch (err) {
-          logger.error('analytics', 'Failed to parse scroll depth data', { error: err instanceof Error ? err.message : String(err) })
-        }
+      for (const row of scrollResult) {
+        const d = Number(row.depth)
+        if (d in scrollStats) scrollStats[d] = Number(row.cnt)
       }
 
-      const deviceEvents = await prisma.analyticsEvent.findMany({
-        where: { ...baseWhere, event: 'page_view' },
-        select: { data: true },
-      })
+      const deviceResult = await prisma.$queryRawUnsafe<{ device: string; browser: string; cnt: bigint }[]>(`
+        SELECT
+          CASE
+            WHEN data::json->>'userAgent' ~ 'Mobile|Android|iPhone|iPad' THEN 'Mobile'
+            ELSE 'Desktop'
+          END AS device,
+          CASE
+            WHEN data::json->>'userAgent' LIKE '%Chrome%' AND data::json->>'userAgent' NOT LIKE '%Edg%' THEN 'Chrome'
+            WHEN data::json->>'userAgent' LIKE '%Safari%' AND data::json->>'userAgent' NOT LIKE '%Chrome%' THEN 'Safari'
+            WHEN data::json->>'userAgent' LIKE '%Firefox%' THEN 'Firefox'
+            WHEN data::json->>'userAgent' LIKE '%Edg%' THEN 'Edge'
+            ELSE 'Autre'
+          END AS browser,
+          COUNT(*) AS cnt
+        FROM "AnalyticsEvent"
+        WHERE ${pvWhere}
+        GROUP BY device, browser
+      `)
       const deviceCounts: Record<string, number> = {}
       const browserCounts: Record<string, number> = {}
-      for (const e of deviceEvents) {
-        try {
-          const parsed = e.data ? JSON.parse(e.data) : null
-          const ua = parsed?.userAgent || null
-          const { device, browser } = parseUserAgent(ua)
-          deviceCounts[device] = (deviceCounts[device] || 0) + 1
-          browserCounts[browser] = (browserCounts[browser] || 0) + 1
-        } catch (err) {
-          logger.error('analytics', 'Failed to parse device data', { error: err instanceof Error ? err.message : String(err) })
-        }
+      for (const row of deviceResult) {
+        deviceCounts[row.device] = (deviceCounts[row.device] || 0) + Number(row.cnt)
+        browserCounts[row.browser] = (browserCounts[row.browser] || 0) + Number(row.cnt)
       }
 
-      const allEventsForUtm = await prisma.analyticsEvent.findMany({
-        where: baseWhere,
-        select: { data: true },
-      })
+      const utmResult = await prisma.$queryRawUnsafe<{ utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; cnt: bigint }[]>(`
+        SELECT
+          data::json->>'utmSource' AS utm_source,
+          data::json->>'utmMedium' AS utm_medium,
+          data::json->>'utmCampaign' AS utm_campaign,
+          COUNT(*) AS cnt
+        FROM "AnalyticsEvent"
+        WHERE ${baseWhere}
+          AND (data::json->>'utmSource' IS NOT NULL OR data::json->>'utmMedium' IS NOT NULL OR data::json->>'utmCampaign' IS NOT NULL)
+        GROUP BY utm_source, utm_medium, utm_campaign
+      `)
       const utmSourceCounts: Record<string, number> = {}
       const utmMediumCounts: Record<string, number> = {}
       const utmCampaignCounts: Record<string, number> = {}
-      for (const e of allEventsForUtm) {
-        try {
-          const parsed = e.data ? JSON.parse(e.data) : null
-          if (parsed?.utmSource) utmSourceCounts[parsed.utmSource] = (utmSourceCounts[parsed.utmSource] || 0) + 1
-          if (parsed?.utmMedium) utmMediumCounts[parsed.utmMedium] = (utmMediumCounts[parsed.utmMedium] || 0) + 1
-          if (parsed?.utmCampaign) utmCampaignCounts[parsed.utmCampaign] = (utmCampaignCounts[parsed.utmCampaign] || 0) + 1
-        } catch (err) {
-          logger.error('analytics', 'Failed to parse UTM data', { error: err instanceof Error ? err.message : String(err) })
-        }
+      for (const row of utmResult) {
+        const n = Number(row.cnt)
+        if (row.utm_source) utmSourceCounts[row.utm_source] = (utmSourceCounts[row.utm_source] || 0) + n
+        if (row.utm_medium) utmMediumCounts[row.utm_medium] = (utmMediumCounts[row.utm_medium] || 0) + n
+        if (row.utm_campaign) utmCampaignCounts[row.utm_campaign] = (utmCampaignCounts[row.utm_campaign] || 0) + n
       }
 
-      const last7Days: Array<{ date: string; visitors: number; conversions: number }> = []
-      for (let i = 6; i >= 0; i--) {
-        const d = new Date()
-        d.setDate(d.getDate() - i)
-        const dayStr = d.toISOString().split('T')[0]
-        const dayStart = new Date(dayStr + 'T00:00:00.000Z')
-        const dayEnd = new Date(dayStr + 'T23:59:59.999Z')
-
-        const [dayVisitorResult, dayConversions] = await Promise.all([
-          prisma.analyticsEvent.findMany({
-            where: { createdAt: { gte: dayStart, lte: dayEnd } },
-            select: { visitorId: true },
-            distinct: ['visitorId'],
-          }),
-          prisma.analyticsEvent.count({
-            where: { createdAt: { gte: dayStart, lte: dayEnd }, event: 'checkout_complete' },
-          }),
-        ])
-        last7Days.push({ date: dayStr, visitors: dayVisitorResult.length, conversions: dayConversions })
-      }
+      const last7DaysResult = await prisma.$queryRawUnsafe<{ day: string; visitors: bigint; conversions: bigint }[]>(`
+        WITH days AS (
+          SELECT generate_series(
+            (CURRENT_DATE - INTERVAL '6 days')::date,
+            CURRENT_DATE::date,
+            INTERVAL '1 day'
+          )::date AS day
+        )
+        SELECT
+          to_char(d.day, 'YYYY-MM-DD') AS day,
+          COUNT(DISTINCT ae."visitorId") AS visitors,
+          COUNT(*) FILTER (WHERE ae.event = 'checkout_complete') AS conversions
+        FROM days d
+        LEFT JOIN "AnalyticsEvent" ae ON ae."createdAt" >= d.day::timestamp AND ae."createdAt" < (d.day + INTERVAL '1 day')::timestamp
+        GROUP BY d.day
+        ORDER BY d.day ASC
+      `)
+      const last7Days: Array<{ date: string; visitors: number; conversions: number }> = last7DaysResult.map((r) => ({
+        date: r.day,
+        visitors: Number(r.visitors),
+        conversions: Number(r.conversions),
+      }))
 
       return {
         totalPageViews,
@@ -215,7 +209,7 @@ export async function GET(request: NextRequest) {
             ? ((checkoutCompletes / uniquePageViewVisitors) * 100).toFixed(2) + '%'
             : '0%',
         },
-        topPages,
+        topPages: topPagesMapped,
         avgTimeOnPage,
         timeDistribution,
         scrollDepths: scrollStats,
@@ -223,7 +217,7 @@ export async function GET(request: NextRequest) {
         deviceBreakdown: { devices: deviceCounts, browsers: browserCounts },
         utmTraffic: { source: utmSourceCounts, medium: utmMediumCounts, campaign: utmCampaignCounts },
         last7Days,
-        totalEvents: totalPageViews + timeEvents.length + ctaEvents.length + scrollEvents.length + deviceEvents.length,
+        totalEvents: totalPageViews,
         dateRange: { from: fromDate.toISOString(), to: toDate.toISOString() },
         isLive,
       }

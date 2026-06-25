@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     siteName: 'NeuraAPI',
     locale: 'fr_FR',
     type: 'website',
-    images: [{ url: 'https://ai-empire-steel.vercel.app/og-image.svg', width: 1200, height: 630, alt: 'Beta NeuraAPI' }],
+    images: [{ url: 'https://ai-empire-steel.vercel.app/logo.jpg', width: 400, height: 400, alt: 'Beta NeuraAPI' }],
   },
   twitter: { card: 'summary_large_image', title: 'Beta NeuraAPI', description: 'Accès anticipé gratuit. 100 crédits offerts.' },
   alternates: { canonical: 'https://ai-empire-steel.vercel.app/beta' },

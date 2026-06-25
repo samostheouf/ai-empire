@@ -123,7 +123,7 @@ export default function CGV() {
               </p>
 
               <h3 className="font-semibold text-white mt-4">5.1 Conditions de rétractation</h3>
-              <p>Pour exercer son droit de rétractation, le Client doit adresser au Vendeur une déclaration écrobe (email ou courrier) exprimant clairement sa volonté de se rétracter.</p>
+              <p>Pour exercer son droit de rétractation, le Client doit adresser au Vendeur une déclaration écrite (email ou courrier) exprimant clairement sa volonté de se rétracter.</p>
               <p>Email : <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
 
               <h3 className="font-semibold text-white mt-4">5.2 Exceptions au droit de rétractation</h3>
