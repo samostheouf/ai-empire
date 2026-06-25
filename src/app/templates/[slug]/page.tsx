@@ -121,7 +121,8 @@ function getComparisonData(t: (key: string) => string) {
 export default function TemplateDetailPage() {
   const params = useParams()
   const slug = params?.slug as string
-  const { t } = useI18n()
+  const { t: rawT } = useI18n()
+  const t = rawT as (key: string) => string
   const [template, setTemplate] = useState<TemplateData | null>(null)
   const [loading, setLoading] = useState(true)
   const fallbackTemplates = getFallbackTemplates(t)
