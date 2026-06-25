@@ -2295,6 +2295,8 @@ export type TranslationKeys = {
   view: string
 
   // === AUTO-GENERATED MISSING KEYS ===
+  adminMarketingCreditsCount: string
+  adminMarketingDiscountCount: string
   aboutMissionText1: string
   aboutMissionText2: string
   aboutMissionText3: string
