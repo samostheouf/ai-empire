@@ -611,7 +611,7 @@ const ar: Record<string, string> = {
   freeCtaPricing: 'عرض الأسعار',
   freeError: 'حدث خطأ. يرجى المحاولة مرة أخرى.',
   freeNetworkError: 'خطأ في الشبكة. يرجى المحاولة مرة أخرى.',
-  freeFeatures: 'Next.js 14 App Router, Tailwind CSS'
+  freeFeatures: 'Next.js 14 App Router, Tailwind CSS',
 
   contactTitle: 'اتصل بنا',
   contactSubtitle: 'نحن هنا لمساعدتك. لا تتردد في التواصل.',

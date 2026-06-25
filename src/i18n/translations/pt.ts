@@ -866,7 +866,7 @@ const pt: Record<string, string> = {
   demoCreateAccount: 'Crie uma conta gratuita para testar com créditos reais.',
   demoErrorDefault: 'Ocorreu um erro. Tente novamente.',
   demoErrorNetwork: 'Não foi possível acessar a API. Verifique sua conexão.',
-  freeFeatures: 'Next.js 14 App Router, Tailwind CSS'
+  freeFeatures: 'Next.js 14 App Router, Tailwind CSS',
   notFoundBack: 'Voltar ao início',
 
   // QuickDemo example prompts

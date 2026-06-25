@@ -866,7 +866,7 @@ const zh: Record<string, string> = {
   demoCreateAccount: '创建免费账户，使用真实积分进行测试。',
   demoErrorDefault: '发生错误。请重试。',
   demoErrorNetwork: '无法连接到 API。请检查您的网络连接。',
-  freeFeatures: 'Next.js 14 App Router, Tailwind CSS'
+  freeFeatures: 'Next.js 14 App Router, Tailwind CSS',
   notFoundBack: '返回首页',
 
   // QuickDemo example prompts

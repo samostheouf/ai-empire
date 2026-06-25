@@ -859,7 +859,7 @@ const es: Record<string, string> = {
   demoCreateAccount: 'Crea una cuenta gratuita para probar con créditos reales.',
   demoErrorDefault: 'Ocurrió un error. Inténtalo de nuevo.',
   demoErrorNetwork: 'No se puede contactar la API. Verifica tu conexión.',
-  freeFeatures: 'Next.js 14 App Router, Tailwind CSS'
+  freeFeatures: 'Next.js 14 App Router, Tailwind CSS',
   notFoundBack: 'Volver al inicio',
 
   // QuickDemo example prompts

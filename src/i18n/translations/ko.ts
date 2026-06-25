@@ -866,7 +866,7 @@ const ko: Record<string, string> = {
   demoCreateAccount: '무료 계정을 만들어 실제 크레딧으로 테스트하세요.',
   demoErrorDefault: '오류가 발생했습니다. 다시 시도해주세요.',
   demoErrorNetwork: 'API에 연결할 수 없습니다. 연결을 확인하세요.',
-  freeFeatures: 'Next.js 14 App Router, Tailwind CSS'
+  freeFeatures: 'Next.js 14 App Router, Tailwind CSS',
   notFoundBack: '홈으로 돌아가기',
 
   // QuickDemo example prompts
