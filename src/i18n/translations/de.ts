@@ -1522,10 +1522,7 @@ const de: Record<string, string> = {
   blogTemplatesNextjsCtaTitle: 'Ready to launch your SaaS?',
   blogTemplatesNextjsCtaDesc: 'Choose a template and start building today.',
   blogTemplatesNextjsCtaExplore: 'Explore templates',
-}
-
   aboutCtaPrimary: 'Ein kostenloses Konto erstellen',
-export default de
   aboutCtaSecondary: 'Preise ansehen',
   aboutCtaText: 'Schließe dich Tausenden von Entwicklern an, die NeuraAPI nutzen, um intelligente Produkte zu erstellen.',
   aboutCtaTitle: 'Bereit loszulegen?',
@@ -3005,4 +3002,6 @@ export default de
   webVitalsTopPages: 'Top-Seiten',
   webVitalsTtfb: 'TTFB (Time to First Byte)',
 }
+
+export default de
 

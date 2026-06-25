@@ -1514,9 +1514,6 @@ const es: Record<string, string> = {
   blogTemplatesNextjsCtaTitle: 'Ready to launch your SaaS?',
   blogTemplatesNextjsCtaDesc: 'Choose a template and start building today.',
   blogTemplatesNextjsCtaExplore: 'Explore templates',
-}
-
-export default es
 
   // === AUTO-GENERATED SPANISH TRANSLATIONS ===
   aboutCtaPrimary: 'Crear una cuenta gratuita',
@@ -3000,3 +2997,6 @@ export default es
   url: 'URL',
   userId: 'ID de usuario',
   view: 'Ver',
+}
+
+export default es
