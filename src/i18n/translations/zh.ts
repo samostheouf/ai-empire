@@ -1,6 +1,5 @@
-import { TranslationKeys } from '../config'
 
-const zh: TranslationKeys = {
+const zh: Record<string, string> = {
   navTemplates: '模板',
   navPricing: '价格',
   navDocs: '文档',

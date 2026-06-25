@@ -1,6 +1,5 @@
-import { TranslationKeys } from '../config'
 
-const it: TranslationKeys = {
+const it: Record<string, string> = {
   navTemplates: 'Template',
   navPricing: 'Prezzi',
   navDocs: 'Docs',

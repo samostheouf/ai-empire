@@ -1,6 +1,5 @@
-import { TranslationKeys } from '../config'
 
-const ja: TranslationKeys = {
+const ja: Record<string, string> = {
   navTemplates: 'テンプレート',
   navPricing: '料金',
   navDocs: 'ドキュメント',
