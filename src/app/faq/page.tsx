@@ -43,7 +43,8 @@ const faqs = [
 ]
 
 export default function FAQPage() {
-  const { t, locale } = useI18n()
+  const { t: rawT, locale } = useI18n()
+  const t = rawT as (key: string) => string
   const [openIdx, setOpenIdx] = useState<string | null>(null)
   const [search, setSearch] = useState('')
 
