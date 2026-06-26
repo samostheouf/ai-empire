@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { useState, useEffect, useRef, useCallback, memo } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { Sparkles, LayoutDashboard, Menu, X } from 'lucide-react'
 import { useI18n } from '@/i18n'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -13,8 +13,6 @@ const Header = memo(function HeaderInner() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
-  const mobileMenuRef = useRef<HTMLDivElement>(null)
-  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -28,24 +26,8 @@ const Header = memo(function HeaderInner() {
 
   useEffect(() => {
     if (!mobileOpen) return
-    closeButtonRef.current?.focus()
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setMobileOpen(false)
-      if (e.key === 'Tab' && mobileMenuRef.current) {
-        const focusable = mobileMenuRef.current.querySelectorAll<HTMLElement>(
-          'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
-        )
-        if (focusable.length === 0) return
-        const first = focusable[0]
-        const last = focusable[focusable.length - 1]
-        if (e.shiftKey && document.activeElement === first) {
-          e.preventDefault()
-          last.focus()
-        } else if (!e.shiftKey && document.activeElement === last) {
-          e.preventDefault()
-          first.focus()
-        }
-      }
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
@@ -68,19 +50,19 @@ const Header = memo(function HeaderInner() {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ease-out ${
           scrolled
-            ? 'bg-indigo-950/60 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-indigo-500/5'
+            ? 'bg-indigo-950/70 backdrop-blur-xl border-b border-white/10 shadow-lg shadow-indigo-500/5'
             : 'bg-transparent border-b border-transparent'
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-2 group" aria-label="NeuraAPI — Retour à l'accueil">
+          <Link href="/" className="flex items-center gap-2.5 group">
             <div className="relative">
-              <img src="/logo.jpg" alt="" className="h-8 w-8 rounded-lg object-cover transition-transform group-hover:scale-110" />
-              <div className="absolute inset-0 blur-md bg-indigo-500/30 group-hover:bg-indigo-500/50 transition-colors" aria-hidden="true" />
+              <Image src="/logo.jpg" alt="NeuraAPI" width={32} height={32} priority className="h-8 w-8 rounded-lg object-cover transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3" />
+              <div className="absolute inset-0 blur-md bg-indigo-500/30 group-hover:bg-indigo-500/50 transition-colors duration-300" />
             </div>
-            <span className="text-xl font-bold text-white">NeuraAPI</span>
+            <span className="text-xl font-bold text-white transition-colors duration-200 group-hover:text-indigo-200">NeuraAPI</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-1" aria-label={t('headerNavigation')}>
@@ -90,16 +72,16 @@ const Header = memo(function HeaderInner() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`relative px-3 py-2 text-sm transition-colors rounded-lg flex items-center gap-1 ${
+                  className={`relative px-3 py-2 text-sm transition-all duration-200 rounded-lg flex items-center gap-1 ${
                     isActive
-                      ? 'text-white'
+                      ? 'text-white bg-white/5'
                       : 'text-indigo-200 hover:text-white hover:bg-white/5'
                   }`}
                 >
                   {link.icon && <LayoutDashboard className="w-4 h-4" />}
                   {link.label}
                   {isActive && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500" />
+                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 h-0.5 w-4 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-300" />
                   )}
                 </Link>
               )
@@ -107,7 +89,7 @@ const Header = memo(function HeaderInner() {
             <div className="ml-2 pl-2 border-l border-white/10">
               <Link
                 href="/docs"
-                className="rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2 text-sm font-medium text-white hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-500/20"
+                className="rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-2 text-sm font-medium text-white hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 shadow-lg shadow-indigo-500/20 hover:shadow-xl hover:-translate-y-0.5 active:scale-[0.98]"
               >
                 {t('navGetApiKey')}
               </Link>
@@ -116,70 +98,74 @@ const Header = memo(function HeaderInner() {
           </nav>
 
           <button
-            className="md:hidden p-2 text-indigo-200 hover:text-white transition-colors rounded-lg hover:bg-white/5"
+            className="md:hidden p-2.5 text-indigo-200 hover:text-white transition-all duration-200 rounded-lg hover:bg-white/5 active:scale-95"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label={mobileOpen ? t('headerMenuClose') : t('headerMenuOpen')}
             aria-expanded={mobileOpen}
           >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileOpen ? <X className="h-6 w-6 transition-transform duration-200" /> : <Menu className="h-6 w-6 transition-transform duration-200" />}
           </button>
         </div>
       </header>
 
-      {mobileOpen && (
-        <div className="fixed inset-0 z-40 md:hidden" role="dialog" aria-modal="true" aria-label={t('headerNavigation')}>
-          <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-            onClick={() => setMobileOpen(false)}
-            aria-hidden="true"
-          />
-          <div ref={mobileMenuRef} className="absolute top-0 right-0 h-full w-72 bg-indigo-950/95 backdrop-blur-xl border-l border-white/10 shadow-2xl animate-slide-in-right">
-            <div className="flex items-center justify-between p-4 border-b border-white/10">
-              <span className="text-lg font-bold text-white">{t('headerNavigation')}</span>
-              <button
-                ref={closeButtonRef}
-                onClick={() => setMobileOpen(false)}
-                aria-label={t('headerMenuClose')}
-                className="p-2 text-indigo-200 hover:text-white transition-colors rounded-lg hover:bg-white/5"
-              >
-                <X className="h-5 w-5" />
-              </button>
-            </div>
-              <nav className="px-3 py-4 space-y-1" aria-label={t('headerNavigation')}>
-              {navLinks.map((link) => {
-                const isActive = pathname === link.href
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    onClick={() => setMobileOpen(false)}
-                    className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition-all ${
-                      isActive
-                        ? 'bg-indigo-600/20 text-white border border-indigo-500/30'
-                        : 'text-indigo-200 hover:bg-white/5 hover:text-white'
-                    }`}
-                  >
-                    {link.icon && <LayoutDashboard className="w-4 h-4" />}
-                    {link.label}
-                  </Link>
-                )
-              })}
-              <div className="pt-2">
-                <Link
-                  href="/docs"
-                  onClick={() => setMobileOpen(false)}
-                  className="block rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-center text-sm font-medium text-white hover:from-indigo-500 hover:to-purple-500 transition-all"
-                >
-                  {t('navGetApiKey')}
-                </Link>
-              </div>
-              <div className="pt-2">
-                <LanguageSwitcher />
-              </div>
-            </nav>
+      {/* Mobile overlay */}
+      <div
+        className={`fixed inset-0 z-40 md:hidden transition-opacity duration-300 ${
+          mobileOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <div
+          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+          onClick={() => setMobileOpen(false)}
+        />
+        <div className={`absolute top-0 right-0 h-full w-72 bg-indigo-950/95 backdrop-blur-xl border-l border-white/10 shadow-2xl transition-transform duration-300 ease-out ${
+          mobileOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}>
+          <div className="flex items-center justify-between p-4 border-b border-white/10">
+            <span className="text-lg font-bold text-white">{t('headerNavigation')}</span>
+            <button
+              onClick={() => setMobileOpen(false)}
+              aria-label={t('headerMenuClose')}
+              className="p-2 text-indigo-200 hover:text-white transition-all duration-200 rounded-lg hover:bg-white/5 active:scale-95"
+            >
+              <X className="h-5 w-5" />
+            </button>
           </div>
+          <nav className="px-3 py-4 space-y-1" aria-label={t('headerNavigation')}>
+            {navLinks.map((link, i) => {
+              const isActive = pathname === link.href
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-3 text-sm transition-all duration-200 ${
+                    isActive
+                      ? 'bg-indigo-600/20 text-white border border-indigo-500/30'
+                      : 'text-indigo-200 hover:bg-white/5 hover:text-white active:bg-white/10'
+                  }`}
+                  style={{ animationDelay: `${i * 50}ms` }}
+                >
+                  {link.icon && <LayoutDashboard className="w-4 h-4" />}
+                  {link.label}
+                </Link>
+              )
+            })}
+            <div className="pt-3">
+              <Link
+                href="/docs"
+                onClick={() => setMobileOpen(false)}
+                className="block rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-center text-sm font-medium text-white hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 active:scale-[0.98]"
+              >
+                {t('navGetApiKey')}
+              </Link>
+            </div>
+            <div className="pt-3">
+              <LanguageSwitcher />
+            </div>
+          </nav>
         </div>
-      )}
+      </div>
     </>
   )
 });

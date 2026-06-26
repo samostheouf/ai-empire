@@ -124,7 +124,7 @@ export default function Chatbot() {
             <div className="bg-indigo-600 px-4 py-3 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center">
-                  <img src="/logo.jpg" alt="" className="w-6 h-6 rounded" />
+                  <Image src="/logo.jpg" alt="NeuraAPI" width={24} height={24} className="w-6 h-6 rounded" />
                 </div>
                 <div>
                   <span className="text-white font-semibold text-sm block">NeuraAPI Assistant</span>

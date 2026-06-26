@@ -11,8 +11,11 @@ const Footer = memo(function Footer() {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
 
+  const [loading, setLoading] = useState(false)
+
   const handleNewsletter = async (e: React.FormEvent) => {
     e.preventDefault()
+    setLoading(true)
     try {
       await fetch('/api/newsletter', {
         method: 'POST',
@@ -23,7 +26,10 @@ const Footer = memo(function Footer() {
       setEmail('')
     } catch {
       // Newsletter subscription failed silently
-    }  }
+    } finally {
+      setLoading(false)
+    }
+  }
 
   return (
     <footer id="footer" className="relative border-t border-white/5 bg-indigo-950" role="contentinfo" aria-label="Pied de page">
@@ -58,30 +64,35 @@ const Footer = memo(function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder={t('footerNewsletterPlaceholder')}
-                    className="flex-1 px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-indigo-400/50 focus:outline-none focus:ring-1 focus:ring-indigo-500/50"
+                    className="flex-1 px-3 py-2.5 rounded-lg bg-white/5 border border-white/10 text-sm text-white placeholder-indigo-400/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-200"
                   />
                   <button
                     type="submit"
+                    disabled={loading}
                     aria-label={t('footerNewsletterAria')}
-                    className="px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-colors"
+                    className="px-3 py-2.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 transition-all duration-200 shadow-lg shadow-indigo-500/20 hover:shadow-xl active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    {loading ? (
+                      <svg className="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" /><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" /></svg>
+                    ) : (
+                      <ArrowRight className="w-4 h-4" aria-hidden="true" />
+                    )}
                   </button>
                 </div>
               )}
             </form>
 
             <div className="flex items-center gap-3 mt-6">
-              <a href="https://twitter.com/neurapi" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="p-2 rounded-lg bg-white/5 text-indigo-300 hover:text-white hover:bg-white/10 transition-all">
+              <a href="https://twitter.com/neurapi" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="p-2.5 rounded-lg bg-white/5 text-indigo-300 hover:text-white hover:bg-indigo-500/20 hover:scale-110 transition-all duration-200 active:scale-95">
                 <Twitter className="w-4 h-4" />
               </a>
-              <a href="https://github.com/neurapi" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2 rounded-lg bg-white/5 text-indigo-300 hover:text-white hover:bg-white/10 transition-all">
+              <a href="https://github.com/neurapi" target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="p-2.5 rounded-lg bg-white/5 text-indigo-300 hover:text-white hover:bg-indigo-500/20 hover:scale-110 transition-all duration-200 active:scale-95">
                 <Github className="w-4 h-4" />
               </a>
-              <a href="https://linkedin.com/company/neurapi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2 rounded-lg bg-white/5 text-indigo-300 hover:text-white hover:bg-white/10 transition-all">
+              <a href="https://linkedin.com/company/neurapi" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="p-2.5 rounded-lg bg-white/5 text-indigo-300 hover:text-white hover:bg-indigo-500/20 hover:scale-110 transition-all duration-200 active:scale-95">
                 <Linkedin className="w-4 h-4" />
               </a>
-              <a href="mailto:contact@neurapi.com" aria-label="Email" className="p-2 rounded-lg bg-white/5 text-indigo-300 hover:text-white hover:bg-white/10 transition-all">
+              <a href="mailto:contact@neurapi.com" aria-label="Email" className="p-2.5 rounded-lg bg-white/5 text-indigo-300 hover:text-white hover:bg-indigo-500/20 hover:scale-110 transition-all duration-200 active:scale-95">
                 <Mail className="w-4 h-4" />
               </a>
             </div>
@@ -89,34 +100,34 @@ const Footer = memo(function Footer() {
 
           <div>
             <h3 className="text-sm font-semibold text-white mb-4">{t('footerProduct')}</h3>
-            <ul className="space-y-3">
-              <li><Link href="/templates" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerTemplates')}</Link></li>
-              <li><Link href="/pricing" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerPricing')}</Link></li>
-              <li><Link href="/docs" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerDocumentation')}</Link></li>
-              <li><Link href="/guide" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerGuide')}</Link></li>
-              <li><Link href="/dashboard" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerDashboard')}</Link></li>
+            <ul className="space-y-2.5">
+              <li><Link href="/templates" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerTemplates')}</Link></li>
+              <li><Link href="/pricing" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerPricing')}</Link></li>
+              <li><Link href="/docs" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerDocumentation')}</Link></li>
+              <li><Link href="/guide" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerGuide')}</Link></li>
+              <li><Link href="/dashboard" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerDashboard')}</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-sm font-semibold text-white mb-4">{t('footerResources')}</h3>
-            <ul className="space-y-3">
-              <li><Link href="/blog" className="text-sm text-indigo-300/80 hover:text-white transition-colors">Blog</Link></li>
-              <li><Link href="/blog/en/api-ia-nextjs" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerTutorialIA')}</Link></li>
-              <li><Link href="/blog/en/creer-saas-48h" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerGuideSaaS')}</Link></li>
-              <li><Link href="/status" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerStatus')}</Link></li>
-              <li><Link href="/contact" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerContact')}</Link></li>
+            <ul className="space-y-2.5">
+              <li><Link href="/blog" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">Blog</Link></li>
+              <li><Link href="/blog/en/api-ia-nextjs" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerTutorialIA')}</Link></li>
+              <li><Link href="/blog/en/creer-saas-48h" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerGuideSaaS')}</Link></li>
+              <li><Link href="/status" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerStatus')}</Link></li>
+              <li><Link href="/contact" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerContact')}</Link></li>
             </ul>
           </div>
 
           <div>
             <h3 className="text-sm font-semibold text-white mb-4">{t('footerLegal')}</h3>
-            <ul className="space-y-3">
-              <li><Link href="/mentions-legales" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerMentionsLegales')}</Link></li>
-              <li><Link href="/cgv" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerCGV')}</Link></li>
-              <li><Link href="/politique-confidentialite" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerConfidentialite')}</Link></li>
-              <li><Link href="/politique-cookies" className="text-sm text-indigo-300/80 hover:text-white transition-colors">{t('footerCookies')}</Link></li>
-              <li><Link href="/dpa" className="text-sm text-indigo-300/80 hover:text-white transition-colors">DPA</Link></li>
+            <ul className="space-y-2.5">
+              <li><Link href="/mentions-legales" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerMentionsLegales')}</Link></li>
+              <li><Link href="/cgv" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerCGV')}</Link></li>
+              <li><Link href="/politique-confidentialite" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerConfidentialite')}</Link></li>
+              <li><Link href="/politique-cookies" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerCookies')}</Link></li>
+              <li><Link href="/dpa" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">DPA</Link></li>
             </ul>
           </div>
         </div>

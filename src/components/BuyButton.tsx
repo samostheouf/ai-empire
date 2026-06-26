@@ -78,16 +78,18 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
         className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
       />
       {error && (
-        <p className="text-sm text-red-600 mt-1" role="alert">{error}</p>
+        <div className="rounded-lg bg-red-500/10 border border-red-500/20 p-3 animate-shake" role="alert">
+          <p className="text-sm text-red-400">{error}</p>
+        </div>
       )}
       <button
         onClick={handleCheckout}
         disabled={loading || !email || success}
         aria-label={t('buyAriaLabel').replace('{name}', templateName).replace('{price}', formatPrice(price))}
-        className={`relative flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3.5 text-sm font-semibold text-white transition-all overflow-hidden ${
+        className={`relative flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3.5 text-sm font-semibold text-white transition-all duration-200 overflow-hidden ${
           success
-            ? 'bg-green-500 cursor-default'
-            : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 hover:shadow-lg hover:shadow-indigo-500/25 active:scale-[0.98]'
+            ? 'bg-green-500 shadow-lg shadow-green-500/25 cursor-default'
+            : 'bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 hover:shadow-xl hover:shadow-indigo-500/30 hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0'
         } disabled:opacity-50 disabled:cursor-not-allowed`}
       >
         {success ? (
@@ -102,12 +104,12 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
           </>
         ) : (
           <>
-            <ShoppingCart className="h-4 w-4" />
+            <ShoppingCart className="h-4 w-4 transition-transform duration-200 group-hover:scale-110" />
             {t('buyCtaLabel').replace('{price}', formatPrice(price))}
           </>
         )}
         {!success && !loading && (
-          <span className="absolute inset-0 bg-white/10 translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700" />
+          <span className="absolute inset-0 bg-white/10 translate-x-[-100%] hover:translate-x-[100%] transition-transform duration-700 pointer-events-none" />
         )}
       </button>
 

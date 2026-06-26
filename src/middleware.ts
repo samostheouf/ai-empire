@@ -32,6 +32,7 @@ if (!SESSION_SECRET) {
   console.error('[SECURITY] SESSION_SECRET is not set')
   throw new Error('SESSION_SECRET must be set in environment variables')
 }
+const SECRET: string = SESSION_SECRET
 const SESSION_COOKIE = 'admin_session'
 
 const AUTH_RATE_LIMIT = 20
@@ -87,7 +88,7 @@ async function verifyAdminSession(request: NextRequest): Promise<NextResponse | 
     return new NextResponse('Unauthorized', { status: 401 })
   }
 
-  const expectedSig = await hmacSign(body, SESSION_SECRET)
+  const expectedSig = await hmacSign(body, SECRET)
   // Constant-time comparison without Node.js Buffer
   if (signature.length !== expectedSig.length) return new NextResponse('Unauthorized', { status: 401 })
   let r = 0
