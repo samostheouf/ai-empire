@@ -1,7 +1,24 @@
+import type { Metadata } from 'next'
 import { Mail, Phone, MapPin, MessageCircle, ExternalLink } from 'lucide-react'
 import Breadcrumb from '@/components/Breadcrumb'
 import ContactForm from '@/components/client/ContactForm'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('contactTitle'),
+    description: t('contactSubtitle'),
+    path: '/contact',
+    keywords: ['contact neuraapi', 'support neuraapi', 'aide neuraapi', 'contacter neuraapi'],
+  })
+}
 
 export default async function Contact() {
   const locale = getLocaleFromCookies()

@@ -27,12 +27,10 @@ function getRateLimitHeaders(result: { remaining: number; resetIn: number }, lim
 }
 import { validateCsrfOrigin } from '@/lib/csrf'
 
-const SESSION_SECRET = process.env.SESSION_SECRET || 'neuraapi-session-secret-change-me'
-if (!SESSION_SECRET || SESSION_SECRET === 'changeme' || SESSION_SECRET === 'neuraapi-session-secret-change-me') {
-  console.warn('[SECURITY] SESSION_SECRET not configured — using fallback. Set a strong secret in production.')
-}
+const SESSION_SECRET = process.env.SESSION_SECRET
 if (!SESSION_SECRET) {
-  throw new Error('SESSION_SECRET (or ADMIN_PASSWORD) must be set')
+  console.error('[SECURITY] SESSION_SECRET is not set')
+  throw new Error('SESSION_SECRET must be set in environment variables')
 }
 const SESSION_COOKIE = 'admin_session'
 

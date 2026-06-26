@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { I18nProvider } from '@/i18n'
-import { isRTL, defaultLocale, type Locale } from '@/i18n/config'
-import dynamic from 'next/dynamic'
+import { isRTL, type Locale } from '@/i18n/config'
+import { getLocaleFromCookies } from '@/i18n/server'
 import {
   generateSoftwareApplicationSchema,
   generateOrganizationSchema,
@@ -11,9 +11,10 @@ import {
   generateWebSiteSchema,
   type FAQItem,
 } from '@/lib/seo'
+import dynamic from 'next/dynamic'
 
-const Header = dynamic(() => import('@/components/Header'), { ssr: false })
-const Footer = dynamic(() => import('@/components/Footer'), { ssr: false })
+const Header = dynamic(() => import('@/components/Header'))
+const Footer = dynamic(() => import('@/components/Footer'))
 const Chatbot = dynamic(() => import('@/components/Chatbot'), { ssr: false })
 const CookieConsent = dynamic(() => import('@/components/CookieConsent'), { ssr: false })
 const AnalyticsTracker = dynamic(() => import('@/components/AnalyticsTracker').then(mod => ({ default: mod.AnalyticsTracker })), { ssr: false })
@@ -96,8 +97,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const locale = defaultLocale
-  const rtl = isRTL(locale as Locale)
+  const locale = getLocaleFromCookies()
+  const rtl = isRTL(locale)
 
   return (
     <html lang={locale} dir={rtl ? 'rtl' : 'ltr'}>
@@ -112,6 +113,9 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         <meta name="theme-color" content="#4F46E5" />
+        <link rel="prefetch" href="/templates" />
+        <link rel="prefetch" href="/pricing" />
+        <link rel="prefetch" href="/register" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(generateSoftwareApplicationSchema()) }}

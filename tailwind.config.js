@@ -49,6 +49,14 @@ module.exports = {
         'confetti-fall': 'confetti-fall 3s ease-in forwards',
         'confetti-fall-sway': 'confetti-fall 2.5s ease-in forwards, confetti-sway 2s ease-in-out infinite',
         'success-pulse-glow': 'success-pulse-glow 2s ease-in-out infinite',
+        'slide-down': 'slide-down 0.2s ease-out',
+        'toast-in': 'toast-in 0.3s ease-out',
+        'toast-out': 'toast-out 0.3s ease-in forwards',
+        'progress': 'progress-bar 2s ease-in-out',
+        'shake': 'shake 0.5s ease-in-out',
+        'morph': 'morph 8s ease-in-out infinite',
+        'skeleton-wave': 'skeleton-wave 1.5s ease-in-out infinite',
+        'progress-indeterminate': 'progress-indeterminate 1.5s ease-in-out infinite',
       },
       keyframes: {
         float: {
@@ -84,6 +92,44 @@ module.exports = {
         'success-pulse-glow': {
           '0%, 100%': { boxShadow: '0 0 20px rgba(34, 197, 94, 0.3)' },
           '50%': { boxShadow: '0 0 40px rgba(34, 197, 94, 0.5)' },
+        },
+        'slide-down': {
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        'toast-in': {
+          '0%': { opacity: '0', transform: 'translateX(100%)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        'toast-out': {
+          '0%': { opacity: '1', transform: 'translateX(0)' },
+          '100%': { opacity: '0', transform: 'translateX(100%)' },
+        },
+        'progress-bar': {
+          '0%': { width: '0%' },
+          '20%': { width: '25%' },
+          '50%': { width: '60%' },
+          '80%': { width: '85%' },
+          '100%': { width: '100%' },
+        },
+        'shake': {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '10%, 30%, 50%, 70%, 90%': { transform: 'translateX(-2px)' },
+          '20%, 40%, 60%, 80%': { transform: 'translateX(2px)' },
+        },
+        'morph': {
+          '0%, 100%': { borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' },
+          '25%': { borderRadius: '30% 60% 70% 40% / 50% 60% 30% 60%' },
+          '50%': { borderRadius: '50% 60% 30% 60% / 30% 60% 70% 40%' },
+          '75%': { borderRadius: '60% 40% 60% 30% / 60% 40% 30% 70%' },
+        },
+        'skeleton-wave': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        'progress-indeterminate': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(400%)' },
         },
       },
     },

@@ -1,6 +1,24 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Sparkles, Code, Globe, Shield, Users, Zap } from 'lucide-react'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
+import Breadcrumb from '@/components/Breadcrumb'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('aboutTitle'),
+    description: t('aboutSubtitle'),
+    path: '/about',
+    keywords: ['neuraapi', 'about neuraapi', 'equipe neuraapi', 'mission neuraapi', 'intelligence artificielle'],
+  })
+}
 
 export default async function AboutPage() {
   const locale = getLocaleFromCookies()
@@ -15,6 +33,7 @@ export default async function AboutPage() {
       {/* Hero */}
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-4xl text-center">
+          <Breadcrumb items={[{ name: t('aboutTitle'), href: '/about' }]} />
           <Sparkles className="mx-auto h-12 w-12 text-indigo-400 mb-6" />
           <h1 className="text-4xl font-bold text-white sm:text-5xl">
             {t('aboutTitle')} <span className="text-indigo-400">NeuraAPI</span>

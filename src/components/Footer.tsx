@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Sparkles, Twitter, Github, Linkedin, Mail, ArrowRight, Shield, BadgeCheck, ShieldCheck, Check, Clock, CreditCard } from 'lucide-react'
 import { useI18n } from '@/i18n'
 import { useState, memo } from 'react'
@@ -33,7 +34,7 @@ const Footer = memo(function Footer() {
           <div className="col-span-2 lg:col-span-2">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <div className="relative">
-                <img src="/logo.jpg" alt="NeuraAPI" className="h-6 w-6 rounded object-cover" />
+                <Image src="/logo.jpg" alt="NeuraAPI" width={24} height={24} className="h-6 w-6 rounded object-cover" />
                 <div className="absolute inset-0 blur-md bg-indigo-500/30" />
               </div>
               <span className="text-lg font-bold text-white">NeuraAPI</span>
@@ -43,14 +44,15 @@ const Footer = memo(function Footer() {
             </p>
 
             <form onSubmit={handleNewsletter} className="mt-6">
-              <p className="text-sm font-medium text-white mb-3">{t('footerNewsletter')}</p>
+              <label htmlFor="footer-newsletter-email" className="text-sm font-medium text-white mb-3 block">{t('footerNewsletter')}</label>
               {subscribed ? (
                 <p className="text-sm text-green-400 flex items-center gap-2" aria-live="polite">
-                  <Sparkles className="w-4 h-4" /> {t('footerNewsletterSuccess')}
+                  <Sparkles className="w-4 h-4" aria-hidden="true" /> {t('footerNewsletterSuccess')}
                 </p>
               ) : (
                 <div className="flex gap-2">
                   <input
+                    id="footer-newsletter-email"
                     type="email"
                     required
                     value={email}
@@ -63,7 +65,7 @@ const Footer = memo(function Footer() {
                     aria-label={t('footerNewsletterAria')}
                     className="px-3 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-500 transition-colors"
                   >
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-4 h-4" aria-hidden="true" />
                   </button>
                 </div>
               )}
@@ -124,17 +126,17 @@ const Footer = memo(function Footer() {
             &copy; {new Date().getFullYear()} NeuraAPI. {t('footerRights')}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-indigo-400/60">
-            <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-green-400/80" /> {t('footerRGPD')}</span>
-            <span className="w-1 h-1 rounded-full bg-indigo-500/40" />
-            <span className="flex items-center gap-1.5"><BadgeCheck className="w-3.5 h-3.5 text-green-400/80" /> {t('footerPayments')}</span>
-            <span className="w-1 h-1 rounded-full bg-indigo-500/40" />
-            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-green-400/80" /> {t('footerSSL')}</span>
-            <span className="w-1 h-1 rounded-full bg-indigo-500/40" />
-            <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-green-400/80" /> {t('footerUptime')}</span>
-            <span className="w-1 h-1 rounded-full bg-indigo-500/40" />
-            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-green-400/80" /> {t('footerSupport247')}</span>
-            <span className="w-1 h-1 rounded-full bg-indigo-500/40" />
-            <span className="flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5 text-green-400/80" /> {t('footerNoCommitment')}</span>
+            <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-green-400/80" aria-hidden="true" /> {t('footerRGPD')}</span>
+            <span className="w-1 h-1 rounded-full bg-indigo-500/40" aria-hidden="true" />
+            <span className="flex items-center gap-1.5"><BadgeCheck className="w-3.5 h-3.5 text-green-400/80" aria-hidden="true" /> {t('footerPayments')}</span>
+            <span className="w-1 h-1 rounded-full bg-indigo-500/40" aria-hidden="true" />
+            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5 text-green-400/80" aria-hidden="true" /> {t('footerSSL')}</span>
+            <span className="w-1 h-1 rounded-full bg-indigo-500/40" aria-hidden="true" />
+            <span className="flex items-center gap-1.5"><Check className="w-3.5 h-3.5 text-green-400/80" aria-hidden="true" /> {t('footerUptime')}</span>
+            <span className="w-1 h-1 rounded-full bg-indigo-500/40" aria-hidden="true" />
+            <span className="flex items-center gap-1.5"><Clock className="w-3.5 h-3.5 text-green-400/80" aria-hidden="true" /> {t('footerSupport247')}</span>
+            <span className="w-1 h-1 rounded-full bg-indigo-500/40" aria-hidden="true" />
+            <span className="flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5 text-green-400/80" aria-hidden="true" /> {t('footerNoCommitment')}</span>
           </div>
         </div>
       </div>

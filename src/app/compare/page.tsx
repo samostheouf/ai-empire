@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { Check, X, ArrowRight, Sparkles, Zap, Clock, Shield, Download } from 'lucide-react'
 import { useI18n } from '@/i18n'
+import Breadcrumb from '@/components/Breadcrumb'
 
 export default function ComparePage() {
   const { t } = useI18n()
@@ -94,7 +95,8 @@ export default function ComparePage() {
         </div>
 
         <div className="relative mx-auto max-w-4xl text-center">
-          <div className="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-4 py-1.5 text-sm text-indigo-400 mb-6">
+          <Breadcrumb items={[{ name: t('compareTitle'), href: '/compare' }]} />
+          <div className="inline-flex items-center gap-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 px-4 py-1.5 text-sm text-indigo-400 mb-6 mt-8">
             <Zap className="w-4 h-4" />
             <span>{t('compareBadge')}</span>
           </div>

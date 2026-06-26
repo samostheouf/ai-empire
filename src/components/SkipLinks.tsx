@@ -1,21 +1,22 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useI18n } from '@/i18n'
 
 export default function SkipLinks() {
+  const { t } = useI18n()
   return (
     <>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:rounded-lg focus:bg-indigo-600 focus:px-4 focus:py-2 focus:text-white focus:outline-none"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-2 focus:left-2 focus:z-[9999] focus:rounded-lg focus:bg-indigo-600 focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-900"
       >
-        Aller au contenu principal
+        {t('skipToMainContent') || 'Aller au contenu principal'}
       </a>
       <a
         href="#footer"
-        className="sr-only focus:not-sr-only focus:fixed focus:bottom-2 focus:left-2 focus:z-[9999] focus:rounded-lg focus:bg-indigo-600 focus:px-4 focus:py-2 focus:text-white focus:outline-none"
+        className="sr-only focus:not-sr-only focus:fixed focus:bottom-2 focus:left-2 focus:z-[9999] focus:rounded-lg focus:bg-indigo-600 focus:px-4 focus:py-2 focus:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-900"
       >
-        Aller au pied de page
+        {t('skipToFooter') || 'Aller au pied de page'}
       </a>
     </>
   )

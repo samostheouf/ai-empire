@@ -1,7 +1,24 @@
+import type { Metadata } from 'next'
 import { BookOpen } from 'lucide-react'
 import Breadcrumb from '@/components/Breadcrumb'
 import GuideContent from '@/components/client/GuideContent'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('guideTitle'),
+    description: t('guideDesc'),
+    path: '/guide',
+    keywords: ['guide neuraapi', 'tutoriel api ia', 'getting started neuraapi', 'documentation api ia'],
+  })
+}
 
 export default async function GuidePage() {
   const locale = getLocaleFromCookies()

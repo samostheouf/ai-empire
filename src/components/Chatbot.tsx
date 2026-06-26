@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect, useCallback } from 'react'
+import Image from 'next/image'
 import { MessageCircle, X, Send, Bot, User, Sparkles, AlertTriangle } from 'lucide-react'
 import { useI18n } from '@/i18n'
 
@@ -11,11 +12,22 @@ interface Message {
   timestamp: Date
 }
 
-function renderMarkdown(text: string) {
-  return text
+function sanitize(html: string): string {
+  return html
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')
+    .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gi, '')
+    .replace(/on\w+\s*=\s*["'][^"']*["']/gi, '')
+    .replace(/javascript\s*:/gi, '')
+    .replace(/data\s*:/gi, '')
+    .replace(/vbscript\s*:/gi, '')
+}
+
+function renderMarkdown(text: string): string {
+  const html = text
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/`([^`]+)`/g, '<code class="bg-indigo-950 px-1 rounded text-xs">$1</code>')
     .replace(/\n/g, '<br/>')
+  return sanitize(html)
 }
 
 export default function Chatbot() {
@@ -112,19 +124,19 @@ export default function Chatbot() {
             <div className="bg-indigo-600 px-4 py-3 flex items-center justify-between flex-shrink-0">
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 rounded-full bg-indigo-500 flex items-center justify-center">
-                  <img src="/logo.jpg" alt="NeuraAPI" className="w-6 h-6 rounded" />
+                  <img src="/logo.jpg" alt="" className="w-6 h-6 rounded" />
                 </div>
                 <div>
                   <span className="text-white font-semibold text-sm block">NeuraAPI Assistant</span>
-                  <span className="text-indigo-200 text-xs">En ligne</span>
+                  <span className="text-indigo-200 text-xs">{locale === 'fr' ? 'En ligne' : 'Online'}</span>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white transition-colors p-1" aria-label="Fermer le chat">
-                <X className="w-5 h-5" />
+              <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white transition-colors p-1" aria-label={locale === 'fr' ? 'Fermer le chat' : 'Close chat'}>
+                <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4" role="log" aria-label={locale === 'fr' ? 'Messages du chat' : 'Chat messages'} aria-live="polite">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] rounded-2xl px-4 py-3 ${
@@ -133,8 +145,8 @@ export default function Chatbot() {
                       : 'bg-gray-100 text-gray-800 rounded-bl-md'
                   }`}>
                     <div className="flex items-start gap-2">
-                      {msg.role === 'bot' && <Bot className="w-4 h-4 mt-0.5 text-indigo-600 flex-shrink-0" />}
-                      {msg.role === 'user' && <User className="w-4 h-4 mt-0.5 text-white flex-shrink-0" />}
+                      {msg.role === 'bot' && <Bot className="w-4 h-4 mt-0.5 text-indigo-600 flex-shrink-0" aria-hidden="true" />}
+                      {msg.role === 'user' && <User className="w-4 h-4 mt-0.5 text-white flex-shrink-0" aria-hidden="true" />}
                       <p
                         className="text-sm leading-relaxed"
                         dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
@@ -159,7 +171,11 @@ export default function Chatbot() {
 
             <div className="border-t border-gray-200 p-3 flex-shrink-0">
               <div className="flex gap-2">
+                <label htmlFor="chatbot-input" className="sr-only">
+                  {locale === 'fr' ? 'Votre message' : 'Your message'}
+                </label>
                 <input
+                  id="chatbot-input"
                   type="text"
                   value={input}
                   onChange={e => setInput(e.target.value)}
@@ -172,9 +188,9 @@ export default function Chatbot() {
                   onClick={() => handleSend()}
                   disabled={!input.trim() || isTyping}
                   className="p-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 disabled:opacity-50 transition-colors flex-shrink-0"
-                  aria-label="Envoyer"
+                  aria-label={locale === 'fr' ? 'Envoyer' : 'Send'}
                 >
-                  <Send className="w-4 h-4" />
+                  <Send className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
             </div>

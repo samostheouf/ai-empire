@@ -1,9 +1,21 @@
+import type { Metadata } from 'next'
+import { generateMetadata as genMeta } from '@/lib/seo'
+import Breadcrumb from '@/components/Breadcrumb'
+
+export const metadata: Metadata = genMeta({
+  title: 'Conditions Générales d\'Utilisation — CGU NeuraAPI',
+  description: 'Conditions générales d\'utilisation de NeuraAPI. Lisez nos CGU pour connaître les règles d\'utilisation de nos APIs IA et templates premium.',
+  path: '/terms',
+  keywords: ['cgu neuraapi', 'conditions générales', 'terms of service', 'règles utilisation'],
+})
+
 export default function TermsPage() {
   return (
     <div className="bg-indigo-950 min-h-screen">
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl font-bold text-white mb-8">Conditions Générales d&apos;Utilisation</h1>
+          <Breadcrumb items={[{ name: 'CGU', href: '/terms' }]} />
+          <h1 className="text-4xl font-bold text-white mb-8 mt-8">Conditions Générales d&apos;Utilisation</h1>
 
           <div className="prose prose-invert prose-indigo space-y-8 text-indigo-200">
             <div>

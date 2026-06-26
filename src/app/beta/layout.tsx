@@ -1,20 +1,12 @@
 import type { Metadata } from 'next'
+import { generateMetadata as genMeta } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Beta — NeuraAPI',
-  description: 'Testez NeuraAPI gratuitement. 100 crédits offerts, accès complet à toutes les APIs.',
-  openGraph: {
-    title: 'Beta NeuraAPI — Accès anticipé',
-    description: '100 crédits gratuits, accès complet.',
-    url: 'https://ai-empire-steel.vercel.app/beta',
-    siteName: 'NeuraAPI',
-    locale: 'fr_FR',
-    type: 'website',
-    images: [{ url: 'https://ai-empire-steel.vercel.app/logo.jpg', width: 400, height: 400, alt: 'Beta NeuraAPI' }],
-  },
-  twitter: { card: 'summary_large_image', title: 'Beta NeuraAPI', description: 'Accès anticipé gratuit. 100 crédits offerts.' },
-  alternates: { canonical: 'https://ai-empire-steel.vercel.app/beta' },
-}
+export const metadata: Metadata = genMeta({
+  title: 'Beta — Accès Anticipé NeuraAPI',
+  description: 'Rejoignez la bêta de NeuraAPI et obtenez un accès anticipé à nos APIs IA et templates Next.js premium.',
+  path: '/beta',
+  keywords: ['neuraapi beta', 'accès anticipé', 'early access neuraapi', 'bêta api ia'],
+})
 
 export default function BetaLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>

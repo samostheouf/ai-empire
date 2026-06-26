@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
-import { generateMetadata as generateSEO } from '@/lib/seo'
+import { generateMetadata as genMeta } from '@/lib/seo'
 
-export const metadata: Metadata = generateSEO({
-  title: 'Lancement NeuraAPI — APIs IA & Templates Premium',
-  description: "Découvrez NeuraAPI lors de notre lancement. APIs IA, templates Next.js premium, SDK TypeScript. Offre de lancement -30% sur le plan Pro.",
+export const metadata: Metadata = genMeta({
+  title: 'Lancement — Offres et Fonctionnalités NeuraAPI',
+  description: 'Découvrez NeuraAPI au lancement : APIs IA, templates Next.js premium, SDK TypeScript. Offres de lancement avec réductions.',
   path: '/launch',
-  keywords: ['lancement', 'NeuraAPI', 'API ia', 'templates premium', 'Next.js', 'offre lancement', 'Product Hunt'],
+  keywords: ['lancement neuraapi', 'offre lancement', 'neuraapi product hunt', 'nouveau api ia'],
 })
 
 export default function LaunchLayout({ children }: { children: React.ReactNode }) {

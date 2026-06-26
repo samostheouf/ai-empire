@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useState, useEffect, memo } from 'react'
+import Image from 'next/image'
+import { useState, useEffect, useRef, useCallback, memo } from 'react'
 import { Sparkles, LayoutDashboard, Menu, X } from 'lucide-react'
 import { useI18n } from '@/i18n'
 import LanguageSwitcher from './LanguageSwitcher'
@@ -12,6 +13,8 @@ const Header = memo(function HeaderInner() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+  const mobileMenuRef = useRef<HTMLDivElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20)
@@ -25,8 +28,24 @@ const Header = memo(function HeaderInner() {
 
   useEffect(() => {
     if (!mobileOpen) return
+    closeButtonRef.current?.focus()
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setMobileOpen(false)
+      if (e.key === 'Tab' && mobileMenuRef.current) {
+        const focusable = mobileMenuRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button, input, textarea, select, [tabindex]:not([tabindex="-1"])'
+        )
+        if (focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
@@ -56,10 +75,10 @@ const Header = memo(function HeaderInner() {
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <Link href="/" className="flex items-center gap-2 group">
+          <Link href="/" className="flex items-center gap-2 group" aria-label="NeuraAPI — Retour à l'accueil">
             <div className="relative">
-              <img src="/logo.jpg" alt="NeuraAPI" className="h-8 w-8 rounded-lg object-cover transition-transform group-hover:scale-110" />
-              <div className="absolute inset-0 blur-md bg-indigo-500/30 group-hover:bg-indigo-500/50 transition-colors" />
+              <img src="/logo.jpg" alt="" className="h-8 w-8 rounded-lg object-cover transition-transform group-hover:scale-110" />
+              <div className="absolute inset-0 blur-md bg-indigo-500/30 group-hover:bg-indigo-500/50 transition-colors" aria-hidden="true" />
             </div>
             <span className="text-xl font-bold text-white">NeuraAPI</span>
           </Link>
@@ -108,15 +127,17 @@ const Header = memo(function HeaderInner() {
       </header>
 
       {mobileOpen && (
-        <div className="fixed inset-0 z-40 md:hidden">
+        <div className="fixed inset-0 z-40 md:hidden" role="dialog" aria-modal="true" aria-label={t('headerNavigation')}>
           <div
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setMobileOpen(false)}
+            aria-hidden="true"
           />
-          <div className="absolute top-0 right-0 h-full w-72 bg-indigo-950/95 backdrop-blur-xl border-l border-white/10 shadow-2xl animate-slide-in-right">
+          <div ref={mobileMenuRef} className="absolute top-0 right-0 h-full w-72 bg-indigo-950/95 backdrop-blur-xl border-l border-white/10 shadow-2xl animate-slide-in-right">
             <div className="flex items-center justify-between p-4 border-b border-white/10">
               <span className="text-lg font-bold text-white">{t('headerNavigation')}</span>
               <button
+                ref={closeButtonRef}
                 onClick={() => setMobileOpen(false)}
                 aria-label={t('headerMenuClose')}
                 className="p-2 text-indigo-200 hover:text-white transition-colors rounded-lg hover:bg-white/5"

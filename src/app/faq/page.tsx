@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ChevronDown, ChevronUp, Search } from 'lucide-react'
 import { useI18n } from '@/i18n'
+import Breadcrumb from '@/components/Breadcrumb'
 
 const faqs = [
   {
@@ -74,7 +75,8 @@ export default function FAQPage() {
       />
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
-          <h1 className="text-4xl font-bold text-white sm:text-5xl">{t('faqTitle')}</h1>
+          <Breadcrumb items={[{ name: 'FAQ', href: '/faq' }]} />
+          <h1 className="text-4xl font-bold text-white sm:text-5xl mt-8">{t('faqTitle')}</h1>
           <p className="mt-4 text-lg text-indigo-300">
             {t('faqSubtitle')}
           </p>

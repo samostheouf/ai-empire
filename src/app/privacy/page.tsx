@@ -1,4 +1,22 @@
+import type { Metadata } from 'next'
+import Breadcrumb from '@/components/Breadcrumb'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: t('privacyTitle'),
+    description: 'Politique de confidentialité NeuraAPI. Comment nous collectons, utilisons et protégeons vos données personnelles.',
+    path: '/privacy',
+    keywords: ['politique confidentialité', 'privacy policy', 'protection données', 'rgpd'],
+  })
+}
 
 export default async function PrivacyPage() {
   const locale = getLocaleFromCookies()
@@ -12,7 +30,8 @@ export default async function PrivacyPage() {
     <div className="bg-indigo-950 min-h-screen">
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl font-bold text-white mb-8">{t('privacyTitle')}</h1>
+          <Breadcrumb items={[{ name: t('privacyTitle'), href: '/privacy' }]} />
+          <h1 className="text-4xl font-bold text-white mb-8 mt-8">{t('privacyTitle')}</h1>
 
           <div className="prose prose-invert prose-indigo space-y-8 text-indigo-200">
             <div>

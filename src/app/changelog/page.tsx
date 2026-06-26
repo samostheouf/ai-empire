@@ -1,6 +1,24 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Calendar, Tag, ArrowRight } from 'lucide-react'
+import Breadcrumb from '@/components/Breadcrumb'
+import { generateMetadata as genMeta } from '@/lib/seo'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = getLocaleFromCookies()
+  const translations = await getTranslations(locale)
+  const t = (key: string) => {
+    const dict = translations as unknown as Record<string, string>
+    return dict[key] || key
+  }
+  return genMeta({
+    title: 'Changelog — Mises à jour NeuraAPI',
+    description: 'Suivez les mises à jour, nouvelles fonctionnalités et améliorations de NeuraAPI.',
+    path: '/changelog',
+    keywords: ['changelog neuraapi', 'mises à jour neuraapi', 'nouvelles fonctionnalités'],
+  })
+}
 
 export default async function ChangelogPage() {
   const locale = getLocaleFromCookies()
@@ -83,7 +101,8 @@ export default async function ChangelogPage() {
     <div className="bg-indigo-950 min-h-screen">
       <section className="px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-4xl font-bold text-white mb-4">{t('changelogTitle')}</h1>
+          <Breadcrumb items={[{ name: 'Changelog', href: '/changelog' }]} />
+          <h1 className="text-4xl font-bold text-white mb-4 mt-8">{t('changelogTitle')}</h1>
           <p className="text-indigo-300 mb-12">
             {t('changelogSubtitle')}
           </p>
