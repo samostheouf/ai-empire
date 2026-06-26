@@ -135,8 +135,8 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <ErrorBoundary>
-          <SkipLinks />
           <I18nProvider initialLocale={locale}>
+          <SkipLinks />
           <Header />
           <main id="main-content" className="min-h-screen" role="main">{children}</main>
           <Footer />
