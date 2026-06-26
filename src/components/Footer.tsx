@@ -7,7 +7,7 @@ import { useI18n } from '@/i18n'
 import { useState, memo } from 'react'
 
 const Footer = memo(function Footer() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
 

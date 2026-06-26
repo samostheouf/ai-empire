@@ -5,7 +5,7 @@ import { UserPlus, Key, Zap, Code, ArrowRight, CheckCircle2, ExternalLink, Copy,
 import { useI18n } from '@/i18n'
 
 export default function GuideContent() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [activeStep, setActiveStep] = useState('register')
   const [codeTab, setCodeTab] = useState<'js' | 'python' | 'curl'>('js')
   const [copiedId, setCopiedId] = useState<string | null>(null)

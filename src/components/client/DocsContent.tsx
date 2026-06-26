@@ -5,7 +5,7 @@ import { Zap, Shield, AlertTriangle, Clock, ChevronDown, Copy, Check, Terminal, 
 import { useI18n } from '@/i18n'
 
 export default function DocsContent() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [activeTab, setActiveTab] = useState('curl')
   const [selectedEndpoint, setSelectedEndpoint] = useState('generate')
   const [tryItPrompt, setTryItPrompt] = useState('')

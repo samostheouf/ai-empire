@@ -10,7 +10,7 @@ interface ShareButtonsProps {
 }
 
 export default function ShareButtons({ url, title }: ShareButtonsProps) {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [copied, setCopied] = useState(false)
   const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)

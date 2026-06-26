@@ -53,7 +53,7 @@ const plans = [
 ]
 
 export default function PricingPageClient() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)

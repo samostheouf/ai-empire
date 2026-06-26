@@ -13,7 +13,7 @@ export default function ContactForm() {
   })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

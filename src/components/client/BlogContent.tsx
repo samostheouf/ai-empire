@@ -50,7 +50,7 @@ const articles = [
 ]
 
 export default function BlogContent() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   return (
     <div className="bg-indigo-950 min-h-screen">

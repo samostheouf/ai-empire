@@ -27,7 +27,7 @@ function stableHash(str: string): number {
 }
 
 const TemplateCard = memo(function TemplateCardInner({ id, name, slug, description, price, screenshot, tags }: TemplateCardProps) {
-  const { t } = useI18n();
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string;
   const parsedTags = parseJsonField<string[]>(tags || '[]');
   const [hovered, setHovered] = useState(false);
   const [quickView, setQuickView] = useState(false);

@@ -6,7 +6,7 @@ import { Sparkles, Play, Code, Search, MessageSquare, Loader2, Clock, AlertCircl
 import { useI18n } from '@/i18n'
 
 export default function QuickDemo() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [endpoint, setEndpoint] = useState('generate')
 
   const EXAMPLE_PROMPTS: Record<string, string> = useMemo(() => ({

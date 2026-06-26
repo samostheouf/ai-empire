@@ -9,7 +9,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 import { usePathname } from 'next/navigation'
 
 const Header = memo(function HeaderInner() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()

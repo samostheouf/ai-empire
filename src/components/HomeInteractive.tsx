@@ -61,7 +61,7 @@ export function CtaLink({
 
 export function EndpointCopyButton({ code, name }: { code: string; name: string }) {
   const [copied, setCopied] = useState(false)
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   const handleCopy = () => {
     navigator.clipboard.writeText(`const result = await neurapi.${code}({ prompt: "..." })`)
@@ -91,7 +91,7 @@ const CAROUSEL_TEMPLATES = [
 
 export function TemplateCarousel() {
   const carouselRef = useRef<HTMLDivElement>(null)
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   const scrollCarousel = (direction: 'left' | 'right') => {
     if (carouselRef.current) {

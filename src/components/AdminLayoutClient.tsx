@@ -6,7 +6,7 @@ import { LayoutDashboard, Users, ShoppingCart, FileCode, Megaphone, Bot, BarChar
 import { useI18n } from '@/i18n'
 
 export default function AdminLayoutClient({ children }: { children: React.ReactNode }) {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [authenticated, setAuthenticated] = useState(false)
   const [password, setPassword] = useState('')

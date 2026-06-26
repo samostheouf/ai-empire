@@ -15,7 +15,8 @@ export default function ExitIntentPopup() {
   const [dismissed, setDismissed] = useState(false)
   const [email, setEmail] = useState('')
   const [submitted, setSubmitted] = useState(false)
-  const { t } = useI18n()
+  const { t: rawT } = useI18n()
+  const t = rawT as (key: string) => string
 
   useEffect(() => {
     if (typeof window === 'undefined') return

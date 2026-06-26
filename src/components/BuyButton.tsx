@@ -24,7 +24,7 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
   const [showReferral, setShowReferral] = useState(false)
   const [showPreview, setShowPreview] = useState(false)
   const [error, setError] = useState<string | null>(null)
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   useEffect(() => {
     if (typeof window !== 'undefined') {

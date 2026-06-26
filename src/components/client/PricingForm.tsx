@@ -16,7 +16,7 @@ export default function PricingForm({ plan }: { plan: Plan }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showForm, setShowForm] = useState(false)
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   if (showForm) {
     return (

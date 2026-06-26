@@ -13,7 +13,7 @@ export default function NewsletterPopup() {
   const [email, setEmail] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   useEffect(() => {
     if (typeof window === 'undefined') return

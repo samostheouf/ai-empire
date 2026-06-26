@@ -22,7 +22,7 @@ export default function CookieConsent() {
     functional: false,
   })
   const [showDetails, setShowDetails] = useState(false)
-  const { t } = useI18n()
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   useEffect(() => {
     const consent = localStorage.getItem(COOKIE_KEY)

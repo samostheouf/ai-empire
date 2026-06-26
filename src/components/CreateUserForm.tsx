@@ -9,7 +9,7 @@ interface Props {
 }
 
 export default function CreateUserForm({ onUserCreated }: Props) {
-  const { t } = useI18n();
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string;
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

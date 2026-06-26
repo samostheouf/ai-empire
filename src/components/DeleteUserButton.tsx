@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function DeleteUserButton({ userId, userEmail, onDeleted }: Props) {
-  const { t } = useI18n();
+  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string;
   const [showConfirm, setShowConfirm] = useState(false);
   const [loading, setLoading] = useState(false);
 
