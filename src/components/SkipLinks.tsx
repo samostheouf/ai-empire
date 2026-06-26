@@ -3,7 +3,8 @@
 import { useI18n } from '@/i18n'
 
 export default function SkipLinks() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n()
+  const t = rawT as (key: string) => string
   return (
     <>
       <a
