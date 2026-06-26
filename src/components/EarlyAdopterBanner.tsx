@@ -23,10 +23,10 @@ export default function EarlyAdopterBanner() {
       </div>
 
       <div className="mt-6 flex flex-wrap gap-4 text-xs text-indigo-300">
-        <span className="flex items-center gap-1"><Check className="w-3 h-3 text-green-400" /> 100 crédits/mois gratuits</span>
-        <span className="flex items-center gap-1"><Check className="w-3 h-3 text-green-400" /> SDK TypeScript</span>
-        <span className="flex items-center gap-1"><Check className="w-3 h-3 text-green-400" /> Sans carte bancaire</span>
-        <span className="flex items-center gap-1"><Check className="w-3 h-3 text-green-400" /> Annulation libre</span>
+        <span className="flex items-center gap-1"><Check className="w-3 h-3 text-green-400" aria-hidden="true" /> 100 crédits/mois gratuits</span>
+        <span className="flex items-center gap-1"><Check className="w-3 h-3 text-green-400" aria-hidden="true" /> SDK TypeScript</span>
+        <span className="flex items-center gap-1"><Check className="w-3 h-3 text-green-400" aria-hidden="true" /> Sans carte bancaire</span>
+        <span className="flex items-center gap-1"><Check className="w-3 h-3 text-green-400" aria-hidden="true" /> Annulation libre</span>
       </div>
     </div>
   )

@@ -8,9 +8,10 @@ export default function ProductHuntBadge() {
       href="https://www.producthunt.com/posts/neuraapi"
       target="_blank"
       rel="noopener noreferrer"
+      aria-label="NeuraAPI sur Product Hunt — As featured on"
       className="inline-flex items-center gap-3 rounded-xl border border-orange-500/30 bg-orange-500/10 px-5 py-3 hover:bg-orange-500/20 transition-all group"
     >
-      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500 text-white font-bold text-lg">
+      <div className="flex items-center justify-center w-10 h-10 rounded-lg bg-orange-500 text-white font-bold text-lg" aria-hidden="true">
         P
       </div>
       <div>

@@ -35,8 +35,8 @@ export default function CountdownTimer({ deadline = DEFAULT_DEADLINE }: { deadli
   const pad = (n: number) => String(n).padStart(2, '0')
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-2 text-sm text-orange-300 backdrop-blur-sm">
-      <Clock className="w-4 h-4 text-orange-400 animate-pulse" />
+    <div className="inline-flex items-center gap-2 rounded-full bg-orange-500/10 border border-orange-500/20 px-4 py-2 text-sm text-orange-300 backdrop-blur-sm" role="timer" aria-label="Offre de lancement">
+      <Clock className="w-4 h-4 text-orange-400 animate-pulse" aria-hidden="true" />
       <span className="font-medium">Offre de lancement dans</span>
       <span className="font-mono font-bold text-orange-200">
         {pad(time.days)}j {pad(time.hours)}h {pad(time.minutes)}m {pad(time.seconds)}s

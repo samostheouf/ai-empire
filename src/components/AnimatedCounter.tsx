@@ -60,7 +60,7 @@ export default function AnimatedCounter({
     : current.toLocaleString('fr-FR')
 
   return (
-    <span ref={ref} className={className}>
+    <span ref={ref} className={className} aria-live="off">
       {prefix}{display}{suffix}
     </span>
   )

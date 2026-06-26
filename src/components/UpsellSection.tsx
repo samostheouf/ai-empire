@@ -24,7 +24,7 @@ export default function UpsellSection({ templates, promoCode, variant = 'compact
         <div className="mx-auto max-w-5xl">
           <div className="text-center mb-10">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm text-indigo-300 mb-4">
-              <Star className="w-4 h-4 text-yellow-400" />
+              <Star className="w-4 h-4 text-yellow-400" aria-hidden="true" />
               Les plus populaires
             </span>
             <h2 className="text-2xl font-bold text-white sm:text-3xl">
@@ -48,7 +48,7 @@ export default function UpsellSection({ templates, promoCode, variant = 'compact
                 <h3 className="text-lg font-semibold text-white mt-1 group-hover:text-indigo-300 transition-colors">{tpl.name}</h3>
                 {tpl.downloads !== undefined && (
                   <div className="mt-2 flex items-center gap-1 text-xs text-indigo-300/60">
-                    <Download className="w-3 h-3" />
+                    <Download className="w-3 h-3" aria-hidden="true" />
                     {tpl.downloads} téléchargements
                   </div>
                 )}
@@ -56,7 +56,7 @@ export default function UpsellSection({ templates, promoCode, variant = 'compact
                   <span className="text-xl font-bold text-gradient">{tpl.price / 100}€</span>
                 </div>
                 <div className="mt-4 flex items-center gap-1 text-sm text-indigo-400 group-hover:text-indigo-300 transition-colors">
-                  Voir le template <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  Voir le template <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </div>
               </Link>
             ))}

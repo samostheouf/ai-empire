@@ -3,6 +3,7 @@ import { callAI, isDemoMode } from '@/lib/ai';
 import { findResponse } from '@/lib/chatbot-knowledge';
 import { safeQuery } from '@/lib/db';
 import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit';
+import { validateString } from '@/lib/input-validation';
 
 const SYSTEM_PROMPTS: Record<string, string> = {
   fr: 'Tu es l\'assistant NeuraAPI. Réponds de manière utile et concise en français. Tu aides les développeurs avec les APIs IA, les templates Next.js, et le déploiement SaaS.',
@@ -16,13 +17,15 @@ const SYSTEM_PROMPTS: Record<string, string> = {
   ar: 'أنت مساعد NeuraAPI. أجب بطريقة مفيدة ومختصرة بالعربية. تساعد المطورين على APIs الذكاء الاصطناعي وقوالب Next.js ونشر SaaS.',
 }
 
+const MAX_MESSAGE_LENGTH = 4000
+const MAX_MESSAGES = 50
+
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: Request) {
   try {
     const apiKey = request.headers.get('x-api-key') || '';
     
-    // Allow demo mode without valid API key
     const isDemo = !apiKey || apiKey === 'demo' || isDemoMode();
 
     const body = await request.json();
@@ -60,16 +63,17 @@ export async function POST(request: Request) {
 
     const ALLOWED_ROLES = new Set(['user', 'assistant']);
     const safeMessages = messages
-      .slice(-50)
+      .slice(-MAX_MESSAGES)
       .filter((m: { role: string; content: string }) =>
-        m.content && typeof m.content === 'string' && m.content.length < 4000
+        m.content && typeof m.content === 'string' && m.content.length < MAX_MESSAGE_LENGTH
       )
       .map((m: { role: string; content: string }) => ({
         role: ALLOWED_ROLES.has(m.role) ? m.role as 'user' | 'assistant' : 'user',
-        content: m.content.substring(0, 4000),
+        content: m.content.substring(0, MAX_MESSAGE_LENGTH),
       }));
 
-    const systemPrompt = SYSTEM_PROMPTS[locale] || SYSTEM_PROMPTS.fr
+    const validLocale = validateString(locale, 5) || 'fr';
+    const systemPrompt = SYSTEM_PROMPTS[validLocale] || SYSTEM_PROMPTS.fr
     const formattedMessages = [
       { role: 'system' as const, content: systemPrompt },
       ...safeMessages,

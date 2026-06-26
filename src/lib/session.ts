@@ -1,7 +1,10 @@
 import crypto from 'crypto'
 import { NextResponse } from 'next/server'
 
-const SESSION_SECRET = process.env.SESSION_SECRET || 'build-time-fallback'
+const SESSION_SECRET = process.env.SESSION_SECRET
+if (!SESSION_SECRET || SESSION_SECRET === 'build-time-fallback' || SESSION_SECRET === 'changeme' || SESSION_SECRET.length < 32) {
+  throw new Error('[SECURITY] SESSION_SECRET must be a strong random string (min 32 chars). Set it in your environment.')
+}
 const SESSION_MAX_AGE = 60 * 60 * 8 // 8 hours in seconds
 const SESSION_COOKIE = 'admin_session'
 
@@ -51,7 +54,7 @@ export function setSessionCookie(response: NextResponse): NextResponse {
   response.cookies.set(SESSION_COOKIE, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: 'strict',
     path: '/',
     maxAge: SESSION_MAX_AGE,
   })
@@ -62,7 +65,7 @@ export function destroySessionCookie(response: NextResponse): NextResponse {
   response.cookies.set(SESSION_COOKIE, '', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    sameSite: 'strict',
     path: '/',
     maxAge: 0,
   })

@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { safeQuery } from '@/lib/db';
 import { verifyPassword } from '@/lib/auth';
-import { rateLimit, resetRateLimit } from '@/lib/rate-limit';
+import { rateLimit, resetRateLimit, getRateLimitHeaders } from '@/lib/rate-limit';
+import { validateEmail } from '@/lib/input-validation';
 
 const MAX_ATTEMPTS = 5
 const LOCKOUT_MS = 15 * 60 * 1000
@@ -18,23 +19,21 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
     }
 
-    if (!email || !password) {
+    const validEmail = validateEmail(email);
+    if (!validEmail || !password || typeof password !== 'string' || password.length < 1 || password.length > 128) {
       return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
     }
 
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
-    }
-
-    const attemptResult = await rateLimit(`login:${email}`, MAX_ATTEMPTS, LOCKOUT_MS)
+    const attemptResult = await rateLimit(`login:${validEmail}`, MAX_ATTEMPTS, LOCKOUT_MS)
+    const rlHeaders = getRateLimitHeaders(attemptResult, MAX_ATTEMPTS)
     if (!attemptResult.allowed) {
-      return NextResponse.json({ error: 'Tentatives épuisées. Réessayez plus tard.' }, { status: 429 })
+      return NextResponse.json({ error: 'Tentatives épuisées. Réessayez plus tard.' }, { status: 429 }, { headers: rlHeaders })
     }
 
     const user = await safeQuery(
       async () => {
         const { prisma } = await import('@/lib/db');
-        return prisma.apiUser.findUnique({ where: { email } });
+        return prisma.apiUser.findUnique({ where: { email: validEmail } });
       },
       null
     );
@@ -53,7 +52,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Email ou mot de passe incorrect' }, { status: 401 });
     }
 
-    await resetRateLimit(`login:${email}`)
+    await resetRateLimit(`login:${validEmail}`)
 
     return NextResponse.json({
       success: true,

@@ -93,11 +93,12 @@ export default function QuickDemo() {
         <div className="glass-card rounded-2xl p-6 sm:p-8">
           <div className="grid gap-4 sm:grid-cols-2 mb-4">
             <div>
-              <label className="block text-sm font-medium text-indigo-300/80 mb-2">
+              <label htmlFor="demo-endpoint-select" className="block text-sm font-medium text-indigo-300/80 mb-2">
                 {t('demoEndpointLabel')}
               </label>
               <div className="relative">
                 <select
+                  id="demo-endpoint-select"
                   value={endpoint}
                   onChange={e => handleEndpointChange(e.target.value)}
                   className="w-full appearance-none rounded-xl border border-white/10 bg-white/5 px-4 py-3 pr-10 text-sm text-white backdrop-blur-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 transition-colors"
@@ -109,7 +110,7 @@ export default function QuickDemo() {
                   ))}
                 </select>
                 {selectedEp && (
-                  <selectedEp.icon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-indigo-400 pointer-events-none" />
+                  <selectedEp.icon className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-indigo-400 pointer-events-none" aria-hidden="true" />
                 )}
               </div>
             </div>
@@ -132,10 +133,11 @@ export default function QuickDemo() {
           </div>
 
           <div className="mb-4">
-            <label className="block text-sm font-medium text-indigo-300/80 mb-2">
+            <label htmlFor="demo-prompt-textarea" className="block text-sm font-medium text-indigo-300/80 mb-2">
               {t('demoPromptLabel')}
             </label>
             <textarea
+              id="demo-prompt-textarea"
               value={prompt}
               onChange={e => setPrompt(e.target.value)}
               rows={3}

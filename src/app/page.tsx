@@ -78,7 +78,7 @@ export default async function Home() {
         <div className="relative mx-auto max-w-5xl text-center w-full">
           <div className="animate-fade-in-up">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm text-indigo-300 mb-8 backdrop-blur-sm">
-              <Sparkles className="w-4 h-4 text-indigo-400" />
+              <Sparkles className="w-4 h-4 text-indigo-400" aria-hidden="true" />
               <span>{t('heroTagline')}</span>
             </div>
           </div>
@@ -104,16 +104,16 @@ export default async function Home() {
 
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up animate-delay-300">
             <CtaLink href="/free" label="free_template" location="hero" dataTrack="cta_click_free_hero" className="group relative rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-green-500/25 hover:shadow-green-500/40 transition-all flex items-center gap-2 w-full sm:w-auto justify-center hover:scale-105">
-              <Download className="w-5 h-5" />
+              <Download className="w-5 h-5" aria-hidden="true" />
               {t('heroCtaFreeTemplate')}
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </CtaLink>
             <ABTest testName="hero_cta_register" variants={['variant_a', 'variant_b']}>
               {(variant) => (
                 <CtaLink href="/register" label="register" location="hero" dataTrack="cta_click_register_hero" className="group relative rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all flex items-center gap-2 w-full sm:w-auto justify-center animate-glow hover:scale-105">
-                  <Sparkles className="w-5 h-5" />
+                  <Sparkles className="w-5 h-5" aria-hidden="true" />
                   {variant === 'variant_b' ? 'Obtenir 100 crédits gratuits' : t('heroCtaCreateAccount')}
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
                 </CtaLink>
               )}
             </ABTest>
@@ -123,9 +123,9 @@ export default async function Home() {
           </div>
 
           <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-indigo-300/70 animate-fade-in-up animate-delay-400">
-            <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-indigo-400" /> <LiveUserCountBadge /> personnes regardent cette page en ce moment</span>
-            <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-400" /> {t('heroNoCard')}</span>
-            <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-400" /> {t('hero100FreeCredits')}</span>
+            <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-indigo-400" aria-hidden="true" /> <LiveUserCountBadge /> personnes regardent cette page en ce moment</span>
+            <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-400" aria-hidden="true" /> {t('heroNoCard')}</span>
+            <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-400" aria-hidden="true" /> {t('hero100FreeCredits')}</span>
           </div>
 
           <div className="mt-16 relative h-64 sm:h-48 hidden sm:block animate-fade-in animate-delay-600">
@@ -144,7 +144,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm text-indigo-300 mb-4 backdrop-blur-sm">
-              <Users className="w-4 h-4" />
+              <Users className="w-4 h-4" aria-hidden="true" />
               {t('audienceBadge')}
             </span>
             <h2 className="text-3xl font-bold text-white sm:text-4xl">
@@ -168,7 +168,7 @@ export default async function Home() {
                 <h3 className="mt-4 text-lg font-semibold text-white group-hover:text-indigo-300 transition-colors">{persona.title}</h3>
                 <p className="mt-2 text-indigo-300/70 text-sm leading-relaxed">{persona.desc}</p>
                 <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/5 border border-white/10 px-3 py-1 text-xs font-medium text-indigo-300">
-                  <Check className="w-3 h-3 text-green-400" />
+                  <Check className="w-3 h-3 text-green-400" aria-hidden="true" />
                   {persona.stat}
                 </div>
               </div>
@@ -201,7 +201,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm text-indigo-300 mb-4 backdrop-blur-sm">
-              <Zap className="w-4 h-4" />
+              <Zap className="w-4 h-4" aria-hidden="true" />
               {t('endpointsBadge')}
             </span>
             <h2 className="text-3xl font-bold text-white sm:text-4xl lg:text-5xl">
@@ -269,7 +269,7 @@ export default async function Home() {
                 <p className="mt-3 text-indigo-300/70 text-sm leading-relaxed">{item.desc}</p>
                 {i < 2 && (
                   <div className="hidden sm:block absolute top-1/2 -right-4 w-8 text-indigo-500/30">
-                    <ArrowRight className="w-8 h-8" />
+                    <ArrowRight className="w-8 h-8" aria-hidden="true" />
                   </div>
                 )}
               </div>
@@ -284,7 +284,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm text-indigo-300 mb-4 backdrop-blur-sm">
-              <BarChart3 className="w-4 h-4" />
+              <BarChart3 className="w-4 h-4" aria-hidden="true" />
               {t('roiBadge')}
             </span>
             <h2 className="text-3xl font-bold text-white sm:text-4xl">
@@ -330,7 +330,7 @@ export default async function Home() {
         <div className="mx-auto max-w-7xl">
           <div className="text-center mb-16">
             <span className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm text-indigo-300 mb-4 backdrop-blur-sm">
-              <ShieldCheck className="w-4 h-4" />
+              <ShieldCheck className="w-4 h-4" aria-hidden="true" />
               {t('comparisonBadge')}
             </span>
             <h2 className="text-3xl font-bold text-white sm:text-4xl">
@@ -365,7 +365,7 @@ export default async function Home() {
                     <td className="p-4 text-sm text-indigo-200/80 font-medium">{row.name}</td>
                     <td className="p-4 text-center">
                       <span className="inline-flex items-center gap-1 text-sm text-green-400 font-medium">
-                        <Check className="w-4 h-4" /> {row.neurapi}
+                        <Check className="w-4 h-4" aria-hidden="true" /> {row.neurapi}
                       </span>
                     </td>
                     <td className="p-4 text-center text-sm text-indigo-300/50">{row.openai}</td>
@@ -391,7 +391,7 @@ export default async function Home() {
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
           <div className="relative">
-            <Sparkles className="mx-auto h-12 w-12 text-indigo-400 animate-glow" />
+            <Sparkles className="mx-auto h-12 w-12 text-indigo-400 animate-glow" aria-hidden="true" />
             <h2 className="mt-6 text-3xl font-bold text-white sm:text-4xl">
               {t('finalCtaTitle')}
             </h2>
@@ -400,13 +400,13 @@ export default async function Home() {
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <CtaLink href="/free" label="free_template" location="final_cta" dataTrack="cta_click_free_final" className="rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 px-8 py-4 text-lg font-semibold text-white hover:from-green-500 hover:to-emerald-500 transition-all flex items-center gap-2 shadow-xl shadow-green-500/25 w-full sm:w-auto justify-center hover:scale-105">
-                <Download className="w-5 h-5" />
+                <Download className="w-5 h-5" aria-hidden="true" />
                 {t('finalCtaFreeTemplate')}
               </CtaLink>
               <CtaLink href="/register" label="register" location="final_cta" dataTrack="cta_click_register_final" className="rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white hover:from-indigo-500 hover:to-purple-500 transition-all flex items-center gap-2 shadow-xl shadow-indigo-500/25 w-full sm:w-auto justify-center animate-glow hover:scale-105">
-                <Sparkles className="w-5 h-5" />
+                <Sparkles className="w-5 h-5" aria-hidden="true" />
                 {t('finalCtaCreateAccount')}
-                <ArrowRight className="w-5 h-5" />
+                <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </CtaLink>
             </div>
           </div>
@@ -416,10 +416,10 @@ export default async function Home() {
       <section className="px-4 py-12 sm:px-6 lg:px-8 border-t border-white/5">
         <div className="mx-auto max-w-7xl">
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-indigo-300/60">
-            <span className="flex items-center gap-2"><Shield className="w-5 h-5" /> {t('trustGdpr')}</span>
-            <span className="flex items-center gap-2"><Check className="w-5 h-5 text-green-400" /> {t('trustPayments')}</span>
-            <span className="flex items-center gap-2"><Check className="w-5 h-5 text-green-400" /> {t('trustCancel')}</span>
-            <span className="flex items-center gap-2"><Check className="w-5 h-5 text-green-400" /> {t('trustSupport')}</span>
+            <span className="flex items-center gap-2"><Shield className="w-5 h-5" aria-hidden="true" /> {t('trustGdpr')}</span>
+            <span className="flex items-center gap-2"><Check className="w-5 h-5 text-green-400" aria-hidden="true" /> {t('trustPayments')}</span>
+            <span className="flex items-center gap-2"><Check className="w-5 h-5 text-green-400" aria-hidden="true" /> {t('trustCancel')}</span>
+            <span className="flex items-center gap-2"><Check className="w-5 h-5 text-green-400" aria-hidden="true" /> {t('trustSupport')}</span>
           </div>
         </div>
       </section>

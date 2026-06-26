@@ -136,7 +136,11 @@ export default function ExitIntentPopup() {
           {!submitted ? (
             <form onSubmit={handleNewsletterSubmit} className="space-y-2">
               <div className="flex gap-2">
+                <label htmlFor="exit-intent-email" className="sr-only">
+                  {t('exitEmailAria') || 'Adresse email'}
+                </label>
                 <input
+                  id="exit-intent-email"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -149,7 +153,7 @@ export default function ExitIntentPopup() {
                   aria-label="Envoyer"
                   className="flex items-center gap-2 rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white hover:bg-indigo-500 transition-all"
                 >
-                  <Mail className="w-4 h-4" />
+                  <Mail className="w-4 h-4" aria-hidden="true" />
                 </button>
               </div>
               <p className="text-xs text-indigo-500 text-center">

@@ -32,7 +32,7 @@ const Footer = memo(function Footer() {
   }
 
   return (
-    <footer id="footer" className="relative border-t border-white/5 bg-indigo-950" role="contentinfo" aria-label="Pied de page">
+    <footer id="footer" className="relative border-t border-white/5 bg-indigo-950" aria-label="Pied de page">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent" />
 
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

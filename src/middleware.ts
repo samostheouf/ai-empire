@@ -40,6 +40,12 @@ const API_RATE_LIMIT = 100
 const STRICT_RATE_LIMIT = 30
 const WEBHOOK_RATE_LIMIT = 100
 const DEMO_RATE_LIMIT = 20
+const CSP_REPORT_RATE_LIMIT = 10
+
+const ALLOWED_ORIGINS = [
+  process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app',
+  'https://ai-empire-steel.vercel.app',
+]
 
 const PUBLIC_POST_ENDPOINTS = [
   '/api/auth/register',
@@ -64,6 +70,21 @@ function getClientIp(request: NextRequest): string {
     request.ip ||
     'unknown'
   )
+}
+
+function getCorsHeaders(request: NextRequest): Record<string, string> {
+  const origin = request.headers.get('origin')
+  const headers: Record<string, string> = {
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-API-Key, X-CSRF-Token, X-Requested-With',
+    'Access-Control-Max-Age': '86400',
+    'Vary': 'Origin',
+  }
+  if (origin && ALLOWED_ORIGINS.includes(origin)) {
+    headers['Access-Control-Allow-Origin'] = origin
+    headers['Access-Control-Allow-Credentials'] = 'true'
+  }
+  return headers
 }
 
 async function hmacSign(data: string, secret: string): Promise<string> {
@@ -124,12 +145,29 @@ export async function middleware(request: NextRequest) {
         headers: { ...headers, 'Content-Type': 'application/json' },
       })
     }
-    return NextResponse.next()
+    const response = NextResponse.next()
+    const corsHeaders = getCorsHeaders(request)
+    for (const [key, value] of Object.entries(corsHeaders)) {
+      response.headers.set(key, value)
+    }
+    return response
+  }
+
+  if (method === 'OPTIONS') {
+    const corsHeaders = getCorsHeaders(request)
+    return new NextResponse(null, { status: 204, headers: corsHeaders })
   }
 
   if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
     const adminError = await verifyAdminSession(request)
     if (adminError) return adminError
+  }
+
+  if (pathname === '/api/csp-report') {
+    const result = rateLimit(`csp:${ip}`, CSP_REPORT_RATE_LIMIT, 60_000)
+    if (!result.allowed) {
+      return new NextResponse(null, { status: 429 })
+    }
   }
 
   if (pathname === '/api/demo') {
@@ -143,6 +181,10 @@ export async function middleware(request: NextRequest) {
     }
     const response = NextResponse.next()
     for (const [key, value] of Object.entries(headers)) {
+      response.headers.set(key, value)
+    }
+    const corsHeaders = getCorsHeaders(request)
+    for (const [key, value] of Object.entries(corsHeaders)) {
       response.headers.set(key, value)
     }
     return response
@@ -159,6 +201,10 @@ export async function middleware(request: NextRequest) {
     }
     const response = NextResponse.next()
     for (const [key, value] of Object.entries(headers)) {
+      response.headers.set(key, value)
+    }
+    const corsHeaders = getCorsHeaders(request)
+    for (const [key, value] of Object.entries(corsHeaders)) {
       response.headers.set(key, value)
     }
     return response
@@ -206,6 +252,10 @@ export async function middleware(request: NextRequest) {
     for (const [key, value] of Object.entries(headers)) {
       response.headers.set(key, value)
     }
+    const corsHeaders = getCorsHeaders(request)
+    for (const [key, value] of Object.entries(corsHeaders)) {
+      response.headers.set(key, value)
+    }
     return response
   }
 
@@ -214,13 +264,16 @@ export async function middleware(request: NextRequest) {
     "default-src 'self'",
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' https://js.stripe.com https://fonts.googleapis.com`,
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "img-src 'self' https://images.unsplash.com data: blob:",
+    "img-src 'self' https://images.unsplash.com https://*.stripe.com data: blob:",
     "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self' https://api.stripe.com https://js.stripe.com https://checkout.stripe.com",
-    "frame-src https://js.stripe.com https://hooks.stripe.com",
+    "connect-src 'self' https://api.stripe.com https://js.stripe.com https://checkout.stripe.com https://api.groq.com https://api.openai.com",
+    "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com",
+    "worker-src 'self' blob:",
+    "child-src 'self' blob:",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
+    "upgrade-insecure-requests",
     "report-uri /api/csp-report",
   ].join('; ')
 
@@ -232,5 +285,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/api/:path*', '/admin/:path*'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|robots.txt|sitemap.xml).*)'],
 }

@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { safeQuery } from '@/lib/db';
 import { authenticateApiKey } from '@/lib/auth';
+import { validateEmail } from '@/lib/input-validation';
 
 export async function GET(request: Request) {
   try {
@@ -10,11 +11,12 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const email = searchParams.get('email');
 
-    if (!email) {
+    const validEmail = validateEmail(email);
+    if (!validEmail) {
       return NextResponse.json({ error: 'Email requis' }, { status: 400 });
     }
 
-    if (email !== auth.user!.email && auth.user!.plan !== 'admin') {
+    if (validEmail !== auth.user!.email && auth.user!.plan !== 'admin') {
       return NextResponse.json({ error: 'Accès refusé' }, { status: 403 });
     }
 
@@ -23,11 +25,12 @@ export async function GET(request: Request) {
         const { prisma } = await import('@/lib/db');
         const [orders, user] = await Promise.all([
           prisma.order.findMany({
-            where: { email },
+            where: { email: validEmail },
             include: { template: true },
             orderBy: { createdAt: 'desc' },
+            take: 100,
           }),
-          prisma.apiUser.findUnique({ where: { email } }),
+          prisma.apiUser.findUnique({ where: { email: validEmail } }),
         ]);
         return { orders, user };
       },

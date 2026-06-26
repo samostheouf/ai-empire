@@ -65,6 +65,7 @@ export default function CookieConsent() {
               {/* Details toggle */}
               <button
                 onClick={() => setShowDetails(!showDetails)}
+                aria-expanded={showDetails}
                 aria-label="Personnaliser les cookies"
                 className="mt-3 text-sm text-indigo-400 hover:text-white transition-colors underline"
               >
@@ -80,9 +81,15 @@ export default function CookieConsent() {
                       <p className="font-semibold text-white text-sm">{t('cookieEssential')}</p>
                       <p className="text-xs text-indigo-300">{t('cookieEssentialDesc')}</p>
                     </div>
-                    <div className="flex h-6 w-11 items-center rounded-full bg-indigo-600 px-1">
-                      <div className="h-4 w-4 rounded-full bg-white shadow"></div>
-                    </div>
+                    <button
+                      role="switch"
+                      aria-checked={true}
+                      aria-label={t('cookieEssential')}
+                      disabled
+                      className="flex h-6 w-11 items-center rounded-full bg-indigo-600 px-1 cursor-not-allowed opacity-70"
+                    >
+                      <div className="h-4 w-4 rounded-full bg-white shadow translate-x-5" />
+                    </button>
                   </div>
 
                   {/* Analytics */}
@@ -141,7 +148,7 @@ export default function CookieConsent() {
                       onClick={() => setPreferences(p => ({ ...p, functional: !p.functional }))}
                       role="switch"
                       aria-checked={preferences.functional}
-                      aria-label="Cookies fonctionnels"
+                      aria-label={t('cookieFunctional')}
                       className={`flex h-6 w-11 items-center rounded-full px-1 transition-colors ${
                         preferences.functional ? 'bg-indigo-600' : 'bg-indigo-800'
                       }`}

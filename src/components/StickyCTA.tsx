@@ -52,7 +52,7 @@ export default function StickyCTA() {
         <div className="flex items-center gap-3 px-4 py-3">
           <div className="flex-1 min-w-0">
             <p className="text-xs font-semibold text-white truncate">
-              <Sparkles className="w-3 h-3 text-indigo-400 inline mr-1" />
+              <Sparkles className="w-3 h-3 text-indigo-400 inline mr-1" aria-hidden="true" />
               {t('sticky100Credits')}
             </p>
             <p className="text-[10px] text-indigo-300/60 truncate">{t('stickyNoCard')}</p>

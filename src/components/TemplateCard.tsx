@@ -78,11 +78,23 @@ const TemplateCard = memo(function TemplateCardInner({ id, name, slug, descripti
           <div className={`absolute top-3 right-3 transition-all duration-300 ${hovered ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}>
             <button
               onClick={(e) => { e.preventDefault(); handleQuickView(); }}
+              aria-label={t('templateQuickView')}
               className="inline-flex items-center gap-1.5 rounded-lg bg-white/90 backdrop-blur-sm px-3 py-1.5 text-xs font-semibold text-gray-900 hover:bg-white transition-all shadow-lg"
             >
-              <Eye className="w-3 h-3" />
+              <Eye className="w-3 h-3" aria-hidden="true" />
               {t('templateQuickView')}
             </button>
+          </div>
+
+          <div className={`absolute bottom-3 left-3 right-3 flex items-center gap-2 transition-all duration-300 ${hovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+            <div className="flex items-center gap-1 rounded-md bg-black/50 backdrop-blur-sm px-2 py-1 text-xs text-white">
+              <Download className="w-3 h-3" aria-hidden="true" />
+              {downloadCount}
+            </div>
+            <div className="flex items-center gap-0.5 rounded-md bg-black/50 backdrop-blur-sm px-2 py-1 text-xs text-yellow-400">
+              <Star className="w-3 h-3 fill-current" aria-hidden="true" />
+              {ratingWhole.toFixed(1)}
+            </div>
           </div>
 
           <div className={`absolute bottom-3 left-3 right-3 flex items-center gap-2 transition-all duration-300 ${hovered ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
@@ -113,7 +125,7 @@ const TemplateCard = memo(function TemplateCardInner({ id, name, slug, descripti
                 key={tag}
                 className="inline-flex items-center gap-1 rounded-full bg-gray-100 px-3 py-1 text-xs text-gray-600"
               >
-                <Tag className="h-3 w-3" />
+                <Tag className="h-3 w-3" aria-hidden="true" />
                 {tag}
               </span>
             ))}
@@ -123,11 +135,11 @@ const TemplateCard = memo(function TemplateCardInner({ id, name, slug, descripti
         <div className="mt-4 flex items-center justify-between">
           <div className="flex items-center gap-3 text-xs text-gray-400">
             <span className="flex items-center gap-1">
-              <Download className="w-3 h-3" />
+              <Download className="w-3 h-3" aria-hidden="true" />
               {downloadCount}
             </span>
             <span className="flex items-center gap-0.5">
-              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" aria-hidden="true" />
               {ratingWhole.toFixed(1)}
             </span>
           </div>
@@ -144,13 +156,13 @@ const TemplateCard = memo(function TemplateCardInner({ id, name, slug, descripti
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={t('templateQuickView')}>
           <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setQuickView(false)} aria-hidden="true" />
           <div className="relative w-full max-w-2xl rounded-2xl border border-gray-200 bg-white shadow-2xl overflow-hidden animate-scale-in">
-            <button
-              onClick={() => setQuickView(false)}
-              className="absolute top-4 right-4 z-10 p-2 rounded-lg bg-white/80 backdrop-blur-sm text-gray-500 hover:text-gray-900 hover:bg-white transition-colors shadow"
-              aria-label={t('templateClosePreview')}
-            >
-              <X className="w-5 h-5" />
-            </button>
+                <button
+                  onClick={() => setQuickView(false)}
+                  className="absolute top-4 right-4 z-10 p-2 rounded-lg bg-white/80 backdrop-blur-sm text-gray-500 hover:text-gray-900 hover:bg-white transition-colors shadow"
+                  aria-label={t('templateClosePreview')}
+                >
+                  <X className="w-5 h-5" aria-hidden="true" />
+                </button>
             <div className="relative aspect-video bg-gray-100">
               <Image src={screenshot} alt={name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 672px" placeholder="blur" blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCBmaWxsPSIjZjFmNWY5IiB3aWR0aD0iODAwIiBoZWlnaHQ9IjQ1MCIvPjwvc3ZnPg==" />
             </div>
@@ -160,7 +172,7 @@ const TemplateCard = memo(function TemplateCardInner({ id, name, slug, descripti
                   {formatPrice(price)}
                 </span>
                 <div className="flex items-center gap-1 text-sm text-yellow-500">
-                  <Star className="w-4 h-4 fill-current" />
+                  <Star className="w-4 h-4 fill-current" aria-hidden="true" />
                   {ratingWhole.toFixed(1)} ({reviewCount} {t('templateReviews')})
                 </div>
               </div>

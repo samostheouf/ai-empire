@@ -23,11 +23,17 @@ function sanitize(html: string): string {
 }
 
 function renderMarkdown(text: string): string {
-  const html = text
+  const escaped = text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#x27;')
+  const html = escaped
     .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
     .replace(/`([^`]+)`/g, '<code class="bg-indigo-950 px-1 rounded text-xs">$1</code>')
     .replace(/\n/g, '<br/>')
-  return sanitize(html)
+  return html
 }
 
 export default function Chatbot() {

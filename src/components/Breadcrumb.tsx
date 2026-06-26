@@ -54,9 +54,9 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
           </li>
           {items.map((item, index) => (
             <li key={index} className="flex items-center gap-1">
-              <ChevronRight className="w-4 h-4 text-indigo-600" />
+              <ChevronRight className="w-4 h-4 text-indigo-600" aria-hidden="true" />
               {index === items.length - 1 ? (
-                <span className="text-indigo-200">{item.name}</span>
+                <span className="text-indigo-200" aria-current="page">{item.name}</span>
               ) : (
                 <Link
                   href={item.href}

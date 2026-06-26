@@ -48,7 +48,7 @@ export default function NotFound() {
         </p>
 
         <div className="relative max-w-sm mx-auto mb-8">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-indigo-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-5 h-5 text-indigo-400" aria-hidden="true" />
           <input
             type="text"
             placeholder={t('notFoundSearch')}
@@ -72,7 +72,7 @@ export default function NotFound() {
                 </span>
                 <p className="text-xs text-indigo-400/60 mt-0.5">{link.desc}</p>
               </div>
-              <ArrowLeft className="w-4 h-4 text-indigo-500/50 group-hover:text-indigo-300 rotate-180 group-hover:translate-x-1 transition-all duration-200" />
+              <ArrowLeft className="w-4 h-4 text-indigo-500/50 group-hover:text-indigo-300 rotate-180 group-hover:translate-x-1 transition-all duration-200" aria-hidden="true" />
             </Link>
           ))}
           {filteredLinks.length === 0 && query && (

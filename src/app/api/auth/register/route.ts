@@ -3,6 +3,7 @@ import { safeQuery } from '@/lib/db';
 import { generateApiKey } from '@/lib/utils';
 import { sendApiKeyEmail } from '@/lib/email';
 import { hashPassword } from '@/lib/auth';
+import { validateEmail, validatePassword } from '@/lib/input-validation';
 
 export async function POST(request: Request) {
   try {
@@ -16,14 +17,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
     }
 
-    if (!email || !password || password.length < 8 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    const validEmail = validateEmail(email);
+    const validPassword = validatePassword(password);
+    if (!validEmail || !validPassword) {
       return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
     }
 
     const existing = await safeQuery(
       async () => {
         const { prisma } = await import('@/lib/db');
-        return prisma!.apiUser.findUnique({ where: { email } });
+        return prisma!.apiUser.findUnique({ where: { email: validEmail } });
       },
       null
     );
@@ -32,9 +35,9 @@ export async function POST(request: Request) {
       async () => {
         const { prisma } = await import('@/lib/db');
         const { generateApiKey: gen } = await import('@/lib/utils');
-        const hashedPassword = await hashPassword(password);
+        const hashedPassword = await hashPassword(validPassword);
         const user = await prisma!.apiUser.create({
-          data: { email, apiKey: gen(), password: hashedPassword, plan: 'starter', credits: 100 },
+          data: { email: validEmail, apiKey: gen(), password: hashedPassword, plan: 'starter', credits: 100 },
         });
         return user.apiKey;
       },
@@ -42,7 +45,7 @@ export async function POST(request: Request) {
     );
 
     if (apiKey) {
-      try { await sendApiKeyEmail({ to: email, apiKey, plan: 'starter' }); } catch {}
+      try { await sendApiKeyEmail({ to: validEmail, apiKey, plan: 'starter' }); } catch {}
     }
 
     return NextResponse.json({

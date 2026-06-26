@@ -138,7 +138,7 @@ export default function RootLayout({
           <I18nProvider initialLocale={locale}>
           <SkipLinks />
           <Header />
-          <main id="main-content" className="min-h-screen" role="main">{children}</main>
+          <main id="main-content" className="min-h-screen">{children}</main>
           <Footer />
           <Chatbot />
           <CookieConsent />

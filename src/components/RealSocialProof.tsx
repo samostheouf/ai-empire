@@ -114,14 +114,15 @@ export default function RealSocialProof() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-50 space-y-2 max-w-xs">
+      <div className="fixed bottom-4 left-4 z-50 space-y-2 max-w-xs" aria-live="polite" aria-atomic="false">
         {toasts.map(toast => (
           <div
             key={toast.id}
             className="flex items-center gap-3 rounded-xl border border-indigo-800 bg-indigo-950/95 backdrop-blur-xl px-4 py-3 shadow-xl shadow-indigo-500/10 animate-slide-in-left"
+            role="status"
           >
             <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center">
-              <Users className="w-4 h-4 text-green-400" />
+              <Users className="w-4 h-4 text-green-400" aria-hidden="true" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="text-sm text-white font-medium truncate">{toast.message}</p>
