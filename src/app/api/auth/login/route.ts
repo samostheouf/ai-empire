@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     const attemptResult = await rateLimit(`login:${validEmail}`, MAX_ATTEMPTS, LOCKOUT_MS)
     const rlHeaders = getRateLimitHeaders(attemptResult, MAX_ATTEMPTS)
     if (!attemptResult.allowed) {
-      return NextResponse.json({ error: 'Tentatives épuisées. Réessayez plus tard.' }, { status: 429 }, { headers: rlHeaders })
+      return NextResponse.json({ error: 'Tentatives épuisées. Réessayez plus tard.' }, { status: 429, headers: rlHeaders })
     }
 
     const user = await safeQuery(
