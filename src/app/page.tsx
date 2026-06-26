@@ -8,15 +8,15 @@ import dynamic from 'next/dynamic'
 import { CtaLink, LiveUserCountBadge, EndpointCopyButton } from '@/components/HomeInteractive'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
-const FAQ = dynamic(() => import('@/components/FAQ'), { ssr: false })
-const AnimatedCounter = dynamic(() => import('@/components/AnimatedCounter'), { ssr: false })
-const RealTestimonials = dynamic(() => import('@/components/RealTestimonials'), { ssr: false })
-const QuickDemo = dynamic(() => import('@/components/QuickDemo'), { ssr: false })
-const TemplateCarousel = dynamic(() => import('@/components/HomeInteractive').then(mod => ({ default: mod.TemplateCarousel })), { ssr: false })
-const EarlyAdopterBanner = dynamic(() => import('@/components/EarlyAdopterBanner'), { ssr: false })
-const CountdownTimer = dynamic(() => import('@/components/CountdownTimer'), { ssr: false })
-const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'), { ssr: false })
-const ABTest = dynamic(() => import('@/components/ABTest').then(mod => ({ default: mod.ABTest })), { ssr: false })
+const FAQ = dynamic(() => import('@/components/FAQ'))
+const AnimatedCounter = dynamic(() => import('@/components/AnimatedCounter'))
+const RealTestimonials = dynamic(() => import('@/components/RealTestimonials'))
+const QuickDemo = dynamic(() => import('@/components/QuickDemo'))
+const TemplateCarousel = dynamic(() => import('@/components/HomeInteractive').then(mod => ({ default: mod.TemplateCarousel })))
+const EarlyAdopterBanner = dynamic(() => import('@/components/EarlyAdopterBanner'))
+const CountdownTimer = dynamic(() => import('@/components/CountdownTimer'))
+const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
+const ABTest = dynamic(() => import('@/components/ABTest').then(mod => ({ default: mod.ABTest })))
 
 export default async function Home() {
   const locale = getLocaleFromCookies()
