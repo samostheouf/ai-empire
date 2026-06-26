@@ -13,8 +13,8 @@ import {
 } from '@/lib/seo'
 import dynamic from 'next/dynamic'
 
-const Header = dynamic(() => import('@/components/Header'))
-const Footer = dynamic(() => import('@/components/Footer'))
+const Header = dynamic(() => import('@/components/Header'), { ssr: false })
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: false })
 const Chatbot = dynamic(() => import('@/components/Chatbot'), { ssr: false })
 const CookieConsent = dynamic(() => import('@/components/CookieConsent'), { ssr: false })
 const AnalyticsTracker = dynamic(() => import('@/components/AnalyticsTracker').then(mod => ({ default: mod.AnalyticsTracker })), { ssr: false })
