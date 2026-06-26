@@ -3151,4 +3151,7 @@ export type TranslationKeys = {
   webVitalsStep2: string
   webVitalsStep3: string
   webVitalsStep4: string
+  
+  // Exit Intent Popup
+  exitEmailAria: string
 }

@@ -3012,6 +3012,9 @@ const fr: Record<string, string> = {
   webVitalsStep2: 'Agrégation des données sur la période sélectionnée.',
   webVitalsStep3: 'Calcul des scores selon les seuils Google.',
   webVitalsStep4: 'Affichage des résultats par page.',
+  
+  // Exit Intent Popup
+  exitEmailAria: 'Adresse email',
 }
 
 export default fr

@@ -3002,7 +3002,9 @@ const en: Record<string, string> = {
   webVitalsStep4: 'Get optimization recommendations',
   webVitalsTopPages: 'Top Pages',
   webVitalsTtfb: 'Time to First Byte',
-
+  
+  // Exit Intent Popup
+  exitEmailAria: 'Email address',
 }
 
 export default en
