@@ -3152,6 +3152,20 @@ cookieLastUpdate: 'Last update: June 24, 2026',
   agentsCtaDesc: 'Deploy your first AI agent in minutes. No credit card required.',
   agentsCtaButton: '無料で始める',
   agentsCtaNoCard: 'クレジットカード不要 — 2分で開始',
+
+  cookieLastUpdate: 'クッキーの最終更新',
+  statusDemoMode: 'デモモード',
+  statusEnvironment: '環境',
+  statusError: 'エラー',
+  statusInfo: '情報',
+  statusOperational: '稼働中',
+  templateGridCopyCode: 'コードをコピー',
+  templateGridEmpty: '検索に一致するテンプレートがありません',
+  templateGridHideCode: 'コードを非表示',
+  templateGridLiveDemo: '${name}のライブデモを見る',
+  templateGridLoading: 'テンプレートを読み込み中...',
+  templateGridSearch: 'テンプレートを検索',
+  templateGridShowCode: 'コードを表示',
 }
 
 export default ja

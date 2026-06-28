@@ -3043,6 +3043,20 @@ cookieLastUpdate: 'Last update: June 24, 2026',
   agentsCtaDesc: 'Deploy your first AI agent in minutes. No credit card required.',
   agentsCtaButton: '免费开始',
   agentsCtaNoCard: '无需信用卡 — 2分钟开始',
+
+  cookieLastUpdate: 'Cookie 最后更新',
+  statusDemoMode: '演示模式',
+  statusEnvironment: '环境',
+  statusError: '错误',
+  statusInfo: '信息',
+  statusOperational: '运行正常',
+  templateGridCopyCode: '复制代码',
+  templateGridEmpty: '没有匹配的模板',
+  templateGridHideCode: '隐藏代码',
+  templateGridLiveDemo: '查看 ${name} 的实时演示',
+  templateGridLoading: '加载模板中...',
+  templateGridSearch: '搜索模板',
+  templateGridShowCode: '显示代码',
 }
 
 export default zh

@@ -3152,6 +3152,20 @@ cookieLastUpdate: 'Last update: June 24, 2026',
   agentsCtaDesc: 'Deploy your first AI agent in minutes. No credit card required.',
   agentsCtaButton: '무료로 시작하기',
   agentsCtaNoCard: '신용카드 불필요 — 2분 안에 시작',
+
+  cookieLastUpdate: '쿠키 마지막 업데이트',
+  statusDemoMode: '데모 모드',
+  statusEnvironment: '환경',
+  statusError: '오류',
+  statusInfo: '정보',
+  statusOperational: '운영 중',
+  templateGridCopyCode: '코드 복사',
+  templateGridEmpty: '검색과 일치하는 템플릿이 없습니다',
+  templateGridHideCode: '코드 숨기기',
+  templateGridLiveDemo: '${name}의 라이브 데모 보기',
+  templateGridLoading: '템플릿 로딩 중...',
+  templateGridSearch: '템플릿 검색',
+  templateGridShowCode: '코드 보기',
 }
 
 export default ko

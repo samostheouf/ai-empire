@@ -3149,6 +3149,20 @@ cookieLastUpdate: 'Last update: June 24, 2026',
   agentsCtaDesc: 'Deploy your first AI agent in minutes. No credit card required.',
   agentsCtaButton: 'ابدأ مجانًا',
   agentsCtaNoCard: 'لا حاجة لبطاقة ائتمان — ابدأ في دقيقتين',
+
+  cookieLastUpdate: 'آخر تحديث ملفات تعريف الارتباط',
+  statusDemoMode: 'وضع العرض التوضيحي',
+  statusEnvironment: 'البيئة',
+  statusError: 'خطأ',
+  statusInfo: 'معلومات',
+  statusOperational: 'يعمل',
+  templateGridCopyCode: 'نسخ الكود',
+  templateGridEmpty: 'لا يوجد قالب يطابق بحثك',
+  templateGridHideCode: 'إخفاء الكود',
+  templateGridLiveDemo: 'عرض العرض المباشر لـ ${name}',
+  templateGridLoading: 'جاري تحميل القوالب...',
+  templateGridSearch: 'البحث عن قالب',
+  templateGridShowCode: 'عرض الكود',
 }
 
 export default ar

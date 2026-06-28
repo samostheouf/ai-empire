@@ -3204,6 +3204,20 @@ cookieLastUpdate: 'Last update: June 24, 2026',
   agentsCtaDesc: 'Deploy your first AI agent in minutes. No credit card required.',
   agentsCtaButton: 'Inizia Gratis',
   agentsCtaNoCard: 'Nessuna carta di credito — Inizia in 2 minuti',
+
+  cookieLastUpdate: 'Ultimo aggiornamento cookie',
+  statusDemoMode: 'Modalità demo',
+  statusEnvironment: 'Ambiente',
+  statusError: 'Errore',
+  statusInfo: 'Informazioni',
+  statusOperational: 'Operativo',
+  templateGridCopyCode: 'Copia codice',
+  templateGridEmpty: 'Nessun modello corrisponde alla tua ricerca',
+  templateGridHideCode: 'Nascondi codice',
+  templateGridLiveDemo: 'Guarda la demo live di ${name}',
+  templateGridLoading: 'Caricamento modelli...',
+  templateGridSearch: 'Cerca modello',
+  templateGridShowCode: 'Mostra codice',
 }
 
 export default it
