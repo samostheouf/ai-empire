@@ -39,6 +39,7 @@ export async function GET(request: NextRequest) {
 
 async function runCleanup() {
   const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+  const ninetyDaysAgo = new Date(Date.now() - 90 * 24 * 60 * 60 * 1000)
 
   const deletedOrders = await safeQuery(async () => {
     const { prisma } = await import('@/lib/db')
@@ -61,9 +62,20 @@ async function runCleanup() {
     return result.count
   }, 0)
 
+  const deletedEvolutionReports = await safeQuery(async () => {
+    const { prisma } = await import('@/lib/db')
+    const result = await prisma.evolutionReport.deleteMany({
+      where: {
+        createdAt: { lt: ninetyDaysAgo },
+      },
+    })
+    return result.count
+  }, 0)
+
   return {
     staleOrdersDeleted: deletedOrders,
     oldUsageLogsDeleted: deletedUsage,
+    oldEvolutionReportsDeleted: deletedEvolutionReports,
   }
 }
 

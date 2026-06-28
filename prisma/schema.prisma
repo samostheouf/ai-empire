@@ -261,3 +261,23 @@ model RateLimit {
   count   Int      @default(0)
   resetAt DateTime
 }
+
+model AgentMetric {
+  id        String   @id @default(uuid())
+  agentId   String
+  score     Float
+  requests  Int      @default(0)
+  errors    Int      @default(0)
+  avgLatency Float   @default(0)
+  createdAt DateTime @default(now())
+}
+
+model EvolutionReport {
+  id        String   @id @default(uuid())
+  agentId   String
+  oldScore  Float
+  newScore  Float
+  changes   String
+  status    String
+  createdAt DateTime @default(now())
+}

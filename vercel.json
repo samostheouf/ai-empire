@@ -15,6 +15,40 @@
     {
       "path": "/api/cron/upsell",
       "schedule": "0 10 * * 1"
+    },
+    {
+      "path": "/api/cron/send-welcome-sequence",
+      "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/cron/daily-seo",
+      "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/weekly-report",
+      "schedule": "0 9 * * 1"
+    },
+    {
+      "path": "/api/cron/self-evolution",
+      "schedule": "0 4 * * *"
+    },
+    {
+      "path": "/api/cron/backup",
+      "schedule": "0 3 * * 0"
+    },
+    {
+      "path": "/api/cron/retry-webhooks",
+      "schedule": "0 2 * * *"
+    },
+    {
+      "path": "/api/cron/weekly-report",
+      "schedule": "0 9 * * 1"
+    },
+    {
+      "path": "/api/cron/health-check",
+      "schedule": "0 5 * * *"
     }
+  ]
+}
   ]
 }
