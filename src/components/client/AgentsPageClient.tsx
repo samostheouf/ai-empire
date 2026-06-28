@@ -100,6 +100,7 @@ const FAQ_ITEMS = [
 
 const PRICING_PLANS = [
   {
+    plan: 'free',
     name: 'Starter',
     price: '0',
     priceSuffix: 'agentsPricingFree',
@@ -113,6 +114,7 @@ const PRICING_PLANS = [
     popular: false,
   },
   {
+    plan: 'pro',
     name: 'Pro',
     price: '49',
     priceSuffix: 'agentsPricingPerMonth',
@@ -127,6 +129,7 @@ const PRICING_PLANS = [
     popular: true,
   },
   {
+    plan: 'business',
     name: 'Business',
     price: '149',
     priceSuffix: 'agentsPricingPerMonth',
@@ -147,6 +150,7 @@ export default function AgentsPageClient({ translations }: AgentsPageClientProps
   const [demoInput, setDemoInput] = useState('')
   const [demoOutput, setDemoOutput] = useState('')
   const [demoLoading, setDemoLoading] = useState(false)
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null)
 
   const handleDemo = async () => {
     if (!demoInput.trim()) return
@@ -164,6 +168,29 @@ export default function AgentsPageClient({ translations }: AgentsPageClientProps
       setDemoOutput(t('agentsDemoError'))
     } finally {
       setDemoLoading(false)
+    }
+  }
+
+  const handleCheckout = async (plan: string) => {
+    const email = prompt('Entrez votre email pour commencer :')
+    if (!email) return
+    setCheckoutLoading(plan)
+    try {
+      const res = await fetch('/api/checkout/agents', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, email }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        alert(data.error || 'Erreur lors de la création du paiement')
+      }
+    } catch {
+      alert('Erreur de connexion')
+    } finally {
+      setCheckoutLoading(null)
     }
   }
 
@@ -374,16 +401,30 @@ export default function AgentsPageClient({ translations }: AgentsPageClientProps
                     </li>
                   ))}
                 </ul>
-                <Link
-                  href="/register"
-                  className={`mt-8 block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all ${
-                    plan.popular
-                      ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/20 hover:scale-105'
-                      : 'border border-white/10 bg-white/5 text-indigo-200 hover:bg-white/10 hover:scale-105'
-                  }`}
-                >
-                  {t(plan.cta)}
-                </Link>
+                {plan.plan === 'free' ? (
+                  <Link
+                    href="/register"
+                    className={`mt-8 block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/20 hover:scale-105'
+                        : 'border border-white/10 bg-white/5 text-indigo-200 hover:bg-white/10 hover:scale-105'
+                    }`}
+                  >
+                    {t(plan.cta)}
+                  </Link>
+                ) : (
+                  <button
+                    onClick={() => handleCheckout(plan.plan)}
+                    disabled={checkoutLoading === plan.plan}
+                    className={`mt-8 block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/20 hover:scale-105'
+                        : 'border border-white/10 bg-white/5 text-indigo-200 hover:bg-white/10 hover:scale-105'
+                    } disabled:opacity-50`}
+                  >
+                    {checkoutLoading === plan.plan ? '...' : t(plan.cta)}
+                  </button>
+                )}
               </div>
             ))}
           </div>
