@@ -41,6 +41,18 @@ const SOCIAL_POSTS: Record<string, Array<{ content: string; hashtags: string[] }
       content: '🧠 Astuce du jour : comment intégrer GPT-4 dans votre SaaS en 5 minutes\n\n1. Installez le SDK AI Empire\n2. Configurez votre clé API\n3. Utilisez nos templates\n4. Déployez sur Vercel\n\nTutorial complet → ai-empire-steel.vercel.app/docs',
       hashtags: ['#Tutorial', '#GPT4', '#AI', '#DevTips'],
     },
+    {
+      content: '🤖 6 agents IA qui travaillent pendant que tu dors\n\n✅ Support client 24/7\n✅ Génération de leads B2B\n✅ Création de contenu SEO\n✅ Automatisation email\n\nEssai gratuit → ai-empire-steel.vercel.app/agents',
+      hashtags: ['#AIAgents', '#Automation', '#SaaS', '#Productivity'],
+    },
+    {
+      content: '💡 Le Support Agent gère 80% des tickets automatiquement\n\n• Routing intelligent\n• 50+ langues\n• Escalade humaine fluide\n• Disponible 24/7\n\nDécouvrez → ai-empire-steel.vercel.app/agents',
+      hashtags: ['#CustomerSupport', '#AI', '#Automation'],
+    },
+    {
+      content: '🚀 Comment j\'ai automatisé 80% de mes tâches avec des agents IA\n\n1. Support client → 80% auto\n2. Leads B2B → scoring automatique\n3. Contenu → SEO optimisé\n4. Emails → séquences auto\n\nGuide → ai-empire-steel.vercel.app/agents',
+      hashtags: ['#GrowthHacking', '#AITools', '#Automation'],
+    },
   ],
   linkedin: [
     {
@@ -55,6 +67,14 @@ const SOCIAL_POSTS: Record<string, Array<{ content: string; hashtags: string[] }
       content: '🧠 L\'avenir du développement web est intelligent\n\nAI Empire combine l\'IA avec des outils modernes :\n✨ Génération de code assistée par IA\n✨ Templates adaptatifs\n✨ Optimisation automatique des performances\n✨ Suggestions en temps réel\n\nRejoignez 5000+ développeurs → ai-empire-steel.vercel.app',
       hashtags: ['#FutureOfWork', '#AI', '#Innovation', '#WebDev'],
     },
+    {
+      content: '🤖 AI Agent Factory : La nouvelle ère de l\'automatisation\n\nImaginez avoir 6 employés IA qui travaillent 24/7 sans interruption :\n\n• Support Client Agent : gère 80% des tickets\n• Lead Generation Agent : trouve et qualifie les prospects\n• Content Creator Agent : génère du contenu SEO\n• Sales Agent : automatise les emails et follow-ups\n• Voice Agent : support multilingue\n• Automation Agent : workflows et planification\n\nTous disponibles dès maintenant → ai-empire-steel.vercel.app/agents\n\n#AIAgents #Automation #SaaS #Productivity',
+      hashtags: ['AIAgents', 'Automation', 'SaaS', 'Productivity'],
+    },
+    {
+      content: '📊 Les chiffres qui parlent :\n\nAprès avoir déployé nos AI Agents :\n• -80% sur le temps de support client\n• +64% de leads qualifiés\n• 3.2x ROI sur le contenu généré par IA\n• -60% sur les tâches répétitives\n\nL\'automatisation n\'est plus l\'avenir, c\'est maintenant.\n\nDécouvrez → ai-empire-steel.vercel.app/agents\n\n#BusinessAutomation #AI #ROI',
+      hashtags: ['BusinessAutomation', 'AI', 'ROI'],
+    },
   ],
   facebook: [
     {
@@ -68,6 +88,10 @@ const SOCIAL_POSTS: Record<string, Array<{ content: string; hashtags: string[] }
     {
       content: '🔥 Offre spéciale développeurs !\n\nProfitez de -30% sur tous les templates avec le code LAUNCH30\n\nTemplates disponibles :\n📦 NeuraBlog — Blog premium (€19)\n📦 NeuraStore — E-commerce (€29)\n📦 NeuraPortfolio — Portfolio (€29)\n📦 Bundle complet — 6 templates (€299)\n\n⏰ Offre limitée → ai-empire-steel.vercel.app',
       hashtags: ['#SpecialOffer', '#AI', '#DevTools', '#Promo'],
+    },
+    {
+      content: '🎉 Nouveau : AI Agent Factory !\n\n6 agents IA prêts à transformer votre business :\n\n🎧 Support Client — 49€/mo\n🎯 Lead Generation — 79€/mo\n✍️ Content Creator — 59€/mo\n💰 Sales Agent — 69€/mo\n🗣️ Voice Agent — 89€/mo\n⚡ Automation Agent — 99€/mo\n\nEssai gratuit 14 jours → ai-empire-steel.vercel.app/agents',
+      hashtags: ['AIAgents', 'SaaS', 'Automation', 'Launch'],
     },
   ],
 }

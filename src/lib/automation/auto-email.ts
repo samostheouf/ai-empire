@@ -1,6 +1,7 @@
 import { Resend } from 'resend'
 import { prisma, safeQuery } from '@/lib/db'
 import { callAI } from '@/lib/ai'
+export { sendAgentsOnboardingSequence } from './agents-emails'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
