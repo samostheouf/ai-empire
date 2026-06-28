@@ -3,8 +3,11 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { Sparkles, ArrowRight, Check, ChevronDown, Zap, Shield, Send } from 'lucide-react'
-import { useI18n } from '@/i18n'
 import Breadcrumb from '@/components/Breadcrumb'
+
+interface AgentsPageClientProps {
+  translations: Record<string, string>
+}
 
 const AGENTS = [
   {
@@ -139,8 +142,8 @@ const PRICING_PLANS = [
   },
 ]
 
-export default function AgentsPageClient() {
-  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
+export default function AgentsPageClient({ translations }: AgentsPageClientProps) {
+  const t = (key: string) => translations[key] || key
   const [demoInput, setDemoInput] = useState('')
   const [demoOutput, setDemoOutput] = useState('')
   const [demoLoading, setDemoLoading] = useState(false)

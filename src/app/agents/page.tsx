@@ -51,7 +51,7 @@ export default async function AgentsPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <AgentsPageClient />
+      <AgentsPageClient translations={translations as Record<string, string>} />
     </>
   )
 }
