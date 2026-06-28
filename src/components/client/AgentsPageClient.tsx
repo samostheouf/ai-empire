@@ -153,13 +153,13 @@ export default function AgentsPageClient({ translations }: AgentsPageClientProps
     setDemoLoading(true)
     setDemoOutput('')
     try {
-      const res = await fetch('/api/agents', {
+      const res = await fetch('/api/demo', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: demoInput }),
+        body: JSON.stringify({ prompt: demoInput, endpoint: 'chat' }),
       })
       const data = await res.json()
-      setDemoOutput(data.result || data.error || 'No result returned.')
+      setDemoOutput(data.text || data.error || 'No result returned.')
     } catch {
       setDemoOutput(t('agentsDemoError'))
     } finally {
