@@ -26,7 +26,8 @@ export default function NewsletterForm() {
       } else {
         setStatus('error')
       }
-    } catch {
+    } catch (err) {
+      console.error('Newsletter subscription failed:', err)
       setStatus('error')
     }
   }

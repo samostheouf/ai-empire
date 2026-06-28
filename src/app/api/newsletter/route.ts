@@ -30,7 +30,8 @@ export async function POST(request: Request) {
     }, null)
 
     return NextResponse.json({ success: true, message: 'Inscription réussie' })
-  } catch {
+  } catch (err) {
+    console.error('Newsletter subscription error:', err)
     return NextResponse.json({ error: 'Erreur serveur' }, { status: 500 })
   }
 }

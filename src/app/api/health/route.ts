@@ -19,9 +19,7 @@ export async function GET(request: Request) {
       try {
         await prisma.$queryRaw`SELECT 1`
         return true
-      } catch {
-        return false
-      }
+      } catch { return false }
     })()
 
     const aiCheck = (async () => {
@@ -42,7 +40,13 @@ export async function GET(request: Request) {
       return { status: 'configured' }
     })()
 
-    const [dbOk, aiResult, stripeResult, emailResult] = await Promise.all([dbCheck, aiCheck, stripeCheck, emailCheck])
+    const groqCheck = (async () => {
+      const apiKey = process.env.GROQ_API_KEY
+      if (!apiKey) return { status: 'not_configured' }
+      return { status: 'configured' }
+    })()
+
+    const [dbOk, aiResult, stripeResult, emailResult, groqResult] = await Promise.all([dbCheck, aiCheck, stripeCheck, emailCheck, groqCheck])
 
     const services: Record<string, { status: string; latencyMs?: number }> = {
       frontend: { status: 'ok' },
@@ -50,10 +54,11 @@ export async function GET(request: Request) {
       ai: aiResult,
       stripe: stripeResult,
       email: emailResult,
+      groq: groqResult,
     }
 
     const criticalOk = dbOk
-    const nonCriticalDown = aiResult.status !== 'configured' || stripeResult.status !== 'configured' || emailResult.status !== 'configured'
+    const nonCriticalDown = aiResult.status !== 'configured' || stripeResult.status !== 'configured' || emailResult.status !== 'configured' || groqResult.status !== 'configured'
     let status: 'healthy' | 'degraded' | 'unhealthy' = 'healthy'
     if (!criticalOk) status = 'unhealthy'
     else if (nonCriticalDown) status = 'degraded'
@@ -68,7 +73,8 @@ export async function GET(request: Request) {
     }, {
       headers: { 'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60' },
     })
-  } catch {
+  } catch (err) {
+    console.error('Health check error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

@@ -114,6 +114,7 @@ export default function RootLayout({
         <meta name="theme-color" content="#4F46E5" />
         <link rel="prefetch" href="/templates" />
         <link rel="prefetch" href="/pricing" />
+        <link rel="prefetch" href="/agents" />
         <link rel="prefetch" href="/register" />
         <script
           type="application/ld+json"

@@ -51,7 +51,8 @@ export async function POST(request: NextRequest) {
     }, { success: false, queued: false })
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Recovery POST error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
@@ -156,7 +157,8 @@ export async function PUT(request: NextRequest) {
           })
 
           sentCount++
-        } catch {
+        } catch (err) {
+          console.error('Recovery email send failed:', err)
         }
       }
 
@@ -164,7 +166,8 @@ export async function PUT(request: NextRequest) {
     }, { sent: 0 })
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Recovery PUT error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
@@ -196,7 +199,8 @@ export async function GET(request: NextRequest) {
     }, { clicked: false })
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Recovery GET error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

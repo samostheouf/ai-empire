@@ -24,8 +24,8 @@ const Footer = memo(function Footer() {
       })
       setSubscribed(true)
       setEmail('')
-    } catch {
-      // Newsletter subscription failed silently
+    } catch (err) {
+      console.error('Footer newsletter subscription failed:', err)
     } finally {
       setLoading(false)
     }

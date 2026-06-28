@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { safeQuery } from '@/lib/db';
-import { generateApiKey } from '@/lib/utils';
 import { sendApiKeyEmail } from '@/lib/email';
 import { hashPassword } from '@/lib/auth';
 import { validateEmail, validatePassword } from '@/lib/input-validation';
@@ -14,7 +13,8 @@ export async function POST(request: Request) {
       const body = await request.json();
       email = body.email;
       password = body.password;
-    } catch {
+    } catch (err) {
+      console.error('Failed to parse request body:', err)
       return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
     }
 
@@ -55,13 +55,14 @@ export async function POST(request: Request) {
     );
 
     if (apiKey) {
-      try { await sendApiKeyEmail({ to: validEmail, apiKey, plan: 'starter' }); } catch {}
+      try { await sendApiKeyEmail({ to: validEmail, apiKey, plan: 'starter' }); } catch (err) { console.error('Failed to send welcome email:', err) }
     }
 
     return NextResponse.json({
       message: 'Si un compte n\'existe pas, il a été créé. Un email contenant votre clé API vous a été envoyé.',
     });
-  } catch {
+  } catch (err) {
+    console.error('Registration error:', err)
     return NextResponse.json({ error: 'Erreur interne' }, { status: 500 });
   }
 }

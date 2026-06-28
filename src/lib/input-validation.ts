@@ -75,7 +75,5 @@ export function validateUrl(url: unknown, allowedProtocols: string[] = ['https:'
     if (!allowedProtocols.includes(parsed.protocol)) return null
     if (url.length > 2048) return null
     return url
-  } catch {
-    return null
-  }
+  } catch { return null }
 }

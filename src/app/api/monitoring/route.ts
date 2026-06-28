@@ -32,7 +32,8 @@ export async function GET() {
     }, {
       headers: { 'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=60' },
     })
-  } catch {
+  } catch (err) {
+    console.error('Monitoring check error:', err)
     return NextResponse.json({ error: 'Erreur lors de la vérification du statut' }, { status: 500 })
   }
 }

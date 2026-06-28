@@ -18,9 +18,7 @@ export function parseJsonField<T>(field: unknown): T {
   if (typeof field === 'string') {
     try {
       return JSON.parse(field) as T
-    } catch {
-      return field as T
-    }
+    } catch { return field as T }
   }
   return field as T
 }

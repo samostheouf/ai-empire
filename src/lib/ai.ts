@@ -45,6 +45,27 @@ interface ChatMessage {
   content: string;
 }
 
+/**
+ * Sends a prompt or conversation to the first available AI provider
+ * and returns the generated content.
+ *
+ * Providers are tried in order (Groq → GLM → Gemini → OpenAI). Each
+ * provider is attempted up to 2 times with a 1-second delay between
+ * retries. A 15-second timeout is applied per request.
+ *
+ * When no provider has a valid API key, a demo/empty result is returned.
+ *
+ * @param promptOrMessages - A plain text prompt or an array of chat messages.
+ * @param maxTokens - Maximum tokens in the response (default: 1000).
+ * @param modelOverride - Override the model name (only applies to the OpenAI provider).
+ * @returns An `AIResult` with the generated content, token count, and provider name.
+ *
+ * @example
+ * ```ts
+ * const result = await callAI('Explain quantum computing', 500);
+ * console.log(result.content);
+ * ```
+ */
 export async function callAI(
   prompt: string,
   maxTokens?: number,
@@ -102,6 +123,14 @@ export async function callAI(
   return { content: '', tokensUsed: 0, provider: 'demo' };
 }
 
+/**
+ * Checks whether the application is running in demo mode.
+ *
+ * Demo mode is active when no AI provider has a configured API key
+ * (or all keys are placeholders).
+ *
+ * @returns `true` if no real AI provider is available.
+ */
 export function isDemoMode(): boolean {
   return PROVIDERS.every(
     (p) => !p.apiKey || p.apiKey.startsWith('sk-placeholder')

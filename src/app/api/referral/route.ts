@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
-import { validateEmail, sanitizeInput } from '@/lib/input-validation'
+import { validateEmail } from '@/lib/input-validation'
 import { EMAIL_FROM } from '@/lib/email'
 import { Resend } from 'resend'
 import { logger } from '@/lib/logger'
@@ -129,7 +129,8 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Referral GET error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
@@ -195,7 +196,8 @@ export async function POST(request: NextRequest) {
     }, { success: false, message: 'Erreur serveur' })
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Referral POST error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
@@ -271,7 +273,8 @@ export async function PUT(request: NextRequest) {
     }, { success: false, commission: 0 })
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Referral PUT error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
@@ -318,7 +321,8 @@ async function getLeaderboard() {
     }, { topByReferrals: [], topByCommission: [] })
 
     return NextResponse.json(leaderboard)
-  } catch {
+  } catch (err) {
+    console.error('Referral leaderboard error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
@@ -348,7 +352,8 @@ async function getMonthlyEarnings(email: string) {
     }, { earnings: [], totalAllTime: 0, totalAllTimeEuros: '0.00' })
 
     return NextResponse.json(earnings)
-  } catch {
+  } catch (err) {
+    console.error('Referral monthly earnings error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

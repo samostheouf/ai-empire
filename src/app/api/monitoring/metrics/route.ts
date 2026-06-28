@@ -22,7 +22,8 @@ export async function GET(request: NextRequest) {
     }, {
       headers: { 'Cache-Control': 'no-store' },
     })
-  } catch {
+  } catch (err) {
+    console.error('Metrics retrieval error:', err)
     return NextResponse.json({ error: 'Erreur lors de la récupération des métriques' }, { status: 500 })
   }
 }

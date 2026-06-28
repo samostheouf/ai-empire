@@ -127,7 +127,8 @@ export async function POST(request: NextRequest) {
       discountDescription: discountDescription || null,
       promoCode: promoCode || null,
     })
-  } catch {
+  } catch (err) {
+    console.error('Checkout session creation error:', err)
     return NextResponse.json({ error: 'Erreur lors de la création de la session' }, { status: 500 })
   }
 }

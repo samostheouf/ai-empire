@@ -103,7 +103,8 @@ export default function ExitIntentPopup() {
       })
       setSubmitted(true)
       trackEvent('cta_click', { label: 'exit_intent_newsletter', location: 'popup' })
-    } catch {
+    } catch (err) {
+      console.error('Exit intent newsletter submission failed:', err)
       setSubmitted(true)
     }
   }

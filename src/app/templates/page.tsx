@@ -1,10 +1,12 @@
 import type { Metadata } from 'next'
 import { Layers, Zap, Timer, BarChart3, ArrowRight } from 'lucide-react'
 import Breadcrumb from '@/components/Breadcrumb'
-import BuildTimeSaved from '@/components/client/BuildTimeSaved'
-import TemplateGrid from '@/components/client/TemplateGrid'
+import dynamic from 'next/dynamic'
 import { generateMetadata as genMeta } from '@/lib/seo'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
+
+const BuildTimeSaved = dynamic(() => import('@/components/client/BuildTimeSaved'))
+const TemplateGrid = dynamic(() => import('@/components/client/TemplateGrid'))
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = getLocaleFromCookies()

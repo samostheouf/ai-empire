@@ -211,9 +211,7 @@ export function useConversionFunnel(config: FunnelConfig) {
       try {
         const data = JSON.parse(stored)
         return data.currentStep || 0
-      } catch {
-        return 0
-      }
+      } catch { return 0 }
     }
     return 0
   }, [config])

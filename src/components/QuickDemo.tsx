@@ -64,7 +64,8 @@ export default function QuickDemo() {
 
       const data = await res.json()
       setResult(data.text || data.content || data.result || JSON.stringify(data, null, 2))
-    } catch {
+    } catch (err) {
+      console.error('Demo API call failed:', err)
       setResponseTime(Math.round(performance.now() - start))
       setError(t('demoErrorNetwork'))
     } finally {

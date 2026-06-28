@@ -94,9 +94,7 @@ async function verifyAdminSession(request: NextRequest): Promise<NextResponse | 
     if (payload.exp < Math.floor(Date.now() / 1000)) {
       return new NextResponse('Session expired', { status: 401 })
     }
-  } catch {
-    return new NextResponse('Unauthorized', { status: 401 })
-  }
+  } catch { return new NextResponse('Unauthorized', { status: 401 }) }
 
   return null
 }

@@ -78,7 +78,9 @@ export default function CWVDashboard() {
       }
       const res = await fetch(url)
       if (res.ok) setData(await res.json())
-    } catch {}
+    } catch (err) {
+      console.error('Failed to fetch web vitals data:', err)
+    }
     setLoading(false)
   }
 

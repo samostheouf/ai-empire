@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import Image from 'next/image'
-import { MessageCircle, X, Send, Bot, User, Sparkles, AlertTriangle } from 'lucide-react'
+import { MessageCircle, X, Send, Bot, User } from 'lucide-react'
 import { useI18n } from '@/i18n'
 
 interface Message {
@@ -53,7 +53,7 @@ export default function Chatbot() {
   useEffect(() => {
     const stored = localStorage.getItem('neuraapi_chat')
     if (stored) {
-      try { setMessages(JSON.parse(stored)) } catch {}
+      try { setMessages(JSON.parse(stored)) } catch { /* corrupted storage, ignore */ }
     }
   }, [])
 
@@ -110,7 +110,8 @@ export default function Chatbot() {
         content: data.content || t('chatErrorApi'),
         timestamp: new Date(),
       }])
-    } catch {
+    } catch (err) {
+      console.error('Chat API error:', err)
       setMessages(prev => [...prev, {
         id: crypto.randomUUID(),
         role: 'bot',

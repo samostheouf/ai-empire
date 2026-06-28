@@ -40,7 +40,8 @@ export default function NewsletterPopup() {
       })
       setSuccess(true)
       trackEvent('cta_click', { label: 'newsletter_signup', location: 'popup' })
-    } catch {
+    } catch (err) {
+      console.error('Newsletter popup submission failed:', err)
       setSuccess(true)
     } finally {
       setLoading(false)

@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
-import PricingPageClient from '@/components/client/PricingPageClient'
+import dynamic from 'next/dynamic'
 import { generateMetadata as genMeta } from '@/lib/seo'
+
+const PricingPageClient = dynamic(() => import('@/components/client/PricingPageClient'))
 
 export const metadata: Metadata = genMeta({
   title: 'Tarifs — API IA & Templates Premium',

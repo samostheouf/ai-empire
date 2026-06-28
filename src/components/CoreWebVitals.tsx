@@ -42,8 +42,8 @@ export default function CoreWebVitals() {
         onTTFB((metric) => sendMetric('TTFB', metric.value, getRating('TTFB', metric.value)))
         onFCP((metric) => sendMetric('FCP', metric.value, getRating('FCP', metric.value)))
         onINP((metric) => sendMetric('INP', metric.value, getRating('INP', metric.value)))
-      }).catch(() => {})
-    } catch {}
+      }).catch(() => {/* web-vitals load failure, non-critical */})
+    } catch {/* dynamic import failure, non-critical */}
   }, [])
 
   return null

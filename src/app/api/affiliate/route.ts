@@ -89,7 +89,8 @@ export async function POST(request: NextRequest) {
             </body></html>
           `,
         })
-      } catch {
+      } catch (err) {
+        console.error('Failed to send affiliate welcome email:', err)
       }
 
       return {
@@ -104,7 +105,8 @@ export async function POST(request: NextRequest) {
     }, { success: false, message: 'Erreur serveur', affiliate: { trackingCode: '', link: '' } })
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Affiliate POST error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
@@ -177,7 +179,8 @@ export async function GET(request: NextRequest) {
     }
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Affiliate GET error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
@@ -226,7 +229,8 @@ export async function PUT(request: NextRequest) {
     }, { success: false, commission: 0 })
 
     return NextResponse.json(result)
-  } catch {
+  } catch (err) {
+    console.error('Affiliate PUT error:', err)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }
