@@ -1,30 +1,5 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-
-// Edge-compatible in-memory rate limiter (middleware runs on Edge, not Node.js)
-const rateLimitStore = new Map<string, { count: number; resetAt: number }>()
-
-function rateLimit(key: string, limit: number = 100, windowMs: number = 60_000): { allowed: boolean; remaining: number; resetIn: number } {
-  const now = Date.now()
-  const entry = rateLimitStore.get(key)
-  if (!entry || now > entry.resetAt) {
-    rateLimitStore.set(key, { count: 1, resetAt: now + windowMs })
-    return { allowed: true, remaining: limit - 1, resetIn: Math.ceil(windowMs / 1000) }
-  }
-  entry.count++
-  if (entry.count > limit) {
-    return { allowed: false, remaining: 0, resetIn: Math.ceil((entry.resetAt - now) / 1000) }
-  }
-  return { allowed: true, remaining: limit - entry.count, resetIn: Math.ceil((entry.resetAt - now) / 1000) }
-}
-
-function getRateLimitHeaders(result: { remaining: number; resetIn: number }, limit: number) {
-  return {
-    'X-RateLimit-Limit': String(limit),
-    'X-RateLimit-Remaining': String(result.remaining),
-    'X-RateLimit-Reset': String(result.resetIn),
-  } as Record<string, string>
-}
 import { validateCsrfOrigin } from '@/lib/csrf'
 
 const SESSION_SECRET = process.env.SESSION_SECRET
@@ -34,13 +9,6 @@ if (!SESSION_SECRET) {
 }
 const SECRET: string = SESSION_SECRET
 const SESSION_COOKIE = 'admin_session'
-
-const AUTH_RATE_LIMIT = 20
-const API_RATE_LIMIT = 100
-const STRICT_RATE_LIMIT = 30
-const WEBHOOK_RATE_LIMIT = 100
-const DEMO_RATE_LIMIT = 20
-const CSP_REPORT_RATE_LIMIT = 10
 
 const ALLOWED_ORIGINS = [
   process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app',
@@ -64,8 +32,11 @@ const PUBLIC_POST_ENDPOINTS = [
 ]
 
 function getClientIp(request: NextRequest): string {
+  const vercelForwardedFor = request.headers.get('x-vercel-forwarded-for')
+  if (vercelForwardedFor) {
+    return vercelForwardedFor.split(',')[0]?.trim() || 'unknown'
+  }
   return (
-    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
     request.headers.get('x-real-ip') ||
     request.ip ||
     'unknown'
@@ -110,7 +81,6 @@ async function verifyAdminSession(request: NextRequest): Promise<NextResponse | 
   }
 
   const expectedSig = await hmacSign(body, SECRET)
-  // Constant-time comparison without Node.js Buffer
   if (signature.length !== expectedSig.length) return new NextResponse('Unauthorized', { status: 401 })
   let r = 0
   for (let i = 0; i < signature.length; i++) { r |= signature.charCodeAt(i) ^ expectedSig.charCodeAt(i) }
@@ -132,19 +102,10 @@ async function verifyAdminSession(request: NextRequest): Promise<NextResponse | 
 }
 
 export async function middleware(request: NextRequest) {
-  const ip = getClientIp(request)
   const pathname = request.nextUrl.pathname
   const method = request.method
 
   if (pathname.startsWith('/api/webhooks/')) {
-    const result = rateLimit(`webhook:${ip}`, WEBHOOK_RATE_LIMIT, 60_000)
-    const headers = getRateLimitHeaders(result, WEBHOOK_RATE_LIMIT)
-    if (!result.allowed) {
-      return new NextResponse(JSON.stringify({ error: 'Trop de requêtes. Réessayez plus tard.' }), {
-        status: 429,
-        headers: { ...headers, 'Content-Type': 'application/json' },
-      })
-    }
     const response = NextResponse.next()
     const corsHeaders = getCorsHeaders(request)
     for (const [key, value] of Object.entries(corsHeaders)) {
@@ -163,74 +124,17 @@ export async function middleware(request: NextRequest) {
     if (adminError) return adminError
   }
 
-  if (pathname === '/api/csp-report') {
-    const result = rateLimit(`csp:${ip}`, CSP_REPORT_RATE_LIMIT, 60_000)
-    if (!result.allowed) {
-      return new NextResponse(null, { status: 429 })
-    }
-  }
-
-  if (pathname === '/api/demo') {
-    const result = rateLimit(`demo:${ip}`, DEMO_RATE_LIMIT, 60_000)
-    const headers = getRateLimitHeaders(result, DEMO_RATE_LIMIT)
-    if (!result.allowed) {
-      return new NextResponse(JSON.stringify({ error: 'Trop de requêtes. Réessayez plus tard.' }), {
-        status: 429,
-        headers: { ...headers, 'Content-Type': 'application/json' },
-      })
-    }
-    const response = NextResponse.next()
-    for (const [key, value] of Object.entries(headers)) {
-      response.headers.set(key, value)
-    }
-    const corsHeaders = getCorsHeaders(request)
-    for (const [key, value] of Object.entries(corsHeaders)) {
-      response.headers.set(key, value)
-    }
-    return response
-  }
-
-  if (pathname.startsWith('/api/auth/')) {
-    const result = rateLimit(`auth:${ip}`, AUTH_RATE_LIMIT, 60_000)
-    const headers = getRateLimitHeaders(result, AUTH_RATE_LIMIT)
-    if (!result.allowed) {
-      return new NextResponse(JSON.stringify({ error: 'Trop de requêtes. Réessayez plus tard.' }), {
-        status: 429,
-        headers: { ...headers, 'Content-Type': 'application/json' },
-      })
-    }
-    const response = NextResponse.next()
-    for (const [key, value] of Object.entries(headers)) {
-      response.headers.set(key, value)
-    }
-    const corsHeaders = getCorsHeaders(request)
-    for (const [key, value] of Object.entries(corsHeaders)) {
-      response.headers.set(key, value)
-    }
-    return response
-  }
-
   if (pathname.startsWith('/api/')) {
-    const isStrict = pathname.startsWith('/api/billing') || pathname.startsWith('/api/checkout') || pathname.startsWith('/api/marketing')
-    const limit = isStrict ? STRICT_RATE_LIMIT : API_RATE_LIMIT
-    const prefix = isStrict ? 'strict' : 'api'
-    const result = rateLimit(`${prefix}:${ip}`, limit, 60_000)
-    const headers = getRateLimitHeaders(result, limit)
-
-    if (!result.allowed) {
-      return new NextResponse(JSON.stringify({ error: 'Trop de requêtes. Réessayez plus tard.' }), {
-        status: 429,
-        headers: { ...headers, 'Content-Type': 'application/json' },
-      })
-    }
-
     const isAnalytics = pathname.startsWith('/api/analytics') || pathname === '/api/ai/chat'
-    if (!isAnalytics) {
+    const isPublicPost = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method) &&
+      PUBLIC_POST_ENDPOINTS.some(ep => pathname.startsWith(ep))
+
+    if (!isAnalytics && !isPublicPost) {
       const csrfResult = validateCsrfOrigin(request)
       if (!csrfResult.valid) {
         return new NextResponse(JSON.stringify({ error: csrfResult.error || 'Requête refusée' }), {
           status: 403,
-          headers: { ...headers, 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json' },
         })
       }
     }
@@ -242,16 +146,13 @@ export async function middleware(request: NextRequest) {
         if (!apiKey) {
           return new NextResponse(JSON.stringify({ error: 'Authentification requise' }), {
             status: 401,
-            headers: { ...headers, 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json' },
           })
         }
       }
     }
 
     const response = NextResponse.next()
-    for (const [key, value] of Object.entries(headers)) {
-      response.headers.set(key, value)
-    }
     const corsHeaders = getCorsHeaders(request)
     for (const [key, value] of Object.entries(corsHeaders)) {
       response.headers.set(key, value)
