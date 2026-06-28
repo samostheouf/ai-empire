@@ -187,6 +187,7 @@ model BlogIdea {
   keywords  String
   source    String
   status    String   @default("pending")
+  content   String?
   createdAt DateTime @default(now())
 }
 
