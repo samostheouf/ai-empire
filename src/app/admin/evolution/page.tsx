@@ -35,7 +35,7 @@ export default function EvolutionDashboard() {
   useEffect(() => {
     Promise.all([
       fetch('/api/agents').then(res => res.json()),
-      fetch('/api/admin/evolution').then(res => res.json()),
+      fetch('/api/evolution').then(res => res.json()),
     ])
       .then(([agentsData, reportsData]) => {
         setAgents(agentsData.agents || [])
