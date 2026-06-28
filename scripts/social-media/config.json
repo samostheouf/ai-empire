@@ -4,7 +4,13 @@
     "apiSecret": "",
     "accessToken": "",
     "accessTokenSecret": "",
-    "_instructions": "1. Va sur https://developer.twitter.com/en/portal/dashboard 2. Crée un projet 3. Active Read+Write 4. Génère les clés"
+    "_instructions": "1. Va sur https://developer.twitter.com/en/portal/dashboard 2. Crée un projet 3. Active Read+Write 4. Génère les clés",
+    "_validation": {
+      "apiKey": "Commence par 'A' ou 'a', longueur 25+",
+      "apiSecret": "Longueur 50+",
+      "accessToken": "Commence par '1'- '9', longueur 40+",
+      "accessTokenSecret": "Longueur 40+"
+    }
   },
   "reddit": {
     "clientId": "",
@@ -12,12 +18,22 @@
     "username": "",
     "password": "",
     "userAgent": "NeuraAPI-Launch/1.0 by /u/YOUR_USERNAME",
-    "_instructions": "1. Va sur https://www.reddit.com/prefs/apps 2. Crée app type 'script' 3. Redirect: http://localhost:8080"
+    "_instructions": "1. Va sur https://www.reddit.com/prefs/apps 2. Crée app type 'script' 3. Redirect: http://localhost:8080",
+    "_validation": {
+      "clientId": "AlphNumérique, longueur 14+",
+      "clientSecret": "AlphNumérique, longueur 27+",
+      "username": "Ton username Reddit",
+      "password": "Mot de passe du compte Reddit"
+    }
   },
   "linkedin": {
     "accessToken": "",
-    "personUrn": "",
-    "_instructions": "1. Va sur https://www.linkedin.com/developers/apps 2. Crée app 3. Active Share on LinkedIn 4. OAuth 2.0 access token"
+    "personUrn": "urn:li:person:XXXXX",
+    "_instructions": "1. Va sur https://www.linkedin.com/developers/apps 2. Crée app 3. Active Share on LinkedIn 4. OAuth 2.0 access token",
+    "_validation": {
+      "accessToken": "Commence par 'AQ', longueur 100+",
+      "personUrn": "Format: urn:li:person:XXXXXXXXX"
+    }
   },
-  "_status": "REMPLIS CES CLÉS PUIS LANCE: node scripts/social-media/launch.js"
+  "_status": "REMPLIS CES CLÉS PUIS LANCE: node scripts/social-media/test-connection.js"
 }
