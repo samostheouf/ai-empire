@@ -363,7 +363,7 @@ export default function AgentsPageClient({ translations }: AgentsPageClientProps
                     </div>
                   )}
                 </div>
-                <p className="mt-2 text-sm text-indigo-400">{plan.agents} {plan.agents === '1' ? t('agentsPricingAgent') : t('agentsPricingAgents')}</p>
+                <p className="mt-2 text-sm text-indigo-400">{plan.agents === 'agentsPricingAll' ? t('agentsPricingAll') : plan.agents} {plan.agents === '1' ? t('agentsPricingAgent') : t('agentsPricingAgents')}</p>
                 <ul className="mt-8 space-y-3">
                   {plan.features.map((feat, j) => (
                     <li key={j} className="flex items-start gap-3">
