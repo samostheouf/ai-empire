@@ -115,7 +115,7 @@ export default function NewsletterPopup() {
               <button
                 type="submit"
                 disabled={loading || !email}
-                aria-label="S'inscrire à la newsletter"
+                aria-label={t('newsletterSubscribe')}
                 className="w-full rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white hover:from-indigo-500 hover:to-purple-500 transition-all disabled:opacity-50 flex items-center justify-center gap-2"
               >
                   {loading ? (

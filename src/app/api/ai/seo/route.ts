@@ -94,7 +94,7 @@ Retourne un JSON avec: title, metaDescription, content.`;
         tokensUsed: 0,
         demo: true,
         message: 'Mode démo — Aucun provider IA configuré',
-      });
+      }, { headers: { "Cache-Control": "no-store" } });
     }
 
     let parsed: typeof DEMO_SEO;

@@ -4,17 +4,13 @@ import { validateEmail, validateString, sanitizeInput } from '@/lib/input-valida
 import { EMAIL_FROM } from '@/lib/email'
 import { Resend } from 'resend'
 import { getRateLimitHeaders, rateLimit } from '@/lib/rate-limit'
+import crypto from 'crypto'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 function generateTrackingCode(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
-  let code = 'aff_'
-  for (let i = 0; i < 8; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return code
+  return 'aff_' + crypto.randomBytes(8).toString('hex')
 }
 
 export async function POST(request: NextRequest) {

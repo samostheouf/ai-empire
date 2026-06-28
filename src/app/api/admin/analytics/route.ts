@@ -130,8 +130,8 @@ export async function GET(request: NextRequest) {
     }
   )
 
-    return NextResponse.json(data, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    return NextResponse.json(data, { headers: { 'Cache-Control': 'private, no-store' } })
   } catch {
-    return NextResponse.json({ error: 'Erreur lors de la récupération des analytics' }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    return NextResponse.json({ error: 'Erreur lors de la récupération des analytics' }, { status: 500, headers: { 'Cache-Control': 'private, no-store' } })
   }
 }

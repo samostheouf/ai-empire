@@ -4,17 +4,14 @@ import { validateEmail, sanitizeInput } from '@/lib/input-validation'
 import { EMAIL_FROM } from '@/lib/email'
 import { Resend } from 'resend'
 import { logger } from '@/lib/logger'
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
+import crypto from 'crypto'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 function generateReferralCode(): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
-  let code = 'ref_'
-  for (let i = 0; i < 8; i++) {
-    code += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  return code
+  return 'ref_' + crypto.randomBytes(8).toString('hex')
 }
 
 function getBadge(referralCount: number): string {
@@ -44,6 +41,13 @@ function getRewardTiers(referralCount: number) {
 
 export async function GET(request: NextRequest) {
   try {
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const rl = await rateLimit(`referral:${ip}`, 30, 60_000)
+    const rlHeaders = getRateLimitHeaders(rl, 30)
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, { status: 429, headers: rlHeaders })
+    }
+
     const email = request.nextUrl.searchParams.get('email')
     const view = request.nextUrl.searchParams.get('view') || 'dashboard'
 
@@ -216,7 +220,7 @@ export async function PUT(request: NextRequest) {
       if (!referral) return { success: false, commission: 0 }
       if (referral.status === 'completed') return { success: true, commission: referral.commissionEarned, duplicate: true }
 
-      const commission = Math.round(19.00 * 0.20)
+      const commission = Math.round(amount * 0.20)
 
       await prisma.referral.update({
         where: { id: referralId },

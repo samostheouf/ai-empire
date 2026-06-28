@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import { safeQuery } from '@/lib/db'
 import { validateEmail, validateId, validateString } from '@/lib/input-validation'
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 import type Stripe from 'stripe'
 import { createHash } from 'crypto'
 
@@ -13,10 +14,17 @@ const PROMO_CODES: Record<string, { discount: number; description: string }> = {
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const rl = await rateLimit(`checkout:${ip}`, 10, 60_000)
+    const rlHeaders = getRateLimitHeaders(rl, 10)
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, { status: 429, headers: rlHeaders })
+    }
+
     const { templateId, templateTitle, email, promoCode, referralCode, affiliateCode } = await request.json()
 
     if (!validateId(templateId)) {
-      return NextResponse.json({ error: 'ID template invalide' }, { status: 400 })
+      return NextResponse.json({ error: 'ID template invalide' }, { status: 400, headers: { 'Cache-Control': 'no-store' } })
     }
 
     if (!validateString(templateTitle, 200)) {

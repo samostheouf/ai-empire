@@ -87,6 +87,7 @@ export default function FAQPage() {
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder={t('faqSearchPlaceholder')}
+              aria-label={t('faqSearchPlaceholder')}
               className="w-full rounded-xl border border-indigo-800/50 bg-indigo-900/30 pl-11 pr-4 py-3 text-white placeholder:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
@@ -106,6 +107,7 @@ export default function FAQPage() {
                     <div key={key} className="rounded-xl border border-indigo-800/50 bg-indigo-900/30">
                       <button
                         onClick={() => setOpenIdx(isOpen ? null : key)}
+                        aria-expanded={isOpen}
                         className="w-full flex items-center justify-between p-5 text-left"
                       >
                         <span className="font-medium text-white pr-4">{t(item.qKey)}</span>

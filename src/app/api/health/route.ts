@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { safeQuery } from '@/lib/db'
+import { prisma } from '@/lib/db'
 
 export const dynamic = 'force-dynamic'
 
@@ -7,11 +7,14 @@ export async function GET() {
   try {
     const startTime = Date.now()
 
-    const dbCheck = safeQuery(async () => {
-      const { prisma } = await import('@/lib/db')
-      await prisma.$queryRaw`SELECT 1`
-      return true
-    }, null)
+    const dbCheck = (async () => {
+      try {
+        await prisma.$queryRaw`SELECT 1`
+        return true
+      } catch {
+        return false
+      }
+    })()
 
     const aiCheck = (async () => {
       const apiKey = process.env.AI_API_KEY || process.env.OPENAI_API_KEY

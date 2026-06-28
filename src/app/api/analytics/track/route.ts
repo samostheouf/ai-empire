@@ -20,9 +20,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Champs requis manquants' }, { status: 400 })
     }
 
-    const safeEvent = validateString(body.event, 200) || body.event
-    const safePage = validateString(body.page, 2000) || body.page
-    const safeVisitorId = validateString(body.visitorId, 200) || body.visitorId
+    const safeEvent = validateString(body.event, 200)
+    const safePage = validateString(body.page, 2000)
+    const safeVisitorId = validateString(body.visitorId, 200)
+
+    if (!safeEvent || !safePage || !safeVisitorId) {
+      return NextResponse.json({ error: 'Données invalides' }, { status: 400 })
+    }
 
     const fiveSecondsAgo = new Date(Date.now() - 5000)
     const existingEvent = await safeQuery(async () => {

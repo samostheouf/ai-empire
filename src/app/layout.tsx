@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { I18nProvider } from '@/i18n'
 import { isRTL, type Locale } from '@/i18n/config'
-import { getLocaleFromCookies } from '@/i18n/server'
+import { defaultLocale } from '@/i18n/config'
 import {
   generateSoftwareApplicationSchema,
   generateOrganizationSchema,
@@ -97,7 +97,7 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const locale = getLocaleFromCookies()
+  const locale = defaultLocale
   const rtl = isRTL(locale)
 
   return (

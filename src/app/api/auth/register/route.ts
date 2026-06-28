@@ -4,6 +4,7 @@ import { generateApiKey } from '@/lib/utils';
 import { sendApiKeyEmail } from '@/lib/email';
 import { hashPassword } from '@/lib/auth';
 import { validateEmail, validatePassword } from '@/lib/input-validation';
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit';
 
 export async function POST(request: Request) {
   try {
@@ -23,10 +24,18 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Données invalides' }, { status: 400 });
     }
 
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown';
+    const rl = await rateLimit(`register:${ip}`, 20, 60_000);
+    const rlHeaders = getRateLimitHeaders(rl, 20);
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, { status: 429, headers: rlHeaders });
+    }
+
     const existing = await safeQuery(
       async () => {
         const { prisma } = await import('@/lib/db');
-        return prisma!.apiUser.findUnique({ where: { email: validEmail } });
+        if (!prisma) return null;
+        return prisma.apiUser.findUnique({ where: { email: validEmail } });
       },
       null
     );
@@ -34,9 +43,10 @@ export async function POST(request: Request) {
     const apiKey = existing?.apiKey || await safeQuery(
       async () => {
         const { prisma } = await import('@/lib/db');
+        if (!prisma) return null;
         const { generateApiKey: gen } = await import('@/lib/utils');
         const hashedPassword = await hashPassword(validPassword);
-        const user = await prisma!.apiUser.create({
+        const user = await prisma.apiUser.create({
           data: { email: validEmail, apiKey: gen(), password: hashedPassword, plan: 'starter', credits: 100 },
         });
         return user.apiKey;

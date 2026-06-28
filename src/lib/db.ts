@@ -28,12 +28,9 @@ export const prisma: PrismaClient = getPrismaClient() as PrismaClient
 export async function safeQuery<T>(queryFn: () => Promise<T>, fallback: T): Promise<T> {
   if (!prisma) return fallback
   try {
-    await prisma.$connect()
     return await queryFn()
   } catch (err) {
     console.error('[safeQuery] Database error:', err)
     return fallback
-  } finally {
-    prisma.$disconnect().catch(() => {})
   }
 }

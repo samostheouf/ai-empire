@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
 import { logger } from '@/lib/logger'
+import { validateId } from '@/lib/input-validation'
 
 export const dynamic = 'force-dynamic'
 
@@ -58,10 +59,11 @@ export async function GET(request: NextRequest) {
         uniqueVisitors: Number(p.unique_visitors),
       }))
 
-      const pageViewsFiltered = pageFilter
+      const validatedPage = pageFilter ? validateId(pageFilter) : null
+      const pageViewsFiltered = validatedPage
         ? await prisma.$queryRawUnsafe<{ data: string | null; visitorId: string }[]>(`
             SELECT data, "visitorId" FROM "AnalyticsEvent"
-            WHERE ${pvWhere} AND page = ${pageFilter}
+            WHERE ${pvWhere} AND page = ${validatedPage}
           `)
         : []
 

@@ -5,7 +5,9 @@ import { Check, X as XIcon, Shield, Clock, CreditCard, BadgeCheck, ArrowRight, S
 import Link from 'next/link'
 import { useI18n } from '@/i18n'
 import Breadcrumb from '@/components/Breadcrumb'
-import CountdownTimer from '@/components/CountdownTimer'
+import dynamic from 'next/dynamic'
+
+const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
 
 const COMPARISON_FEATURES = [
   { nameKey: 'pricingCompMonthlyCredits' as const, starter: 'pricingCompStarterCredits' as const, pro: 'pricingCompProCredits' as const, enterprise: 'pricingCompEnterpriseCredits' as const },
@@ -54,8 +56,6 @@ const plans = [
 
 export default function PricingPageClient() {
   const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
 
   return (
@@ -74,7 +74,7 @@ export default function PricingPageClient() {
               {t('pricingSubtitle')}. {t('pricingNoCommitment')}, {t('pricingSocialProof').split('.')[0]}.
             </p>
             <div className="mt-6 flex justify-center">
-              <CountdownTimer />
+              <HomeCountdown />
             </div>
           </div>
         </div>
@@ -132,56 +132,26 @@ export default function PricingPageClient() {
                   >
                     {t(plan.ctaKey)}
                   </Link>
-                ) : selectedPlan === plan.name ? (
-                  <form
-                    onSubmit={async (e) => {
-                      e.preventDefault()
-                      const res = await fetch('/api/auth/register', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({ email, password, plan: plan.name }),
-                      })
-                      const data = await res.json()
-                      if (data.apiKey) {
-                        window.location.href = `/dashboard?email=${encodeURIComponent(email)}`
-                      }
-                    }}
-                    className="mt-8 space-y-3"
+                ) : plan.name === 'Pro' ? (
+                  <Link
+                    href="/api/checkout/agents?plan=pro"
+                    className={`mt-8 block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all ${
+                      plan.popular
+                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/20 hover:scale-105 animate-pulse'
+                        : 'border border-white/10 bg-white/5 text-indigo-200 hover:bg-white/10 hover:scale-105'
+                    }`}
                   >
-                    <input
-                      type="email"
-                      required
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="votre@email.com"
-                      aria-label={t('pricingEmailLabel')}
-                      className="w-full px-4 py-3 border border-white/10 bg-white/5 text-white rounded-xl text-sm focus:ring-2 focus:ring-indigo-500/50 outline-none placeholder-indigo-400/40 transition-all"
-                    />
-                    <input
-                      type="password"
-                      required
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder={t('pricingPasswordPlaceholder')}
-                      aria-label={t('pricingPasswordPlaceholder')}
-                      className="w-full px-4 py-3 border border-white/10 bg-white/5 text-white rounded-xl text-sm focus:ring-2 focus:ring-indigo-500/50 outline-none placeholder-indigo-400/40 transition-all"
-                    />
-                    <button
-                      type="submit"
-                      aria-label={t(plan.ctaKey)}
-                      className="w-full rounded-xl py-3 text-center text-sm font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 hover:scale-105"
-                    >
-                      <Sparkles className="w-4 h-4" />
-                      {t(plan.ctaKey)}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setSelectedPlan(null)}
-                      className="w-full rounded-xl py-2 text-center text-xs text-indigo-400 hover:text-indigo-300 transition-colors"
-                    >
-                      {t('pricingCancel')}
-                    </button>
-                  </form>
+                    {t(plan.ctaKey)}
+                  </Link>
+                ) : plan.name === 'Enterprise' ? (
+                  <Link
+                    href="/contact"
+                    className={`mt-8 block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all ${
+                      'border border-white/10 bg-white/5 text-indigo-200 hover:bg-white/10 hover:scale-105'
+                    }`}
+                  >
+                    {t(plan.ctaKey)}
+                  </Link>
                 ) : (
                   <button
                     onClick={() => setSelectedPlan(plan.name)}

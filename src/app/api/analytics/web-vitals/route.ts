@@ -34,19 +34,21 @@ export async function POST(request: Request) {
 
     await ensureTable()
 
-    if (prisma) {
-      await safeQuery(
-        () => prisma!.webVital.create({
+    await safeQuery(
+      async () => {
+        const { prisma: db } = await import('@/lib/db')
+        if (!db) return null
+        return db.webVital.create({
           data: {
             name: body.name,
             value: Math.round(body.value * 100) / 100,
             rating: body.rating || 'unknown',
             page: body.page,
           },
-        }),
-        null
-      )
-    }
+        })
+      },
+      null
+    )
 
     return NextResponse.json({ ok: true }, {
       headers: { 'Cache-Control': 'no-store' },
@@ -89,10 +91,14 @@ export async function GET(request: Request) {
   await ensureTable()
 
   const metrics = await safeQuery(
-    () => prisma!.webVital.findMany({
-      where: { createdAt: { gte: fromTime, lte: toTime } },
-      orderBy: { createdAt: 'desc' },
-    }),
+    async () => {
+      const { prisma: db } = await import('@/lib/db')
+      if (!db) return []
+      return db.webVital.findMany({
+        where: { createdAt: { gte: fromTime, lte: toTime } },
+        orderBy: { createdAt: 'desc' },
+      })
+    },
     []
   )
 

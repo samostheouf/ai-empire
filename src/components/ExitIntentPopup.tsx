@@ -7,8 +7,10 @@ import { trackEvent } from '@/lib/analytics'
 import { useI18n } from '@/i18n'
 
 const STORAGE_KEY = 'neura_exit_popup_shown'
+const FREQ_CAP_KEY = 'neura_exit_popup_last_shown'
 const POPUP_TIMEOUT = 30000
 const SCROLL_DEPTH_THRESHOLD = 0.6
+const FREQ_CAP_HOURS = 24
 
 export default function ExitIntentPopup() {
   const [visible, setVisible] = useState(false)
@@ -23,12 +25,19 @@ export default function ExitIntentPopup() {
 
     if (sessionStorage.getItem(STORAGE_KEY)) return
 
+    const lastShown = localStorage.getItem(FREQ_CAP_KEY)
+    if (lastShown) {
+      const hoursSinceLastShown = (Date.now() - Number(lastShown)) / (1000 * 60 * 60)
+      if (hoursSinceLastShown < FREQ_CAP_HOURS) return
+    }
+
     const isMobile = window.matchMedia('(max-width: 768px)').matches
 
     const handleMouseLeave = (e: MouseEvent) => {
       if (e.clientY <= 0 && !dismissed) {
         setVisible(true)
         sessionStorage.setItem(STORAGE_KEY, '1')
+        localStorage.setItem(FREQ_CAP_KEY, String(Date.now()))
         trackEvent('cta_click', { label: 'exit_intent_trigger', location: 'mouse_leave' })
       }
     }
@@ -41,6 +50,7 @@ export default function ExitIntentPopup() {
         if (scrollPercent >= SCROLL_DEPTH_THRESHOLD) {
           setVisible(true)
           sessionStorage.setItem(STORAGE_KEY, '1')
+          localStorage.setItem(FREQ_CAP_KEY, String(Date.now()))
           trackEvent('cta_click', { label: 'exit_intent_trigger', location: 'scroll_depth' })
         }
       }
@@ -50,6 +60,7 @@ export default function ExitIntentPopup() {
       if (!dismissed && !sessionStorage.getItem(STORAGE_KEY)) {
         setVisible(true)
         sessionStorage.setItem(STORAGE_KEY, '1')
+        localStorage.setItem(FREQ_CAP_KEY, String(Date.now()))
         trackEvent('cta_click', { label: 'exit_intent_trigger', location: 'idle_timeout' })
       }
     }, POPUP_TIMEOUT)

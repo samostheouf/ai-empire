@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { ArrowRight, Sparkles, Zap, Globe, Star, Code, ExternalLink, Download, Check, Trophy, Rocket, BarChart3 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import Breadcrumb from '@/components/Breadcrumb'
+import HomeCountdown from '@/components/HomeCountdown'
+import SocialProofToast from '@/components/SocialProofToast'
 import { useI18n } from '@/i18n'
 
 const PH_WIDGET_SCRIPT = 'https://widgets.producthunt.com/widgets/frame/embed/v1/featured'
@@ -267,6 +269,72 @@ export default function ProductHuntPage() {
         </div>
       </section>
 
+      {/* Early Adopter Section */}
+      <section className="px-4 py-24 sm:px-6 lg:px-8 border-t border-indigo-800/50">
+        <div className="mx-auto max-w-4xl">
+          <div className="rounded-2xl border border-indigo-500/30 bg-gradient-to-r from-indigo-500/10 to-indigo-900/30 p-8 sm:p-12">
+            <div className="text-center mb-8">
+              <h2 className="text-3xl font-bold text-white mb-2">{t('launchEarlyTitle') || 'Offre Early Adopter'}</h2>
+              <p className="text-indigo-300">{t('launchEarlyDesc') || 'Rejoignez les premiers utilisateurs et bénéficiez de prix réduit.'}</p>
+            </div>
+            <div className="flex justify-center mb-8">
+              <HomeCountdown />
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2 max-w-2xl mx-auto">
+              <div className="rounded-xl border border-indigo-800/50 bg-indigo-950/50 p-6">
+                <h3 className="font-semibold text-white mb-1">{t('launchEarlyPro') || 'Pro Early Bird'}</h3>
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className="text-3xl font-bold text-orange-400">19€</span>
+                  <span className="text-sm text-indigo-400 line-through">27€</span>
+                  <span className="text-xs text-green-400 font-medium">-30%</span>
+                </div>
+                <p className="text-sm text-indigo-300 mt-2">{t('launchEarlyProDesc') || '10 000 crédits/mois, tous les endpoints, templates premium'}</p>
+                <code className="mt-3 block rounded-lg bg-indigo-950 p-2 text-xs text-orange-300 font-mono text-center">LANCEMENT30</code>
+              </div>
+              <div className="rounded-xl border border-indigo-800/50 bg-indigo-950/50 p-6">
+                <h3 className="font-semibold text-white mb-1">{t('launchEarlyStarter') || 'Starter Gratuit'}</h3>
+                <div className="flex items-baseline gap-2 mt-2">
+                  <span className="text-3xl font-bold text-green-400">0€</span>
+                </div>
+                <p className="text-sm text-indigo-300 mt-2">{t('launchEarlyStarterDesc') || '100 crédits/mois, 3 endpoints, sans carte bancaire'}</p>
+                <Link href="/register" className="mt-3 block w-full rounded-lg py-2 text-center border border-green-600 text-green-300 text-sm font-semibold hover:bg-green-900/30 transition-colors">
+                  {t('launchEarlyStarterCta') || 'Commencer gratuitement'}
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Section */}
+      <section className="px-4 py-16 sm:px-6 lg:px-8 border-t border-indigo-800/50">
+        <div className="mx-auto max-w-4xl">
+          <div className="grid gap-6 sm:grid-cols-3 text-center">
+            <div className="flex flex-col items-center gap-3">
+              <div className="rounded-full bg-green-500/10 border border-green-500/30 p-3">
+                <Check className="w-6 h-6 text-green-400" />
+              </div>
+              <h3 className="font-semibold text-white text-sm">{t('launchTrustGdpr') || 'Conforme RGPD'}</h3>
+              <p className="text-xs text-indigo-400">{t('launchTrustGdprDesc') || 'Données hébergées en Europe, suppression sur demande'}</p>
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <div className="rounded-full bg-blue-500/10 border border-blue-500/30 p-3">
+                <Check className="w-6 h-6 text-blue-400" />
+              </div>
+              <h3 className="font-semibold text-white text-sm">{t('launchTrustStripe') || 'Paiements Stripe'}</h3>
+              <p className="text-xs text-indigo-400">{t('launchTrustStripeDesc') || 'Visa, Mastercard, Apple Pay — sécurisé et chiffré'}</p>
+            </div>
+            <div className="flex flex-col items-center gap-3">
+              <div className="rounded-full bg-purple-500/10 border border-purple-500/30 p-3">
+                <Check className="w-6 h-6 text-purple-400" />
+              </div>
+              <h3 className="font-semibold text-white text-sm">{t('launchTrustGuarantee') || 'Garantie 30 jours'}</h3>
+              <p className="text-xs text-indigo-400">{t('launchTrustGuaranteeDesc') || 'Satisfait ou remboursé, annulation en 1 clic'}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <section className="px-4 pb-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl rounded-3xl bg-orange-500/10 border border-orange-500/30 p-12 text-center">
@@ -285,6 +353,8 @@ export default function ProductHuntPage() {
           </div>
         </div>
       </section>
+
+      <SocialProofToast />
     </div>
   )
 }

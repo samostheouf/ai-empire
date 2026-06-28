@@ -200,10 +200,10 @@ export default function CookieConsent() {
               href="/politique-confidentialite"
               className="rounded-lg border border-indigo-800 px-4 py-2 text-sm font-medium text-indigo-300 hover:bg-indigo-900/50 transition-colors"
             >
-              Politique de confidentialité
+              {t('footerConfidentialite')}
             </a>
           </div>
-          <p className="mt-3 text-center text-xs text-indigo-500">Dernière mise à jour : 24 juin 2026</p>
+          <p className="mt-3 text-center text-xs text-indigo-500">{t('cookieLastUpdate')}</p>
         </div>
       </div>
     </div>

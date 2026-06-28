@@ -9,6 +9,8 @@ function CheckoutContent() {
   const { t, locale } = useI18n();
   const searchParams = useSearchParams();
   const template = searchParams.get('template');
+  const promoCode = searchParams.get('promo') || '';
+  const referralCode = searchParams.get('ref') || '';
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -32,10 +34,12 @@ function CheckoutContent() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          templateId: `${template?.toLowerCase()}-plan`,
+          templateId: template || 'pro',
           templateTitle: plan.name,
           price: plan.price,
           email: email,
+          ...(promoCode && { promoCode }),
+          ...(referralCode && { referralCode }),
         }),
       });
 

@@ -101,7 +101,7 @@ export async function POST(request: Request) {
       tokensUsed: result.tokensUsed,
       model: result.provider,
       provider: result.provider,
-    });
+    }, { headers: { "Cache-Control": "no-store" } });
   } catch {
     await trackApiCall('/api/ai/generate', 'unknown', 0, Date.now() - startTime, false)
     return NextResponse.json({ error: 'Erreur lors de la génération' }, { status: 500 });

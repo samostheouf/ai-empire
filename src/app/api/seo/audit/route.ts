@@ -18,7 +18,7 @@ interface AuditResult {
 }
 
 function isPrivateIP(hostname: string): boolean {
-  if (/^(127\.|10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.|0\.|localhost|::1|fc|fd)/i.test(hostname)) return true
+  if (/^(127\.|10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.|169\.254\.|0\.|localhost|::1|fc|fd)/i.test(hostname)) return true
   if (/^\[::1\]$/.test(hostname)) return true
   return false
 }
@@ -42,7 +42,7 @@ async function resolveAndValidateURL(rawUrl: string): Promise<{ valid: boolean; 
   try {
     const addresses = await dns.promises.resolve4(parsed.hostname)
     for (const addr of addresses) {
-      if (/^(127\.|10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.|0\.)/.test(addr)) {
+      if (/^(127\.|10\.|172\.(1[6-9]|2\d|3[01])\.|192\.168\.|169\.254\.|0\.)/.test(addr)) {
         return { valid: false, error: 'L\'adresse résolue est privée' }
       }
     }

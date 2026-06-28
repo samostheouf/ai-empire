@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     const effectivePrompt = (typeof prompt === 'string' && prompt.trim()) || DEMO_PROMPTS[endpoint] || DEMO_PROMPTS.generate
 
     if (effectivePrompt.length > 2000) {
-      return NextResponse.json({ error: 'Prompt trop long (max 2000 caractères)' }, { status: 400 })
+      return NextResponse.json({ error: 'Prompt trop long (max 2000 caractères)' }, { status: 400, headers: { "Cache-Control": "no-store" } })
     }
 
     const result = await callAI(effectivePrompt, 300)

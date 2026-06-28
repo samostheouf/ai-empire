@@ -3,12 +3,20 @@ import { safeQuery } from '@/lib/db'
 import { validateEmail, sanitizeInput } from '@/lib/input-validation'
 import { EMAIL_FROM } from '@/lib/email'
 import { Resend } from 'resend'
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 export async function POST(request: NextRequest) {
   try {
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const rl = await rateLimit(`recovery:${ip}`, 3, 60_000)
+    const rlHeaders = getRateLimitHeaders(rl, 3)
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, { status: 429, headers: rlHeaders })
+    }
+
     const body = await request.json()
     const { email, templateId } = body
 

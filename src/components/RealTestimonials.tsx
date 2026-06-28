@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { Users, Download, Zap, TrendingUp } from 'lucide-react'
 import AnimatedCounter from './AnimatedCounter'
+import { useI18n } from '@/i18n'
 
 interface Stats {
   userCount: number
@@ -14,6 +15,8 @@ interface Stats {
 
 export default function RealTestimonials() {
   const [stats, setStats] = useState<Stats | null>(null)
+  const { t: rawT } = useI18n()
+  const t = rawT as (key: string) => string
 
   useEffect(() => {
     fetch('/api/stats')
@@ -30,28 +33,28 @@ export default function RealTestimonials() {
     {
       icon: Users,
       value: stats.userCount,
-      label: 'développeurs inscrits',
+      label: t('testimonialsDevsRegistered'),
       suffix: '',
       color: 'from-indigo-500 to-blue-500',
     },
     {
       icon: Download,
       value: stats.totalDownloads,
-      label: 'templates téléchargés',
+      label: t('testimonialsTemplatesDownloaded'),
       suffix: '',
       color: 'from-purple-500 to-pink-500',
     },
     {
       icon: Zap,
       value: stats.orderCount,
-      label: 'templates vendus',
+      label: t('testimonialsTemplatesSold'),
       suffix: '',
       color: 'from-emerald-500 to-teal-500',
     },
     {
       icon: TrendingUp,
       value: stats.totalRevenue,
-      label: 'de revenus générés',
+      label: t('testimonialsRevenueGenerated'),
       prefix: '€',
       suffix: '',
       color: 'from-amber-500 to-orange-500',
@@ -64,15 +67,15 @@ export default function RealTestimonials() {
         <div className="text-center mb-16">
           <span className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-sm text-indigo-300 mb-4 backdrop-blur-sm">
             <Users className="w-4 h-4" />
-            Preuve sociale
+            {t('testimonialsBadge')}
           </span>
           <h2 className="text-3xl font-bold text-white sm:text-4xl">
-            Une communauté qui <span className="text-gradient">croît chaque jour</span>
+            {t('realTestimonialsTitle')}
           </h2>
           <p className="mt-3 text-indigo-300/70 max-w-2xl mx-auto">
             {isEmpty
-              ? 'Rejoignez les premiers utilisateurs et faites partie de l\'aventure.'
-              : 'Des chiffres réels, en temps réel. Pas de fausses preuves sociales.'}
+              ? t('testimonialsEmpty')
+              : t('testimonialsSubtitle')}
           </p>
         </div>
 
@@ -81,7 +84,7 @@ export default function RealTestimonials() {
             <div className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-indigo-600/20 to-purple-600/20 border border-indigo-500/20 px-8 py-4">
               <Users className="w-6 h-6 text-indigo-400" />
               <span className="text-lg font-semibold text-indigo-300">
-                Rejoignez les premiers utilisateurs
+                {t('testimonialsJoinFirst')}
               </span>
             </div>
           </div>

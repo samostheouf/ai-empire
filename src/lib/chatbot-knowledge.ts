@@ -57,17 +57,17 @@ export const knowledgeBase: KnowledgeEntry[] = [
   // PRICING — specific
   {
     keywords: ['prix', 'tarif', 'coût', 'combien', 'cher', 'abonnement', 'price', 'pricing', 'cost'],
-    response: 'Nos tarifs :\n\n🟢 **Starter** — Gratuit (100 crédits/mois)\n🔵 **Pro** — 29€/mois (10 000 crédits) — Offre -30% avec code LANCEMENT30\n🟣 **Enterprise** — 99€/mois (illimité)\n\n👉 /pricing pour les détails',
+    response: 'Nos tarifs :\n\n🟢 **Starter** — Gratuit (100 crédits/mois)\n🔵 **Pro** — 19€/mois (10 000 crédits) — Offre -30% avec code LANCEMENT30\n🟣 **Enterprise** — 69€/mois (illimité)\n\n👉 /pricing pour les détails',
     category: 'pricing',
     priority: 88,
   },
 
   // FREE TIER
   {
-    keywords: ['gratuit', 'free', 'essai', 'trial', 'tester', 'essayer', 'sans payer', 'no cost'],
-    response: 'Le plan **Starter est 100% gratuit** :\n• 100 crédits/mois\n• Tous les endpoints IA\n• Documentation complète\n• Support par email\n\nInscrivez-vous sur /register — aucune carte bancaire requise.',
+    keywords: ['gratuit', 'free', 'essai', 'trial', 'tester', 'essayer', 'sans payer', 'no cost', 'free tier', 'without paying'],
+    response: 'Le plan **Starter est 100% gratuit** :\n• 100 crédits/mois\n• 3 endpoints IA (generate, SEO, code)\n• Documentation complète\n• Support par email\n\n💡 Pas de limite de temps — le tier gratuit est permanent !\n\nInscrivez-vous sur /register — aucune carte bancaire requise.',
     category: 'pricing',
-    priority: 87,
+    priority: 89,
   },
 
   // PROMO
@@ -78,10 +78,26 @@ export const knowledgeBase: KnowledgeEntry[] = [
     priority: 86,
   },
 
+  // UPGRADE
+  {
+    keywords: ['upgrade', 'pro', 'premium', 'passer pro', 'upgrader'],
+    response: '⬆️ Passez au plan **Pro** pour débloquer tout le potentiel :\n\n🔵 **19€/mois** au lieu de 27€ (-30% avec le code **LANCEMENT30**)\n• 10 000 crédits/mois\n• Tous les endpoints IA\n• Templates premium inclus\n• Support prioritaire\n• Analytics avancés\n\n👉 /pricing pour comparer les plans et utiliser votre code promo.',
+    category: 'upgrade',
+    priority: 88,
+  },
+
+  // WHY NEURAAPI
+  {
+    keywords: ['why', 'pourquoi', 'why neuraapi', 'why you', 'avantage', 'advantage', 'difference', 'vs openai'],
+    response: '🏆 Pourquoi NeuraAPI ?\n\n✅ **10 langues** — Interface et API multilingue (FR, EN, ES, DE, IT, PT, JA, ZH, KO, AR)\n✅ **Tier gratuit** — 100 crédits/mois, pas de carte bancaire\n✅ **Setup instantané** — Clé API en 30 secondes\n✅ **Templates premium** — 10 templates Next.js prêts à l\'emploi\n\n💡 **vs OpenAI direct** :\n• OpenAI = anglais uniquement, plus cher\n• NeuraAPI = 10 langues, tier gratuit, plus abordable\n\n👉 /register pour essayer gratuitement.',
+    category: 'why',
+    priority: 87,
+  },
+
   // TEMPLATES — specific
   {
-    keywords: ['template', 'templates', 'theme', 'thème', 'modèle', 'starter kit', 'nextjs template'],
-    response: 'Nos 10 templates premium :\n\n📦 **NeuraSaaS** — 97€ (SaaS Starter)\n📦 **NeuraCommerce** — 129€ (E-commerce)\n📦 **NeuraBlog** — 59€ (Blog)\n📦 **NeuraLanding** — 79€ (Landing Page)\n📦 **NeuraDashboard** — 99€ (Dashboard Admin)\n📦 **NeuraStore** — 149€ (Boutique)\n📦 **NeuraPortfolio** — 59€ (Portfolio)\n📦 **NeuraStudio** — 89€ (Agence)\n📦 **NeuraChat** — 69€ (Chat IA)\n📦 **NeuraAPI** — 199€ (Plateforme API)\n\n👉 /templates pour les détails et démos.',
+    keywords: ['template', 'templates', 'theme', 'thème', 'modèle', 'starter kit', 'nextjs template', 'boilerplate', 'starter'],
+    response: 'Nos 10 templates premium Next.js :\n\n📦 **NeuraSaaS** — 97€ (SaaS Starter)\n📦 **NeuraCommerce** — 129€ (E-commerce)\n📦 **NeuraBlog** — 59€ (Blog)\n📦 **NeuraLanding** — 79€ (Landing Page)\n📦 **NeuraDashboard** — 99€ (Dashboard Admin)\n📦 **NeuraStore** — 149€ (Boutique)\n📦 **NeuraPortfolio** — 59€ (Portfolio)\n📦 **NeuraStudio** — 89€ (Agence)\n📦 **NeuraChat** — 69€ (Chat IA)\n📦 **NeuraAPI** — 199€ (Plateforme API)\n\n💰 De 59€ à 199€ — code source complet, docs, mises à jour gratuites.\n\n👉 /templates pour les démos et détails.',
     category: 'templates',
     priority: 88,
   },
@@ -176,10 +192,10 @@ export const knowledgeBase: KnowledgeEntry[] = [
 
   // GETTING STARTED
   {
-    keywords: ['commencer', 'démarrer', 'getting started', 'premier pas', 'first step', 'première étape'],
-    response: '🚀 Guide de démarrage en 4 étapes :\n\n1️⃣ **Inscrivez-vous** sur /register (gratuit)\n2️⃣ **Récupérez votre clé API** dans le dashboard\n3️⃣ **Faites votre premier appel** :\n```\ncurl -X POST https://api.neuraapi.com/generate \\\n  -H "x-api-key: napi_votre_cle" \\\n  -d \'{"prompt":"Bonjour"}\'\n```\n4️⃣ **Explorez les templates** sur /templates\n\n👉 /guide pour le guide complet.',
+    keywords: ['start', 'commencer', 'démarrer', 'getting started', 'premier pas', 'first step', 'première étape', 'quickstart', 'how to start'],
+    response: '🚀 Commencez en 3 étapes simples :\n\n1️⃣ **Inscrivez-vous** sur /register — gratuit, sans carte bancaire\n2️⃣ **Récupérez votre clé API** instantanément dans le dashboard\n3️⃣ **Faites votre premier appel** :\n```\ncurl -X POST https://api.neuraapi.com/generate \\\n  -H "x-api-key: napi_votre_cle" \\\n  -d \'{"prompt":"Bonjour"}\'\n```\n\n✅ 100 crédits offerts dès l\'inscription\n✅ Aucune carte bancaire requise\n✅ Clé API générée instantanément\n\n👉 /register pour démarrer maintenant !',
     category: 'guide',
-    priority: 84,
+    priority: 92,
   },
 
   // COURTESY — thank you
@@ -221,7 +237,7 @@ export function findResponse(input: string, locale: string = 'fr'): string {
           const enResponses: Record<string, string> = {
             'greeting': 'Hello! Welcome to NeuraAPI. I\'m your intelligent assistant. 👋\n\nI can help you with:\n• 🤖 Our AI APIs (text, code, SEO generation)\n• 📦 Premium Next.js templates\n• 💰 Pricing & subscriptions\n• 🛠 Technical support\n\nHow can I help you?',
             'api': 'Our AI APIs are accessible via 3 endpoints:\n\n1️⃣ **POST /api/ai/generate** — Text generation\n2️⃣ **POST /api/ai/seo** — SEO-optimized content\n3️⃣ **POST /api/ai/code** — Code generation\n\n🔑 Auth: `x-api-key: napi_your_key`\n📊 Rate limits: Starter 10 req/min, Pro 100 req/min, Enterprise unlimited\n\n👉 Check /docs for full documentation.',
-            'pricing': 'Our pricing plans:\n\n🟢 **Starter** — Free (100 credits/month)\n🔵 **Pro** — €29/month (10,000 credits) — Launch offer -30% with code LAUNCH30\n🟣 **Enterprise** — €99/month (unlimited)\n\n👉 /pricing for details',
+            'pricing': 'Our pricing plans:\n\n🟢 **Starter** — Free (100 credits/month)\n🔵 **Pro** — €19/month (10,000 credits) — Launch offer -30% with code LAUNCH30\n🟣 **Enterprise** — €69/month (unlimited)\n\n👉 /pricing for details',
             'templates': 'Our 10 premium templates:\n\n📦 **NeuraSaaS** — €97 (SaaS Starter)\n📦 **NeuraCommerce** — €129 (E-commerce)\n📦 **NeuraBlog** — €59 (Blog)\n📦 **NeuraLanding** — €79 (Landing Page)\n📦 **NeuraDashboard** — €99 (Dashboard)\n\n👉 /templates for the full catalog',
             'contact': '📬 Contact us:\n• Email: contact@neuraapi.com\n• Phone: +33 6 29 41 85 24 (Mon-Fri 9am-6pm)\n• Page: /contact\n\nWe respond within 24 business hours.',
             'support': '📬 Contact us:\n• Email: contact@neuraapi.com\n• Phone: +33 6 29 41 85 24 (Mon-Fri 9am-6pm)\n• Page: /contact\n\nWe respond within 24 business hours.',
@@ -231,6 +247,9 @@ export function findResponse(input: string, locale: string = 'fr'): string {
             'monitoring': 'Our monitoring page is live at /status\n\nYou can check:\n• System health\n• API uptime\n• Response times\n\nWe use GitHub Actions for continuous health checks.',
             'bug': 'If you encounter a bug, please report it:\n\n📧 Email: samilaboulette21@gmail.com\n📝 Include: steps to reproduce, browser, expected vs actual behavior\n\nWe respond within 48 hours.',
             'referral': 'Our referral program gives you credits for every friend who signs up.\n\n1. Share your referral link\n2. Friend creates an account\n3. You both get bonus credits\n\nCheck /referral for details.',
+            'upgrade': '⬆️ Upgrade to **Pro** and unlock full potential:\n\n🔵 **€19/month** instead of €27 (-30% with code LAUNCH30)\n• 10,000 credits/month\n• All AI endpoints\n• Premium templates included\n• Priority support\n• Advanced analytics\n\n👉 /pricing to compare plans and use your promo code.',
+            'why': '🏆 Why NeuraAPI?\n\n✅ **10 languages** — Multilingual interface and API (FR, EN, ES, DE, IT, PT, JA, ZH, KO, AR)\n✅ **Free tier** — 100 credits/month, no credit card\n✅ **Instant setup** — API key in 30 seconds\n✅ **Premium templates** — 10 ready-to-use Next.js templates\n\n💡 **vs OpenAI direct**:\n• OpenAI = English only, more expensive\n• NeuraAPI = 10 languages, free tier, more affordable\n\n👉 /register to try for free.',
+            'guide': '🚀 Getting started in 3 simple steps:\n\n1️⃣ **Sign up** at /register — free, no credit card\n2️⃣ **Get your API key** instantly in the dashboard\n3️⃣ **Make your first call**:\n```\ncurl -X POST https://api.neuraapi.com/generate \\\n  -H "x-api-key: napi_your_key" \\\n  -d \'{"prompt":"Hello"}\'\n```\n\n✅ 100 free credits on signup\n✅ No credit card required\n✅ API key generated instantly\n\n👉 /register to start now!',
           }
           return enResponses[entry.category] || entry.response
         }

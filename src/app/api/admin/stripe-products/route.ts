@@ -12,10 +12,10 @@ export async function GET() {
     return NextResponse.json({
       stripeProducts: stripeProducts.data,
       templates,
-    }, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    }, { headers: { 'Cache-Control': 'private, no-store' } })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erreur inconnue'
-    return NextResponse.json({ error: message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    return NextResponse.json({ error: message }, { status: 500, headers: { 'Cache-Control': 'private, no-store' } })
   }
 }
 
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         })
       }
 
-      return NextResponse.json({ synced: results.length, products: results }, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+      return NextResponse.json({ synced: results.length, products: results }, { headers: { 'Cache-Control': 'private, no-store' } })
     }
 
     const template = await safeQuery(
@@ -69,11 +69,11 @@ export async function POST(request: Request) {
     )
 
     if (!template) {
-      return NextResponse.json({ error: 'Template introuvable.' }, { status: 404, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+      return NextResponse.json({ error: 'Template introuvable.' }, { status: 404, headers: { 'Cache-Control': 'private, no-store' } })
     }
 
     if (template.stripeProductId) {
-      return NextResponse.json({ error: 'Ce template a déjà un produit Stripe.' }, { status: 409, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+      return NextResponse.json({ error: 'Ce template a déjà un produit Stripe.' }, { status: 409, headers: { 'Cache-Control': 'private, no-store' } })
     }
 
     const product = await stripe.products.create({
@@ -100,9 +100,9 @@ export async function POST(request: Request) {
       id: template.id,
       stripeProductId: product.id,
       stripePriceId: price.id,
-    }, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    }, { headers: { 'Cache-Control': 'private, no-store' } })
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erreur inconnue'
-    return NextResponse.json({ error: message }, { status: 500, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+    return NextResponse.json({ error: message }, { status: 500, headers: { 'Cache-Control': 'private, no-store' } })
   }
 }

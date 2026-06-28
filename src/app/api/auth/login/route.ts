@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       email: user.email,
       plan: user.plan,
       credits: user.credits,
-    });
+    }, { headers: { "Cache-Control": "no-store" } });
   } catch {
     return NextResponse.json({ error: 'Erreur interne' }, { status: 500 });
   }

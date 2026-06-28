@@ -6,17 +6,28 @@ import {
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { CtaLink, LiveUserCountBadge, EndpointCopyButton } from '@/components/HomeInteractive'
+import { HeroABTest } from '@/components/client/HeroABTest'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
+import { generateMetadata as genMeta } from '@/lib/seo'
+import type { Metadata } from 'next'
 
 const FAQ = dynamic(() => import('@/components/FAQ'))
 const AnimatedCounter = dynamic(() => import('@/components/AnimatedCounter'))
 const RealTestimonials = dynamic(() => import('@/components/RealTestimonials'))
 const QuickDemo = dynamic(() => import('@/components/QuickDemo'))
 const TemplateCarousel = dynamic(() => import('@/components/HomeInteractive').then(mod => ({ default: mod.TemplateCarousel })))
-const EarlyAdopterBanner = dynamic(() => import('@/components/EarlyAdopterBanner'))
-const CountdownTimer = dynamic(() => import('@/components/CountdownTimer'))
+import EarlyAdopterBanner from '@/components/EarlyAdopterBanner'
 const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
-const ABTest = dynamic(() => import('@/components/ABTest').then(mod => ({ default: mod.ABTest })))
+
+export async function generateMetadata(): Promise<Metadata> {
+  return genMeta({
+    title: 'NeuraAPI — APIs IA & Templates Premium Next.js',
+    description: 'Intégrez l\'intelligence artificielle dans vos applications en quelques minutes. APIs IA puissantes et templates Next.js premium pour développeurs.',
+    path: '',
+    type: 'website',
+    keywords: ['APIs IA', 'Templates Next.js', 'Intelligence artificielle', 'SaaS', 'Développeurs', 'NeuraAPI', 'OpenAI', 'GPT-4'],
+  })
+}
 
 export default async function Home() {
   const locale = getLocaleFromCookies()
@@ -108,15 +119,7 @@ export default async function Home() {
               {t('heroCtaFreeTemplate')}
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </CtaLink>
-            <ABTest testName="hero_cta_register" variants={['variant_a', 'variant_b']}>
-              {(variant) => (
-                <CtaLink href="/register" label="register" location="hero" dataTrack="cta_click_register_hero" className="group relative rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-indigo-500/25 hover:shadow-indigo-500/40 transition-all flex items-center gap-2 w-full sm:w-auto justify-center animate-glow hover:scale-105">
-                  <Sparkles className="w-5 h-5" aria-hidden="true" />
-                  {variant === 'variant_b' ? 'Obtenir 100 crédits gratuits' : t('heroCtaCreateAccount')}
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
-                </CtaLink>
-              )}
-            </ABTest>
+            <HeroABTest createAccountLabel={t('heroCtaCreateAccount')} />
             <CtaLink href="/pricing" label="pricing" location="hero" dataTrack="cta_click_pricing_hero" className="rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-indigo-200 hover:bg-white/10 hover:border-white/20 transition-all w-full sm:w-auto justify-center flex items-center gap-2 backdrop-blur-sm hover:scale-105">
               {t('heroCtaViewPricing')}
             </CtaLink>

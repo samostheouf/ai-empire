@@ -121,7 +121,7 @@ export async function POST(request: Request) {
         language,
         demo: true,
         message: 'Mode démo — Aucun provider IA configuré',
-      });
+      }, { headers: { "Cache-Control": "no-store" } });
     }
 
     await safeQuery(

@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
   const alreadyProcessed = await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     const existing = await prisma.webhookEvent.findUnique({ where: { eventId: event.id } });
-    return !!existing;
+    return existing?.status === 'completed';
   }, false);
 
   if (alreadyProcessed) {
@@ -107,20 +107,24 @@ export async function POST(request: NextRequest) {
               newApiKey = apiKey;
             }
 
-            await handleReferralCommission(email, session.amount_total || 0, webhookErrors);
-            await handleAffiliateCommission(email, session.id, session.amount_total || 0, session.metadata || {});
-            await autoAssignReferralProgram(email, webhookErrors);
-            await scheduleUpsellEmail(email);
-
             return {
               skipped: false,
               template,
               newApiKey,
+              email,
+              sessionId: session.id,
+              amount: session.amount_total || 0,
+              metadata: session.metadata || {},
               downloadUrl: template?.fileUrl || `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id=${session.id}&template_id=${templateId}`,
             };
-          }, null as { skipped: true } | { skipped: false; template: { name: string; price: number } | null; newApiKey: string | null; downloadUrl: string } | null);
+          }, null as { skipped: true } | { skipped: false; template: { name: string; price: number } | null; newApiKey: string | null; email: string; sessionId: string; amount: number; metadata: Record<string, string>; downloadUrl: string } | null);
 
           if (!dbResult || dbResult.skipped) break;
+
+          await handleReferralCommission(dbResult.email, dbResult.amount, webhookErrors);
+          await handleAffiliateCommission(dbResult.email, dbResult.sessionId, dbResult.amount, dbResult.metadata);
+          await autoAssignReferralProgram(dbResult.email, webhookErrors);
+          await scheduleUpsellEmail(dbResult.email);
 
           try {
             if (dbResult.newApiKey) {
@@ -348,11 +352,8 @@ async function autoAssignReferralProgram(email: string, errors: string[]) {
     const { prisma } = await import('@/lib/db');
     const existing = await prisma.referral.findFirst({ where: { referrerEmail: email } });
     if (!existing) {
-      const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789';
-      let newCode = 'ref_';
-      for (let i = 0; i < 8; i++) {
-        newCode += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
+      const crypto = await import('crypto');
+      const newCode = 'ref_' + crypto.randomBytes(8).toString('hex');
 
       await prisma.referral.create({
         data: { code: newCode, referrerEmail: email },

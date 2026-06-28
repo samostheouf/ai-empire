@@ -1,8 +1,16 @@
 import { NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const rl = await rateLimit(`templates:${ip}`, 30, 60_000)
+    const rlHeaders = getRateLimitHeaders(rl, 30)
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, { status: 429, headers: rlHeaders })
+    }
+
     const templates = await safeQuery(
       async () => {
         const { prisma } = await import('@/lib/db')

@@ -7,6 +7,21 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url)
     const title = searchParams.get('title') || 'NeuraAPI'
     const subtitle = searchParams.get('subtitle') || 'APIs IA & Templates Premium Next.js'
+    const lang = searchParams.get('lang') || 'fr'
+
+    const badgeTexts: Record<string, string> = {
+      fr: 'Gratuit',
+      en: 'Free',
+      es: 'Gratis',
+      de: 'Kostenlos',
+      it: 'Gratuito',
+      ja: '無料',
+      ko: '무료',
+      pt: 'Grátis',
+      zh: '免费',
+      ar: 'مجاني',
+    }
+    const badgeText = badgeTexts[lang] || badgeTexts.fr
 
     return new ImageResponse(
     (
@@ -177,7 +192,7 @@ export async function GET(request: Request) {
                 fontFamily: 'sans-serif',
               }}
             >
-              Gratuit
+              {badgeText}
             </div>
           </div>
         </div>

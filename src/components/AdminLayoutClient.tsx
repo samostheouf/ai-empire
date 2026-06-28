@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { LayoutDashboard, Users, ShoppingCart, FileCode, Megaphone, Bot, BarChart3, Menu, X } from 'lucide-react'
+import { LayoutDashboard, Users, ShoppingCart, FileCode, Megaphone, Bot, BarChart3, TrendingUp, Menu, X } from 'lucide-react'
 import { useI18n } from '@/i18n'
 
 export default function AdminLayoutClient({ children }: { children: React.ReactNode }) {
@@ -24,6 +24,7 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
   const links = [
     { href: '/admin', label: t('adminNavDashboard'), icon: LayoutDashboard },
     { href: '/admin/analytics', label: t('adminNavAnalytics'), icon: BarChart3 },
+    { href: '/admin/commerce', label: t('adminNavCommerce'), icon: TrendingUp },
     { href: '/admin/users', label: t('adminNavUsers'), icon: Users },
     { href: '/admin/orders', label: t('adminNavOrders'), icon: ShoppingCart },
     { href: '/admin/templates', label: t('adminNavTemplates'), icon: FileCode },
