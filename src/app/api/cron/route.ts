@@ -197,12 +197,11 @@ async function runReEngagement(errors: string[]) {
       const userEvent = events.find(e => e.visitorId === visitorId && e.event === 'page_view')
       if (!userEvent) continue
 
-      const waitlistEntry = await prisma.waitlist.findFirst({ where: { source: 'landing' } })
-
-      const email = waitlistEntry?.email || `visitor-${visitorId.slice(0, 8)}@placeholder.local`
+      const emailFromData = userEvent.data ? JSON.parse(userEvent.data).email : null
+      if (!emailFromData || !emailFromData.includes('@')) continue
 
       await prisma.reEngagementEmail.create({
-        data: { visitorId, email },
+        data: { visitorId, email: emailFromData },
       })
 
       try {
@@ -210,7 +209,7 @@ async function runReEngagement(errors: string[]) {
         const resend = new Resend(process.env.RESEND_API_KEY)
         await resend.emails.send({
           from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
-          to: email,
+          to: emailFromData,
           subject: '🎉 Dernière chance — Votre template vous attend !',
           html: `
             <!DOCTYPE html>
@@ -234,8 +233,8 @@ async function runReEngagement(errors: string[]) {
           `,
         })
       } catch (e) {
-      errors.push('reengagement_email: ' + (e instanceof Error ? e.message : String(e)));
-    }
+        errors.push('reengagement_email: ' + (e instanceof Error ? e.message : String(e)));
+      }
       queued++
     }
 

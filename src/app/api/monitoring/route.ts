@@ -17,7 +17,8 @@ export async function GET() {
     const dbStatus: 'ok' | 'error' = dbCheck ? 'ok' : 'error'
     const aiProvider = isDemoMode() ? 'demo' : 'live'
     let status: 'healthy' | 'degraded' | 'unhealthy' = 'healthy'
-    if (dbStatus === 'error') status = 'degraded'
+    if (dbStatus === 'error') status = 'unhealthy'
+    else if (aiProvider === 'demo') status = 'degraded'
 
     return NextResponse.json({
       status,

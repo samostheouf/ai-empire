@@ -181,12 +181,12 @@ export async function POST(request: NextRequest) {
       }
 
       case 'checkout.session.expired': {
-        console.log(`[webhook] Event ${event.type} received for session ${event.data.object.id}`);
+        logger.info('webhook', `Event ${event.type} received for session ${event.data.object.id}`);
         break;
       }
 
       case 'payment_intent.payment_failed': {
-        console.log(`[webhook] Event ${event.type} received for session ${event.data.object.id}`);
+        logger.info('webhook', `Event ${event.type} received for session ${event.data.object.id}`);
         break;
       }
 
@@ -194,24 +194,14 @@ export async function POST(request: NextRequest) {
         const invoice = event.data.object;
         const customerId = invoice.customer;
         const subscriptionId = invoice.subscription;
-        console.log(`[webhook] Invoice paid: ${invoice.id} for customer ${customerId}`);
-        await safeQuery(async () => {
-          const { prisma } = await import('@/lib/db');
-          await prisma.emailLog.create({
-            data: {
-              to: invoice.customer_email || 'unknown',
-              subject: `Payment received: ${(invoice.amount_paid / 100).toFixed(2)} EUR`,
-              status: 'sent',
-            },
-          });
-        }, null);
+        logger.info('webhook', `Invoice paid: ${invoice.id} for customer ${customerId}`);
         break;
       }
 
       case 'customer.subscription.deleted': {
         const subscription = event.data.object;
         const customerId = subscription.customer;
-        console.log(`[webhook] Subscription deleted: ${subscription.id}`);
+        logger.info('webhook', `Subscription deleted: ${subscription.id}`);
         await safeQuery(async () => {
           const { prisma } = await import('@/lib/db');
           const user = await prisma.apiUser.findFirst({
@@ -229,7 +219,7 @@ export async function POST(request: NextRequest) {
 
       case 'customer.subscription.updated': {
         const subscription = event.data.object;
-        console.log(`[webhook] Subscription updated: ${subscription.id}, status: ${subscription.status}`);
+        logger.info('webhook', `Subscription updated: ${subscription.id}, status: ${subscription.status}`);
         break;
       }
 

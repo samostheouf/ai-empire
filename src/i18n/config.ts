@@ -3168,6 +3168,8 @@ export type TranslationKeys = {
   privacySection5Item1: string
   privacySection5Item2: string
   privacySection5Item3: string
+  privacySection5Item4: string
+  privacySection5Item5: string
   privacySection5Title: string
   privacySection6Content: string
   privacySection6Intro: string

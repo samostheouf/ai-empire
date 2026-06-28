@@ -8,8 +8,14 @@ import { createHash } from 'crypto'
 
 const PROMO_CODES: Record<string, { discount: number; description: string }> = {
   LANCEMENT30: { discount: 0.30, description: 'Offre de lancement -30%' },
+  LAUNCH30: { discount: 0.30, description: 'Launch discount -30%' },
   BIENVENUE20: { discount: 0.20, description: 'Bienvenue -20%' },
+  WELCOME20: { discount: 0.20, description: 'Welcome -20%' },
+  WELCOME10: { discount: 0.10, description: 'Welcome -10%' },
+  RETOUR20: { discount: 0.20, description: 'Retour -20%' },
   PARTENAIRE15: { discount: 0.15, description: 'Partenaire -15%' },
+  PRO20: { discount: 0.20, description: 'Pro plan -20%' },
+  HEBDO15: { discount: 0.15, description: 'Offre hebdomadaire -15%' },
 }
 
 const couponCache = new Map<string, string>()
@@ -82,15 +88,18 @@ export async function POST(request: NextRequest) {
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}&template_id=${templateId}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
       metadata: { templateId, email, promoCode: promoCode || '', referralCode: referralCode || '', affiliateCode: affiliateCode || '', templateName: template.name, fileUrl: template.fileUrl },
-      allow_promotion_codes: true,
     }
 
     if (template.stripePriceId) {
       sessionParams.line_items = [{ price: template.stripePriceId, quantity: 1 }]
       if (discountApplied) {
         sessionParams.discounts = [{ coupon: await createDiscountCoupon(promoCode!) }]
+        sessionParams.allow_promotion_codes = false
+      } else {
+        sessionParams.allow_promotion_codes = true
       }
     } else {
+      sessionParams.allow_promotion_codes = true
       sessionParams.line_items = [{
         price_data: {
           currency: 'eur',

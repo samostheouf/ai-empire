@@ -286,7 +286,7 @@ export function generateBreadcrumbSchema(items: BreadcrumbItem[]): object {
       {
         '@type': 'ListItem',
         position: 1,
-        name: 'Accueil',
+        name: 'Home',
         item: baseUrl,
       },
       ...items.map((item, index) => ({

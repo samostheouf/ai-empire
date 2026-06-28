@@ -3000,7 +3000,6 @@ const es: Record<string, string> = {
   url: 'URL',
   userId: 'ID de usuario',
   view: 'Ver',
-cookieLastUpdate: 'Last update: June 24, 2026',
   countdownAriaLabel: 'Launch offer countdown',
   countdownLabel: 'Launch offer ends in',
   earlyBannerCancelFree: 'Cancel anytime',

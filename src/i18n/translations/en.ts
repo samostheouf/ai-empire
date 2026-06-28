@@ -2803,6 +2803,8 @@ const en: Record<string, string> = {
   privacySection5Item1: 'Right to access your personal data',
   privacySection5Item2: 'Right to rectification and deletion',
   privacySection5Item3: 'Right to data portability',
+  privacySection5Item4: 'Right to object to processing',
+  privacySection5Item5: 'Right to data portability',
   privacySection5Title: 'Your Rights',
   privacySection6Content: 'We implement industry-standard security measures to protect your data.',
   privacySection6Intro: 'We protect your data through:',
@@ -3034,8 +3036,8 @@ const en: Record<string, string> = {
   countdownAriaLabel: 'Launch offer countdown',
   countdownLabel: 'Launch offer ends in',
 
-
-adminCommerceTitle: 'Commerce Dashboard',
+  // Commerce
+  adminCommerceTitle: 'Commerce Dashboard',
   adminCommerceSummary: 'Revenue & Conversion Overview',
   adminCommerceVisitors: 'Total Visitors',
   adminCommerceRegistrations: 'Registrations',

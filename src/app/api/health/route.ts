@@ -53,8 +53,10 @@ export async function GET(request: Request) {
     }
 
     const criticalOk = dbOk
-    let status: 'healthy' | 'degraded' | 'unhealthy' = criticalOk ? 'healthy' : 'degraded'
-    if (!dbOk) status = 'unhealthy'
+    const nonCriticalDown = aiResult.status !== 'configured' || stripeResult.status !== 'configured' || emailResult.status !== 'configured'
+    let status: 'healthy' | 'degraded' | 'unhealthy' = 'healthy'
+    if (!criticalOk) status = 'unhealthy'
+    else if (nonCriticalDown) status = 'degraded'
 
     return NextResponse.json({
       status,

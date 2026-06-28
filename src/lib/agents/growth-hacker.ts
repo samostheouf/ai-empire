@@ -1,4 +1,5 @@
 import { callAI } from '@/lib/ai'
+import { logger } from '@/lib/logger'
 
 const SYSTEM_PROMPT = `Tu es un growth hacker expert pour NeuraAPI, une plateforme de templates Next.js et APIs IA.
 Tu identifies les opportunités de croissance rapide et à faible coût.
@@ -63,7 +64,7 @@ Retourne un JSON: { strategies: [{channel, tactic, expectedImpact, effort, timel
       const jsonMatch = result.content.match(/\{[\s\S]*\}/)
       if (jsonMatch) parsed = JSON.parse(jsonMatch[0])
     } catch {
-      console.warn('Failed to parse AI growth hacker response as JSON');
+      logger.warn('growth-hacker', 'Failed to parse AI growth hacker response as JSON')
     }
 
     return {

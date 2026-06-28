@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client'
+import { logger } from '@/lib/logger'
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
@@ -30,7 +31,7 @@ export async function safeQuery<T>(queryFn: () => Promise<T>, fallback: T): Prom
   try {
     return await queryFn()
   } catch (err) {
-    console.error('[safeQuery] Database error:', err)
+    logger.error('database', 'Query failed', { error: err instanceof Error ? err.message : String(err) })
     return fallback
   }
 }

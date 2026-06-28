@@ -10,7 +10,15 @@ export async function POST(request: NextRequest) {
   try {
     const authHeader = request.headers.get('authorization')
     const adminKey = process.env.ADMIN_API_KEY
-    if (!adminKey || authHeader !== `Bearer ${adminKey}`) {
+    if (!adminKey) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+    const expected = `Bearer ${adminKey}`
+    if (!authHeader || authHeader.length !== expected.length) {
+      return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
+    }
+    const { default: crypto } = await import('crypto')
+    if (!crypto.timingSafeEqual(Buffer.from(authHeader), Buffer.from(expected))) {
       return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
     }
 

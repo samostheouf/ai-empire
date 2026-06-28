@@ -4,6 +4,7 @@ import { safeQuery } from '@/lib/db'
 import { validateEmail, validateString } from '@/lib/input-validation'
 import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 import { createHash } from 'crypto'
+import { logger } from '@/lib/logger'
 
 const AGENT_PLANS = {
   pro: {
@@ -97,7 +98,7 @@ export async function POST(request: NextRequest) {
           })
         }, null)
       } catch (productError) {
-        console.error('Failed to create Stripe product:', productError)
+        logger.error('checkout-agents', 'Failed to create Stripe product', { error: productError instanceof Error ? productError.message : String(productError) })
         throw new Error('Impossible de créer le produit Stripe')
       }
     }
@@ -137,7 +138,7 @@ export async function POST(request: NextRequest) {
       sessionId: session.id,
     })
   } catch (error) {
-    console.error('Agent checkout error:', error)
+    logger.error('checkout-agents', 'Agent checkout error', { error: error instanceof Error ? error.message : String(error) })
     return NextResponse.json(
       { error: 'Erreur lors de la création de la session de paiement' },
       { status: 500 }

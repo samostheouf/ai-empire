@@ -37,7 +37,7 @@ async function findUpsellCandidates() {
     const { prisma } = await import('@/lib/db')
 
     const freeUsers = await prisma.apiUser.findMany({
-      where: { plan: 'free' },
+      where: { plan: 'starter' },
       select: { id: true, email: true },
     })
 
@@ -120,9 +120,9 @@ async function sendUpsellEmail(email: string, apiCalls: number) {
 
               <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
                 <p style="color: #166534; margin: 0 0 8px;"><strong>Calculator ROI :</strong></p>
-                <p style="color: #166534; margin: 0 0 4px;">💰 Investissement plan Pro : 99€/mois</p>
+                <p style="color: #166534; margin: 0 0 4px;">💰 Investissement plan Pro : 49€/mois</p>
                 <p style="color: #166534; margin: 0 0 4px;">📈 Valeur générée : ${potentialRevenue}€/mois</p>
-                <p style="color: #166534; margin: 0;">✅ ROI : ${potentialRevenue > 0 ? Math.round((potentialRevenue / 99) * 100) : 0}%</p>
+                <p style="color: #166534; margin: 0;">✅ ROI : ${potentialRevenue > 0 ? Math.round((potentialRevenue / 49) * 100) : 0}%</p>
               </div>
 
               <div style="background: #fffbeb; border: 1px solid #fde68a; border-radius: 8px; padding: 16px; margin-bottom: 24px;">

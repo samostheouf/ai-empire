@@ -2922,6 +2922,8 @@ const fr: Record<string, string> = {
   privacySection5Item1: 'Droit d\'accès à vos données',
   privacySection5Item2: 'Droit de rectification',
   privacySection5Item3: 'Droit de suppression',
+  privacySection5Item4: 'Droit d\'opposition au traitement',
+  privacySection5Item5: 'Droit à la portabilité des données',
   privacySection5Title: 'Vos droits RGPD',
   privacySection6Content: 'Nous prenons la sécurité de vos données au sérieux.',
   privacySection6Intro: 'Mesures de protection :',
@@ -3044,8 +3046,8 @@ const fr: Record<string, string> = {
   countdownAriaLabel: 'Compte à rebours offre de lancement',
   countdownLabel: 'Offre de lancement dans',
 
-
-adminCommerceTitle: 'Tableau de bord commercial',
+  // Commerce
+  adminCommerceTitle: 'Tableau de bord commercial',
   adminCommerceSummary: 'Vue d\'ensemble revenus et conversions',
   adminCommerceVisitors: 'Visiteurs totaux',
   adminCommerceRegistrations: 'Inscriptions',

@@ -3,9 +3,6 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
-const isProd = process.env.NODE_ENV === 'production'
-const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
-
 const securityHeaders = [
   { key: 'X-Content-Type-Options', value: 'nosniff' },
   { key: 'X-Frame-Options', value: 'DENY' },
@@ -67,6 +64,45 @@ const nextConfig = {
           { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate' },
           { key: 'Pragma', value: 'no-cache' },
         ],
+      },
+      {
+        source: '/templates',
+        headers: [
+          ...securityHeaders,
+          { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=600' },
+        ],
+      },
+      {
+        source: '/pricing',
+        headers: [
+          ...securityHeaders,
+          { key: 'Cache-Control', value: 'public, s-maxage=600, stale-while-revalidate=3600' },
+        ],
+      },
+      {
+        source: '/docs',
+        headers: [
+          ...securityHeaders,
+          { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=600' },
+        ],
+      },
+      {
+        source: '/about',
+        headers: [
+          ...securityHeaders,
+          { key: 'Cache-Control', value: 'public, s-maxage=600, stale-while-revalidate=3600' },
+        ],
+      },
+      {
+        source: '/guide',
+        headers: [
+          ...securityHeaders,
+          { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=600' },
+        ],
+      },
+      {
+        source: '/(?!api/|admin/|_next/).*',
+        headers: securityHeaders,
       },
       {
         source: '/(.*)',
