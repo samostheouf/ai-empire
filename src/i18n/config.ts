@@ -3263,6 +3263,22 @@ export type TranslationKeys = {
   // Exit Intent Popup
   exitEmailAria: string
 
+  // StatusContent
+  statusOperational: string
+  statusDemoMode: string
+  statusError: string
+  statusInfo: string
+  statusEnvironment: string
+
+  // TemplateGrid
+  templateGridSearch: string
+  templateGridLoading: string
+  templateGridEmpty: string
+  templateGridHideCode: string
+  templateGridShowCode: string
+  templateGridCopyCode: string
+  templateGridLiveDemo: string
+
   adminCommerceTitle: string
   adminCommerceSummary: string
   adminCommerceVisitors: string
@@ -3289,4 +3305,23 @@ export type TranslationKeys = {
   launchTrustGuaranteeDesc: string
   launchTrustStripe: string
   launchTrustStripeDesc: string
+
+  // ErrorBoundary
+  errorOccurred: string
+  errorHome: string
+  errorContactSupport: string
+  errorUnknownError: string
+
+  // Chatbot additional
+  chatYourMessage: string
+  chatMessagesLogAria: string
+  chatAskQuestion: string
+  chatErrorApi: string
+  chatErrorTechnical: string
+
+  // CookieConsent aria
+  cookieCustomizeAria: string
+  cookieSaveAria: string
+  cookieAcceptAllAria: string
+  cookieRejectAllAria: string
 }

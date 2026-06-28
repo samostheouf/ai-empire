@@ -5,6 +5,7 @@ import { parseJsonField, formatPrice } from '@/lib/utils'
 import { Search, SlidersHorizontal, Code, FileCode, Box, ExternalLink, Copy, Check, Tag } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useI18n } from '@/i18n'
 
 interface Template {
   id: string
@@ -61,6 +62,7 @@ const FILE_COUNTS: Record<string, { files: number; components: number; size: str
 }
 
 export default function TemplateGrid() {
+  const { t } = useI18n()
   const [templates, setTemplates] = useState<Template[]>([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -118,10 +120,10 @@ export default function TemplateGrid() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-indigo-400/50" />
           <input
             type="text"
-            placeholder="Rechercher un template..."
+            placeholder={t('templateGridSearch')}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            aria-label="Rechercher un template"
+            aria-label={t('templateGridSearch')}
             className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-indigo-400/40 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-transparent transition-all backdrop-blur-sm"
           />
         </div>
@@ -146,11 +148,11 @@ export default function TemplateGrid() {
       {loading ? (
         <div className="text-center py-12">
           <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-indigo-300/60">Chargement des templates...</p>
+          <p className="text-indigo-300/60">{t('templateGridLoading')}</p>
         </div>
       ) : filteredTemplates.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-indigo-300/60">Aucun template ne correspond à votre recherche.</p>
+          <p className="text-indigo-300/60">{t('templateGridEmpty')}</p>
         </div>
       ) : (
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
@@ -220,11 +222,11 @@ export default function TemplateGrid() {
                   {CODE_PREVIEWS[template.slug] && (
                   <button
                     onClick={() => setExpandedSlug(isExpanded ? null : template.slug)}
-                    aria-label={isExpanded ? 'Masquer le code' : 'Aperçu du code'}
+                    aria-label={isExpanded ? t('templateGridHideCode') : t('templateGridShowCode')}
                     className="mt-3 flex items-center gap-1.5 text-xs font-medium text-indigo-400 hover:text-indigo-300 transition-colors"
                   >
                       <Code className="w-3.5 h-3.5" />
-                      {isExpanded ? 'Masquer le code' : 'Aperçu du code'}
+                      {isExpanded ? t('templateGridHideCode') : t('templateGridShowCode')}
                     </button>
                   )}
 
@@ -236,7 +238,7 @@ export default function TemplateGrid() {
                         </span>
                          <button
                            onClick={() => copyCode(template.slug)}
-                           aria-label="Copier le code"
+                           aria-label={t('templateGridCopyCode')}
                            className="text-indigo-400/50 hover:text-white transition-colors"
                          >
                           {copiedSlug === template.slug ? <Check className="w-3.5 h-3.5 text-green-400" /> : <Copy className="w-3.5 h-3.5" />}
@@ -259,7 +261,7 @@ export default function TemplateGrid() {
                       href={`https://ai-empire-steel.vercel.app/templates/${template.slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      aria-label={`Voir la démo live de ${template.name}`}
+                       aria-label={t('templateGridLiveDemo').replace('{name}', template.name)}
                       className="rounded-lg border border-white/10 bg-white/5 px-3 py-2.5 text-sm text-indigo-300 hover:bg-white/10 hover:text-white transition-all"
                     >
                       <ExternalLink className="w-4 h-4" />

@@ -3045,8 +3045,24 @@ adminCommerceTitle: 'Commerce Dashboard',
   adminCommerceRevenue: 'Total Revenue',
   adminCommerceFunnel: 'Visitor → Registration → Payment',
   adminCommerceAvgRevenuePerUser: 'Avg Revenue Per User',
-  adminCommerceAvgCallsPerUser: 'Avg API Calls Per User'
-,
+  adminCommerceAvgCallsPerUser: 'Avg API Calls Per User',
+
+  // StatusContent
+  statusOperational: 'Operational',
+  statusDemoMode: 'Demo mode',
+  statusError: 'Error',
+  statusInfo: 'Information',
+  statusEnvironment: 'Environment',
+
+  // TemplateGrid
+  templateGridSearch: 'Search templates...',
+  templateGridLoading: 'Loading templates...',
+  templateGridEmpty: 'No templates match your search.',
+  templateGridHideCode: 'Hide code',
+  templateGridShowCode: 'Code preview',
+  templateGridCopyCode: 'Copy code',
+  templateGridLiveDemo: 'View live demo of {name}',
+
   launchEarlyDesc: 'launchEarlyDesc',
   launchEarlyTitle: 'launchEarlyTitle',
   launchTrustGdpr: 'launchTrustGdpr',

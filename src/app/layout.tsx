@@ -11,6 +11,7 @@ import {
   generateWebSiteSchema,
   type FAQItem,
 } from '@/lib/seo'
+import { BASE_URL } from '@/lib/config'
 import dynamic from 'next/dynamic'
 
 const Header = dynamic(() => import('@/components/Header'))
@@ -29,8 +30,6 @@ import ErrorBoundary from '@/components/ErrorBoundary'
 
 const inter = Inter({ subsets: ['latin'], display: 'swap' })
 
-const baseUrl = 'https://ai-empire-steel.vercel.app'
-
 export const metadata: Metadata = {
   title: {
     default: 'NeuraAPI — APIs IA & Templates Premium Next.js',
@@ -45,13 +44,13 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'NeuraAPI — APIs IA & Templates Premium Next.js',
     description: "Intégrez l'IA dans vos apps en minutes. Texte, code, SEO. Templates premium. Gratuit pour commencer.",
-    url: baseUrl,
+    url: BASE_URL,
     siteName: 'NeuraAPI',
     locale: 'fr_FR',
     type: 'website',
     images: [
       {
-        url: `${baseUrl}/api/og?title=NeuraAPI&subtitle=APIs+IA+%26+Templates+Premium+Next.js`,
+        url: `${BASE_URL}/api/og?title=NeuraAPI&subtitle=APIs+IA+%26+Templates+Premium+Next.js`,
         width: 1200,
         height: 630,
         alt: 'NeuraAPI — APIs IA & Templates Premium Next.js',
@@ -62,14 +61,14 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'NeuraAPI — APIs IA & Templates Premium Next.js',
     description: "Intégrez l'IA dans vos apps en minutes. Gratuit pour commencer.",
-    images: [`${baseUrl}/api/og?title=NeuraAPI&subtitle=APIs+IA+%26+Templates+Premium+Next.js`],
+    images: [`${BASE_URL}/api/og?title=NeuraAPI&subtitle=APIs+IA+%26+Templates+Premium+Next.js`],
   },
   icons: {
     icon: '/logo.jpg',
     apple: '/logo.jpg',
   },
   alternates: {
-    canonical: baseUrl,
+    canonical: BASE_URL,
     languages: {
       'fr-FR': '/',
       'en-US': '/en',

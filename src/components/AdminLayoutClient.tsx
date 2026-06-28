@@ -35,7 +35,7 @@ export default function AdminLayoutClient({ children }: { children: React.ReactN
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     if (password) {
-      localStorage.setItem('neura_admin_auth', 'true')
+      localStorage.setItem('neura_admin_auth', btoa(Date.now().toString()))
       setAuthenticated(true)
     } else {
       setError(t('adminPasswordRequired'))

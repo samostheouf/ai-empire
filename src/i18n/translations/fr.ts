@@ -3055,8 +3055,24 @@ adminCommerceTitle: 'Tableau de bord commercial',
   adminCommerceRevenue: 'Revenu total',
   adminCommerceFunnel: 'Visiteur → Inscription → Paiement',
   adminCommerceAvgRevenuePerUser: 'Revenu moyen par utilisateur',
-  adminCommerceAvgCallsPerUser: 'Avg API Calls Per User'
-,
+  adminCommerceAvgCallsPerUser: 'Appels API moyens par utilisateur',
+
+  // StatusContent
+  statusOperational: 'Opérationnel',
+  statusDemoMode: 'Mode démo',
+  statusError: 'Erreur',
+  statusInfo: 'Informations',
+  statusEnvironment: 'Environnement',
+
+  // TemplateGrid
+  templateGridSearch: 'Rechercher un template...',
+  templateGridLoading: 'Chargement des templates...',
+  templateGridEmpty: 'Aucun template ne correspond à votre recherche.',
+  templateGridHideCode: 'Masquer le code',
+  templateGridShowCode: 'Aperçu du code',
+  templateGridCopyCode: 'Copier le code',
+  templateGridLiveDemo: 'Voir la démo live de {name}',
+
   launchEarlyDesc: 'launchEarlyDesc',
   launchEarlyTitle: 'launchEarlyTitle',
   launchTrustGdpr: 'launchTrustGdpr',

@@ -37,8 +37,8 @@ export function trackEvent({ action, category, label, value }: AnalyticsEvent): 
 }
 
 export function trackPageView(url: string): void {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('config', process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX', {
+  if (typeof window !== 'undefined' && window.gtag && process.env.NEXT_PUBLIC_GA_ID) {
+    window.gtag('config', process.env.NEXT_PUBLIC_GA_ID, {
       page_path: url,
     })
   }
@@ -125,8 +125,11 @@ export default function Analytics() {
   }, [pathname])
 
   useEffect(() => {
+    const gaId = process.env.NEXT_PUBLIC_GA_ID
+    if (!gaId) return
+
     const script = document.createElement('script')
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'}`
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${gaId}`
     script.async = true
     document.head.appendChild(script)
 
@@ -135,7 +138,7 @@ export default function Analytics() {
       window.dataLayer!.push(args)
     }
     window.gtag('js', new Date())
-    window.gtag('config', process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX')
+    window.gtag('config', gaId)
 
     return () => {
       document.head.removeChild(script)

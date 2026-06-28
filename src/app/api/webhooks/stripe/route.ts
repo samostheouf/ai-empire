@@ -180,10 +180,12 @@ export async function POST(request: NextRequest) {
       }
 
       case 'checkout.session.expired': {
+        console.log(`[webhook] Event ${event.type} received for session ${event.data.object.id}`);
         break;
       }
 
       case 'payment_intent.payment_failed': {
+        console.log(`[webhook] Event ${event.type} received for session ${event.data.object.id}`);
         break;
       }
 

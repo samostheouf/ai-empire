@@ -66,7 +66,7 @@ export default function CookieConsent() {
               <button
                 onClick={() => setShowDetails(!showDetails)}
                 aria-expanded={showDetails}
-                aria-label="Personnaliser les cookies"
+                aria-label={t('cookieCustomizeAria')}
                 className="mt-3 text-sm text-indigo-400 hover:text-white transition-colors underline"
               >
                 {showDetails ? t('cookieHideDetails') : t('cookieCustomize')}
@@ -170,7 +170,7 @@ export default function CookieConsent() {
             {showDetails ? (
               <button
                 onClick={saveCustom}
-                aria-label="Enregistrer les préférences"
+                aria-label={t('cookieSaveAria')}
                 className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors"
               >
                 {t('cookieSave')}
@@ -178,14 +178,14 @@ export default function CookieConsent() {
             ) : null}
             <button
               onClick={acceptAll}
-              aria-label="Accepter tous les cookies"
+              aria-label={t('cookieAcceptAllAria')}
               className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-500 transition-colors"
             >
               {t('cookieAcceptAll')}
             </button>
             <button
               onClick={rejectAll}
-              aria-label="Refuser les cookies optionnels"
+              aria-label={t('cookieRejectAllAria')}
               className="rounded-lg border border-indigo-600 px-4 py-2 text-sm font-medium text-indigo-200 hover:bg-indigo-900/50 transition-colors"
             >
               {t('cookieRejectAll')}

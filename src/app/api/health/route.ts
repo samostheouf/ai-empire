@@ -1,10 +1,18 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
+import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const rl = await rateLimit(`health:${ip}`, 60, 60_000)
+    const rlHeaders = getRateLimitHeaders(rl, 60)
+    if (!rl.allowed) {
+      return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, { status: 429, headers: rlHeaders })
+    }
+
     const startTime = Date.now()
 
     const dbCheck = (async () => {

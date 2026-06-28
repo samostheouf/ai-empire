@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { Activity, CheckCircle, AlertTriangle, XCircle, RefreshCw } from 'lucide-react'
+import { useI18n } from '@/i18n'
 
 interface MonitoringData {
   status: string
@@ -33,6 +34,7 @@ function makeFallbackData(): MonitoringData {
 }
 
 export default function StatusContent() {
+  const { t } = useI18n()
   const [data, setData] = useState<MonitoringData | null>(null)
   const [loading, setLoading] = useState(true)
   const [lastChecked, setLastChecked] = useState<Date | null>(null)
@@ -106,20 +108,20 @@ export default function StatusContent() {
             <span className={`text-sm font-medium ${
               service.status === 'ok' ? 'text-green-400' : service.status === 'demo' ? 'text-yellow-400' : 'text-red-400'
             }`}>
-              {service.status === 'ok' ? 'Opérationnel' : service.status === 'demo' ? 'Mode démo' : 'Erreur'}
+              {service.status === 'ok' ? t('statusOperational') : service.status === 'demo' ? t('statusDemoMode') : t('statusError')}
             </span>
           </div>
         ))}
 
         <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/30 p-5 mt-6">
-          <h2 className="font-semibold text-white mb-3">Informations</h2>
+          <h2 className="font-semibold text-white mb-3">{t('statusInfo')}</h2>
           <div className="grid grid-cols-2 gap-4 text-sm">
             <div>
               <p className="text-indigo-400">Version</p>
               <p className="text-white">{data?.version || '—'}</p>
             </div>
             <div>
-              <p className="text-indigo-400">Environnement</p>
+              <p className="text-indigo-400">{t('statusEnvironment')}</p>
               <p className="text-white">{data?.environment || '—'}</p>
             </div>
           </div>

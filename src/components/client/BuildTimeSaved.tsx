@@ -3,6 +3,12 @@
 import { useState, useRef, useCallback } from 'react'
 import { Clock, TrendingUp, Users } from 'lucide-react'
 
+const colorMap: Record<string, { border: string; bg: string; text: string }> = {
+  green: { border: 'hover:border-green-500/30', bg: 'bg-green-500/10', text: 'text-green-400' },
+  blue: { border: 'hover:border-blue-500/30', bg: 'bg-blue-500/10', text: 'text-blue-400' },
+  purple: { border: 'hover:border-purple-500/30', bg: 'bg-purple-500/10', text: 'text-purple-400' },
+}
+
 function AnimatedCounter({
   end,
   duration = 2000,
@@ -18,6 +24,7 @@ function AnimatedCounter({
 }) {
   const [count, setCount] = useState(0)
   const hasAnimated = useRef(false)
+  const colors = colorMap[color] || colorMap.blue
 
   const nodeRef = useCallback(
     (node: HTMLDivElement | null) => {
@@ -46,9 +53,9 @@ function AnimatedCounter({
   )
 
   return (
-    <div ref={nodeRef} className={`glass-card rounded-2xl p-6 text-center group hover:border-${color}-500/30 transition-all`}>
-      <div className={`w-12 h-12 rounded-xl bg-${color}-500/10 flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
-        <Icon className={`w-6 h-6 text-${color}-400`} />
+    <div ref={nodeRef} className={`glass-card rounded-2xl p-6 text-center group ${colors.border} transition-all`}>
+      <div className={`w-12 h-12 rounded-xl ${colors.bg} flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform`}>
+        <Icon className={`w-6 h-6 ${colors.text}`} />
       </div>
       <p className="text-4xl font-bold text-white">{count.toLocaleString()}+</p>
       <p className="text-sm text-indigo-300/60 mt-1">{label}</p>

@@ -68,7 +68,7 @@ export default function Chatbot() {
       setMessages([{
         id: crypto.randomUUID(),
         role: 'bot',
-        content: locale === 'fr' ? 'Bonjour ! Je suis l\'assistant NeuraAPI. 👋\n\nJe peux vous aider avec :\n• Nos APIs IA\n• Templates premium\n• Tarifs et abonnements\n• Support technique\n\nComment puis-je vous aider ?' : 'Hello! I\'m the NeuraAPI assistant. 👋\n\nI can help you with:\n• Our AI APIs\n• Premium templates\n• Pricing & plans\n• Technical support\n\nHow can I help you?',
+        content: t('chatWelcome'),
         timestamp: new Date(),
       }])
     }
@@ -107,14 +107,14 @@ export default function Chatbot() {
       setMessages(prev => [...prev, {
         id: crypto.randomUUID(),
         role: 'bot',
-        content: data.content || (locale === 'fr' ? 'Désolé, une erreur est survenue.' : 'Sorry, an error occurred.'),
+        content: data.content || t('chatErrorApi'),
         timestamp: new Date(),
       }])
     } catch {
       setMessages(prev => [...prev, {
         id: crypto.randomUUID(),
         role: 'bot',
-        content: locale === 'fr' ? 'Désolé, je rencontre un problème technique. Réessayez dans quelques instants.' : 'Sorry, I\'m experiencing a technical issue. Please try again shortly.',
+        content: t('chatErrorTechnical'),
         timestamp: new Date(),
       }])
     } finally {
@@ -134,15 +134,15 @@ export default function Chatbot() {
                 </div>
                 <div>
                   <span className="text-white font-semibold text-sm block">NeuraAPI Assistant</span>
-                  <span className="text-indigo-200 text-xs">{locale === 'fr' ? 'En ligne' : 'Online'}</span>
+                  <span className="text-indigo-200 text-xs">{t('chatOnline')}</span>
                 </div>
               </div>
-              <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white transition-colors p-1" aria-label={locale === 'fr' ? 'Fermer le chat' : 'Close chat'}>
+              <button onClick={() => setIsOpen(false)} className="text-white/80 hover:text-white transition-colors p-1" aria-label={t('chatClose')}>
                 <X className="w-5 h-5" aria-hidden="true" />
               </button>
             </div>
 
-            <div className="flex-1 overflow-y-auto p-4 space-y-4" role="log" aria-label={locale === 'fr' ? 'Messages du chat' : 'Chat messages'} aria-live="polite">
+            <div className="flex-1 overflow-y-auto p-4 space-y-4" role="log" aria-label={t('chatMessagesLogAria')} aria-live="polite">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] rounded-2xl px-4 py-3 ${
@@ -155,7 +155,7 @@ export default function Chatbot() {
                       {msg.role === 'user' && <User className="w-4 h-4 mt-0.5 text-white flex-shrink-0" aria-hidden="true" />}
                       <p
                         className="text-sm leading-relaxed"
-                        dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }}
+                        dangerouslySetInnerHTML={{ __html: sanitize(renderMarkdown(msg.content)) }}
                       />
                     </div>
                   </div>
@@ -178,7 +178,7 @@ export default function Chatbot() {
             <div className="border-t border-gray-200 p-3 flex-shrink-0">
               <div className="flex gap-2">
                 <label htmlFor="chatbot-input" className="sr-only">
-                  {locale === 'fr' ? 'Votre message' : 'Your message'}
+                  {t('chatYourMessage')}
                 </label>
                 <input
                   id="chatbot-input"
@@ -186,7 +186,7 @@ export default function Chatbot() {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && handleSend()}
-                  placeholder={locale === "fr" ? "Posez votre question..." : "Ask your question..."}
+                  placeholder={t('chatAskQuestion')}
                   className="flex-1 px-4 py-2.5 border border-gray-300 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none"
                   disabled={isTyping}
                 />
@@ -194,7 +194,7 @@ export default function Chatbot() {
                   onClick={() => handleSend()}
                   disabled={!input.trim() || isTyping}
                   className="p-2.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 disabled:opacity-50 transition-colors flex-shrink-0"
-                  aria-label={locale === 'fr' ? 'Envoyer' : 'Send'}
+                  aria-label={t('chatSendAria')}
                 >
                   <Send className="w-4 h-4" aria-hidden="true" />
                 </button>
@@ -207,7 +207,7 @@ export default function Chatbot() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed bottom-6 right-6 z-50 bg-indigo-600 text-white p-4 rounded-full shadow-lg hover:bg-indigo-700 transition-all hover:scale-105 active:scale-95"
-        aria-label={isOpen ? 'Fermer le chat' : 'Ouvrir le chat'}
+        aria-label={isOpen ? t('chatClose') : t('chatOpen')}
       >
         {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
       </button>
