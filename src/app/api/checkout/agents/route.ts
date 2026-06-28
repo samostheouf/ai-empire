@@ -3,6 +3,7 @@ import { stripe } from '@/lib/stripe'
 import { safeQuery } from '@/lib/db'
 import { validateEmail, validateString } from '@/lib/input-validation'
 import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
+import { createHash } from 'crypto'
 
 const AGENT_PLANS = {
   pro: {
@@ -60,40 +61,45 @@ export async function POST(request: NextRequest) {
     if (existingProduct?.stripePriceId) {
       stripePriceId = existingProduct.stripePriceId
     } else {
-      const product = await stripe.products.create({
-        name: selectedPlan.name,
-        description: selectedPlan.description,
-        metadata: { type: 'agent-subscription', plan },
-      })
-
-      const price = await stripe.prices.create({
-        product: product.id,
-        unit_amount: selectedPlan.price,
-        currency: 'eur',
-        recurring: { interval: 'month' },
-      })
-
-      stripePriceId = price.id
-
-      await safeQuery(async () => {
-        const { prisma } = await import('@/lib/db')
-        return prisma.template.create({
-          data: {
-            name: selectedPlan.name,
-            slug: `agent-${plan}`,
-            description: selectedPlan.description,
-            price: selectedPlan.price,
-            category: 'agents',
-            tags: 'ai,agents,subscription',
-            previewUrl: '/agents',
-            screenshot: '/logo.jpg',
-            features: JSON.stringify([`${selectedPlan.agents} agents`, `${selectedPlan.conversations} conversations/mois`]),
-            fileUrl: '',
-            stripeProductId: product.id,
-            stripePriceId: price.id,
-          },
+      try {
+        const product = await stripe.products.create({
+          name: selectedPlan.name,
+          description: selectedPlan.description,
+          metadata: { type: 'agent-subscription', plan },
         })
-      }, null)
+
+        const price = await stripe.prices.create({
+          product: product.id,
+          unit_amount: selectedPlan.price,
+          currency: 'eur',
+          recurring: { interval: 'month' },
+        })
+
+        stripePriceId = price.id
+
+        await safeQuery(async () => {
+          const { prisma } = await import('@/lib/db')
+          return prisma.template.create({
+            data: {
+              name: selectedPlan.name,
+              slug: `agent-${plan}`,
+              description: selectedPlan.description,
+              price: selectedPlan.price,
+              category: 'agents',
+              tags: 'ai,agents,subscription',
+              previewUrl: '/agents',
+              screenshot: '/logo.jpg',
+              features: JSON.stringify([`${selectedPlan.agents} agents`, `${selectedPlan.conversations} conversations/mois`]),
+              fileUrl: '',
+              stripeProductId: product.id,
+              stripePriceId: price.id,
+            },
+          })
+        }, null)
+      } catch (productError) {
+        console.error('Failed to create Stripe product:', productError)
+        throw new Error('Impossible de créer le produit Stripe')
+      }
     }
 
     const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
@@ -105,19 +111,25 @@ export async function POST(request: NextRequest) {
       success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${appUrl}/agents`,
       metadata: { plan, type: 'agent-subscription' },
+      allow_promotion_codes: true,
     }
 
     if (promoCode) {
-      const promoCodes = await stripe.promotionCodes.list({ limit: 100 })
-      const validPromo = promoCodes.data.find(
-        (pc) => pc.code.toUpperCase() === promoCode.toUpperCase() && pc.active
-      )
-      if (validPromo) {
+      const promoCodes = await stripe.promotionCodes.list({ code: promoCode.toUpperCase(), limit: 1 })
+      const validPromo = promoCodes.data[0]
+      if (validPromo?.active) {
         sessionParams.discounts = [{ promotion_code: validPromo.id }]
       }
     }
 
-    const session = await stripe.checkout.sessions.create(sessionParams as never)
+    const idempotencyKey = createHash('sha256')
+      .update(`${email}:${plan}:${promoCode || ''}`)
+      .digest('hex')
+
+    const session = await stripe.checkout.sessions.create(
+      sessionParams as never,
+      { idempotencyKey }
+    )
 
     return NextResponse.json({
       success: true,

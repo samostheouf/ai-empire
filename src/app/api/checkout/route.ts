@@ -12,6 +12,8 @@ const PROMO_CODES: Record<string, { discount: number; description: string }> = {
   PARTENAIRE15: { discount: 0.15, description: 'Partenaire -15%' },
 }
 
+const couponCache = new Map<string, string>()
+
 export async function POST(request: NextRequest) {
   try {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
@@ -80,6 +82,7 @@ export async function POST(request: NextRequest) {
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}&template_id=${templateId}`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
       metadata: { templateId, email, promoCode: promoCode || '', referralCode: referralCode || '', affiliateCode: affiliateCode || '', templateName: template.name, fileUrl: template.fileUrl },
+      allow_promotion_codes: true,
     }
 
     if (template.stripePriceId) {
@@ -121,12 +124,17 @@ export async function POST(request: NextRequest) {
 }
 
 async function createDiscountCoupon(code: string): Promise<string> {
-  const promo = PROMO_CODES[code.toUpperCase()]
+  const upperCode = code.toUpperCase()
+  const cached = couponCache.get(upperCode)
+  if (cached) return cached
+
+  const promo = PROMO_CODES[upperCode]
   if (!promo) return ''
   const coupon = await stripe.coupons.create({
     percent_off: promo.discount * 100,
     duration: 'once',
     name: promo.description,
   })
+  couponCache.set(upperCode, coupon.id)
   return coupon.id
 }

@@ -102,6 +102,7 @@ export async function POST(request: NextRequest) {
                   apiKey,
                   plan: 'starter',
                   credits: 100,
+                  stripeId: session.customer as string,
                 },
               });
               newApiKey = apiKey;
@@ -186,6 +187,49 @@ export async function POST(request: NextRequest) {
 
       case 'payment_intent.payment_failed': {
         console.log(`[webhook] Event ${event.type} received for session ${event.data.object.id}`);
+        break;
+      }
+
+      case 'invoice.paid': {
+        const invoice = event.data.object;
+        const customerId = invoice.customer;
+        const subscriptionId = invoice.subscription;
+        console.log(`[webhook] Invoice paid: ${invoice.id} for customer ${customerId}`);
+        await safeQuery(async () => {
+          const { prisma } = await import('@/lib/db');
+          await prisma.emailLog.create({
+            data: {
+              to: invoice.customer_email || 'unknown',
+              subject: `Payment received: ${(invoice.amount_paid / 100).toFixed(2)} EUR`,
+              status: 'sent',
+            },
+          });
+        }, null);
+        break;
+      }
+
+      case 'customer.subscription.deleted': {
+        const subscription = event.data.object;
+        const customerId = subscription.customer;
+        console.log(`[webhook] Subscription deleted: ${subscription.id}`);
+        await safeQuery(async () => {
+          const { prisma } = await import('@/lib/db');
+          const user = await prisma.apiUser.findFirst({
+            where: { stripeId: customerId }
+          });
+          if (user) {
+            await prisma.apiUser.update({
+              where: { id: user.id },
+              data: { plan: 'starter', credits: 100 }
+            });
+          }
+        }, null);
+        break;
+      }
+
+      case 'customer.subscription.updated': {
+        const subscription = event.data.object;
+        console.log(`[webhook] Subscription updated: ${subscription.id}, status: ${subscription.status}`);
         break;
       }
 
