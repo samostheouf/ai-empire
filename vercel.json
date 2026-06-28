@@ -41,14 +41,12 @@
       "schedule": "0 2 * * *"
     },
     {
-      "path": "/api/cron/weekly-report",
-      "schedule": "0 9 * * 1"
-    },
-    {
       "path": "/api/cron/health-check",
       "schedule": "0 5 * * *"
+    },
+    {
+      "path": "/api/cron/auto-blog",
+      "schedule": "0 5 * * *"
     }
-  ]
-}
   ]
 }
