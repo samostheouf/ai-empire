@@ -57,6 +57,30 @@ const plans = [
 export default function PricingPageClient() {
   const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null)
+  const [checkoutLoading, setCheckoutLoading] = useState<string | null>(null)
+
+  const handleCheckout = async (plan: string) => {
+    const email = prompt('Entrez votre email pour commencer :')
+    if (!email) return
+    setCheckoutLoading(plan)
+    try {
+      const res = await fetch('/api/checkout/agents', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ plan, email }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        alert(data.error || 'Erreur lors de la création du paiement')
+      }
+    } catch {
+      alert('Erreur de connexion')
+    } finally {
+      setCheckoutLoading(null)
+    }
+  }
 
   return (
     <div className="bg-[#0f0a2e]">
@@ -133,16 +157,17 @@ export default function PricingPageClient() {
                     {t(plan.ctaKey)}
                   </Link>
                 ) : plan.name === 'Pro' ? (
-                  <Link
-                    href="/api/checkout/agents?plan=pro"
+                  <button
+                    onClick={() => handleCheckout('pro')}
+                    disabled={checkoutLoading === 'pro'}
                     className={`mt-8 block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all ${
                       plan.popular
                         ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-500 hover:to-purple-500 shadow-lg shadow-indigo-500/20 hover:scale-105 animate-pulse'
                         : 'border border-white/10 bg-white/5 text-indigo-200 hover:bg-white/10 hover:scale-105'
-                    }`}
+                    } disabled:opacity-50`}
                   >
-                    {t(plan.ctaKey)}
-                  </Link>
+                    {checkoutLoading === 'pro' ? '...' : t(plan.ctaKey)}
+                  </button>
                 ) : plan.name === 'Enterprise' ? (
                   <Link
                     href="/contact"
