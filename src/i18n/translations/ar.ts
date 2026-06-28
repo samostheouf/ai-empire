@@ -3030,7 +3030,7 @@ cookieLastUpdate: 'Last update: June 24, 2026',
   adminCommercePayments: 'Successful Payments',
   adminCommerceRevenue: 'Total Revenue',
   adminCommerceFunnel: 'Visitor → Registration → Payment',
-  adminCommerceAvgRevenuePerUser: 'Avg Revenue Per User'
+  adminCommerceAvgRevenuePerUser: 'Avg Revenue Per User',
 
   // Agents Page
   agentsMetaTitle: 'وكلاء الذكاء الاصطناعي — قوى عملك المستقلة | NeuraAPI',
