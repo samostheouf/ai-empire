@@ -7,6 +7,9 @@ export * from './content-creator'
 export * from './seo-specialist'
 export * from './marketing-expert'
 export * from './sales-agent'
+export * from './lead-generator'
+export * from './voice-agent'
+export * from './automation-agent'
 export * from './analyst'
 
 export {
@@ -110,6 +113,37 @@ export type {
   SalesResult,
   EmailSequence
 } from './sales-agent'
+
+export {
+  leadGeneratorAgent,
+  executeLeadGenerator
+} from './lead-generator'
+
+export type {
+  LeadRequest,
+  LeadResult,
+  Lead
+} from './lead-generator'
+
+export {
+  voiceAgent,
+  executeVoiceAgent
+} from './voice-agent'
+
+export type {
+  VoiceRequest,
+  VoiceResult
+} from './voice-agent'
+
+export {
+  automationAgent,
+  executeAutomationAgent
+} from './automation-agent'
+
+export type {
+  AutomationRequest,
+  AutomationResult
+} from './automation-agent'
 
 export {
   analystAgent,

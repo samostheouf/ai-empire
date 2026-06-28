@@ -65,6 +65,10 @@ export type TranslationKeys = {
 
   // Testimonials
   testimonialsTitle: string
+  testimonialsSubtitle: string
+  realTestimonialsTitle: string
+  testimonialsEmpty: string
+  testimonialsJoinFirst: string
 
   // CTA
   ctaTitle: string
@@ -2264,6 +2268,110 @@ export type TranslationKeys = {
   webVitalsTopPages: string
   webVitalsTtfb: string
 
+  // Agents Page
+  agentsMetaTitle: string
+  agentsMetaDesc: string
+  agentsBreadcrumb: string
+  agentsHeroTag: string
+  agentsHeroTitle: string
+  agentsHeroSubtitle: string
+  agentsHeroDesc: string
+  agentsHeroCta: string
+  agentsHeroCtaPricing: string
+  agentsHeroNoCard: string
+  agentsHeroFreeTrial: string
+  agentsHeroCancel: string
+  agentsGridBadge: string
+  agentsGridTitle: string
+  agentsGridHighlight: string
+  agentsPerMonth: string
+  agentsCardCta: string
+  agentsCardSupportName: string
+  agentsCardSupportDesc: string
+  agentsCardSupportCap1: string
+  agentsCardSupportCap2: string
+  agentsCardSupportCap3: string
+  agentsCardSupportCap4: string
+  agentsCardLeadName: string
+  agentsCardLeadDesc: string
+  agentsCardLeadCap1: string
+  agentsCardLeadCap2: string
+  agentsCardLeadCap3: string
+  agentsCardLeadCap4: string
+  agentsCardContentName: string
+  agentsCardContentDesc: string
+  agentsCardContentCap1: string
+  agentsCardContentCap2: string
+  agentsCardContentCap3: string
+  agentsCardContentCap4: string
+  agentsCardSalesName: string
+  agentsCardSalesDesc: string
+  agentsCardSalesCap1: string
+  agentsCardSalesCap2: string
+  agentsCardSalesCap3: string
+  agentsCardSalesCap4: string
+  agentsCardVoiceName: string
+  agentsCardVoiceDesc: string
+  agentsCardVoiceCap1: string
+  agentsCardVoiceCap2: string
+  agentsCardVoiceCap3: string
+  agentsCardVoiceCap4: string
+  agentsCardAutomationName: string
+  agentsCardAutomationDesc: string
+  agentsCardAutomationCap1: string
+  agentsCardAutomationCap2: string
+  agentsCardAutomationCap3: string
+  agentsCardAutomationCap4: string
+  agentsDemoBadge: string
+  agentsDemoTitle: string
+  agentsDemoDesc: string
+  agentsDemoLabel: string
+  agentsDemoPlaceholder: string
+  agentsDemoSend: string
+  agentsDemoSending: string
+  agentsDemoResponse: string
+  agentsDemoNote: string
+  agentsDemoError: string
+  agentsPricingBadge: string
+  agentsPricingTitle: string
+  agentsPricingDesc: string
+  agentsPricingFree: string
+  agentsPricingPerMonth: string
+  agentsPricingAgent: string
+  agentsPricingAgents: string
+  agentsPricingAll: string
+  agentsPricingPopular: string
+  agentsPricingStarterCta: string
+  agentsPricingProCta: string
+  agentsPricingBusinessCta: string
+  agentsPricingStarterF1: string
+  agentsPricingStarterF2: string
+  agentsPricingStarterF3: string
+  agentsPricingProF1: string
+  agentsPricingProF2: string
+  agentsPricingProF3: string
+  agentsPricingProF4: string
+  agentsPricingBusinessF1: string
+  agentsPricingBusinessF2: string
+  agentsPricingBusinessF3: string
+  agentsPricingBusinessF4: string
+  agentsFaqTitle: string
+  agentsFaqDesc: string
+  agentsFaq1Q: string
+  agentsFaq1A: string
+  agentsFaq2Q: string
+  agentsFaq2A: string
+  agentsFaq3Q: string
+  agentsFaq3A: string
+  agentsFaq4Q: string
+  agentsFaq4A: string
+  agentsFaq5Q: string
+  agentsFaq5A: string
+  agentsCtaTitle: string
+  agentsCtaDesc: string
+  agentsCtaButton: string
+  agentsCtaNoCard: string
+
   // Other
   action: string
   authorization: string
@@ -3154,4 +3262,31 @@ export type TranslationKeys = {
   
   // Exit Intent Popup
   exitEmailAria: string
+
+  adminCommerceTitle: string
+  adminCommerceSummary: string
+  adminCommerceVisitors: string
+  adminCommerceRegistrations: string
+  adminCommerceApiCalls: string
+  adminCommerceConversion: string
+  adminCommercePayments: string
+  adminCommerceRevenue: string
+  adminCommerceFunnel: string
+  adminCommerceAvgRevenuePerUser: string
+
+  adminCommerceAvgCallsPerUser: string
+
+  launchEarlyDesc: string
+  launchEarlyPro: string
+  launchEarlyProDesc: string
+  launchEarlyStarter: string
+  launchEarlyStarterCta: string
+  launchEarlyStarterDesc: string
+  launchEarlyTitle: string
+  launchTrustGdpr: string
+  launchTrustGdprDesc: string
+  launchTrustGuarantee: string
+  launchTrustGuaranteeDesc: string
+  launchTrustStripe: string
+  launchTrustStripeDesc: string
 }
