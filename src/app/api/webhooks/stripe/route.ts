@@ -322,7 +322,7 @@ export async function POST(request: NextRequest) {
   try {
     await processWebhookEvent(event, 0)
   } catch (err) {
-    logger.error('webhook', 'Webhook processing failed', { eventId: event?.id, type: event?.type, error: err instanceof Error ? err.message : 'Unknown' });
+    logger.error('webhook', 'Webhook processing failed', { eventId, type: evtType, error: err instanceof Error ? err.message : 'Unknown' });
 
     sendAlert(
       'Webhook Processing Failed',
@@ -347,8 +347,8 @@ export async function POST(request: NextRequest) {
         data: { status: 'failed', lastError: err instanceof Error ? err.message : 'Unknown error', retryCount: 1 },
       });
     }, null);
-    await trackWebhookComplete('stripe', event?.type || 'unknown', event?.id || 'unknown', false);
-    return NextResponse.json({ error: 'Webhook processing failed', details: err instanceof Error ? err.message : 'Unknown error', eventId: event?.id, retry: true }, { status: 500 });
+    await trackWebhookComplete('stripe', evtType || 'unknown', eventId || 'unknown', false);
+    return NextResponse.json({ error: 'Webhook processing failed', details: err instanceof Error ? err.message : 'Unknown error', eventId, retry: true }, { status: 500 });
   }
 
   await safeQuery(async () => {
@@ -358,7 +358,7 @@ export async function POST(request: NextRequest) {
       data: { status: 'completed' },
     });
   }, null);
-  await trackWebhookComplete('stripe', event?.type || 'unknown', event?.id || 'unknown', true);
+  await trackWebhookComplete('stripe', evtType || 'unknown', eventId || 'unknown', true);
 
   return NextResponse.json({ received: true });
 }
