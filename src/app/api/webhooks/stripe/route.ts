@@ -98,10 +98,10 @@ async function processRetryQueue(): Promise<void> {
 
 async function processWebhookEvent(event: Record<string, unknown>, attempt: number = 0): Promise<void> {
   const webhookErrors: string[] = []
-  const eventType = (event.type as string) || ''
+  const eventType = (eventType as string) || ''
   const eventData = event.data as { object: Record<string, unknown> } | undefined
   const eventObject = eventData?.object || {}
-  const eventId = (event.id as string) || ''
+  const eventId = (eventId as string) || ''
 
   switch (eventType) {
     case 'checkout.session.completed': {
