@@ -96,12 +96,16 @@ async function processRetryQueue(): Promise<void> {
   }
 }
 
-async function processWebhookEvent(event: { id: string; type: string; data: { object: Record<string, unknown> } }, attempt: number = 0): Promise<void> {
+async function processWebhookEvent(event: Record<string, unknown>, attempt: number = 0): Promise<void> {
   const webhookErrors: string[] = []
+  const eventType = (event.type as string) || ''
+  const eventData = event.data as { object: Record<string, unknown> } | undefined
+  const eventObject = eventData?.object || {}
+  const eventId = (event.id as string) || ''
 
-  switch (event.type) {
+  switch (eventType) {
     case 'checkout.session.completed': {
-      const session = event.data.object;
+      const session = eventObject;
       const { templateId, email } = (session.metadata || {}) as Record<string, string>;
 
       if (templateId && email) {
@@ -219,17 +223,17 @@ async function processWebhookEvent(event: { id: string; type: string; data: { ob
     }
 
     case 'checkout.session.expired': {
-      logger.info('webhook', `Event ${event.type} received for session ${event.data.object.id}`);
+      logger.info('webhook', `Event ${eventType} received for session ${eventObject.id}`);
       break;
     }
 
     case 'payment_intent.payment_failed': {
-      logger.info('webhook', `Event ${event.type} received for session ${event.data.object.id}`);
+      logger.info('webhook', `Event ${eventType} received for session ${eventObject.id}`);
       break;
     }
 
     case 'invoice.paid': {
-      const invoice = event.data.object;
+      const invoice = eventObject;
       const customerId = invoice.customer;
       const subscriptionId = invoice.subscription;
       logger.info('webhook', `Invoice paid: ${invoice.id} for customer ${customerId}`);
@@ -237,7 +241,7 @@ async function processWebhookEvent(event: { id: string; type: string; data: { ob
     }
 
     case 'customer.subscription.deleted': {
-      const subscription = event.data.object;
+      const subscription = eventObject;
       const customerId = subscription.customer;
       logger.info('webhook', `Subscription deleted: ${subscription.id}`);
       await safeQuery(async () => {
@@ -256,7 +260,7 @@ async function processWebhookEvent(event: { id: string; type: string; data: { ob
     }
 
     case 'customer.subscription.updated': {
-      const subscription = event.data.object;
+      const subscription = eventObject;
       logger.info('webhook', `Subscription updated: ${subscription.id}, status: ${subscription.status}`);
       break;
     }
@@ -265,7 +269,7 @@ async function processWebhookEvent(event: { id: string; type: string; data: { ob
   }
 
   if (webhookErrors.length > 0) {
-    logger.warn('webhook', `Webhook processed with warnings for event ${event.id}`, { warnings: webhookErrors })
+    logger.warn('webhook', `Webhook processed with warnings for event ${eventId}`, { warnings: webhookErrors })
   }
 }
 
@@ -298,7 +302,7 @@ export async function POST(request: NextRequest) {
 
   const alreadyProcessed = await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
-    const existing = await prisma.webhookEvent.findUnique({ where: { eventId: event.id } });
+    const existing = await prisma.webhookEvent.findUnique({ where: { eventId: eventId } });
     return existing?.status === 'completed';
   }, false);
 
@@ -309,9 +313,9 @@ export async function POST(request: NextRequest) {
   await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     await prisma.webhookEvent.upsert({
-      where: { eventId: event.id },
+      where: { eventId: eventId },
       update: { status: 'processing' },
-      create: { eventId: event.id, provider: 'stripe', type: event.type, status: 'processing' },
+      create: { eventId: eventId, provider: 'stripe', type: eventType, status: 'processing' },
     });
   }, null);
 
@@ -322,12 +326,12 @@ export async function POST(request: NextRequest) {
 
     sendAlert(
       'Webhook Processing Failed',
-      `Event ${event.id} (${event.type}) failed: ${err instanceof Error ? err.message : 'Unknown error'}`
+      `Event ${eventId} (${eventType}) failed: ${err instanceof Error ? err.message : 'Unknown error'}`
     ).catch(() => {})
 
     const retryJob: WebhookRetryJob = {
-      eventId: event.id,
-      eventType: event.type,
+      eventId: eventId,
+      eventType: eventType,
       attempt: 1,
       maxAttempts: MAX_RETRY_ATTEMPTS,
       nextRetryAt: Date.now() + RETRY_DELAYS_MS[0],
@@ -339,7 +343,7 @@ export async function POST(request: NextRequest) {
     await safeQuery(async () => {
       const { prisma } = await import('@/lib/db');
       await prisma.webhookEvent.update({
-        where: { eventId: event.id },
+        where: { eventId: eventId },
         data: { status: 'failed', lastError: err instanceof Error ? err.message : 'Unknown error', retryCount: 1 },
       });
     }, null);
@@ -350,7 +354,7 @@ export async function POST(request: NextRequest) {
   await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     await prisma.webhookEvent.update({
-      where: { eventId: event.id },
+      where: { eventId: eventId },
       data: { status: 'completed' },
     });
   }, null);
