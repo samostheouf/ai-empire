@@ -18,7 +18,7 @@ function getResendClient(): Resend {
 }
 
 interface WebhookRetryJob {
-  evtId: string
+  eventId: string
   evtType: string
   attempt: number
   maxAttempts: number
@@ -35,7 +35,7 @@ let deadLetterQueue: WebhookRetryJob[] = []
 
 function enqueueRetry(job: WebhookRetryJob): void {
   retryQueue.push(job)
-  logger.warn('webhook', `Enqueued retry for event ${job.evtId}`, {
+  logger.warn('webhook', `Enqueued retry for event ${job.eventId}`, {
     attempt: job.attempt,
     nextRetryAt: new Date(job.nextRetryAt).toISOString(),
   })
@@ -46,13 +46,13 @@ function moveToDeadLetter(job: WebhookRetryJob): void {
   if (deadLetterQueue.length > 100) {
     deadLetterQueue = deadLetterQueue.slice(-100)
   }
-  logger.error('webhook', `Event ${job.evtId} moved to dead letter queue`, {
+  logger.error('webhook', `Event ${job.eventId} moved to dead letter queue`, {
     evtType: job.evtType,
     totalAttempts: job.attempt,
   })
   sendAlert(
     'Webhook Dead Letter',
-    `Event ${job.evtId} (${job.evtType}) failed after ${job.attempt} attempts and moved to dead letter queue.`
+    `Event ${job.eventId} (${job.evtType}) failed after ${job.attempt} attempts and moved to dead letter queue.`
   ).catch(() => {})
 }
 
@@ -66,9 +66,9 @@ async function processRetryQueue(): Promise<void> {
       await safeQuery(async () => {
         const { prisma } = await import('@/lib/db');
         await prisma.webhookEvent.upsert({
-          where: { evtId: job.evtId },
+          where: { eventId: job.eventId },
           update: { status: 'retrying', retryCount: job.attempt },
-          create: { evtId: job.evtId, provider: 'stripe', type: job.evtType, status: 'retrying', retryCount: job.attempt },
+          create: { eventId: job.eventId, provider: 'stripe', type: job.evtType, status: 'retrying', retryCount: job.attempt },
         });
       }, null);
 
@@ -78,7 +78,7 @@ async function processRetryQueue(): Promise<void> {
       await safeQuery(async () => {
         const { prisma } = await import('@/lib/db');
         await prisma.webhookEvent.update({
-          where: { evtId: job.evtId },
+          where: { eventId: job.eventId },
           data: { status: 'completed', retryCount: job.attempt },
         });
       }, null);
@@ -96,12 +96,12 @@ async function processRetryQueue(): Promise<void> {
   }
 }
 
-async function processWebhookEvent(event: Record<string, unknown>, attempt: number = 0): Promise<void> {
+async function processWebhookEvent(stripeEvent: Record<string, unknown>, attempt: number = 0): Promise<void> {
   const webhookErrors: string[] = []
-  const evtType = (event.type as string) || ''
-  const evtData = event.data as { object: Record<string, unknown> } | undefined
+  const evtType = (stripeEvent.type as string) || ''
+  const evtData = stripeEvent.data as { object: Record<string, unknown> } | undefined
   const evtObject = evtData?.object || {}
-  const evtId = (event.id as string) || ''
+  const eventId = (stripeEvent.id as string) || ''
 
   switch (evtType) {
     case 'checkout.session.completed': {
@@ -269,7 +269,7 @@ async function processWebhookEvent(event: Record<string, unknown>, attempt: numb
   }
 
   if (webhookErrors.length > 0) {
-    logger.warn('webhook', `Webhook processed with warnings for event ${evtId}`, { warnings: webhookErrors })
+    logger.warn('webhook', `Webhook processed with warnings for event ${eventId}`, { warnings: webhookErrors })
   }
 }
 
@@ -302,7 +302,7 @@ export async function POST(request: NextRequest) {
 
   const alreadyProcessed = await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
-    const existing = await prisma.webhookEvent.findUnique({ where: { evtId: evtId } });
+    const existing = await prisma.webhookEvent.findUnique({ where: { eventId: eventId } });
     return existing?.status === 'completed';
   }, false);
 
@@ -313,24 +313,24 @@ export async function POST(request: NextRequest) {
   await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     await prisma.webhookEvent.upsert({
-      where: { evtId: evtId },
+      where: { eventId: eventId },
       update: { status: 'processing' },
-      create: { evtId: evtId, provider: 'stripe', type: evtType, status: 'processing' },
+      create: { eventId: eventId, provider: 'stripe', type: evtType, status: 'processing' },
     });
   }, null);
 
   try {
     await processWebhookEvent(event, 0)
   } catch (err) {
-    logger.error('webhook', 'Webhook processing failed', { evtId: event?.id, type: event?.type, error: err instanceof Error ? err.message : 'Unknown' });
+    logger.error('webhook', 'Webhook processing failed', { eventId: event?.id, type: event?.type, error: err instanceof Error ? err.message : 'Unknown' });
 
     sendAlert(
       'Webhook Processing Failed',
-      `Event ${evtId} (${evtType}) failed: ${err instanceof Error ? err.message : 'Unknown error'}`
+      `Event ${eventId} (${evtType}) failed: ${err instanceof Error ? err.message : 'Unknown error'}`
     ).catch(() => {})
 
     const retryJob: WebhookRetryJob = {
-      evtId: evtId,
+      eventId: eventId,
       evtType: evtType,
       attempt: 1,
       maxAttempts: MAX_RETRY_ATTEMPTS,
@@ -343,18 +343,18 @@ export async function POST(request: NextRequest) {
     await safeQuery(async () => {
       const { prisma } = await import('@/lib/db');
       await prisma.webhookEvent.update({
-        where: { evtId: evtId },
+        where: { eventId: eventId },
         data: { status: 'failed', lastError: err instanceof Error ? err.message : 'Unknown error', retryCount: 1 },
       });
     }, null);
     await trackWebhookComplete('stripe', event?.type || 'unknown', event?.id || 'unknown', false);
-    return NextResponse.json({ error: 'Webhook processing failed', details: err instanceof Error ? err.message : 'Unknown error', evtId: event?.id, retry: true }, { status: 500 });
+    return NextResponse.json({ error: 'Webhook processing failed', details: err instanceof Error ? err.message : 'Unknown error', eventId: event?.id, retry: true }, { status: 500 });
   }
 
   await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     await prisma.webhookEvent.update({
-      where: { evtId: evtId },
+      where: { eventId: eventId },
       data: { status: 'completed' },
     });
   }, null);
