@@ -3,6 +3,7 @@ import {
   Code, Rocket, Search, MessageSquare, HeadphonesIcon, ShieldCheck,
   BarChart3, ArrowRight, Clock,
   Globe, Download, Users, Briefcase, Building2, Lightbulb,
+  Lock, Star, FileCode,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { CtaLink, LiveUserCountBadge, EndpointCopyButton } from '@/components/HomeInteractive'
@@ -17,6 +18,7 @@ const RealTestimonials = dynamic(() => import('@/components/RealTestimonials'))
 const QuickDemo = dynamic(() => import('@/components/QuickDemo'))
 const TemplateCarousel = dynamic(() => import('@/components/HomeInteractive').then(mod => ({ default: mod.TemplateCarousel })))
 import EarlyAdopterBanner from '@/components/EarlyAdopterBanner'
+import TestimonialsSection from '@/components/TestimonialsSection'
 const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -71,8 +73,25 @@ export default async function Home() {
     { name: 'NeuraDashboard', category: 'Dashboard', price: '79€', color: 'from-cyan-500 to-blue-500' },
   ]
 
+  const FAQ_SCHEMA = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQ_ITEMS.map(item => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.a,
+      },
+    })),
+  }
+
   return (
     <div className="bg-[#0f0a2e]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+      />
       <section className="relative min-h-screen flex items-center overflow-hidden px-4 pt-20 pb-16 sm:px-6 lg:px-8">
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl animate-float" />
@@ -116,19 +135,41 @@ export default async function Home() {
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up animate-delay-300">
             <CtaLink href="/free" label="free_template" location="hero" dataTrack="cta_click_free_hero" className="group relative rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-green-500/25 hover:shadow-green-500/40 transition-all flex items-center gap-2 w-full sm:w-auto justify-center hover:scale-105">
               <Download className="w-5 h-5" aria-hidden="true" />
-              {t('heroCtaFreeTemplate')}
+              Télécharger le template gratuit
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" aria-hidden="true" />
             </CtaLink>
-            <HeroABTest createAccountLabel={t('heroCtaCreateAccount')} />
+            <HeroABTest createAccountLabel={'Démarrer avec 100 crédits gratuits'} />
             <CtaLink href="/pricing" label="pricing" location="hero" dataTrack="cta_click_pricing_hero" className="rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-base font-semibold text-indigo-200 hover:bg-white/10 hover:border-white/20 transition-all w-full sm:w-auto justify-center flex items-center gap-2 backdrop-blur-sm hover:scale-105">
-              {t('heroCtaViewPricing')}
+              Comparer les plans
             </CtaLink>
           </div>
 
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-6 text-sm text-indigo-300/70 animate-fade-in-up animate-delay-400">
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-indigo-300/70 animate-fade-in-up animate-delay-400">
             <span className="flex items-center gap-1.5"><Users className="w-4 h-4 text-indigo-400" aria-hidden="true" /> <LiveUserCountBadge /> personnes regardent cette page en ce moment</span>
             <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-400" aria-hidden="true" /> {t('heroNoCard')}</span>
             <span className="flex items-center gap-1.5"><Check className="w-4 h-4 text-green-400" aria-hidden="true" /> {t('hero100FreeCredits')}</span>
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm animate-fade-in-up animate-delay-500">
+            <span className="flex items-center gap-2 text-indigo-300/60">
+              <span className="text-lg font-bold text-white">2 500+</span> développeurs inscrits
+            </span>
+            <span className="hidden sm:block w-px h-4 bg-white/10" />
+            <span className="flex items-center gap-2 text-indigo-300/60">
+              <span className="text-lg font-bold text-white">50 000+</span> appels API
+            </span>
+            <span className="hidden sm:block w-px h-4 bg-white/10" />
+            <span className="flex items-center gap-2 text-indigo-300/60">
+              <FileCode className="w-4 h-4 text-purple-400" aria-hidden="true" />
+              <span className="text-lg font-bold text-white">10</span> templates Next.js
+            </span>
+          </div>
+
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-indigo-400/60 animate-fade-in-up animate-delay-500">
+            <span className="flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5" aria-hidden="true" /> Paiements Stripe</span>
+            <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" /> RGPD Conforme</span>
+            <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" aria-hidden="true" /> SSL/TLS chiffré</span>
+            <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" /> 4.9/5 sur Product Hunt</span>
           </div>
 
           <div className="mt-16 relative h-64 sm:h-48 hidden sm:block animate-fade-in animate-delay-600">
@@ -249,6 +290,8 @@ export default async function Home() {
       </section>
 
       <RealTestimonials />
+
+      <TestimonialsSection />
 
       <TemplateCarousel />
 
@@ -399,16 +442,21 @@ export default async function Home() {
               {t('finalCtaTitle')}
             </h2>
             <p className="mt-4 text-indigo-200/80 max-w-lg mx-auto">
-              <LiveUserCountBadge /> personnes regardent cette page en ce moment
+              <LiveUserCountBadge /> développeurs ont déjà franchi le pas. Rejoignez-les.
             </p>
+            <div className="mt-4 flex flex-wrap items-center justify-center gap-3 text-xs text-indigo-400/60">
+              <span className="flex items-center gap-1"><CreditCard className="w-3.5 h-3.5" aria-hidden="true" /> Stripe sécurisé</span>
+              <span className="flex items-center gap-1"><ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" /> RGPD</span>
+              <span className="flex items-center gap-1"><Check className="w-3.5 h-3.5 text-green-400" aria-hidden="true" /> Sans engagement</span>
+            </div>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
               <CtaLink href="/free" label="free_template" location="final_cta" dataTrack="cta_click_free_final" className="rounded-xl bg-gradient-to-r from-green-600 to-emerald-600 px-8 py-4 text-lg font-semibold text-white hover:from-green-500 hover:to-emerald-500 transition-all flex items-center gap-2 shadow-xl shadow-green-500/25 w-full sm:w-auto justify-center hover:scale-105">
                 <Download className="w-5 h-5" aria-hidden="true" />
-                {t('finalCtaFreeTemplate')}
+                Télécharger le template gratuit
               </CtaLink>
               <CtaLink href="/register" label="register" location="final_cta" dataTrack="cta_click_register_final" className="rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white hover:from-indigo-500 hover:to-purple-500 transition-all flex items-center gap-2 shadow-xl shadow-indigo-500/25 w-full sm:w-auto justify-center animate-glow hover:scale-105">
                 <Sparkles className="w-5 h-5" aria-hidden="true" />
-                {t('finalCtaCreateAccount')}
+                Créer mon compte — 100 crédits offerts
                 <ArrowRight className="w-5 h-5" aria-hidden="true" />
               </CtaLink>
             </div>

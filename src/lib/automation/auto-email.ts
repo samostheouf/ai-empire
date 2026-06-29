@@ -54,7 +54,8 @@ function baseTemplate(content: string): string {
           </p>
           <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0;">
             <a href="${appUrl}" style="color: #6366f1;">site web</a> · 
-            <a href="mailto:support@neuraapi.com" style="color: #6366f1;">support</a>
+            <a href="mailto:support@neuraapi.com" style="color: #6366f1;">support</a> ·
+            <a href="${appUrl}/unsubscribe" style="color: #6366f1;">se désabonner</a>
           </p>
         </div>
       </div>
@@ -96,6 +97,9 @@ export async function sendWelcomeEmails(): Promise<AutomationLog[]> {
 
   for (const user of newUsers) {
     const content = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=200&fit=crop" alt="Welcome" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
+      </div>
       <h2 style="margin: 0 0 16px; color: #1e293b;">Bienvenue ${user.email.split('@')[0]} ! 🎉</h2>
       <p style="color: #64748b; margin: 0 0 16px;">
         Merci de rejoindre NeuraAPI. Vous avez maintenant accès à des APIs IA puissantes et des templates premium.
@@ -104,15 +108,51 @@ export async function sendWelcomeEmails(): Promise<AutomationLog[]> {
         <p style="margin: 0; color: #166534; font-weight: 600;">✅ Votre compte est actif</p>
         <p style="margin: 8px 0 0; color: #166534; font-size: 14px;">${user.credits} crédits offerts pour commencer</p>
       </div>
-      <h3 style="color: #1e293b; margin: 0 0 12px;">Pour commencer :</h3>
-      <ul style="color: #64748b; padding-left: 20px; margin: 0 0 24px;">
-        <li style="margin-bottom: 8px;">Récupérez votre clé API dans le dashboard</li>
-        <li style="margin-bottom: 8px;">Consultez la documentation rapide</li>
-        <li style="margin-bottom: 8px;">Faites votre première requête API</li>
-      </ul>
-      <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 24px;">
+      <h3 style="color: #1e293b; margin: 0 0 12px;">🚀 Guide de démarrage rapide</h3>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px;">
+        <tr>
+          <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0;">
+            <div style="display: flex; align-items: center;">
+              <div style="background: #4F46E5; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: 700; font-size: 14px; margin-right: 12px;">1</div>
+              <div>
+                <strong style="color: #1e293b;">Récupérez votre clé API</strong>
+                <p style="margin: 2px 0 0; color: #64748b; font-size: 13px;">Dans votre dashboard en un clic</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 0; border-bottom: 1px solid #e2e8f0;">
+            <div style="display: flex; align-items: center;">
+              <div style="background: #4F46E5; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: 700; font-size: 14px; margin-right: 12px;">2</div>
+              <div>
+                <strong style="color: #1e293b;">Consultez la documentation</strong>
+                <p style="margin: 2px 0 0; color: #64748b; font-size: 13px;">Guides rapides et exemples de code</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding: 12px 0;">
+            <div style="display: flex; align-items: center;">
+              <div style="background: #4F46E5; color: white; width: 28px; height: 28px; border-radius: 50%; text-align: center; line-height: 28px; font-weight: 700; font-size: 14px; margin-right: 12px;">3</div>
+              <div>
+                <strong style="color: #1e293b;">Faites votre première requête</strong>
+                <p style="margin: 2px 0 0; color: #64748b; font-size: 13px;">Testez une API en 5 minutes</p>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 16px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; margin-bottom: 24px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
         Accéder au Dashboard
       </a>
+      <div style="background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+        <p style="margin: 0; color: #7c3aed; font-weight: 600;">👥 Rejoignez 2,400+ utilisateurs actifs</p>
+        <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
+          Besoin d'aide ? Répondez à cet email — nous répondons en moins de 2h.
+        </p>
+      </div>
     `
 
     const sent = await sendEmail(
@@ -158,22 +198,24 @@ export async function sendAbandonedCartEmails(): Promise<AutomationLog[]> {
   for (const order of recentOrders) {
     const price = (order.amount / 100).toFixed(2)
     const content = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=200&fit=crop" alt="Cart" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
+      </div>
       <h2 style="margin: 0 0 16px; color: #1e293b;">Vous avez laissé un template dans votre panier 🛒</h2>
       <p style="color: #64748b; margin: 0 0 16px;">
         Le template <strong>${order.template?.name || 'Premium'}</strong> vous attend toujours !
       </p>
       <div style="background: #fff7ed; border: 1px solid #fed7aa; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-        <p style="margin: 0; color: #c2410c; font-weight: 600;">Utilisez le code RETOUR20 pour -20% sur ce template</p>
+        <p style="margin: 0; color: #c2410c; font-weight: 600;">🎁 Offre spéciale : -20% avec le code RETOUR20</p>
       </div>
-      <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px;">
-        <tr>
-          <td>
-            <h3 style="margin: 0; color: #1e293b;">${order.template?.name || 'Template Premium'}</h3>
-            <p style="margin: 4px 0 0; color: #64748b;">${price}€</p>
-          </td>
-        </tr>
-      </table>
-      <a href="${appUrl}/templates/${order.template?.slug || ''}" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 24px;">
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+        <h3 style="margin: 0 0 8px; color: #1e293b;">${order.template?.name || 'Template Premium'}</h3>
+        <p style="margin: 0; color: #64748b; font-size: 14px;">${price}€</p>
+      </div>
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+        <p style="margin: 0; color: #166534; font-weight: 600;">👥 2,400+ développeurs nous font confiance</p>
+      </div>
+      <a href="${appUrl}/templates/${order.template?.slug || ''}" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 16px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
         Finaliser mon achat
       </a>
       <p style="color: #94a3b8; font-size: 13px; margin: 0; text-align: center;">
@@ -324,22 +366,40 @@ export async function sendReengagementEmails(): Promise<AutomationLog[]> {
     )
 
     const content = `
+      <div style="text-align: center; margin-bottom: 24px;">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=200&fit=crop" alt="We miss you" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
+      </div>
       <h2 style="margin: 0 0 16px; color: #1e293b;">${user.email.split('@')[0]}, nous vous avons manqué ! 💜</h2>
       <p style="color: #64748b; margin: 0 0 16px;">
         Cela fait ${daysSinceCreation} jours que vous n'avez pas utilisé NeuraAPI. Voici ce qui a changé :
       </p>
-      <ul style="color: #64748b; padding-left: 20px; margin: 0 0 16px;">
-        <li style="margin-bottom: 8px;">Nouvelles APIs disponibles</li>
-        <li style="margin-bottom: 8px;">Templates premium ajoutés</li>
-        <li style="margin-bottom: 8px;">Performances améliorées</li>
-      </ul>
-      <div style="background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-        <p style="margin: 0; color: #7c3aed; font-weight: 600;">Offre de retour : +100 crédits gratuits</p>
-        <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">Utilisez le code BIENVENUE100</p>
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+        <h3 style="margin: 0 0 12px; color: #1e293b;">🆕 Nouveautés récentes</h3>
+        <ul style="color: #64748b; padding-left: 20px; margin: 0;">
+          <li style="margin-bottom: 8px;">Nouvelles APIs disponibles (GPT-4o, Claude 3.5)</li>
+          <li style="margin-bottom: 8px;">Templates premium ajoutés</li>
+          <li style="margin-bottom: 8px;">Performances améliorées de 40%</li>
+          <li style="margin-bottom: 8px;">Nouvelles intégrations (Notion, Airtable)</li>
+        </ul>
       </div>
-      <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-bottom: 24px;">
+      <div style="background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+        <p style="margin: 0; color: #7c3aed; font-weight: 600;">🎁 Offre de retour : +100 crédits gratuits</p>
+        <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
+          Utilisez le code <strong style="color: #7c3aed;">RETOUR100</strong> — valable 7 jours
+        </p>
+      </div>
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
+        <p style="margin: 0; color: #166534; font-weight: 600;">👥 2,400+ utilisateurs actifs</p>
+        <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
+          Rejoignez-les et transformez votre productivité.
+        </p>
+      </div>
+      <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 16px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
         Reprendre là où vous en étiez
       </a>
+      <p style="color: #94a3b8; font-size: 13px; margin: 0; text-align: center;">
+        Code promo : <strong>RETOUR100</strong> — valable 7 jours
+      </p>
     `
 
     const sent = await sendEmail(

@@ -30,6 +30,23 @@ export default async function ChangelogPage() {
 
   const releases = [
     {
+      version: '2.0.0',
+      date: '27 Juin 2026',
+      title: 'AI Agents — Your Autonomous Workforce',
+      changes: [
+        'Launch of AI Agent Factory — deploy autonomous agents in minutes',
+        'No-code agent setup: describe workflows in plain English',
+        'Autonomous decision-making with configurable escalation rules',
+        'Tool integrations: Slack, email, CRM, spreadsheets, and more',
+        'Customer Support Agent template with 87% faster response times',
+        'Data Entry Agent with 64% fewer errors',
+        'Sales & Lead Generation Agent for pipeline automation',
+        'Real-time analytics dashboard for agent performance',
+        'Multi-agent workflows for complex business processes',
+        '30-day free trial with free setup call included',
+      ],
+    },
+    {
       version: '1.0.0',
       date: t('changelogEntry1Date'),
       title: t('changelogEntry1Title'),
