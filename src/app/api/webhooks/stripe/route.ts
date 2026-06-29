@@ -281,7 +281,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Webhook not configured', details: 'STRIPE_WEBHOOK_SECRET is not configured' }, { status: 500 })
   }
 
-  let event;
+  let stripeEvent;
   try {
     const body = await request.text();
     const sig = request.headers.get('stripe-signature');
@@ -290,7 +290,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Signature manquante' }, { status: 400 });
     }
 
-    event = stripe.webhooks.constructEvent(
+    stripeEvent = stripe.webhooks.constructEvent(
       body,
       sig,
       webhookSecret
@@ -300,9 +300,12 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Signature invalide' }, { status: 400 });
   }
 
+  const evtType = (stripeEvent.type as string) || '';
+  const eventId = (stripeEvent.id as string) || '';
+
   const alreadyProcessed = await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
-    const existing = await prisma.webhookEvent.findUnique({ where: { eventId: eventId } });
+    const existing = await prisma.webhookEvent.findUnique({ where: { eventId } });
     return existing?.status === 'completed';
   }, false);
 
@@ -313,14 +316,14 @@ export async function POST(request: NextRequest) {
   await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     await prisma.webhookEvent.upsert({
-      where: { eventId: eventId },
+      where: { eventId },
       update: { status: 'processing' },
-      create: { eventId: eventId, provider: 'stripe', type: evtType, status: 'processing' },
+      create: { eventId, provider: 'stripe', type: evtType, status: 'processing' },
     });
   }, null);
 
   try {
-    await processWebhookEvent(event, 0)
+    await processWebhookEvent(stripeEvent, 0)
   } catch (err) {
     logger.error('webhook', 'Webhook processing failed', { eventId, type: evtType, error: err instanceof Error ? err.message : 'Unknown' });
 
@@ -335,7 +338,7 @@ export async function POST(request: NextRequest) {
       attempt: 1,
       maxAttempts: MAX_RETRY_ATTEMPTS,
       nextRetryAt: Date.now() + RETRY_DELAYS_MS[0],
-      payload: JSON.stringify(event),
+      payload: JSON.stringify(stripeEvent),
       createdAt: Date.now(),
     }
     enqueueRetry(retryJob)
