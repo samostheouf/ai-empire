@@ -101,10 +101,6 @@ const nextConfig = {
         ],
       },
       {
-        source: '/(?!api/|admin/|_next/).*',
-        headers: securityHeaders,
-      },
-      {
         source: '/(.*)',
         headers: securityHeaders,
       },
