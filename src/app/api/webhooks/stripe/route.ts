@@ -323,7 +323,7 @@ export async function POST(request: NextRequest) {
   }, null);
 
   try {
-    await processWebhookEvent(stripeEvent, 0)
+    await processWebhookEvent(stripeEvent as unknown as Record<string, unknown>, 0)
   } catch (err) {
     logger.error('webhook', 'Webhook processing failed', { eventId, type: evtType, error: err instanceof Error ? err.message : 'Unknown' });
 
