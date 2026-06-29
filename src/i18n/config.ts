@@ -3271,6 +3271,10 @@ export type TranslationKeys = {
   statusError: string
   statusInfo: string
   statusEnvironment: string
+  statusCtaTitle: string
+  statusCtaDesc: string
+  statusCtaButton: string
+  statusCtaPricing: string
 
   // TemplateGrid
   templateGridSearch: string

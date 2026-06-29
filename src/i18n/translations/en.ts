@@ -3055,6 +3055,10 @@ const en: Record<string, string> = {
   statusError: 'Error',
   statusInfo: 'Information',
   statusEnvironment: 'Environment',
+  statusCtaTitle: 'Need a reliable AI API?',
+  statusCtaDesc: 'NeuraAPI offers 99.9% uptime. Integrate AI into your projects in minutes.',
+  statusCtaButton: 'Get started for free',
+  statusCtaPricing: 'View pricing',
 
   // TemplateGrid
   templateGridSearch: 'Search templates...',
