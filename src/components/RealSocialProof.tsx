@@ -8,6 +8,7 @@ interface Stats {
   templateCount: number
   totalDownloads: number
   orderCount: number
+  recentActivity?: Array<{ type: string; label: string; timestamp: number }>
 }
 
 interface Toast {
@@ -15,13 +16,17 @@ interface Toast {
   message: string
 }
 
-const TOAST_MESSAGES = [
-  'Nouveau membre a rejoint NeuraAPI',
-  'Template acheté par un développeur',
-  'Nouvelle inscription cette semaine',
-  'Un utilisateur a télécharger un template',
-  'Nouvel abonné newsletter',
-]
+function buildToastsFromStats(stats: Stats): Toast[] {
+  const toasts: Toast[] = []
+  if (stats.recentActivity && stats.recentActivity.length > 0) {
+    for (const activity of stats.recentActivity.slice(0, 5)) {
+      toasts.push({ id: activity.timestamp, message: activity.label })
+    }
+  } else if (stats.userCount > 0) {
+    toasts.push({ id: Date.now(), message: `${stats.userCount.toLocaleString('fr-FR')} utilisateurs nous font confiance` })
+  }
+  return toasts
+}
 
 export default function RealSocialProof() {
   const [stats, setStats] = useState<Stats | null>(null)
@@ -42,32 +47,22 @@ export default function RealSocialProof() {
     if (!stats || stats.userCount === 0) return
 
     let mounted = true
-    const interval = setInterval(() => {
-      if (!mounted) return
-      const message = TOAST_MESSAGES[Math.floor(Math.random() * TOAST_MESSAGES.length)]
-      const id = Date.now()
-      setToasts(prev => [...prev.slice(-2), { id, message }])
-      setTimeout(() => {
-        if (mounted) setToasts(prev => prev.filter(t => t.id !== id))
-      }, 5000)
-    }, 45000)
 
-    const initialTimeout = setTimeout(() => {
-      if (!mounted) return
-      const message = TOAST_MESSAGES[Math.floor(Math.random() * TOAST_MESSAGES.length)]
-      const id = Date.now()
-      setToasts([{ id, message }])
-      setTimeout(() => {
-        if (mounted) setToasts(prev => prev.filter(t => t.id !== id))
-      }, 5000)
-    }, 10000)
+    const initialToasts = buildToastsFromStats(stats)
+    if (initialToasts.length > 0) {
+      setToasts(initialToasts.slice(0, 2))
+      const firstToastId = initialToasts[0]?.id
+      if (firstToastId) {
+        setTimeout(() => {
+          if (mounted) setToasts(prev => prev.filter(t => t.id !== firstToastId))
+        }, 5000)
+      }
+    }
 
     return () => {
       mounted = false
-      clearInterval(interval)
-      clearTimeout(initialTimeout)
     }
-  }, [stats?.userCount])
+  }, [stats?.userCount, stats?.recentActivity])
 
   if (!stats) return null
 
@@ -114,30 +109,32 @@ export default function RealSocialProof() {
         </div>
       </div>
 
-      <div className="fixed bottom-4 left-4 z-50 space-y-2 max-w-xs" aria-live="polite" aria-atomic="false">
-        {toasts.map(toast => (
-          <div
-            key={toast.id}
-            className="flex items-center gap-3 rounded-xl border border-indigo-800 bg-indigo-950/95 backdrop-blur-xl px-4 py-3 shadow-xl shadow-indigo-500/10 animate-slide-in-left"
-            role="status"
-          >
-            <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center">
-              <Users className="w-4 h-4 text-green-400" aria-hidden="true" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="text-sm text-white font-medium truncate">{toast.message}</p>
-              <p className="text-xs text-indigo-400">à l&apos;instant</p>
-            </div>
-            <button
-              onClick={() => setToasts(prev => prev.filter(t => t.id !== toast.id))}
-              className="flex-shrink-0 p-1 text-indigo-500 hover:text-white transition-colors"
-              aria-label="Fermer la notification"
+      {toasts.length > 0 && (
+        <div className="fixed bottom-4 left-4 z-50 space-y-2 max-w-xs" aria-live="polite" aria-atomic="false">
+          {toasts.map(toast => (
+            <div
+              key={toast.id}
+              className="flex items-center gap-3 rounded-xl border border-indigo-800 bg-indigo-950/95 backdrop-blur-xl px-4 py-3 shadow-xl shadow-indigo-500/10 animate-slide-in-left"
+              role="status"
             >
-              <X className="w-3 h-3" />
-            </button>
-          </div>
-        ))}
-      </div>
+              <div className="flex-shrink-0 w-8 h-8 rounded-full bg-green-500/10 flex items-center justify-center">
+                <Users className="w-4 h-4 text-green-400" aria-hidden="true" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="text-sm text-white font-medium truncate">{toast.message}</p>
+                <p className="text-xs text-indigo-400">à l&apos;instant</p>
+              </div>
+              <button
+                onClick={() => setToasts(prev => prev.filter(t => t.id !== toast.id))}
+                className="flex-shrink-0 p-1 text-indigo-500 hover:text-white transition-colors"
+                aria-label="Fermer la notification"
+              >
+                <X className="w-3 h-3" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </>
   )
 }

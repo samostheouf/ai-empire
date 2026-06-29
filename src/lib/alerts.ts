@@ -54,3 +54,46 @@ export async function sendAlert(type: string, message: string): Promise<void> {
     console.error('[sendAlert] Failed to send alert:', error)
   }
 }
+
+export async function sendHealthCheckAlert(service: string, status: 'healthy' | 'unhealthy', details?: string): Promise<void> {
+  if (status === 'healthy') return
+
+  const safeService = escapeHtml(service)
+  const safeDetails = details ? escapeHtml(details) : 'No additional details'
+
+  await sendAlert(
+    'Health Check Failed',
+    `Service: ${safeService}\nStatus: ${status}\nDetails: ${safeDetails}\nTime: ${new Date().toISOString()}\n\nPlease investigate immediately.`
+  )
+}
+
+export async function sendWebhookAlert(eventId: string, eventType: string, error: string, attempt?: number): Promise<void> {
+  const safeEventId = escapeHtml(eventId)
+  const safeEventType = escapeHtml(eventType)
+  const safeError = escapeHtml(error)
+
+  await sendAlert(
+    'Webhook Processing Failed',
+    `Event: ${safeEventId} (${safeEventType})\nError: ${safeError}\nAttempt: ${attempt || 1}\nTime: ${new Date().toISOString()}\n\nCheck webhook logs for details.`
+  )
+}
+
+export async function sendCronJobAlert(jobName: string, error: string, duration?: number): Promise<void> {
+  const safeJobName = escapeHtml(jobName)
+  const safeError = escapeHtml(error)
+
+  await sendAlert(
+    'Cron Job Failed',
+    `Job: ${safeJobName}\nError: ${safeError}\nDuration: ${duration ? `${duration}ms` : 'Unknown'}\nTime: ${new Date().toISOString()}\n\nThe scheduled job did not complete successfully.`
+  )
+}
+
+export async function sendDatabaseAlert(operation: string, error: string): Promise<void> {
+  const safeOperation = escapeHtml(operation)
+  const safeError = escapeHtml(error)
+
+  await sendAlert(
+    'Database Alert',
+    `Operation: ${safeOperation}\nError: ${safeError}\nTime: ${new Date().toISOString()}\n\nDatabase may be experiencing issues.`
+  )
+}

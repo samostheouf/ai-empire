@@ -4,6 +4,7 @@ import { safeQuery } from '@/lib/db';
 import { sendOrderConfirmation } from '@/lib/email';
 import { trackWebhookComplete } from '@/lib/server-analytics';
 import { logger } from '@/lib/logger';
+import { sendAlert } from '@/lib/alerts';
 import { Resend } from 'resend';
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app';
@@ -16,8 +17,261 @@ function getResendClient(): Resend {
   return resendClient
 }
 
-export async function POST(request: NextRequest) {
+interface WebhookRetryJob {
+  eventId: string
+  eventType: string
+  attempt: number
+  maxAttempts: number
+  nextRetryAt: number
+  payload: string
+  createdAt: number
+}
+
+const MAX_RETRY_ATTEMPTS = 3
+const RETRY_DELAYS_MS = [5000, 30000, 120000]
+
+let retryQueue: WebhookRetryJob[] = []
+let deadLetterQueue: WebhookRetryJob[] = []
+
+function enqueueRetry(job: WebhookRetryJob): void {
+  retryQueue.push(job)
+  logger.warn('webhook', `Enqueued retry for event ${job.eventId}`, {
+    attempt: job.attempt,
+    nextRetryAt: new Date(job.nextRetryAt).toISOString(),
+  })
+}
+
+function moveToDeadLetter(job: WebhookRetryJob): void {
+  deadLetterQueue.push(job)
+  if (deadLetterQueue.length > 100) {
+    deadLetterQueue = deadLetterQueue.slice(-100)
+  }
+  logger.error('webhook', `Event ${job.eventId} moved to dead letter queue`, {
+    eventType: job.eventType,
+    totalAttempts: job.attempt,
+  })
+  sendAlert(
+    'Webhook Dead Letter',
+    `Event ${job.eventId} (${job.eventType}) failed after ${job.attempt} attempts and moved to dead letter queue.`
+  ).catch(() => {})
+}
+
+async function processRetryQueue(): Promise<void> {
+  const now = Date.now()
+  const readyJobs = retryQueue.filter(j => j.nextRetryAt <= now)
+  retryQueue = retryQueue.filter(j => j.nextRetryAt > now)
+
+  for (const job of readyJobs) {
+    try {
+      await safeQuery(async () => {
+        const { prisma } = await import('@/lib/db');
+        await prisma.webhookEvent.upsert({
+          where: { eventId: job.eventId },
+          update: { status: 'retrying', retryCount: job.attempt },
+          create: { eventId: job.eventId, provider: 'stripe', type: job.eventType, status: 'retrying', retryCount: job.attempt },
+        });
+      }, null);
+
+      const event = JSON.parse(job.payload);
+      await processWebhookEvent(event, job.attempt);
+
+      await safeQuery(async () => {
+        const { prisma } = await import('@/lib/db');
+        await prisma.webhookEvent.update({
+          where: { eventId: job.eventId },
+          data: { status: 'completed', retryCount: job.attempt },
+        });
+      }, null);
+    } catch {
+      if (job.attempt >= MAX_RETRY_ATTEMPTS) {
+        moveToDeadLetter(job)
+      } else {
+        enqueueRetry({
+          ...job,
+          attempt: job.attempt + 1,
+          nextRetryAt: Date.now() + RETRY_DELAYS_MS[job.attempt] || RETRY_DELAYS_MS[RETRY_DELAYS_MS.length - 1],
+        })
+      }
+    }
+  }
+}
+
+async function processWebhookEvent(event: { id: string; type: string; data: { object: Record<string, unknown> } }, attempt: number = 0): Promise<void> {
   const webhookErrors: string[] = []
+
+  switch (event.type) {
+    case 'checkout.session.completed': {
+      const session = event.data.object;
+      const { templateId, email } = (session.metadata || {}) as Record<string, string>;
+
+      if (templateId && email) {
+        const dbResult = await safeQuery(async () => {
+          const { prisma } = await import('@/lib/db');
+          const existing = await prisma.order.findUnique({ where: { sessionId: session.id as string } });
+          if (existing) {
+            return { skipped: true } as const;
+          }
+
+          const template = await prisma.template.findUnique({ where: { id: templateId } });
+
+          await prisma.order.create({
+            data: {
+              templateId,
+              email,
+              amount: (session.amount_total as number) || 0,
+              sessionId: session.id as string,
+              status: 'completed',
+            },
+          });
+
+          await prisma.template.update({
+            where: { id: templateId },
+            data: { downloads: { increment: 1 } },
+          });
+
+          let existingUser = await prisma.apiUser.findUnique({ where: { email } });
+          let newApiKey: string | null = null;
+          if (!existingUser) {
+            const crypto = await import('crypto');
+            const apiKey = 'napi_' + crypto.randomUUID().replace(/-/g, '');
+            existingUser = await prisma.apiUser.create({
+              data: {
+                email,
+                apiKey,
+                plan: 'starter',
+                credits: 100,
+                stripeId: session.customer as string,
+              },
+            });
+            newApiKey = apiKey;
+          }
+
+          return {
+            skipped: false,
+            template,
+            newApiKey,
+            email,
+            sessionId: session.id as string,
+            amount: (session.amount_total as number) || 0,
+            metadata: (session.metadata || {}) as Record<string, string>,
+            downloadUrl: template?.fileUrl || `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id=${session.id}&template_id=${templateId}`,
+          };
+        }, null as { skipped: true } | { skipped: false; template: { name: string; price: number } | null; newApiKey: string | null; email: string; sessionId: string; amount: number; metadata: Record<string, string>; downloadUrl: string } | null);
+
+        if (!dbResult || dbResult.skipped) break;
+
+        await handleReferralCommission(dbResult.email, dbResult.amount, webhookErrors);
+        await handleAffiliateCommission(dbResult.email, dbResult.sessionId, dbResult.amount, dbResult.metadata);
+        await autoAssignReferralProgram(dbResult.email, webhookErrors);
+        await scheduleUpsellEmail(dbResult.email);
+
+        try {
+          if (dbResult.newApiKey) {
+            const { sendApiKeyEmail } = await import('@/lib/email');
+            const apiKeyResult = await sendApiKeyEmail({ to: email, apiKey: dbResult.newApiKey, plan: 'starter' });
+            await safeQuery(async () => {
+              const { prisma } = await import('@/lib/db');
+              await prisma.emailLog.create({
+                data: {
+                  to: email,
+                  subject: 'API Key',
+                  status: apiKeyResult.success ? 'sent' : 'failed',
+                  error: apiKeyResult.success ? null : JSON.stringify(apiKeyResult.error),
+                },
+              });
+            }, null);
+          }
+        } catch (e) {
+          webhookErrors.push('api_key_email: ' + (e instanceof Error ? e.message : String(e)));
+        }
+
+        if (dbResult.template) {
+          try {
+            const emailResult = await sendOrderConfirmation({
+              to: email,
+              templateName: dbResult.template.name,
+              templatePrice: dbResult.template.price,
+              downloadUrl: dbResult.downloadUrl,
+            });
+            await safeQuery(async () => {
+              const { prisma } = await import('@/lib/db');
+              await prisma.emailLog.create({
+                data: {
+                  to: email,
+                  subject: `Order confirmation: ${dbResult.template!.name}`,
+                  status: emailResult.success ? 'sent' : 'failed',
+                  error: emailResult.success ? null : JSON.stringify(emailResult.error),
+                },
+              });
+            }, null);
+          } catch (emailError) {
+            webhookErrors.push('order_confirmation_email: ' + (emailError instanceof Error ? emailError.message : String(emailError)));
+          }
+
+          try {
+            await sendWelcomeSequence(email, dbResult.template.name);
+          } catch (e) {
+            webhookErrors.push('welcome_email: ' + (e instanceof Error ? e.message : String(e)));
+          }
+        }
+      }
+      break;
+    }
+
+    case 'checkout.session.expired': {
+      logger.info('webhook', `Event ${event.type} received for session ${event.data.object.id}`);
+      break;
+    }
+
+    case 'payment_intent.payment_failed': {
+      logger.info('webhook', `Event ${event.type} received for session ${event.data.object.id}`);
+      break;
+    }
+
+    case 'invoice.paid': {
+      const invoice = event.data.object;
+      const customerId = invoice.customer;
+      const subscriptionId = invoice.subscription;
+      logger.info('webhook', `Invoice paid: ${invoice.id} for customer ${customerId}`);
+      break;
+    }
+
+    case 'customer.subscription.deleted': {
+      const subscription = event.data.object;
+      const customerId = subscription.customer;
+      logger.info('webhook', `Subscription deleted: ${subscription.id}`);
+      await safeQuery(async () => {
+        const { prisma } = await import('@/lib/db');
+        const user = await prisma.apiUser.findFirst({
+          where: { stripeId: customerId as string }
+        });
+        if (user) {
+          await prisma.apiUser.update({
+            where: { id: user.id },
+            data: { plan: 'starter', credits: 100 }
+          });
+        }
+      }, null);
+      break;
+    }
+
+    case 'customer.subscription.updated': {
+      const subscription = event.data.object;
+      logger.info('webhook', `Subscription updated: ${subscription.id}, status: ${subscription.status}`);
+      break;
+    }
+
+    default:
+  }
+
+  if (webhookErrors.length > 0) {
+    logger.warn('webhook', `Webhook processed with warnings for event ${event.id}`, { warnings: webhookErrors })
+  }
+}
+
+export async function POST(request: NextRequest) {
+  await processRetryQueue()
+
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET
   if (!webhookSecret) {
     return NextResponse.json({ error: 'Webhook not configured', details: 'STRIPE_WEBHOOK_SECRET is not configured' }, { status: 500 })
@@ -38,6 +292,7 @@ export async function POST(request: NextRequest) {
       webhookSecret
     );
   } catch (err) {
+    logger.error('webhook', 'Invalid webhook signature', { error: err instanceof Error ? err.message : 'Unknown' });
     return NextResponse.json({ error: 'Signature invalide' }, { status: 400 });
   }
 
@@ -61,194 +316,47 @@ export async function POST(request: NextRequest) {
   }, null);
 
   try {
-    switch (event.type) {
-      case 'checkout.session.completed': {
-        const session = event.data.object;
-        const { templateId, email } = session.metadata || {};
-
-        if (templateId && email) {
-          const dbResult = await safeQuery(async () => {
-            const { prisma } = await import('@/lib/db');
-            const existing = await prisma.order.findUnique({ where: { sessionId: session.id } });
-            if (existing) {
-              return { skipped: true } as const;
-            }
-
-            const template = await prisma.template.findUnique({ where: { id: templateId } });
-
-            await prisma.order.create({
-              data: {
-                templateId,
-                email,
-                amount: session.amount_total || 0,
-                sessionId: session.id,
-                status: 'completed',
-              },
-            });
-
-            await prisma.template.update({
-              where: { id: templateId },
-              data: { downloads: { increment: 1 } },
-            });
-
-            let existingUser = await prisma.apiUser.findUnique({ where: { email } });
-            let newApiKey: string | null = null;
-            if (!existingUser) {
-              const crypto = await import('crypto');
-              const apiKey = 'napi_' + crypto.randomUUID().replace(/-/g, '');
-              existingUser = await prisma.apiUser.create({
-                data: {
-                  email,
-                  apiKey,
-                  plan: 'starter',
-                  credits: 100,
-                  stripeId: session.customer as string,
-                },
-              });
-              newApiKey = apiKey;
-            }
-
-            return {
-              skipped: false,
-              template,
-              newApiKey,
-              email,
-              sessionId: session.id,
-              amount: session.amount_total || 0,
-              metadata: session.metadata || {},
-              downloadUrl: template?.fileUrl || `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id=${session.id}&template_id=${templateId}`,
-            };
-          }, null as { skipped: true } | { skipped: false; template: { name: string; price: number } | null; newApiKey: string | null; email: string; sessionId: string; amount: number; metadata: Record<string, string>; downloadUrl: string } | null);
-
-          if (!dbResult || dbResult.skipped) break;
-
-          await handleReferralCommission(dbResult.email, dbResult.amount, webhookErrors);
-          await handleAffiliateCommission(dbResult.email, dbResult.sessionId, dbResult.amount, dbResult.metadata);
-          await autoAssignReferralProgram(dbResult.email, webhookErrors);
-          await scheduleUpsellEmail(dbResult.email);
-
-          try {
-            if (dbResult.newApiKey) {
-              const { sendApiKeyEmail } = await import('@/lib/email');
-              const apiKeyResult = await sendApiKeyEmail({ to: email, apiKey: dbResult.newApiKey, plan: 'starter' });
-              await safeQuery(async () => {
-                const { prisma } = await import('@/lib/db');
-                await prisma.emailLog.create({
-                  data: {
-                    to: email,
-                    subject: 'API Key',
-                    status: apiKeyResult.success ? 'sent' : 'failed',
-                    error: apiKeyResult.success ? null : JSON.stringify(apiKeyResult.error),
-                  },
-                });
-              }, null);
-            }
-          } catch (e) {
-            webhookErrors.push('api_key_email: ' + (e instanceof Error ? e.message : String(e)));
-          }
-
-          if (dbResult.template) {
-            try {
-              const emailResult = await sendOrderConfirmation({
-                to: email,
-                templateName: dbResult.template.name,
-                templatePrice: dbResult.template.price,
-                downloadUrl: dbResult.downloadUrl,
-              });
-              await safeQuery(async () => {
-                const { prisma } = await import('@/lib/db');
-                await prisma.emailLog.create({
-                  data: {
-                    to: email,
-                    subject: `Order confirmation: ${dbResult.template!.name}`,
-                    status: emailResult.success ? 'sent' : 'failed',
-                    error: emailResult.success ? null : JSON.stringify(emailResult.error),
-                  },
-                });
-              }, null);
-            } catch (emailError) {
-              webhookErrors.push('order_confirmation_email: ' + (emailError instanceof Error ? emailError.message : String(emailError)));
-            }
-
-            try {
-              await sendWelcomeSequence(email, dbResult.template.name);
-            } catch (e) {
-              webhookErrors.push('welcome_email: ' + (e instanceof Error ? e.message : String(e)));
-            }
-          }
-        }
-        break;
-      }
-
-      case 'checkout.session.expired': {
-        logger.info('webhook', `Event ${event.type} received for session ${event.data.object.id}`);
-        break;
-      }
-
-      case 'payment_intent.payment_failed': {
-        logger.info('webhook', `Event ${event.type} received for session ${event.data.object.id}`);
-        break;
-      }
-
-      case 'invoice.paid': {
-        const invoice = event.data.object;
-        const customerId = invoice.customer;
-        const subscriptionId = invoice.subscription;
-        logger.info('webhook', `Invoice paid: ${invoice.id} for customer ${customerId}`);
-        break;
-      }
-
-      case 'customer.subscription.deleted': {
-        const subscription = event.data.object;
-        const customerId = subscription.customer;
-        logger.info('webhook', `Subscription deleted: ${subscription.id}`);
-        await safeQuery(async () => {
-          const { prisma } = await import('@/lib/db');
-          const user = await prisma.apiUser.findFirst({
-            where: { stripeId: customerId }
-          });
-          if (user) {
-            await prisma.apiUser.update({
-              where: { id: user.id },
-              data: { plan: 'starter', credits: 100 }
-            });
-          }
-        }, null);
-        break;
-      }
-
-      case 'customer.subscription.updated': {
-        const subscription = event.data.object;
-        logger.info('webhook', `Subscription updated: ${subscription.id}, status: ${subscription.status}`);
-        break;
-      }
-
-      default:
-    }
+    await processWebhookEvent(event, 0)
   } catch (err) {
     logger.error('webhook', 'Webhook processing failed', { eventId: event?.id, type: event?.type, error: err instanceof Error ? err.message : 'Unknown' });
+
+    sendAlert(
+      'Webhook Processing Failed',
+      `Event ${event.id} (${event.type}) failed: ${err instanceof Error ? err.message : 'Unknown error'}`
+    ).catch(() => {})
+
+    const retryJob: WebhookRetryJob = {
+      eventId: event.id,
+      eventType: event.type,
+      attempt: 1,
+      maxAttempts: MAX_RETRY_ATTEMPTS,
+      nextRetryAt: Date.now() + RETRY_DELAYS_MS[0],
+      payload: JSON.stringify(event),
+      createdAt: Date.now(),
+    }
+    enqueueRetry(retryJob)
+
     await safeQuery(async () => {
       const { prisma } = await import('@/lib/db');
       await prisma.webhookEvent.update({
         where: { eventId: event.id },
-        data: { status: 'failed', lastError: err instanceof Error ? err.message : 'Unknown error' },
+        data: { status: 'failed', lastError: err instanceof Error ? err.message : 'Unknown error', retryCount: 1 },
       });
     }, null);
     await trackWebhookComplete('stripe', event?.type || 'unknown', event?.id || 'unknown', false);
-    return NextResponse.json({ error: 'Webhook processing failed', details: err instanceof Error ? err.message : 'Unknown error', eventId: event?.id }, { status: 500 });
+    return NextResponse.json({ error: 'Webhook processing failed', details: err instanceof Error ? err.message : 'Unknown error', eventId: event?.id, retry: true }, { status: 500 });
   }
 
   await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
     await prisma.webhookEvent.update({
       where: { eventId: event.id },
-        data: { status: 'completed' },
+      data: { status: 'completed' },
     });
   }, null);
   await trackWebhookComplete('stripe', event?.type || 'unknown', event?.id || 'unknown', true);
-  const response: Record<string, unknown> = { received: true };
-  if (webhookErrors.length > 0) response.warnings = webhookErrors;
-  return NextResponse.json(response);
+
+  return NextResponse.json({ received: true });
 }
 
 async function handleReferralCommission(email: string, amount: number, errors: string[]) {

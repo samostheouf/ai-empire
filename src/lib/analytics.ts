@@ -164,6 +164,18 @@ export function trackCheckoutComplete(plan: string, amount: number): void {
   sendTrackingEvent('checkout_complete', { plan, amount })
 }
 
+export function trackAgentCardClick(agentName: string, price: string): void {
+  sendTrackingEvent('cta_click', { label: 'agent_card', agentName, price })
+}
+
+export function trackPricingPlanSelect(plan: string, price: string): void {
+  sendTrackingEvent('cta_click', { label: 'pricing_plan_select', plan, price })
+}
+
+export function trackExitIntentPopup(variant: string, action: 'show' | 'convert' | 'dismiss'): void {
+  sendTrackingEvent('cta_click', { label: `exit_intent_${action}`, variant })
+}
+
 let scrollTracked25 = false
 let scrollTracked50 = false
 let scrollTracked75 = false

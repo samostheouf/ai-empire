@@ -1,4 +1,5 @@
 import OpenAI from 'openai';
+import { logger } from '@/lib/logger';
 
 interface AIResult {
   content: string;
@@ -45,13 +46,39 @@ interface ChatMessage {
   content: string;
 }
 
+const MAX_RETRIES = 3;
+const BASE_DELAY_MS = 1000;
+const MAX_DELAY_MS = 10000;
+const REQUEST_TIMEOUT_MS = 15000;
+
+function isRetryableError(error: unknown): boolean {
+  if (!(error instanceof Error)) return false;
+  const msg = error.message.toLowerCase();
+  if (msg.includes('rate_limit') || msg.includes('429')) return true;
+  if (msg.includes('econnreset') || msg.includes('econnrefused') || msg.includes('etimedout')) return true;
+  if (msg.includes('502') || msg.includes('503') || msg.includes('504')) return true;
+  if (msg.includes('timeout') || msg.includes('aborted')) return true;
+  if (error.name === 'AbortError') return true;
+  return false;
+}
+
+function getRetryDelay(attempt: number): number {
+  const delay = Math.min(BASE_DELAY_MS * Math.pow(2, attempt), MAX_DELAY_MS);
+  const jitter = delay * (0.5 + Math.random() * 0.5);
+  return Math.floor(jitter);
+}
+
+async function sleep(ms: number): Promise<void> {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 /**
  * Sends a prompt or conversation to the first available AI provider
  * and returns the generated content.
  *
  * Providers are tried in order (Groq → GLM → Gemini → OpenAI). Each
- * provider is attempted up to 2 times with a 1-second delay between
- * retries. A 15-second timeout is applied per request.
+ * provider is attempted up to 3 times with exponential backoff + jitter.
+ * A 15-second timeout is applied per request.
  *
  * When no provider has a valid API key, a demo/empty result is returned.
  *
@@ -88,7 +115,9 @@ export async function callAI(
   for (const provider of PROVIDERS) {
     if (!provider.apiKey || provider.apiKey.startsWith('sk-placeholder')) continue;
 
-    for (let attempt = 0; attempt < 2; attempt++) {
+    let lastError: unknown = null;
+
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
       try {
         const client = new OpenAI({
           apiKey: provider.apiKey,
@@ -103,7 +132,7 @@ export async function callAI(
           model,
           messages,
           max_tokens: maxTokens,
-        }, { signal: AbortSignal.timeout(15000) });
+        }, { signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS) });
 
         return {
           content: completion.choices[0]?.message?.content || '',
@@ -111,15 +140,26 @@ export async function callAI(
           provider: provider.name,
         };
       } catch (error) {
-        if (attempt === 0) {
-          await new Promise(resolve => setTimeout(resolve, 1000));
+        lastError = error;
+
+        if (attempt < MAX_RETRIES - 1 && isRetryableError(error)) {
+          const delay = getRetryDelay(attempt);
+          logger.warn('ai', `${provider.name} attempt ${attempt + 1} failed, retrying in ${delay}ms`, {
+            error: error instanceof Error ? error.message : String(error),
+          });
+          await sleep(delay);
           continue;
         }
-        continue;
+
+        logger.error('ai', `${provider.name} failed after ${attempt + 1} attempts`, {
+          error: error instanceof Error ? error.message : String(error),
+        });
+        break;
       }
     }
   }
 
+  logger.warn('ai', 'All providers exhausted, returning demo result');
   return { content: '', tokensUsed: 0, provider: 'demo' };
 }
 

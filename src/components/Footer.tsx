@@ -133,10 +133,10 @@ const Footer = memo(function Footer() {
         </div>
 
         <div className="border-t border-white/5 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-indigo-400/60">
+          <p className="text-xs text-indigo-400/75">
             &copy; {new Date().getFullYear()} NeuraAPI. {t('footerRights')}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-indigo-400/60">
+          <div className="flex flex-wrap items-center justify-center gap-4 text-xs text-indigo-400/75">
             <span className="flex items-center gap-1.5"><Shield className="w-3.5 h-3.5 text-green-400/80" aria-hidden="true" /> {t('footerRGPD')}</span>
             <span className="w-1 h-1 rounded-full bg-indigo-500/40" aria-hidden="true" />
             <span className="flex items-center gap-1.5"><BadgeCheck className="w-3.5 h-3.5 text-green-400/80" aria-hidden="true" /> {t('footerPayments')}</span>

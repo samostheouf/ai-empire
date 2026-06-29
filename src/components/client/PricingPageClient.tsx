@@ -5,6 +5,7 @@ import { Check, X as XIcon, Shield, Clock, CreditCard, BadgeCheck, ArrowRight, S
 import Link from 'next/link'
 import { useI18n } from '@/i18n'
 import Breadcrumb from '@/components/Breadcrumb'
+import { trackPricingPlanSelect, trackCheckoutStart, trackCheckoutComplete } from '@/lib/analytics'
 import dynamic from 'next/dynamic'
 
 const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
@@ -63,6 +64,7 @@ export default function PricingPageClient() {
     const email = prompt('Entrez votre email pour commencer :')
     if (!email) return
     setCheckoutLoading(plan)
+    trackCheckoutStart(plan)
     try {
       const res = await fetch('/api/checkout/agents', {
         method: 'POST',
@@ -72,6 +74,7 @@ export default function PricingPageClient() {
       const data = await res.json()
       if (data.url) {
         window.open(data.url, '_blank')
+        trackCheckoutComplete(plan, plans.find(p => p.name.toLowerCase() === plan)?.price === '0' ? 0 : 19)
       } else {
         alert(data.error || 'Erreur lors de la création du paiement')
       }
@@ -158,7 +161,10 @@ export default function PricingPageClient() {
                   </Link>
                 ) : plan.name === 'Pro' ? (
                   <button
-                    onClick={() => handleCheckout('pro')}
+                    onClick={() => {
+                      trackPricingPlanSelect('pro', plan.price)
+                      handleCheckout('pro')
+                    }}
                     disabled={checkoutLoading === 'pro'}
                     className={`mt-8 block w-full rounded-xl py-3 text-center text-sm font-semibold transition-all ${
                       plan.popular

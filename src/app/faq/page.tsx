@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronDown, ChevronUp, Search } from 'lucide-react'
+import Link from 'next/link'
+import { ChevronDown, ChevronUp, Search, ArrowRight, Sparkles } from 'lucide-react'
 import { useI18n } from '@/i18n'
 import Breadcrumb from '@/components/Breadcrumb'
 
@@ -128,6 +129,38 @@ export default function FAQPage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      <section className="px-4 pb-24 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-4xl rounded-3xl relative overflow-hidden p-12 sm:p-16 text-center">
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600/20 via-purple-600/20 to-pink-600/20" />
+          <div className="absolute inset-0 bg-white/5" />
+          <div className="relative">
+            <Sparkles className="mx-auto h-12 w-12 text-indigo-400" />
+            <h2 className="mt-6 text-3xl font-bold text-white">
+              {t('faqCtaTitle') || 'Prêt à commencer ?'}
+            </h2>
+            <p className="mt-4 text-indigo-200/80 max-w-lg mx-auto">
+              {t('faqCtaDesc') || 'Rejoignez des milliers de développeurs qui utilisent NeuraAPI pour intégrer l\'IA dans leurs projets.'}
+            </p>
+            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/register"
+                className="rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-4 text-lg font-semibold text-white hover:from-indigo-500 hover:to-purple-500 transition-all flex items-center gap-2 shadow-xl shadow-indigo-500/25 w-full sm:w-auto justify-center"
+              >
+                <Sparkles className="w-5 h-5" />
+                {t('faqCtaButton') || 'Commencer gratuitement'}
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+              <Link
+                href="/pricing"
+                className="rounded-xl border border-white/10 bg-white/5 px-8 py-4 text-lg font-semibold text-indigo-200 hover:bg-white/10 transition-all w-full sm:w-auto justify-center flex items-center gap-2"
+              >
+                {t('faqCtaPricing') || 'Voir les tarifs'}
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
     </div>

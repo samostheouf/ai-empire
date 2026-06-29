@@ -193,7 +193,7 @@ export default async function Home() {
                 <div className="text-2xl sm:text-3xl font-bold text-gradient">
                   {stat.isSDK ? 'SDK' : <AnimatedCounter target={stat.value} prefix={stat.prefix} suffix={stat.suffix} duration={1500} />}
                 </div>
-                <div className="text-xs sm:text-sm text-indigo-300/60 mt-1">{stat.label}</div>
+                <div className="text-xs sm:text-sm text-indigo-300/75 mt-1">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -310,7 +310,7 @@ export default async function Home() {
                 </div>
                 <div className="text-2xl font-bold text-white">{item.value}</div>
                 <div className="text-sm font-medium text-indigo-300 mt-1">{item.label}</div>
-                <p className="text-xs text-indigo-400/60 mt-2">{item.desc}</p>
+                <p className="text-xs text-indigo-400/75 mt-2">{item.desc}</p>
               </div>
             ))}
           </div>
@@ -323,7 +323,7 @@ export default async function Home() {
               <p className="text-lg text-white mt-1">
                 {t('roiVs')} <span className="text-green-400 font-bold text-xl">49&euro; &mdash; 199&euro;</span> avec NeuraAPI
               </p>
-              <p className="text-sm text-indigo-400/60 mt-3">{t('roiReturn')} <span className="font-bold text-white">32x &agrave; 320x</span></p>
+              <p className="text-sm text-indigo-400/75 mt-3">{t('roiReturn')} <span className="font-bold text-white">32x &agrave; 320x</span></p>
             </div>
           </div>
         </div>
@@ -347,10 +347,10 @@ export default async function Home() {
             <table className="w-full min-w-[600px]">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th className="p-5 text-left text-sm font-semibold text-indigo-300">{t('comparisonCriteria')}</th>
-                  <th className="p-5 text-center text-sm font-semibold text-gradient">{t('comparisonNeurapi')}</th>
-                  <th className="p-5 text-center text-sm font-semibold text-indigo-300/60">{t('comparisonOpenai')}</th>
-                  <th className="p-5 text-center text-sm font-semibold text-indigo-300/60">{t('comparisonGeneric')}</th>
+                  <th scope="col" className="p-5 text-left text-sm font-semibold text-indigo-300">{t('comparisonCriteria')}</th>
+                  <th scope="col" className="p-5 text-center text-sm font-semibold text-gradient">{t('comparisonNeurapi')}</th>
+                  <th scope="col" className="p-5 text-center text-sm font-semibold text-indigo-300/80">{t('comparisonOpenai')}</th>
+                  <th scope="col" className="p-5 text-center text-sm font-semibold text-indigo-300/80">{t('comparisonGeneric')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -371,8 +371,8 @@ export default async function Home() {
                         <Check className="w-4 h-4" aria-hidden="true" /> {row.neurapi}
                       </span>
                     </td>
-                    <td className="p-4 text-center text-sm text-indigo-300/50">{row.openai}</td>
-                    <td className="p-4 text-center text-sm text-indigo-300/50">{row.templates}</td>
+                    <td className="p-4 text-center text-sm text-indigo-300/70">{row.openai}</td>
+                    <td className="p-4 text-center text-sm text-indigo-300/70">{row.templates}</td>
                   </tr>
                 ))}
               </tbody>

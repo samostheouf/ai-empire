@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { Sparkles, ArrowRight, Check, ChevronDown, Zap, Shield, Send } from 'lucide-react'
 import Breadcrumb from '@/components/Breadcrumb'
+import { trackAgentCardClick, trackCheckoutStart, trackCheckoutComplete } from '@/lib/analytics'
 
 interface AgentsPageClientProps {
   translations: Record<string, string>
@@ -175,6 +176,7 @@ export default function AgentsPageClient({ translations }: AgentsPageClientProps
     const email = prompt('Entrez votre email pour commencer :')
     if (!email) return
     setCheckoutLoading(plan)
+    trackCheckoutStart(plan)
     try {
       const res = await fetch('/api/checkout/agents', {
         method: 'POST',
@@ -184,6 +186,8 @@ export default function AgentsPageClient({ translations }: AgentsPageClientProps
       const data = await res.json()
       if (data.url) {
         window.open(data.url, '_blank')
+        const planData = PRICING_PLANS.find(p => p.plan === plan)
+        trackCheckoutComplete(plan, planData ? parseInt(planData.price) : 0)
       } else {
         alert(data.error || 'Erreur lors de la création du paiement')
       }
@@ -288,6 +292,7 @@ export default function AgentsPageClient({ translations }: AgentsPageClientProps
                 </ul>
                 <Link
                   href="/register"
+                  onClick={() => trackAgentCardClick(t(agent.nameKey), agent.price)}
                   className={`mt-6 block w-full rounded-xl py-3 text-center text-sm font-semibold bg-gradient-to-r ${agent.color} text-white hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg hover:scale-105`}
                 >
                   {t('agentsCardCta')}

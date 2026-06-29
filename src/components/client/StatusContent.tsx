@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Activity, CheckCircle, AlertTriangle, XCircle, RefreshCw } from 'lucide-react'
+import Link from 'next/link'
+import { Activity, CheckCircle, AlertTriangle, XCircle, RefreshCw, ArrowRight, Sparkles } from 'lucide-react'
 import { useI18n } from '@/i18n'
 
 interface MonitoringData {
@@ -125,6 +126,30 @@ export default function StatusContent() {
               <p className="text-white">{data?.environment || '—'}</p>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="mt-12 rounded-2xl bg-indigo-900/30 border border-indigo-500/20 p-8 text-center">
+        <Sparkles className="mx-auto h-8 w-8 text-indigo-400" />
+        <h2 className="mt-4 text-xl font-bold text-white">{t('statusCtaTitle') || 'Besoin d\'une API IA fiable ?'}</h2>
+        <p className="mt-2 text-indigo-300/70 text-sm max-w-md mx-auto">
+          {t('statusCtaDesc') || 'NeuraAPI offre 99.9% de disponibilité. Intégrez l\'IA dans vos projets en quelques minutes.'}
+        </p>
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <Link
+            href="/register"
+            className="rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 text-sm font-semibold text-white hover:from-indigo-500 hover:to-purple-500 transition-all flex items-center gap-2 shadow-lg shadow-indigo-500/20 w-full sm:w-auto justify-center"
+          >
+            <Sparkles className="w-4 h-4" />
+            {t('statusCtaButton') || 'Commencer gratuitement'}
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+          <Link
+            href="/pricing"
+            className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-indigo-200 hover:bg-white/10 transition-all w-full sm:w-auto justify-center flex items-center gap-2"
+          >
+            {t('statusCtaPricing') || 'Voir les tarifs'}
+          </Link>
         </div>
       </div>
     </>
