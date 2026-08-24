@@ -115,7 +115,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">5.1 撤回条件</h3>
               <p>客户须向卖方发送书面声明（电子邮件或信函），明确表达撤回意愿。</p>
-              <p>电子邮件：<a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>电子邮件：<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
 
               <h3 className="font-semibold text-white mt-4">5.2 撤回权例外</h3>
               <p>在以下情况下不得行使撤回权：</p>
@@ -208,7 +208,7 @@ export default function TermsOfService() {
                 客户个人数据的处理由我们的<a href="/zh/privacy-policy" className="text-indigo-400 hover:text-white transition-colors underline">隐私政策</a>规定，符合 GDPR。
               </p>
               <p>
-                客户有权访问、更正、删除、携带和反对其个人数据，请联系：<a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                客户有权访问、更正、删除、携带和反对其个人数据，请联系：<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>
@@ -252,7 +252,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">11.4 联系方式</h3>
               <p>
-                如对本服务条款有任何疑问，请联系我们：<a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>
+                如对本服务条款有任何疑问，请联系我们：<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>

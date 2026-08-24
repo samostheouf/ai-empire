@@ -115,7 +115,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">5.1 Condiciones del desistimiento</h3>
               <p>Para ejercer su derecho de desistimiento, el Cliente debe comunicar al Vendedor una declaración escrita (correo electrónico o carta) que exprese claramente su voluntad de desistir.</p>
-              <p>Correo electrónico: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>Correo electrónico: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
 
               <h3 className="font-semibold text-white mt-4">5.2 Excepciones al derecho de desistimiento</h3>
               <p>El derecho de desistimiento no puede ejercerse en los siguientes casos:</p>
@@ -208,7 +208,7 @@ export default function TermsOfService() {
                 El tratamiento de los datos personales del Cliente se rige por nuestra <a href="/es/privacy-policy" className="text-indigo-400 hover:text-white transition-colors underline">Política de Privacidad</a>, conforme al RGPD.
               </p>
               <p>
-                El Cliente dispone de los derechos de acceso, rectificación, supresión, portabilidad y oposición sobre sus datos personales contactando a: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                El Cliente dispone de los derechos de acceso, rectificación, supresión, portabilidad y oposición sobre sus datos personales contactando a: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>
@@ -252,7 +252,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">11.4 Contacto</h3>
               <p>
-                Para cualquier pregunta relativa a las presentes CGV, puede contactarnos en: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>
+                Para cualquier pregunta relativa a las presentes CGV, puede contactarnos en: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>

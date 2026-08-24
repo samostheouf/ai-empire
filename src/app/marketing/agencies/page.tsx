@@ -41,7 +41,7 @@ export default async function AgenciesLandingPage() {
               {t('agenciesHeroCta1')}
               <ArrowRight className="w-4 h-4" />
             </Link>
-            <Link href="mailto:partners@neuraapi.com" className="rounded-lg border border-indigo-500 px-6 py-3 text-base font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
+            <Link href="mailto:samilaboulette21@gmail.com" className="rounded-lg border border-indigo-500 px-6 py-3 text-base font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
               {t('agenciesHeroCta2')}
             </Link>
           </div>
@@ -164,7 +164,7 @@ export default async function AgenciesLandingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="mailto:partners@neuraapi.com" className="mt-8 block rounded-lg bg-indigo-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-500 transition-all">
+              <Link href="mailto:samilaboulette21@gmail.com" className="mt-8 block rounded-lg bg-indigo-600 px-4 py-2 text-center text-sm font-semibold text-white hover:bg-indigo-500 transition-all">
                 {t('agenciesPricingEnterpriseCta')}
               </Link>
             </div>
@@ -181,7 +181,7 @@ export default async function AgenciesLandingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="mailto:partners@neuraapi.com" className="mt-8 block rounded-lg border border-indigo-500 px-4 py-2 text-center text-sm font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
+              <Link href="mailto:samilaboulette21@gmail.com" className="mt-8 block rounded-lg border border-indigo-500 px-4 py-2 text-center text-sm font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
                 {t('agenciesPricingPartnerCta')}
               </Link>
             </div>
@@ -198,7 +198,7 @@ export default async function AgenciesLandingPage() {
             {t('agenciesCtaDesc')}
           </p>
           <div className="mt-8 flex items-center justify-center gap-4">
-            <Link href="mailto:partners@neuraapi.com" className="rounded-lg bg-indigo-600 px-8 py-4 text-lg font-semibold text-white hover:bg-indigo-500 transition-all">
+            <Link href="mailto:samilaboulette21@gmail.com" className="rounded-lg bg-indigo-600 px-8 py-4 text-lg font-semibold text-white hover:bg-indigo-500 transition-all">
               {t('agenciesCta1')}
             </Link>
             <Link href="/pricing" className="rounded-lg border border-indigo-500 px-8 py-4 text-lg font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">

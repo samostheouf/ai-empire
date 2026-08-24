@@ -11,7 +11,7 @@ interface EmailOptions {
 
 async function sendEmail({ to, subject, html }: EmailOptions) {
   const { data, error } = await resend.emails.send({
-    from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+    from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
     to,
     subject,
     html,
@@ -47,7 +47,7 @@ function baseTemplate(content: string): string {
           </p>
           <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0;">
             <a href="${appUrl}" style="color: #6366f1;">site web</a> · 
-            <a href="mailto:support@neuraapi.com" style="color: #6366f1;">support</a>
+            <a href="mailto:samilaboulette21@gmail.com" style="color: #6366f1;">support</a>
           </p>
         </div>
       </div>

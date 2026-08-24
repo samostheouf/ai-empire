@@ -71,7 +71,7 @@ export default async function CookiePolicyPage() {
 
             <div>
               <h2 className="text-xl font-bold text-white mb-3">{t('cookiePolicySection5Title')}</h2>
-              <p>{t('cookiePolicySection5Content')} contact@neuraapi.com</p>
+              <p>{t('cookiePolicySection5Content')} samilaboulette21@gmail.com</p>
             </div>
           </div>
         </div>

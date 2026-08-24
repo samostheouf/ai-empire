@@ -141,7 +141,7 @@ export default async function CGV() {
 
               <h3 className="font-semibold text-white mt-4">{t('cgvArticle5Section1Title')}</h3>
               <p>{t('cgvArticle5Section1Content')}</p>
-              <p>Email : <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>Email : <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
 
               <h3 className="font-semibold text-white mt-4">{t('cgvArticle5Section2Title')}</h3>
               <p>{t('cgvArticle5Section2Content')}</p>
@@ -241,7 +241,7 @@ export default async function CGV() {
                 <a href="/politique-confidentialite" className="text-indigo-400 hover:text-white transition-colors underline">{t('cgvArticle9Link')}</a>,
               </p>
               <p>
-                {t('cgvArticle9Content2')} <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                {t('cgvArticle9Content2')} <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>
@@ -287,7 +287,7 @@ export default async function CGV() {
 
               <h3 className="font-semibold text-white mt-4">{t('cgvArticle11Section4Title')}</h3>
               <p>
-                {t('cgvArticle11Section4Content')} <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>
+                {t('cgvArticle11Section4Content')} <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>

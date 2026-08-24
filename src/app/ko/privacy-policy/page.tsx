@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
               <p><span className="font-semibold text-white">SIRET:</span> 미기재</p>
               <p><span className="font-semibold text-white">개인정보보호책임자(DPO):</span></p>
               <div className="ml-4">
-                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></div>
+                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></div>
                 <div className="flex items-center gap-2 mt-1"><MapPin className="h-4 w-4 text-indigo-400" /><p>12 Rue de la Paix, 75002 Paris, France</p></div>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function PrivacyPolicy() {
                 <li><span className="font-semibold text-white">반대권(제21조):</span> 데이터 처리에 반대</li>
                 <li><span className="font-semibold text-white">동의 철회:</span> 언제든지 가능. 이전 처리의 적법성에 영향 없음</li>
               </ul>
-              <p className="mt-4">권리를 행사하려면 <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>으로 연락하십시오.</p>
+              <p className="mt-4">권리를 행사하려면 <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>으로 연락하십시오.</p>
               <p>CNIL에 불만을 제기할 권리도 있습니다: <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a></p>
             </div>
           </section>
@@ -156,7 +156,7 @@ export default function PrivacyPolicy() {
             <div className="space-y-3 text-indigo-200 text-sm">
               <p>개인정보 보호에 대한 질문:</p>
               <div className="ml-4 space-y-2">
-                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><span>이메일: </span><a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></div>
+                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><span>이메일: </span><a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></div>
                 <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-indigo-400" /><span>주소: NeuraAPI SAS — DPO, 12 Rue de la Paix, 75002 Paris, France</span></div>
               </div>
               <p className="mt-4">1개월 이내에 요청에 답변할 것을 약속합니다.</p>

@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
               <p><span className="font-semibold text-white">SIRET：</span>未記入</p>
               <p><span className="font-semibold text-white">データ保護官（DPO）：</span></p>
               <div className="ml-4">
-                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></div>
+                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></div>
                 <div className="flex items-center gap-2 mt-1"><MapPin className="h-4 w-4 text-indigo-400" /><p>12 Rue de la Paix, 75002 Paris, France</p></div>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function PrivacyPolicy() {
                 <li><span className="font-semibold text-white">異議権（第21条）：</span>データ処理に異議を唱える</li>
                 <li><span className="font-semibold text-white">同意の撤回：</span>いつでも可能。以前の処理の合法性に影響なし</li>
               </ul>
-              <p className="mt-4">権利を行使するには、<a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a> までご連絡ください。</p>
+              <p className="mt-4">権利を行使するには、<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a> までご連絡ください。</p>
               <p>CNIL に苦情を申し立てる権利もございます：<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a></p>
             </div>
           </section>
@@ -156,7 +156,7 @@ export default function PrivacyPolicy() {
             <div className="space-y-3 text-indigo-200 text-sm">
               <p>個人データの保護に関するご質問：</p>
               <div className="ml-4 space-y-2">
-                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><span>メール：</span><a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></div>
+                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><span>メール：</span><a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></div>
                 <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-indigo-400" /><span>住所：NeuraAPI SAS — DPO, 12 Rue de la Paix, 75002 Paris, France</span></div>
               </div>
               <p className="mt-4">1ヶ月以内にお問い合わせにお答えすることを約束します。</p>

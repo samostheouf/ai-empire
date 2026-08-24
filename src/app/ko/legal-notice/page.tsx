@@ -45,7 +45,7 @@ export default function LegalNotice() {
           <section className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
             <div className="flex items-center gap-3 mb-6"><Mail className="h-6 w-6 text-indigo-400" /><h2 className="text-2xl font-bold text-white">연락처</h2></div>
             <div className="space-y-3 text-indigo-200">
-              <div className="flex items-center gap-3"><Mail className="h-4 w-4 text-indigo-400" /><p><span className="font-semibold text-white">이메일:</span> <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p></div>
+              <div className="flex items-center gap-3"><Mail className="h-4 w-4 text-indigo-400" /><p><span className="font-semibold text-white">이메일:</span> <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p></div>
               <div className="flex items-center gap-3"><Phone className="h-4 w-4 text-indigo-400" /><p><span className="font-semibold text-white">전화:</span> 미기재</p></div>
               <div className="flex items-center gap-3"><MapPin className="h-4 w-4 text-indigo-400" /><p><span className="font-semibold text-white">주소:</span> 12 Rue de la Paix, 75002 Paris, France</p></div>
             </div>

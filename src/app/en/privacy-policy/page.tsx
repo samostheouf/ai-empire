@@ -34,7 +34,7 @@ export default function PrivacyPolicy() {
               <div className="ml-4">
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <MapPin className="h-4 w-4 text-indigo-400" />
@@ -203,7 +203,7 @@ export default function PrivacyPolicy() {
                 <li><span className="font-semibold text-white">Right to withdraw consent:</span> At any time, without affecting the lawfulness of prior processing</li>
               </ul>
               <p className="mt-4">
-                To exercise your rights, contact us at: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                To exercise your rights, contact us at: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
               <p>
                 You also have the right to lodge a complaint with the CNIL: <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a>
@@ -261,7 +261,7 @@ export default function PrivacyPolicy() {
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
                   <span>Email: </span>
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-indigo-400" />

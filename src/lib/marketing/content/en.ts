@@ -233,7 +233,7 @@ export function generateFAQContent(category: string): FAQItem[] {
       },
       {
         question: 'How do I get a refund?',
-        answer: 'Contact support@neuraapi.com within 30 days of your purchase for any refund requests.',
+        answer: 'Contact samilaboulette21@gmail.com within 30 days of your purchase for any refund requests.',
         category: 'billing',
       },
     ],

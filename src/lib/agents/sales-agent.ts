@@ -100,7 +100,7 @@ Offre: -20% pour le parrain et le filleul.`
   if (request?.customerEmail && request?.type === 'welcome') {
     try {
       await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+        from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
         to: request?.customerEmail,
         subject: parsed.subject || '',
         html: buildEmailHTML(parsed.content || '', request.customerName)

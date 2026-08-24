@@ -72,7 +72,7 @@ export default function TermsOfService() {
               <p>법적 규정에 따라, 고객은 가입 또는 구매일로부터 <span className="font-semibold text-white">14일</span> 이내에 이유를 불문하고 청약철회권을 행사할 수 있습니다.</p>
               <h3 className="font-semibold text-white mt-4">5.1 청약철회 조건</h3>
               <p>청약철회를 행사하려면, 고객은 판매자에게 청약철회 의사를 명확히 표시하는 서면 통지(이메일 또는 서신)를 보내야 합니다.</p>
-              <p>이메일: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>이메일: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
               <h3 className="font-semibold text-white mt-4">5.2 청약철회권 예외</h3>
               <p>다음의 경우 청약철회권을 행사할 수 없습니다:</p>
               <ul className="list-disc list-inside space-y-1 ml-4">
@@ -130,7 +130,7 @@ export default function TermsOfService() {
             <div className="flex items-center gap-3 mb-4"><Scale className="h-5 w-5 text-indigo-400" /><h2 className="text-xl font-bold text-white">제9조 — 개인정보</h2></div>
             <div className="space-y-3 text-indigo-200 text-sm">
               <p>고객의 개인정보 처리는 <a href="/ko/privacy-policy" className="text-indigo-400 hover:text-white transition-colors underline">개인정보 처리방침</a>에 따르며, GDPR을 준수합니다.</p>
-              <p>고객은 개인정보에 대한 접근, 정정, 삭제, 이동성 및 반대 권리를拥有합니다. 연락처: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></p>
+              <p>고객은 개인정보에 대한 접근, 정정, 삭제, 이동성 및 반대 권리를拥有합니다. 연락처: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
             </div>
           </section>
           <section className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
@@ -154,7 +154,7 @@ export default function TermsOfService() {
               <h3 className="font-semibold text-white mt-4">11.3 불가항력</h3>
               <p>불가항력의 경우, 판매자는 의무 이행에 대해 책임을 지지 않습니다.</p>
               <h3 className="font-semibold text-white mt-4">11.4 연락처</h3>
-              <p>본 약관에 대한 질문은 <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>으로 연락하십시오.</p>
+              <p>본 약관에 대한 질문은 <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>으로 연락하십시오.</p>
             </div>
           </section>
         </div>

@@ -33,7 +33,7 @@ export default function PrivacyPolicy() {
               <div className="ml-4">
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <MapPin className="h-4 w-4 text-indigo-400" />
@@ -195,7 +195,7 @@ export default function PrivacyPolicy() {
                 <li><span className="font-semibold text-white">Retirar su consentimiento:</span> En cualquier momento, sin afectar la licitud del tratamiento anterior</li>
               </ul>
               <p className="mt-4">
-                Para ejercer sus derechos, contáctenos en: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                Para ejercer sus derechos, contáctenos en: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
               <p>
                 También tiene derecho a presentar una reclamación ante la AEPD: <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a>
@@ -250,7 +250,7 @@ export default function PrivacyPolicy() {
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
                   <span>Correo electrónico: </span>
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-indigo-400" />

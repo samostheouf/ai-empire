@@ -27,7 +27,7 @@ export default function PrivacyPolicy() {
               <p><span className="font-semibold text-white">SIRET:</span> لم يُكمل بعد</p>
               <p><span className="font-semibold text-white">مسؤول حماية البيانات (DPO):</span></p>
               <div className="ml-4">
-                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></div>
+                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></div>
                 <div className="flex items-center gap-2 mt-1"><MapPin className="h-4 w-4 text-indigo-400" /><p>12 Rue de la Paix, 75002 Paris, France</p></div>
               </div>
             </div>
@@ -125,7 +125,7 @@ export default function PrivacyPolicy() {
                 <li><span className="font-semibold text-white">حق الاعتراض (المادة 21):</span> الاعتراض على معالجة بياناتك</li>
                 <li><span className="font-semibold text-white">سحب الموافقة:</span> في أي وقت، دون المساس بشرعيات المعالجة السابقة</li>
               </ul>
-              <p className="mt-4">لممارسة حقوقك، تواصل معنا على: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></p>
+              <p className="mt-4">لممارسة حقوقك، تواصل معنا على: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
               <p>لك أيضًا الحق في تقديم شكوى لدى CNIL: <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a></p>
             </div>
           </section>
@@ -156,7 +156,7 @@ export default function PrivacyPolicy() {
             <div className="space-y-3 text-indigo-200 text-sm">
               <p>لأي سؤال يتعلق بحماية بياناتك الشخصية:</p>
               <div className="ml-4 space-y-2">
-                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><span>البريد الإلكتروني: </span><a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></div>
+                <div className="flex items-center gap-2"><Mail className="h-4 w-4 text-indigo-400" /><span>البريد الإلكتروني: </span><a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></div>
                 <div className="flex items-center gap-2"><MapPin className="h-4 w-4 text-indigo-400" /><span>العنوان: NeuraAPI SAS — DPO, 12 Rue de la Paix, 75002 Paris, France</span></div>
               </div>
               <p className="mt-4">نلتزم بالرد على طلبك خلال شهر واحد.</p>

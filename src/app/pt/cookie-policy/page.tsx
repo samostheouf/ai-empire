@@ -201,8 +201,8 @@ export default function CookiePolicy() {
                 Para qualquer questão relativa à nossa política de cookies, pode contactar-nos:
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>Email: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></li>
-                <li>DPO: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></li>
+                <li>Email: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
+                <li>DPO: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
               </ul>
               <p className="mt-4">
                 Pode também apresentar uma reclamação à CNPD.

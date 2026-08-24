@@ -266,7 +266,7 @@ export function generateOrganizationSchema(): object {
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'support@neuraapi.com',
+      email: 'samilaboulette21@gmail.com',
       contactType: 'customer service',
       availableLanguage: ['French', 'English', 'Spanish', 'German', 'Italian', 'Portuguese', 'Japanese', 'Korean', 'Chinese', 'Arabic'],
     },

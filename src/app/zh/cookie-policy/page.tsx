@@ -201,8 +201,8 @@ export default function CookiePolicy() {
                 如对我们的 Cookie 政策有任何疑问，请联系我们：
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>电子邮件：<a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></li>
-                <li>DPO：<a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></li>
+                <li>电子邮件：<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
+                <li>DPO：<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
               </ul>
               <p className="mt-4">
                 您也可以向 CNIL 提出投诉：<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a>

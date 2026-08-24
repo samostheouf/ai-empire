@@ -201,8 +201,8 @@ export default function CookiePolicy() {
                 Bei Fragen zu unserer Cookie-Richtlinie können Sie uns kontaktieren:
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>E-Mail: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></li>
-                <li>DSB: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></li>
+                <li>E-Mail: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
+                <li>DSB: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
               </ul>
               <p className="mt-4">
                 Sie können auch eine Beschwerde bei der zuständigen Datenschutzbehörde einreichen.

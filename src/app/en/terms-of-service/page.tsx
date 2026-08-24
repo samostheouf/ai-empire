@@ -122,7 +122,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">5.1 Withdrawal Conditions</h3>
               <p>To exercise their right of withdrawal, the Customer must send the Seller a written declaration (email or letter) clearly expressing their intention to withdraw.</p>
-              <p>Email: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>Email: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
 
               <h3 className="font-semibold text-white mt-4">5.2 Exceptions to the Right of Withdrawal</h3>
               <p>The right of withdrawal cannot be exercised in the following cases:</p>
@@ -221,7 +221,7 @@ export default function TermsOfService() {
                 The processing of the Customer&apos;s personal data is governed by our <a href="/en/privacy-policy" className="text-indigo-400 hover:text-white transition-colors underline">Privacy Policy</a>, which complies with the GDPR.
               </p>
               <p>
-                The Customer has the right to access, rectify, erase, port, and object to their personal data by contacting: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                The Customer has the right to access, rectify, erase, port, and object to their personal data by contacting: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>
@@ -267,7 +267,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">11.4 Contact</h3>
               <p>
-                For any questions relating to these TOS, you may contact us at: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>
+                For any questions relating to these TOS, you may contact us at: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>

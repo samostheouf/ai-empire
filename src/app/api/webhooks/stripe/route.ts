@@ -396,7 +396,7 @@ async function handleReferralCommission(email: string, amount: number, errors: s
     try {
       const commissionEuros = (result.commission / 100).toFixed(2);
       await getResendClient().emails.send({
-        from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+        from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
         to: result.referrerEmail,
         subject: '🎉 Votre filleul a effectué un achat !',
         html: `
@@ -462,7 +462,7 @@ async function handleAffiliateCommission(
 
 async function sendWelcomeSequence(email: string, templateName: string) {
   await getResendClient().emails.send({
-    from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+    from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
     to: email,
     subject: '🚀 Bienvenue ! Votre guide de démarrage rapide',
     html: `
@@ -518,7 +518,7 @@ async function autoAssignReferralProgram(email: string, errors: string[]) {
   if (code) {
     try {
       await getResendClient().emails.send({
-        from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+        from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
         to: email,
         subject: '🎁 Vous êtes maintenant dans le programme de parrainage !',
         html: `

@@ -233,7 +233,7 @@ export function generateFAQContent(category: string): FAQItem[] {
       },
       {
         question: 'Wie erhalte ich eine Rückerstattung?',
-        answer: 'Kontaktieren Sie support@neuraapi.com innerhalb von 30 Tagen nach Ihrem Kauf für Rückerstattungsanfragen.',
+        answer: 'Kontaktieren Sie samilaboulette21@gmail.com innerhalb von 30 Tagen nach Ihrem Kauf für Rückerstattungsanfragen.',
         category: 'billing',
       },
     ],

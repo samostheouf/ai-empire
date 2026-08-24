@@ -233,7 +233,7 @@ export function generateFAQContent(category: string): FAQItem[] {
       },
       {
         question: 'كيف أحصل على استرداد؟',
-        answer: 'تواصل مع support@neuraapi.com خلال 30 يوماً من عملية الشراء لأي طلبات استرداد.',
+        answer: 'تواصل مع samilaboulette21@gmail.com خلال 30 يوماً من عملية الشراء لأي طلبات استرداد.',
         category: 'billing',
       },
     ],

@@ -110,8 +110,8 @@ export default function CookiePolicy() {
             <div className="space-y-3 text-indigo-200 text-sm">
               <p>쿠키 정책에 대한 질문은 다음으로 연락하십시오:</p>
               <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>이메일: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></li>
-                <li>DPO: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></li>
+                <li>이메일: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
+                <li>DPO: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
               </ul>
               <p className="mt-4">CNIL에 불만을 제기할 수도 있습니다: <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a></p>
             </div>

@@ -112,7 +112,7 @@ async function sendWelcomeEmails() {
       `
 
       await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+        from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
         to: user.email,
         subject: 'Welcome to AI Empire — Your AI API is ready',
         html,
@@ -182,7 +182,7 @@ async function processOnboardingSequence() {
         const html = buildOnboardingHtml(seqEmail.template, user.email)
 
         await resend.emails.send({
-          from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+          from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
           to: user.email,
           subject: seqEmail.subject,
           html,

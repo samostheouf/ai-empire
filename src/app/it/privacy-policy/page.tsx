@@ -33,7 +33,7 @@ export default function PrivacyPolicy() {
               <div className="ml-4">
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <MapPin className="h-4 w-4 text-indigo-400" />
@@ -195,7 +195,7 @@ export default function PrivacyPolicy() {
                 <li><span className="font-semibold text-white">Revoca del consenso:</span> In qualsiasi momento, senza pregiudicare la liceità del trattamento precedente</li>
               </ul>
               <p className="mt-4">
-                Per esercitare i vostri diritti, contattateci a: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                Per esercitare i vostri diritti, contattateci a: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
               <p>
                 Avete inoltre il diritto di presentare un reclamo al Garante per la protezione dei dati personali.
@@ -250,7 +250,7 @@ export default function PrivacyPolicy() {
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
                   <span>Email: </span>
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-indigo-400" />

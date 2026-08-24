@@ -95,7 +95,7 @@ async function sendUpsellEmail(email: string, apiCalls: number) {
     const monthlySavings = Math.round(potentialRevenue * 0.3)
 
     await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+      from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
       to: email,
       subject: '📊 Votre activité augmente — Passez au plan Pro !',
       html: `
@@ -206,7 +206,7 @@ async function sendMonthlyReferralReport(errors: string[]) {
           const totalEuros = (total / 100).toFixed(2)
 
           await resend.emails.send({
-            from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+            from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
             to: referrerEmail,
             subject: `📊 Votre rapport de parrainage — ${lastMonth.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric' })}`,
             html: `

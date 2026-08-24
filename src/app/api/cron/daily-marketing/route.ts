@@ -187,7 +187,7 @@ async function scheduleReengagementEmails() {
         const resend = new Resend(process.env.RESEND_API_KEY)
 
         await resend.emails.send({
-          from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+          from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
           to: user.email,
           subject: '🎯 Nouveaux templates disponibles — Découvrez-les !',
           html: `

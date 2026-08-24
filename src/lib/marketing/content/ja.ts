@@ -233,7 +233,7 @@ export function generateFAQContent(category: string): FAQItem[] {
       },
       {
         question: '返金は受けられますか？',
-        answer: '購入から30日以内にsupport@neuraapi.comにお問い合わせください。',
+        answer: '購入から30日以内にsamilaboulette21@gmail.comにお問い合わせください。',
         category: 'billing',
       },
     ],

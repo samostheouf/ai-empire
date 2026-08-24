@@ -137,7 +137,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
   // BILLING — refund
   {
     keywords: ['remboursement', 'refund', 'annuler', 'annulation', 'cancel', 'rembourser', 'money back'],
-    response: '🔄 Garantie satisfait ou remboursé 30 jours.\n\nContactez-nous à contact@neuraapi.com pour toute demande de remboursement. Nous traitons les demandes sous 48h.',
+    response: '🔄 Garantie satisfait ou remboursé 30 jours.\n\nContactez-nous à samilaboulette21@gmail.com pour toute demande de remboursement. Nous traitons les demandes sous 48h.',
     category: 'billing',
     priority: 81,
   },
@@ -153,7 +153,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
   // GDPR
   {
     keywords: ['rgpd', 'gdpr', 'confidentialité', 'privacy', 'données personnelles', 'suppression données', 'data protection'],
-    response: '📋 Conformité RGPD :\n\n• Données minimales collectées\n• Droit d\'accès, rectification, suppression\n• Suppression sur demande : contact@neuraapi.com\n• Données supprimées sous 30 jours\n• Hébergement en Europe (Vercel)\n\n👉 /politique-confidentialite pour les détails.',
+    response: '📋 Conformité RGPD :\n\n• Données minimales collectées\n• Droit d\'accès, rectification, suppression\n• Suppression sur demande : samilaboulette21@gmail.com\n• Données supprimées sous 30 jours\n• Hébergement en Europe (Vercel)\n\n👉 /politique-confidentialite pour les détails.',
     category: 'legal',
     priority: 79,
   },
@@ -161,7 +161,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
   // SUPPORT
   {
     keywords: ['contact', 'support', 'email', 'téléphone', 'phone', 'aide', 'help', 'assistance', 'reach out'],
-    response: '📬 Contact :\n• Email : contact@neuraapi.com\n• Téléphone : 06 29 41 85 24 (lun-ven 9h-18h)\n• Page : /contact\n\nNous répondons sous 24h ouvrées.',
+    response: '📬 Contact :\n• Email : samilaboulette21@gmail.com\n• Téléphone : 06 29 41 85 24 (lun-ven 9h-18h)\n• Page : /contact\n\nNous répondons sous 24h ouvrées.',
     category: 'support',
     priority: 78,
   },
@@ -169,7 +169,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
   // TROUBLESHOOTING
   {
     keywords: ['bug', 'erreur', 'error', 'problème', 'marche pas', 'ne fonctionne pas', 'crash', '401', '403', '500'],
-    response: '🔧 En cas de problème :\n\n1. Vérifiez votre clé API (Dashboard → Mon Espace)\n2. Vérifiez vos crédits restants\n3. Consultez la documentation : /docs\n4. Contactez le support : contact@neuraapi.com\n\nCodes d\'erreur courants :\n• 401 = Clé API invalide\n• 402 = Crédits insuffisants\n• 429 = Trop de requêtes (attendez 1 min)',
+    response: '🔧 En cas de problème :\n\n1. Vérifiez votre clé API (Dashboard → Mon Espace)\n2. Vérifiez vos crédits restants\n3. Consultez la documentation : /docs\n4. Contactez le support : samilaboulette21@gmail.com\n\nCodes d\'erreur courants :\n• 401 = Clé API invalide\n• 402 = Crédits insuffisants\n• 429 = Trop de requêtes (attendez 1 min)',
     category: 'support',
     priority: 77,
   },
@@ -239,8 +239,8 @@ export function findResponse(input: string, locale: string = 'fr'): string {
             'api': 'Our AI APIs are accessible via 3 endpoints:\n\n1️⃣ **POST /api/ai/generate** — Text generation\n2️⃣ **POST /api/ai/seo** — SEO-optimized content\n3️⃣ **POST /api/ai/code** — Code generation\n\n🔑 Auth: `x-api-key: napi_your_key`\n📊 Rate limits: Starter 10 req/min, Pro 100 req/min, Enterprise unlimited\n\n👉 Check /docs for full documentation.',
             'pricing': 'Our pricing plans:\n\n🟢 **Starter** — Free (100 credits/month)\n🔵 **Pro** — €19/month (10,000 credits) — Launch offer -30% with code LAUNCH30\n🟣 **Enterprise** — €69/month (unlimited)\n\n👉 /pricing for details',
             'templates': 'Our 10 premium templates:\n\n📦 **NeuraSaaS** — €97 (SaaS Starter)\n📦 **NeuraCommerce** — €129 (E-commerce)\n📦 **NeuraBlog** — €59 (Blog)\n📦 **NeuraLanding** — €79 (Landing Page)\n📦 **NeuraDashboard** — €99 (Dashboard)\n\n👉 /templates for the full catalog',
-            'contact': '📬 Contact us:\n• Email: contact@neuraapi.com\n• Phone: +33 6 29 41 85 24 (Mon-Fri 9am-6pm)\n• Page: /contact\n\nWe respond within 24 business hours.',
-            'support': '📬 Contact us:\n• Email: contact@neuraapi.com\n• Phone: +33 6 29 41 85 24 (Mon-Fri 9am-6pm)\n• Page: /contact\n\nWe respond within 24 business hours.',
+            'contact': '📬 Contact us:\n• Email: samilaboulette21@gmail.com\n• Phone: +33 6 29 41 85 24 (Mon-Fri 9am-6pm)\n• Page: /contact\n\nWe respond within 24 business hours.',
+            'support': '📬 Contact us:\n• Email: samilaboulette21@gmail.com\n• Phone: +33 6 29 41 85 24 (Mon-Fri 9am-6pm)\n• Page: /contact\n\nWe respond within 24 business hours.',
             'courtesy': 'You\'re welcome! If you need anything else, I\'m here. 😊',
             'template': 'Our 10 premium templates are available at /templates.\n\nEach template includes:\n• Full source code\n• Documentation\n• Free updates\n• Email support\n\nStarting from €59.',
             'legal': 'Our legal pages include:\n• Terms of Service (/terms)\n• Privacy Policy (/privacy)\n• Cookie Policy (/cookie-policy)\n• DPA (/dpa)\n\nWe comply with French and EU regulations (LCEN, RGPD, ePrivacy).',

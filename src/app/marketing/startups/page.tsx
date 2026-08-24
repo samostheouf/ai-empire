@@ -181,7 +181,7 @@ export default async function StartupsLandingPage() {
                   </li>
                 ))}
               </ul>
-              <Link href="mailto:contact@neuraapi.com" className="mt-8 block rounded-lg border border-indigo-500 px-4 py-2 text-center text-sm font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
+              <Link href="mailto:samilaboulette21@gmail.com" className="mt-8 block rounded-lg border border-indigo-500 px-4 py-2 text-center text-sm font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all">
                 {t('startupsPricingEnterpriseCta')}
               </Link>
             </div>

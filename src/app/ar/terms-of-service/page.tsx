@@ -72,7 +72,7 @@ export default function TermsOfService() {
               <p>وفقًا للتشريعات المعمول بها، يحق للعميل خلال <span className="font-semibold text-white">14 يومًا</span> من تاريخ الاشتراك أو الشراء ممارسة حقه في الإلغاء دون تبرير قراره.</p>
               <h3 className="font-semibold text-white mt-4">5.1 شروط الإلغاء</h3>
               <p>لممارسة حقه في الإلغاء، يجب على العميل إرسال إعلان كتابي (بريد إلكتروني أو رسالة) يعبر بوضوح عن رغبته في الإلغاء.</p>
-              <p>البريد الإلكتروني: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>البريد الإلكتروني: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
               <h3 className="font-semibold text-white mt-4">5.2 استثناءات حق الإلغاء</h3>
               <p>لا يمكن ممارسة حق الإلغاء في الحالات التالية:</p>
               <ul className="list-disc list-inside space-y-1 ml-4">
@@ -130,7 +130,7 @@ export default function TermsOfService() {
             <div className="flex items-center gap-3 mb-4"><Scale className="h-5 w-5 text-indigo-400" /><h2 className="text-xl font-bold text-white">المادة 9 — البيانات الشخصية</h2></div>
             <div className="space-y-3 text-indigo-200 text-sm">
               <p>يخضع معالجة البيانات الشخصية للعميل وفقًا لـ <a href="/ar/privacy-policy" className="text-indigo-400 hover:text-white transition-colors underline">سياسة الخصوصية</a> الخاصة بنا، المتوافقة مع GDPR.</p>
-              <p>يحق للعميل الوصول إلى بياناته الشخصية وتصحيحها وحذفها ونقلها والاعتراض عليها عن طريق التواصل مع: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></p>
+              <p>يحق للعميل الوصول إلى بياناته الشخصية وتصحيحها وحذفها ونقلها والاعتراض عليها عن طريق التواصل مع: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
             </div>
           </section>
           <section className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
@@ -154,7 +154,7 @@ export default function TermsOfService() {
               <h3 className="font-semibold text-white mt-4">11.3 القوة القاهرة</h3>
               <p>لا يتحمل البائع المسؤولية عن تنفيذ التزاماته في حالة القوة القاهرة وفقًا للمادة 1218 من القانون المدني.</p>
               <h3 className="font-semibold text-white mt-4">11.4 الاتصال</h3>
-              <p> لأي سؤال يتعلق بشروط الخدمة هذه، يمكنكم التواصل معنا على: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p> لأي سؤال يتعلق بشروط الخدمة هذه، يمكنكم التواصل معنا على: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
             </div>
           </section>
         </div>

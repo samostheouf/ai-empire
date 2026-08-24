@@ -219,7 +219,7 @@ export default async function DPA() {
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
                   <span>{t('dpaSection8DpoLabel')}</span>
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
               </div>
             </div>

@@ -233,7 +233,7 @@ export function generateFAQContent(category: string): FAQItem[] {
       },
       {
         question: '如何获得退款？',
-        answer: '请在购买后30天内联系support@neuraapi.com申请退款。',
+        answer: '请在购买后30天内联系samilaboulette21@gmail.com申请退款。',
         category: 'billing',
       },
     ],

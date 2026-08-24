@@ -223,8 +223,8 @@ export default async function PolitiqueCookies() {
                 {t('politiqueCookiesSection5Intro')}
               </p>
               <ul className="list-disc list-inside space-y-1 ml-4">
-                <li>Email : <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></li>
-                <li>DPO : <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></li>
+                <li>Email : <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
+                <li>DPO : <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></li>
               </ul>
               <p className="mt-4">
                 {t('politiqueCookiesSection5Cnil')} <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a>

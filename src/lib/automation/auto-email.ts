@@ -54,7 +54,7 @@ function baseTemplate(content: string): string {
           </p>
           <p style="color: #94a3b8; font-size: 12px; margin: 8px 0 0;">
             <a href="${appUrl}" style="color: #6366f1;">site web</a> · 
-            <a href="mailto:support@neuraapi.com" style="color: #6366f1;">support</a> ·
+            <a href="mailto:samilaboulette21@gmail.com" style="color: #6366f1;">support</a> ·
             <a href="${appUrl}/unsubscribe" style="color: #6366f1;">se désabonner</a>
           </p>
         </div>
@@ -67,7 +67,7 @@ function baseTemplate(content: string): string {
 async function sendEmail(to: string, subject: string, html: string): Promise<boolean> {
   try {
     const { error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'NeuraAPI <hello@neuraapi.com>',
+      from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
       to,
       subject,
       html,

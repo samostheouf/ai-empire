@@ -4,18 +4,13 @@ import { generateMetadata as genMeta } from '@/lib/seo'
 import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/schema'
 import ShareButtons from '@/components/ShareButtons'
 import Breadcrumb from '@/components/Breadcrumb'
-import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
+
+const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 export async function generateMetadata() {
-  const locale = getLocaleFromCookies()
-  const translations = await getTranslations(locale)
-  const t = (key: string) => {
-    const dict = translations as unknown as Record<string, string>
-    return dict[key] || key
-  }
   return genMeta({
-    title: t('blogAiAgentsLaunchTitle'),
-    description: t('blogAiAgentsLaunchDescription'),
+    title: 'Agents IA autonomes : NeuraAPI lance votre workforce IA (2026)',
+    description: "NeuraAPI lance ses agents IA autonomes : support client, prospection, opérations. Déployez un agent connecté à vos outils en quelques lignes de code.",
     path: '/blog/ai-agents-launch',
     type: 'article',
     keywords: ['ai agents', 'autonomous workforce', 'ai automation', 'neuraapi agents', 'business automation', 'ai agents launch', 'autonomous ai', 'ai workforce'],
@@ -24,19 +19,10 @@ export async function generateMetadata() {
   })
 }
 
-const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
-
-export default async function AiAgentsLaunchPage() {
-  const locale = getLocaleFromCookies()
-  const translations = await getTranslations(locale)
-  const t = (key: string) => {
-    const dict = translations as unknown as Record<string, string>
-    return dict[key] || key
-  }
-
+export default function AiAgentsLaunchPage() {
   const articleSchema = generateArticleSchema({
-    title: t('blogAiAgentsLaunchTitle'),
-    description: t('blogAiAgentsLaunchSchemaDesc'),
+    title: 'Agents IA autonomes : NeuraAPI lance votre workforce IA',
+    description: "NeuraAPI lance ses agents IA autonomes : support client, prospection, opérations. Déployez un agent connecté à vos outils en quelques lignes de code.",
     slug: 'ai-agents-launch',
     datePublished: '2026-06-27',
     dateModified: '2026-06-27',
@@ -44,8 +30,8 @@ export default async function AiAgentsLaunchPage() {
 
   const breadcrumbSchema = generateBreadcrumbSchema({
     items: [
-      { name: t('blogBreadcrumbBlog'), path: '/blog' },
-      { name: t('blogAiAgentsLaunchBreadcrumb'), path: '/blog/ai-agents-launch' },
+      { name: 'Blog', path: '/blog' },
+      { name: 'Lancement des Agents IA', path: '/blog/ai-agents-launch' },
     ],
   })
 
@@ -60,53 +46,60 @@ export default async function AiAgentsLaunchPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
-        <Breadcrumb items={[{ name: t('blogBreadcrumbBlog'), href: '/blog' }, { name: t('blogAiAgentsLaunchBreadcrumb'), href: '/blog/ai-agents-launch' }]} />
+        <Breadcrumb items={[{ name: 'Blog', href: '/blog' }, { name: 'Lancement des Agents IA', href: '/blog/ai-agents-launch' }]} />
 
         <div className="mt-8">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
             <span className="inline-flex items-center gap-1 rounded-full bg-indigo-600/20 px-3 py-1 text-xs font-medium text-indigo-300 border border-indigo-600/30">
-              <Tag className="w-3 h-3" /> {t('blogAiAgentsLaunchTag')}
+              <Tag className="w-3 h-3" /> Annonce produit
             </span>
-            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Calendar className="w-4 h-4" /> {t('blogAiAgentsLaunchDate')}</span>
-            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Clock className="w-4 h-4" /> {t('blogAiAgentsLaunchReadTime')}</span>
+            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Calendar className="w-4 h-4" /> 27 juin 2026</span>
+            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Clock className="w-4 h-4" /> 8 min de lecture</span>
           </div>
 
           <h1 className="text-4xl font-bold text-white leading-tight sm:text-5xl">
-            {t('blogAiAgentsLaunchH1')}
+            Agents IA autonomes : NeuraAPI lance votre workforce IA
           </h1>
 
           <div className="mt-6">
-            <ShareButtons url={`${baseUrl}/blog/ai-agents-launch`} title={t('blogAiAgentsLaunchShareTitle')} />
+            <ShareButtons url={`${baseUrl}/blog/ai-agents-launch`} title="NeuraAPI lance ses Agents IA autonomes" />
           </div>
         </div>
 
         <div className="mt-12 space-y-8 text-indigo-200/80 leading-relaxed">
           <p className="text-lg">
-            {t('blogAiAgentsLaunchIntro')}
+            Aujourd&apos;hui, NeuraAPI franchit une étape majeure : les Agents IA autonomes arrivent sur toutes les
+            offres. Un agent ne se contente pas de répondre à un prompt — il exécute des tâches complètes,
+            utilise vos outils (email, Slack, CRM), consulte votre base de connaissances et escalade vers un
+            humain uniquement quand c&apos;est nécessaire.
           </p>
 
           <div className="rounded-xl bg-indigo-900/30 border border-indigo-800/50 p-6 my-8">
-            <h3 className="text-white font-semibold mb-2">{t('blogAiAgentsLaunchKeyBenefitsTitle')}</h3>
+            <h3 className="text-white font-semibold mb-2">Ce que les agents changent concrètement</h3>
             <ul className="list-disc list-inside space-y-1 text-indigo-300 text-sm">
-              <li>{t('blogAiAgentsLaunchBenefit1')}</li>
-              <li>{t('blogAiAgentsLaunchBenefit2')}</li>
-              <li>{t('blogAiAgentsLaunchBenefit3')}</li>
-              <li>{t('blogAiAgentsLaunchBenefit4')}</li>
-              <li>{t('blogAiAgentsLaunchBenefit5')}</li>
+              <li>Support client 24/7 qui résout les tickets sans intervention humaine</li>
+              <li>Prospection automatisée avec qualification des leads</li>
+              <li>Opérations : résumés de réunions, suivi de commandes, rapports</li>
+              <li>Connexion native à vos outils existants (email, Slack, CRM)</li>
+              <li>Escalade intelligente vers un humain selon vos seuils</li>
             </ul>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">{t('blogAiAgentsLaunchH2What')}</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">Qu&apos;est-ce qu&apos;un agent IA autonome ?</h2>
           <p>
-            {t('blogAiAgentsLaunchPWhatA')}
+            Un chatbot classique répond à une question puis s&apos;arrête. Un agent IA autonome, lui, poursuit un
+            objectif : il planifie des étapes, appelle des outils externes, vérifie ses propres résultats et
+            itère jusqu&apos;à accomplir la tâche.
           </p>
           <p>
-            {t('blogAiAgentsLaunchPWhatB')}
+            Concrètement, un agent de support peut lire un ticket, chercher la réponse dans votre FAQ,
+            consulter la commande du client dans votre CRM, rédiger une réponse personnalisée et la envoyer —
+            le tout en moins de trente secondes, sans qu&apos;aucun membre de votre équipe n&apos;ait ouvert l&apos;outil.
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">{t('blogAiAgentsLaunchH2How')}</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">Déployer votre premier agent en 5 minutes</h2>
           <p>
-            {t('blogAiAgentsLaunchPHowA')}
+            L&apos;API Agents fait partie du SDK NeuraAPI. Si vous savez appeler une API REST, vous savez déployer un agent.
           </p>
           <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
             <pre className="text-sm text-indigo-300/80">
@@ -132,105 +125,108 @@ await agent.deploy()`}</code>
             </pre>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">{t('blogAiAgentsLaunchH2Features')}</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">Les capacités clés</h2>
           <div className="space-y-4">
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-              <h3 className="text-white font-semibold mb-2">{t('blogAiAgentsLaunchFeature1Title')}</h3>
-              <p className="text-sm text-indigo-300">{t('blogAiAgentsLaunchFeature1Desc')}</p>
+              <h3 className="text-white font-semibold mb-2">Mémoire longue durée</h3>
+              <p className="text-sm text-indigo-300">Chaque agent se souvient des interactions passées avec chaque client pour des réponses toujours contextuelles.</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-              <h3 className="text-white font-semibold mb-2">{t('blogAiAgentsLaunchFeature2Title')}</h3>
-              <p className="text-sm text-indigo-300">{t('blogAiAgentsLaunchFeature2Desc')}</p>
+              <h3 className="text-white font-semibold mb-2">Intégrations natives</h3>
+              <p className="text-sm text-indigo-300">Email, Slack, Notion, HubSpot et plus de vingt autres outils connectables sans code supplémentaire.</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-              <h3 className="text-white font-semibold mb-2">{t('blogAiAgentsLaunchFeature3Title')}</h3>
-              <p className="text-sm text-indigo-300">{t('blogAiAgentsLaunchFeature3Desc')}</p>
+              <h3 className="text-white font-semibold mb-2">Garde-fous configurables</h3>
+              <p className="text-sm text-indigo-300">Seuils d&apos;escalade, ton de voix, sujets interdits : vous gardez le contrôle total sur ce que l&apos;agent peut faire.</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
-              <h3 className="text-white font-semibold mb-2">{t('blogAiAgentsLaunchFeature4Title')}</h3>
-              <p className="text-sm text-indigo-300">{t('blogAiAgentsLaunchFeature4Desc')}</p>
+              <h3 className="text-white font-semibold mb-2">Analytics temps réel</h3>
+              <p className="text-sm text-indigo-300">Taux de résolution, temps de traitement, motifs d&apos;escalade : un tableau de bord mesure l&apos;impact de chaque agent.</p>
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">{t('blogAiAgentsLaunchH2Pricing')}</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">Tarifs</h2>
           <p>
-            {t('blogAiAgentsLaunchPPricingA')}
+            Les agents sont inclus dans tous les plans NeuraAPI, avec un nombre d&apos;exécutions qui évolue avec votre usage.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5 text-center">
-              <h3 className="text-white font-semibold">{t('blogAiAgentsLaunchPlan1Name')}</h3>
-              <p className="text-2xl font-bold text-indigo-400 mt-2">{t('blogAiAgentsLaunchPlan1Price')}</p>
-              <p className="text-sm text-indigo-300 mt-1">{t('blogAiAgentsLaunchPlan1Desc')}</p>
+              <h3 className="text-white font-semibold">Starter</h3>
+              <p className="text-2xl font-bold text-indigo-400 mt-2">0 €</p>
+              <p className="text-sm text-indigo-300 mt-1">100 exécutions/mois pour tester</p>
             </div>
             <div className="rounded-xl border border-indigo-600 bg-indigo-900/40 p-5 text-center relative">
-              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-indigo-600 px-3 py-1 text-xs font-medium text-white">{t('blogAiAgentsLaunchPopular')}</span>
-              <h3 className="text-white font-semibold">{t('blogAiAgentsLaunchPlan2Name')}</h3>
-              <p className="text-2xl font-bold text-indigo-400 mt-2">{t('blogAiAgentsLaunchPlan2Price')}</p>
-              <p className="text-sm text-indigo-300 mt-1">{t('blogAiAgentsLaunchPlan2Desc')}</p>
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-indigo-600 px-3 py-1 text-xs font-medium text-white">Populaire</span>
+              <h3 className="text-white font-semibold">Pro</h3>
+              <p className="text-2xl font-bold text-indigo-400 mt-2">29 €/mois</p>
+              <p className="text-sm text-indigo-300 mt-1">5 000 exécutions + toutes les intégrations</p>
             </div>
             <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5 text-center">
-              <h3 className="text-white font-semibold">{t('blogAiAgentsLaunchPlan3Name')}</h3>
-              <p className="text-2xl font-bold text-indigo-400 mt-2">{t('blogAiAgentsLaunchPlan3Price')}</p>
-              <p className="text-sm text-indigo-300 mt-1">{t('blogAiAgentsLaunchPlan3Desc')}</p>
+              <h3 className="text-white font-semibold">Business</h3>
+              <p className="text-2xl font-bold text-indigo-400 mt-2">99 €/mois</p>
+              <p className="text-sm text-indigo-300 mt-1">Exécutions illimitées + support dédié</p>
             </div>
           </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">{t('blogAiAgentsLaunchH2Results')}</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">Premiers résultats mesurés</h2>
           <p>
-            {t('blogAiAgentsLaunchPResultsA')}
+            Les équipes beta qui ont déjà déployé des agents constatent des gains immédiats :
           </p>
           <ul className="list-disc list-inside space-y-2 text-indigo-300">
-            <li><strong className="text-white">{t('blogAiAgentsLaunchResult1Strong')}</strong> {t('blogAiAgentsLaunchResult1')}</li>
-            <li><strong className="text-white">{t('blogAiAgentsLaunchResult2Strong')}</strong> {t('blogAiAgentsLaunchResult2')}</li>
-            <li><strong className="text-white">{t('blogAiAgentsLaunchResult3Strong')}</strong> {t('blogAiAgentsLaunchResult3')}</li>
-            <li><strong className="text-white">{t('blogAiAgentsLaunchResult4Strong')}</strong> {t('blogAiAgentsLaunchResult4')}</li>
+            <li><strong className="text-white">-68 %</strong> de tickets support traités manuellement</li>
+            <li><strong className="text-white">x4</strong> sur le volume de leads qualifiés par semaine</li>
+            <li><strong className="text-white">&lt; 30 s</strong> de temps de résolution moyen par demande</li>
+            <li><strong className="text-white">92 %</strong> de satisfaction client sur les interactions agent</li>
           </ul>
 
-          <h2 className="text-2xl font-bold text-white mt-12">{t('blogAiAgentsLaunchH2Conclusion')}</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">Conclusion</h2>
           <p>
-            {t('blogAiAgentsLaunchPConclusion1')}
+            Les agents IA autonomes ne remplacent pas vos équipes — ils leur rendent leur temps. En déléguant
+            les tâches répétitives à des agents connectés à vos outils, chacun se concentre sur le travail à
+            vraie valeur ajoutée.
           </p>
           <p>
-            {t('blogAiAgentsLaunchPConclusion2')}
+            La fonctionnalité est disponible dès aujourd&apos;hui sur toutes les offres. Cinq minutes suffisent pour
+            déployer votre premier agent.
           </p>
         </div>
 
         <div className="mt-12 rounded-2xl bg-indigo-900/50 border border-indigo-700/50 p-8 text-center">
           <h3 className="text-2xl font-bold text-white">
-            {t('blogAiAgentsLaunchCtaTitle')}
+            Déployez votre premier agent IA aujourd&apos;hui
           </h3>
           <p className="mt-3 text-indigo-200">
-            {t('blogAiAgentsLaunchCtaDesc')}
+            Support client, prospection, opérations : créez un agent connecté à vos outils en quelques minutes.
           </p>
-          <div className="mt-6 flex items-center justify-center gap-4">
+          <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
             <Link
               href="/agents"
               className="rounded-lg bg-indigo-600 px-6 py-3 text-base font-semibold text-white hover:bg-indigo-500 transition-all"
             >
-              {t('blogAiAgentsLaunchCtaPrimary')}
+              Découvrir les Agents IA
             </Link>
             <Link
               href="/docs"
               className="rounded-lg border border-indigo-500 px-6 py-3 text-base font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all"
             >
-              {t('blogAiAgentsLaunchCtaSecondary')}
+              Lire la documentation
             </Link>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-4">{t('blogRelatedArticles')}</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">Articles liés</h3>
           <ul className="space-y-3">
             <li>
               <Link href="/blog/ai-api-integration" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                {t('blogRelatedAiApiIntegration')}
+                Intégrer une API IA dans Next.js en 3 étapes
               </Link>
             </li>
             <li>
               <Link href="/blog/nextjs-saas-starter" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                {t('blogRelatedNextjsSaasStarter')}
+                Créer un SaaS Next.js prêt pour la production
               </Link>
             </li>
           </ul>

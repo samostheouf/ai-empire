@@ -84,7 +84,7 @@ export default function TermsOfService() {
               <p>法令に基づき、お客様は申込日または購入日から <span className="font-semibold text-white">14日間</span>以内に理由を問わずクーリングオフの権利を行使できます。</p>
               <h3 className="font-semibold text-white mt-4">5.1 クーリングオフの条件</h3>
               <p>クーリングオフを行使するには、お客様は販売者にクーリングオフの意思を明確に示す書面の通知（メールまたは手紙）を送付する必要があります。</p>
-              <p>メール：<a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>メール：<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
               <h3 className="font-semibold text-white mt-4">5.2 クーリングオフの例外</h3>
               <p>以下の場合にはクーリングオフの権利を行使できません：</p>
               <ul className="list-disc list-inside space-y-1 ml-4">
@@ -154,7 +154,7 @@ export default function TermsOfService() {
             </div>
             <div className="space-y-3 text-indigo-200 text-sm">
               <p>お客様の個人データの処理は、<a href="/ja/privacy-policy" className="text-indigo-400 hover:text-white transition-colors underline">プライバシーポリシー</a>に従い、GDPR に準拠しています。</p>
-              <p>お客様は個人データへのアクセス、訂正、削除、ポータビリティ、異議の権利を有します。連絡先：<a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a></p>
+              <p>お客様は個人データへのアクセス、訂正、削除、ポータビリティ、異議の権利を有します。連絡先：<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
             </div>
           </section>
           <section className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
@@ -181,7 +181,7 @@ export default function TermsOfService() {
               <h3 className="font-semibold text-white mt-4">11.3 不可抗力</h3>
               <p>不可抗力の場合、販売者は義務の履行について責任を負いません。</p>
               <h3 className="font-semibold text-white mt-4">11.4 お問い合わせ</h3>
-              <p>本規約に関するご質問は、<a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a> までご連絡ください。</p>
+              <p>本規約に関するご質問は、<a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a> までご連絡ください。</p>
             </div>
           </section>
         </div>

@@ -233,7 +233,7 @@ export function generateFAQContent(category: string): FAQItem[] {
       },
       {
         question: 'Como obtenho um reembolso?',
-        answer: 'Contacte support@neuraapi.com dentro de 30 dias após a sua compra para qualquer pedido de reembolso.',
+        answer: 'Contacte samilaboulette21@gmail.com dentro de 30 dias após a sua compra para qualquer pedido de reembolso.',
         category: 'billing',
       },
     ],

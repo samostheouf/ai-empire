@@ -233,7 +233,7 @@ export function generateFAQContent(category: string): FAQItem[] {
       },
       {
         question: 'Comment obtenir un remboursement ?',
-        answer: 'Contactez support@neuraapi.com sous 30 jours après votre achat pour toute demande de remboursement.',
+        answer: 'Contactez samilaboulette21@gmail.com sous 30 jours après votre achat pour toute demande de remboursement.',
         category: 'billing',
       },
     ],

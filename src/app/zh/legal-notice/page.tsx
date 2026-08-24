@@ -61,7 +61,7 @@ export default function LegalNotice() {
             <div className="space-y-3 text-indigo-200">
               <div className="flex items-center gap-3">
                 <Mail className="h-4 w-4 text-indigo-400" />
-                <p><span className="font-semibold text-white">电子邮件：</span><a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+                <p><span className="font-semibold text-white">电子邮件：</span><a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-indigo-400" />

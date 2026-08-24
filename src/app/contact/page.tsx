@@ -63,10 +63,10 @@ export default async function Contact() {
               </div>
               <div className="space-y-2 text-sm">
                 <p className="text-indigo-200">
-                  {t('contactSupportGeneral')} : <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>
+                  {t('contactSupportGeneral')} : <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </p>
                 <p className="text-indigo-200">
-                  {t('contactSupportTech')} : <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>
+                  {t('contactSupportTech')} : <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </p>
               </div>
             </div>

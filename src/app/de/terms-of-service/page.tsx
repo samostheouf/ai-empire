@@ -115,7 +115,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">5.1 Widerrufsbedingungen</h3>
               <p>Um sein Widerrufsrecht auszuüben, muss der Kunde dem Verkäufer eine eindeutige schriftliche Erklärung (E-Mail oder Brief) übermitteln.</p>
-              <p>E-Mail: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>E-Mail: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
 
               <h3 className="font-semibold text-white mt-4">5.2 Ausnahmen vom Widerrufsrecht</h3>
               <p>Das Widerrufsrecht besteht nicht in folgenden Fällen:</p>
@@ -208,7 +208,7 @@ export default function TermsOfService() {
                 Die Verarbeitung personenbezogener Daten des Kunden wird durch unsere <a href="/de/privacy-policy" className="text-indigo-400 hover:text-white transition-colors underline">Datenschutzerklärung</a> geregelt, die der DSGVO entspricht.
               </p>
               <p>
-                Der Kunde hat das Recht auf Auskunft, Berichtigung, Löschung, Datenübertragbarkeit und Widerspruch bezüglich seiner personenbezogenen Daten durch Kontaktaufnahme mit: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                Der Kunde hat das Recht auf Auskunft, Berichtigung, Löschung, Datenübertragbarkeit und Widerspruch bezüglich seiner personenbezogenen Daten durch Kontaktaufnahme mit: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>
@@ -252,7 +252,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">11.4 Kontakt</h3>
               <p>
-                Bei Fragen zu diesen AGB können Sie uns kontaktieren unter: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>
+                Bei Fragen zu diesen AGB können Sie uns kontaktieren unter: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>

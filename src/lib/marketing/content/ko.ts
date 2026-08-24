@@ -233,7 +233,7 @@ export function generateFAQContent(category: string): FAQItem[] {
       },
       {
         question: '환불은 어떻게 받나요?',
-        answer: '구매 후 30일 이내에 support@neuraapi.com으로 환불 요청을 보내주세요.',
+        answer: '구매 후 30일 이내에 samilaboulette21@gmail.com으로 환불 요청을 보내주세요.',
         category: 'billing',
       },
     ],

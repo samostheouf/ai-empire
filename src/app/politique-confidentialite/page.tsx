@@ -34,7 +34,7 @@ export default function PolitiqueConfidentialite() {
               <div className="ml-4">
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
                 <div className="flex items-center gap-2 mt-1">
                   <MapPin className="h-4 w-4 text-indigo-400" />
@@ -203,7 +203,7 @@ export default function PolitiqueConfidentialite() {
                 <li><span className="font-semibold text-white">De retirer votre consentement :</span> À tout moment, sans affecter la licéité du traitement antérieur</li>
               </ul>
               <p className="mt-4">
-                Pour exercer vos droits, contactez-nous à : <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                Pour exercer vos droits, contactez-nous à : <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
               <p>
                 Vous disposez également du droit d&apos;introduire une réclamation auprès de la CNIL : <a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer" className="text-indigo-400 hover:text-white transition-colors">www.cnil.fr</a>
@@ -261,7 +261,7 @@ export default function PolitiqueConfidentialite() {
                 <div className="flex items-center gap-2">
                   <Mail className="h-4 w-4 text-indigo-400" />
                   <span>Email : </span>
-                  <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                  <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4 text-indigo-400" />

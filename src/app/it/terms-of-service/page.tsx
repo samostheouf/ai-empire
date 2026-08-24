@@ -115,7 +115,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">5.1 Condizioni di recesso</h3>
               <p>Per esercitare il diritto di recesso, il Cliente deve inviare al Venditore una dichiarazione scritta (email o lettera) che esprima chiaramente la propria volontà di recedere.</p>
-              <p>Email: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a></p>
+              <p>Email: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a></p>
 
               <h3 className="font-semibold text-white mt-4">5.2 Eccezioni al diritto di recesso</h3>
               <p>Il diritto di recesso non può essere esercitato nei seguenti casi:</p>
@@ -208,7 +208,7 @@ export default function TermsOfService() {
                 Il trattamento dei dati personali del Cliente è disciplinato dalla nostra <a href="/it/privacy-policy" className="text-indigo-400 hover:text-white transition-colors underline">Informativa sulla Privacy</a>, conforme al GDPR.
               </p>
               <p>
-                Il Cliente dispone dei diritti di accesso, rettifica, cancellazione, portabilità e opposizione sui propri dati personali contattando: <a href="mailto:dpo@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">dpo@neuraapi.com</a>
+                Il Cliente dispone dei diritti di accesso, rettifica, cancellazione, portabilità e opposizione sui propri dati personali contattando: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>
@@ -252,7 +252,7 @@ export default function TermsOfService() {
 
               <h3 className="font-semibold text-white mt-4">11.4 Contatti</h3>
               <p>
-                Per qualsiasi domanda relativa ai presenti TS, potete contattarci a: <a href="mailto:contact@neuraapi.com" className="text-indigo-400 hover:text-white transition-colors">contact@neuraapi.com</a>
+                Per qualsiasi domanda relativa ai presenti TS, potete contattarci a: <a href="mailto:samilaboulette21@gmail.com" className="text-indigo-400 hover:text-white transition-colors">samilaboulette21@gmail.com</a>
               </p>
             </div>
           </section>
