@@ -1,6 +1,26 @@
 import { MetadataRoute } from 'next'
+import fs from 'fs'
+import path from 'path'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
+
+// Blog slugs discovered dynamically from the filesystem so new articles are
+// picked up automatically at build time.
+const NON_LOCALE_DIRS = ['en', 'es', 'de', 'it', 'pt', 'ja', 'ko', 'zh', 'ar']
+function getBlogSlugs(): string[] {
+  try {
+    const blogDir = path.join(process.cwd(), 'src', 'app', 'blog')
+    return fs
+      .readdirSync(blogDir, { withFileTypes: true })
+      .filter((d) => d.isDirectory())
+      .filter((d) => !NON_LOCALE_DIRS.includes(d.name))
+      .filter((d) => fs.existsSync(path.join(blogDir, d.name, 'page.tsx')))
+      .map((d) => d.name)
+      .sort()
+  } catch {
+    return []
+  }
+}
 
 const LOCALES = ['fr', 'en', 'es', 'de', 'it', 'pt', 'ja', 'ko', 'zh', 'ar'] as const
 
@@ -42,18 +62,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/api-docs`, lastModified: now, changeFrequency: 'weekly', priority: 0.9, alternates: buildAlternates('/api-docs') },
     { url: `${baseUrl}/guide`, lastModified: now, changeFrequency: 'monthly', priority: 0.85, alternates: buildAlternates('/guide') },
     { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9, alternates: buildAlternates('/blog') },
-    { url: `${baseUrl}/blog/chatbot-ia-nextjs-groq`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/chatbot-ia-nextjs-groq') },
-    { url: `${baseUrl}/blog/api-ia-nextjs`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/api-ia-nextjs') },
-    { url: `${baseUrl}/blog/creer-saas-48h`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/creer-saas-48h') },
-    { url: `${baseUrl}/blog/seo-ia-tools`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/seo-ia-tools') },
-    { url: `${baseUrl}/blog/comparaison-providers-ia-gratuits`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/comparaison-providers-ia-gratuits') },
-    { url: `${baseUrl}/blog/ai-api-integration`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/ai-api-integration') },
-    { url: `${baseUrl}/blog/ai-api-pour-saas`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/ai-api-pour-saas') },
-    { url: `${baseUrl}/blog/automatisation-api`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/automatisation-api') },
-    { url: `${baseUrl}/blog/nextjs-saas-starter`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/nextjs-saas-starter') },
-    { url: `${baseUrl}/blog/stripe-billing-nextjs`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/stripe-billing-nextjs') },
-    { url: `${baseUrl}/blog/templates-nextjs-premium`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/templates-nextjs-premium') },
-    { url: `${baseUrl}/blog/templates-premium-guide`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/templates-premium-guide') },
+    ...getBlogSlugs().map(
+      (slug): SitemapEntry => ({
+        url: `${baseUrl}/blog/${slug}`,
+        lastModified: now,
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: buildAlternates(`/blog/${slug}`),
+      })
+    ),
     { url: `${baseUrl}/marketing`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/marketing') },
     { url: `${baseUrl}/marketing/saas`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/marketing/saas') },
     { url: `${baseUrl}/marketing/developers`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/marketing/developers') },
