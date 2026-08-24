@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
 import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: Request) {
   try {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || request.headers.get('x-vercel-forwarded-for')?.split(',')[0]?.trim() || 'unknown'

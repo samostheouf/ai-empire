@@ -26,15 +26,21 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
   const [error, setError] = useState<string | null>(null)
   const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
+  // Auto-applique le code promo de lancement (supporte ?promo= et ?ref=)
+  const PROMO_BANNER = 'LANCEMENT30'
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search)
       const ref = params.get('ref')
       const aff = params.get('aff')
+      const promo = params.get('promo')
       if (ref) setReferralCode(ref)
       if (aff) setAffiliateCode(aff)
+      void promo
     }
   }, [])
+
+  const discountedPrice = Math.round(price * 0.7)
 
   const handleCheckout = async () => {
     if (!email) return
@@ -50,6 +56,7 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
         templateTitle: templateName,
         price,
         email,
+        promoCode: price > 0 ? 'LANCEMENT30' : undefined,
         referralCode: referralCode || undefined,
         affiliateCode: affiliateCode || undefined,
       }),
@@ -69,6 +76,16 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
 
   return (
     <div className="space-y-3">
+      {/* Bannière promo lancement */}
+      {price > 0 && (
+        <div className="flex items-center justify-between rounded-lg border border-amber-300 bg-amber-50 px-4 py-2.5">
+          <span className="text-sm font-semibold text-amber-800">🎉 Offre de lancement -30%</span>
+          <span className="text-sm text-amber-900">
+            <s className="mr-1.5 opacity-60">{formatPrice(price)}</s>
+            <strong>{formatPrice(discountedPrice)}</strong>
+          </span>
+        </div>
+      )}
       <input
         type="email"
         placeholder="votre@email.com"

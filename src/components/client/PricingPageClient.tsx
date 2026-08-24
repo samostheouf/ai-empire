@@ -7,6 +7,7 @@ import { useI18n } from '@/i18n'
 import Breadcrumb from '@/components/Breadcrumb'
 import { trackPricingPlanSelect, trackCheckoutStart, trackCheckoutComplete } from '@/lib/analytics'
 import dynamic from 'next/dynamic'
+import SocialProof from '@/components/client/SocialProof'
 
 const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
 
@@ -132,6 +133,9 @@ export default function PricingPageClient() {
                     <span className="text-4xl font-bold text-white">{t('pricingFree')}</span>
                   ) : (
                     <div className="flex items-baseline gap-1">
+                      {plan.name === 'Pro' && (
+                        <span className="mr-2 text-lg text-indigo-400/50 line-through">27€</span>
+                      )}
                       <span className="text-4xl font-bold text-white">{plan.price}€</span>
                       <span className="text-sm text-indigo-400">{t('pricingPerMonth2')}</span>
                     </div>
@@ -213,6 +217,9 @@ export default function PricingPageClient() {
               {t('pricingSocialProof')}
             </p>
           </div>
+
+          {/* Social proof live */}
+          <SocialProof />
         </div>
       </section>
 

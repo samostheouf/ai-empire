@@ -42,6 +42,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/api-docs`, lastModified: now, changeFrequency: 'weekly', priority: 0.9, alternates: buildAlternates('/api-docs') },
     { url: `${baseUrl}/guide`, lastModified: now, changeFrequency: 'monthly', priority: 0.85, alternates: buildAlternates('/guide') },
     { url: `${baseUrl}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9, alternates: buildAlternates('/blog') },
+    { url: `${baseUrl}/blog/chatbot-ia-nextjs-groq`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/chatbot-ia-nextjs-groq') },
     { url: `${baseUrl}/blog/api-ia-nextjs`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/api-ia-nextjs') },
     { url: `${baseUrl}/blog/creer-saas-48h`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/creer-saas-48h') },
     { url: `${baseUrl}/blog/seo-ia-tools`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/blog/seo-ia-tools') },

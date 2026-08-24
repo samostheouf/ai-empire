@@ -8,6 +8,14 @@ import Breadcrumb from '@/components/Breadcrumb'
 
 const articles = [
   {
+    slug: 'chatbot-ia-nextjs-groq',
+    title: 'Créer un chatbot IA avec Next.js et Groq (2026)',
+    excerpt: 'Guide complet pour créer un chatbot IA performant avec Next.js et Groq. Streaming temps réel, code complet, déploiement Vercel.',
+    date: '24 Août 2026',
+    readTime: '12 min',
+    category: 'Tutoriel',
+  },
+  {
     slug: 'ai-api-pour-saas',
     title: 'Comment intégrer l\'IA dans votre SaaS en 30 minutes',
     excerpt: 'Tutoriel concret : intégrez une API IA dans votre SaaS Next.js en 30 minutes. Code copiable à chaque étape, bonnes pratiques, déploiement.',

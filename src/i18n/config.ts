@@ -2555,6 +2555,54 @@ export type TranslationKeys = {
   blogApiIaNextjsPStep2: string
   blogApiIaNextjsPStep2b: string
   blogApiIaNextjsPStep3: string
+
+  // Blog - Chatbot IA Groq Next.js
+  blogChatbotGroqBreadcrumb: string
+  blogChatbotGroqCtaDesc: string
+  blogChatbotGroqCtaDesc2: string
+  blogChatbotGroqCtaTitle: string
+  blogChatbotGroqDate: string
+  blogChatbotGroqDescription: string
+  blogChatbotGroqH1: string
+  blogChatbotGroqH2BestPractices: string
+  blogChatbotGroqH2Conclusion: string
+  blogChatbotGroqH2Deploy: string
+  blogChatbotGroqH2Streaming: string
+  blogChatbotGroqH2Step1: string
+  blogChatbotGroqH2Step2: string
+  blogChatbotGroqH2Ui: string
+  blogChatbotGroqH2WhyGroq: string
+  blogChatbotGroqIntro: string
+  blogChatbotGroqKw1: string
+  blogChatbotGroqKw2: string
+  blogChatbotGroqKw3: string
+  blogChatbotGroqKw4: string
+  blogChatbotGroqKw5: string
+  blogChatbotGroqKw6: string
+  blogChatbotGroqLiCacheStrong: string
+  blogChatbotGroqLiCache: string
+  blogChatbotGroqLiContextStrong: string
+  blogChatbotGroqLiContext: string
+  blogChatbotGroqLiHistoryStrong: string
+  blogChatbotGroqLiHistory: string
+  blogChatbotGroqLiLimitStrong: string
+  blogChatbotGroqLiLimit: string
+  blogChatbotGroqPBestPractices1: string
+  blogChatbotGroqPConclusion: string
+  blogChatbotGroqPConclusionTemplates: string
+  blogChatbotGroqPConclusion2: string
+  blogChatbotGroqPDeploy: string
+  blogChatbotGroqPStep1: string
+  blogChatbotGroqPStep2b: string
+  blogChatbotGroqPSchemaDesc: string
+  blogChatbotGroqPBestPractices2: string
+  blogChatbotGroqPUi: string
+  blogChatbotGroqPWhyGroq1: string
+  blogChatbotGroqPWhyGroq2: string
+  blogChatbotGroqReadTime: string
+  blogChatbotGroqShareTitle: string
+  blogChatbotGroqTag: string
+  blogChatbotGroqTitle: string
   blogAutomatisationApiH1: string
   blogAutomatisationApiH2Analysis: string
   blogAutomatisationApiH2Conclusion: string

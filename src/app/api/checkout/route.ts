@@ -81,12 +81,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
+
     let sessionParams: Record<string, unknown> = {
       payment_method_types: ['card'],
       customer_email: email,
       mode: 'payment',
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}&template_id=${templateId}`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/pricing`,
+      success_url: `${appUrl}/checkout/success?session_id={CHECKOUT_SESSION_ID}&template_id=${templateId}`,
+      cancel_url: `${appUrl}/pricing`,
       metadata: { templateId, email, promoCode: promoCode || '', referralCode: referralCode || '', affiliateCode: affiliateCode || '', templateName: template.name, fileUrl: template.fileUrl },
     }
 

@@ -9,3 +9,4 @@ node_modules
 credentials.txt
 credentials.json
 social-keys.json
+.env*
