@@ -148,9 +148,9 @@ export default function ExitIntentPopup() {
 
         {variant === 'discount' ? (
           <>
-            <h2 className="text-2xl font-bold text-white">-20% sur votre premier mois</h2>
+            <h2 className="text-2xl font-bold text-white">-30% sur tous les templates</h2>
             <p className="mt-3 text-indigo-300 text-sm leading-relaxed">
-              Profitez de -20% sur le plan Pro avec le code <span className="font-bold text-white">WELCOME20</span>. Offre valable 48h.
+              Profitez de -30% avec le code <span className="font-bold text-white">LANCEMENT30</span>, déjà appliqué automatiquement au panier. Offre de lancement, valable à durée limitée.
             </p>
           </>
         ) : (
@@ -176,7 +176,7 @@ export default function ExitIntentPopup() {
 
           {variant === 'discount' && (
             <Link
-              href="/pricing"
+              href="/templates"
               onClick={() => trackEvent('cta_click', { label: 'exit_intent_discount_cta', location: 'popup', variant })}
               className="flex items-center justify-center gap-2 w-full rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3.5 text-sm font-semibold text-white hover:from-indigo-500 hover:to-purple-500 transition-all shadow-lg shadow-indigo-500/20"
             >
