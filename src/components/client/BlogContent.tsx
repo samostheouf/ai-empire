@@ -10,7 +10,9 @@ const articles = [
   {
     slug: 'chatbot-ia-nextjs-groq',
     title: 'Créer un chatbot IA avec Next.js et Groq (2026)',
+    titleEn: 'Build an AI chatbot with Next.js and Groq (2026)',
     excerpt: 'Guide complet pour créer un chatbot IA performant avec Next.js et Groq. Streaming temps réel, code complet, déploiement Vercel.',
+    excerptEn: 'Complete guide to building a fast AI chatbot with Next.js and Groq. Real-time streaming, full code, Vercel deployment.',
     date: '24 Août 2026',
     readTime: '12 min',
     category: 'Tutoriel',
@@ -18,6 +20,7 @@ const articles = [
   {
     slug: 'ai-api-pour-saas',
     title: 'Comment intégrer l\'IA dans votre SaaS en 30 minutes',
+    titleEn: 'Integrate AI into your SaaS in 30 minutes',
     excerpt: 'Tutoriel concret : intégrez une API IA dans votre SaaS Next.js en 30 minutes. Code copiable à chaque étape, bonnes pratiques, déploiement.',
     date: '15 Juin 2024',
     readTime: '12 min',
@@ -58,7 +61,22 @@ const articles = [
 ]
 
 export default function BlogContent() {
-  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
+  const { t: rawT, locale } = useI18n(); const t = rawT as (key: string) => string
+  const isEn = locale !== 'fr'
+
+  const ui = isEn ? {
+    badge: 'NeuraAPI Blog',
+    h1: 'Articles & Guides',
+    sub: 'Tutorials, comparisons and hands-on guides to build your projects with AI.',
+    read: 'min read',
+  } : {
+    badge: 'Blog NeuraAPI',
+    h1: 'Articles & Guides',
+    sub: "Tutoriels, comparaisons et guides pratiques pour développer vos projets avec l'intelligence artificielle.",
+    read: 'min de lecture',
+  }
+
+  const localized = articles.map(a => isEn && a.titleEn ? { ...a, title: a.titleEn, excerpt: a.excerptEn || a.excerpt } : a)
 
   return (
     <div className="bg-indigo-950 min-h-screen">
@@ -68,13 +86,13 @@ export default function BlogContent() {
           <Breadcrumb items={[{ name: 'Blog', href: '/blog' }]} />
           <div className="inline-flex items-center gap-2 rounded-full bg-indigo-900/50 px-4 py-1.5 text-sm text-indigo-300 border border-indigo-800/50 mb-8">
             <BookOpen className="w-4 h-4" />
-            Blog NeuraAPI
+            {ui.badge}
           </div>
           <h1 className="text-4xl font-bold tracking-tight text-white sm:text-5xl">
-            Articles & Guides
+            {ui.h1}
           </h1>
           <p className="mt-6 text-lg text-indigo-200 max-w-2xl mx-auto">
-            Tutoriels, comparaisons et guides pratiques pour développer vos projets avec l&apos;intelligence artificielle.
+            {ui.sub}
           </p>
         </div>
       </section>
@@ -82,7 +100,7 @@ export default function BlogContent() {
       <section className="px-4 pb-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-8 md:grid-cols-2">
-            {articles.map((article, i) => (
+            {localized.map((article, i) => (
               <Link
                 key={article.slug}
                 href={`/blog/${article.slug}`}
@@ -114,7 +132,7 @@ export default function BlogContent() {
                   {article.excerpt}
                 </p>
                 <div className="mt-6 flex items-center gap-2 text-sm font-medium text-indigo-400 group-hover:text-indigo-300 transition-colors">
-                  Lire l&apos;article
+                  {isEn ? 'Read article' : "Lire l'article"}
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </div>
               </Link>
