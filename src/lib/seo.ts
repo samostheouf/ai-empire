@@ -53,7 +53,8 @@ function buildHreflangAlternates(currentPath: string): Record<string, string> {
   const languages: Record<string, string> = {}
   for (const [locale, localeStr] of Object.entries(LOCALE_MAP)) {
     const basePath = LOCALE_PATHS[locale]
-    languages[localeStr] = `${baseUrl}${basePath}${currentPath}`
+    const joined = `${basePath}${currentPath}`.replace(/\/{2,}/g, '/')
+    languages[localeStr] = `${baseUrl}${joined}`
   }
   languages['x-default'] = `${baseUrl}${currentPath}`
   return languages
