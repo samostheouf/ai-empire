@@ -117,7 +117,7 @@ export async function middleware(request: NextRequest) {
     return new NextResponse(null, { status: 204, headers: corsHeaders })
   }
 
-  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
+  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin') || pathname.startsWith('/dashboard')) {
     const adminError = await verifyAdminSession(request)
     if (adminError) return adminError
   }

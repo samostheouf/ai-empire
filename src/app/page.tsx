@@ -23,7 +23,7 @@ const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
 
 export async function generateMetadata(): Promise<Metadata> {
   return genMeta({
-    title: 'NeuraAPI — APIs IA & Templates Premium Next.js',
+    title: 'APIs IA & Templates Premium Next.js',
     description: 'Intégrez l\'intelligence artificielle dans vos applications en quelques minutes. APIs IA puissantes et templates Next.js premium pour développeurs.',
     path: '',
     type: 'website',
