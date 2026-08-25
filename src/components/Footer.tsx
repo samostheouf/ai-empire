@@ -7,7 +7,8 @@ import { useI18n } from '@/i18n'
 import { useState, memo } from 'react'
 
 const Footer = memo(function Footer() {
-  const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
+  const { t: rawT, locale } = useI18n(); const t = rawT as (key: string) => string
+  const blogPrefix = locale === 'fr' ? '' : `/${locale}`
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
 
@@ -113,8 +114,8 @@ const Footer = memo(function Footer() {
             <h3 className="text-sm font-semibold text-white mb-4">{t('footerResources')}</h3>
             <ul className="space-y-2.5">
               <li><Link href="/blog" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">Blog</Link></li>
-              <li><Link href="/blog/en/api-ia-nextjs" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerTutorialIA')}</Link></li>
-              <li><Link href="/blog/en/creer-saas-48h" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerGuideSaaS')}</Link></li>
+              <li><Link href={`${blogPrefix}/blog/api-ia-nextjs`} className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerTutorialIA')}</Link></li>
+              <li><Link href={`${blogPrefix}/blog/creer-saas-48h`} className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerGuideSaaS')}</Link></li>
               <li><Link href="/status" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerStatus')}</Link></li>
               <li><Link href="/contact" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerContact')}</Link></li>
             </ul>

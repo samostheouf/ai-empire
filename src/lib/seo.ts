@@ -44,7 +44,12 @@ export const LOCALE_PATHS: Record<string, string> = {
   ar: '/ar',
 }
 
+function normalizePath(p: string): string {
+  return p.startsWith('/') && !p.startsWith('//') ? p.replace(/^\/+/, '/') : p
+}
+
 function buildHreflangAlternates(currentPath: string): Record<string, string> {
+  currentPath = normalizePath(currentPath)
   const languages: Record<string, string> = {}
   for (const [locale, localeStr] of Object.entries(LOCALE_MAP)) {
     const basePath = LOCALE_PATHS[locale]
@@ -67,7 +72,7 @@ export interface SEOConfig {
 }
 
 export function generateMetadata(config: SEOConfig): Metadata {
-  const url = `${baseUrl}${config.path}`
+  const url = `${baseUrl}${normalizePath(config.path)}`
   const image = config.image || `${baseUrl}/api/og?title=${encodeURIComponent(config.title)}`
   const locale = config.locale || 'fr_FR'
 
