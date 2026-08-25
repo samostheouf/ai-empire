@@ -23,7 +23,19 @@ export function I18nProvider({
   initialLocale: Locale
 }) {
   const [locale, setLocaleState] = useState<Locale>(initialLocale)
-  const [dict, setDict] = useState<Record<string, unknown> | null>(null)
+  // SSR + first client render: start with the initial locale's dictionary loaded
+  // synchronously so t() never renders raw keys (SEO/crawlers see real text).
+  const [dict, setDict] = useState<Record<string, unknown> | null>(() => {
+    if (initialLocale === 'fr') {
+      try {
+        // eslint-disable-next-line @typescript-eslint/no-require-imports
+        return require('./translations/fr').default as Record<string, unknown>
+      } catch {
+        return null
+      }
+    }
+    return null
+  })
 
   useEffect(() => {
     loadTranslations(locale).then((t) => setDict(t as unknown as Record<string, unknown>))
