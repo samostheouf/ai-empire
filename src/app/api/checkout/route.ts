@@ -29,7 +29,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Trop de requêtes. Réessayez plus tard.' }, { status: 429, headers: rlHeaders })
     }
 
-    const { templateId, templateTitle, email, promoCode, referralCode, affiliateCode } = await request.json()
+    let body: unknown
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json({ error: 'Corps de requête JSON invalide' }, { status: 400, headers: { 'Cache-Control': 'no-store' } })
+    }
+    const { templateId, templateTitle, email, promoCode, referralCode, affiliateCode } = (body ?? {}) as {
+      templateId?: string; templateTitle?: string; email?: string; promoCode?: string; referralCode?: string; affiliateCode?: string
+    }
 
     if (!validateId(templateId)) {
       return NextResponse.json({ error: 'ID template invalide' }, { status: 400, headers: { 'Cache-Control': 'no-store' } })
