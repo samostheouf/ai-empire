@@ -230,6 +230,8 @@ model WebhookEvent {
   retryCount Int     @default(0)
   lastError String?
   processed Boolean  @default(false)
+  payload   Json?
+  nextRetryAt DateTime?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@index([eventId])

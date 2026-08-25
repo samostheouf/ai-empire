@@ -18,6 +18,7 @@ const PROMO_CODES: Record<string, { discount: number; description: string }> = {
   HEBDO15: { discount: 0.15, description: 'Offre hebdomadaire -15%' },
 }
 
+const COUPON_CACHE_MAX = 100
 const couponCache = new Map<string, string>()
 
 export async function POST(request: NextRequest) {
@@ -103,8 +104,14 @@ export async function POST(request: NextRequest) {
     if (template.stripePriceId) {
       sessionParams.line_items = [{ price: template.stripePriceId, quantity: 1 }]
       if (discountApplied) {
-        sessionParams.discounts = [{ coupon: await createDiscountCoupon(promoCode!) }]
-        sessionParams.allow_promotion_codes = false
+        const couponId = await createDiscountCoupon(promoCode!)
+        // Empty coupon id (unknown code / Stripe failure) would break the session.
+        if (couponId) {
+          sessionParams.discounts = [{ coupon: couponId }]
+          sessionParams.allow_promotion_codes = false
+        } else {
+          sessionParams.allow_promotion_codes = true
+        }
       } else {
         sessionParams.allow_promotion_codes = true
       }
@@ -155,6 +162,10 @@ async function createDiscountCoupon(code: string): Promise<string> {
     duration: 'once',
     name: promo.description,
   })
+  if (couponCache.size >= COUPON_CACHE_MAX) {
+    // Bound the cache: drop the oldest entry (FIFO eviction).
+    couponCache.delete(couponCache.keys().next().value as string)
+  }
   couponCache.set(upperCode, coupon.id)
   return coupon.id
 }
