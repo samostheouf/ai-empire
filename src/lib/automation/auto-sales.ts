@@ -1,5 +1,6 @@
 import { Resend } from 'resend'
 import { prisma, safeQuery } from '@/lib/db'
+import { escapeHtml } from '@/lib/html-escape'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
@@ -64,7 +65,7 @@ function baseTemplate(content: string): string {
 async function sendEmail(to: string, subject: string, html: string): Promise<boolean> {
   try {
     const { error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
+      from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
       to,
       subject,
       html,
@@ -110,7 +111,7 @@ export async function sendUpsellEmails(): Promise<SalesLog[]> {
     const content = `
       <h2 style="margin: 0 0 16px; color: #1e293b;">Complétez votre collection 🎯</h2>
       <p style="color: #64748b; margin: 0 0 16px;">
-        Merci d'avoir acheté <strong>${order.template?.name || 'notre template'}</strong> !
+        Merci d'avoir acheté <strong>${escapeHtml(order.template?.name || 'notre template')}</strong> !
         Pour aller plus loin, découvrez nos offres exclusives :
       </p>
       <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px; margin-bottom: 16px;">

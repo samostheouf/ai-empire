@@ -1,3 +1,4 @@
+import { escapeHtml } from '@/lib/html-escape'
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 interface LaunchAnnouncementEmailProps {
@@ -58,7 +59,7 @@ export function getLaunchAnnouncementHtml({ to, userName, lang = 'en' }: LaunchA
   html: string
 } {
   const c = LAUNCH_COPY[lang] || LAUNCH_COPY.en
-  const greeting = userName ? `Hi ${userName},` : 'Hi there,'
+  const greeting = userName ? `Hi ${escapeHtml(userName)},` : 'Hi there,'
 
   const subject = c.subject
   const html = `

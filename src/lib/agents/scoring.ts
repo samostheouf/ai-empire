@@ -142,8 +142,7 @@ export function calculateCompositeScore(
 }
 
 export function normalizeCriteriaScores(
-  rawScores: Record<string, number>,
-  role: string
+  rawScores: Record<string, number>
 ): Record<string, number> {
   const normalized: Record<string, number> = {}
 

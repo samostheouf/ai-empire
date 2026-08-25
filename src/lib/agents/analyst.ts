@@ -147,7 +147,12 @@ function calculateGrowthRate(data: number[]): number {
   if (data.length < 2) return 0
   const growthRates = []
   for (let i = 1; i < data.length; i++) {
-    growthRates.push(((data[i] - data[i-1]) / data[i-1]) * 100)
+    const prev = data[i - 1]
+    if (!prev || prev <= 0) {
+      growthRates.push(0)
+      continue
+    }
+    growthRates.push(((data[i] - prev) / prev) * 100)
   }
   return Math.round(growthRates.reduce((a, b) => a + b, 0) / growthRates.length)
 }
@@ -156,7 +161,7 @@ function generateFallbackAnalysis(request: AnalysisRequest): Partial<AnalysisRes
   const data = request?.data || getDefaultData()
   const currentRevenue = data.revenue?.[data.revenue.length - 1] || 4000
   const previousRevenue = data.revenue?.[data.revenue.length - 2] || 3500
-  const growthRate = ((currentRevenue - previousRevenue) / previousRevenue * 100)
+  const growthRate = previousRevenue > 0 ? ((currentRevenue - previousRevenue) / previousRevenue * 100) : 0
 
   const fallbacks: Record<string, Partial<AnalysisResult>> = {
     metrics: {

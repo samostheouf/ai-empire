@@ -1,4 +1,5 @@
 import { callAI } from '@/lib/ai'
+import { sanitizePromptInput } from '@/lib/html-escape'
 
 export interface VoiceRequest {
   type: 'transcribe' | 'respond' | 'translate'
@@ -36,7 +37,7 @@ export async function executeVoiceAgent(request: VoiceRequest): Promise<VoiceRes
   switch (request?.type) {
     case 'transcribe':
       prompt = `Transcris et analyse le message suivant:
-"${request.input}"
+"${sanitizePromptInput(request.input)}"
 Langue détectée: ${request.language || 'français'}
 Fournis: transcription propre, détection de langue, analyse de sentiment.
 Format JSON: {output, confidence, sentiment, language}`
@@ -44,7 +45,7 @@ Format JSON: {output, confidence, sentiment, language}`
 
     case 'respond':
       prompt = `Génère une réponse au message suivant:
-"${request.input}"
+"${sanitizePromptInput(request.input)}"
 Contexte: ${request.context || 'Conversation avec un prospect potentiel'}
 Fournis: réponse contextuelle et pertinente, analyse de sentiment.
 Format JSON: {output, confidence, sentiment, language}`
@@ -52,7 +53,7 @@ Format JSON: {output, confidence, sentiment, language}`
 
     case 'translate':
       prompt = `Traduis le message suivant en ${request.language || 'français'}:
-"${request.input}"
+"${sanitizePromptInput(request.input)}"
 Fournis: traduction naturelle, analyse de sentiment.
 Format JSON: {output, confidence, sentiment, language}`
       break

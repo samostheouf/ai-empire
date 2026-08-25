@@ -1,4 +1,5 @@
 import { callAI } from '@/lib/ai'
+import { sanitizePromptInput } from '@/lib/html-escape'
 
 export interface ContentRequest {
   type: 'blog' | 'product' | 'social' | 'email'
@@ -50,16 +51,19 @@ function calculateSEOScore(content: string, keywords: string[]): number {
 
 export async function executeContentCreator(request: ContentRequest): Promise<GeneratedContent> {
   const id = generateId()
-  const keywords = request?.keywords || [request?.topic || ""]
   const tone = request?.tone || 'professionnel et engageant'
   const maxLength = request?.maxLength || 1500
+  const keywords = request?.keywords || [request?.topic || ""]
+  const safeTopic = sanitizePromptInput(request?.topic)
+  const safeTone = sanitizePromptInput(tone, 200)
+  const safeAudience = sanitizePromptInput(request?.targetAudience, 200)
 
   let prompt = ''
   switch (request?.type) {
     case 'blog':
-      prompt = `Rédige un article de blog sur: "${request?.topic}"
-Audience cible: ${request?.targetAudience || 'développeurs et entrepreneurs'}
-Ton: ${tone}
+      prompt = `Rédige un article de blog sur: "${safeTopic}"
+Audience cible: ${safeAudience || 'développeurs et entrepreneurs'}
+Ton: ${safeTone}
 Mots-clés à intégrer: ${keywords.join(', ')}
 Longueur max: ${maxLength} caractères.
 
@@ -67,24 +71,24 @@ Format: Titre H2, introduction accrocheuse, sous-sections H3, conclusion avec CT
       break
 
     case 'product':
-      prompt = `Rédige une description produit pour: "${request?.topic}"
-Ton: ${tone}
+      prompt = `Rédige une description produit pour: "${safeTopic}"
+Ton: ${safeTone}
 Mots-clés: ${keywords.join(', ')}
 Format: Titre percutant, liste de bénéfices (pas de features), preuve sociale, CTA.
 Max ${maxLength} caractères.`
       break
 
     case 'social':
-      prompt = `Crée 3 posts réseaux sociaux pour: "${request?.topic}"
-Ton: ${tone}
+      prompt = `Crée 3 posts réseaux sociaux pour: "${safeTopic}"
+Ton: ${safeTone}
 Mots-clés: ${keywords.join(', ')}
 Inclus: emoji pertinents, hashtags (max 5), CTA clair.
 Chaque post max 280 caractères.`
       break
 
     case 'email':
-      prompt = `Rédige un email marketing pour: "${request?.topic}"
-Ton: ${tone}
+      prompt = `Rédige un email marketing pour: "${safeTopic}"
+Ton: ${safeTone}
 Mots-clés: ${keywords.join(', ')}
 Format: Objet d'email, pré-header, corps avec bénéfices, CTA.
 Max ${maxLength} caractères.`
@@ -125,14 +129,15 @@ function extractExcerpt(content: string): string {
 }
 
 function generateFallbackContent(request: ContentRequest): string {
+  const safeTopic = sanitizePromptInput(request?.topic)
   const templates: Record<string, string> = {
-    blog: `## ${request?.topic}\n\nDécouvrez comment ${request?.topic} peut transformer votre business.\n\n### Pourquoi c'est important\n\nDans un monde digital en constante évolution, ${request?.topic} est devenu incontournable.\n\n### Les bénéfices clés\n\n- Gain de temps considérable\n- Réduction des coûts\n- Amélioration de la qualité\n\n### Conclusion\n\nPrêt à passer à l'action ? ${request?.topic} est votre allié.`,
+    blog: `## ${safeTopic}\n\nDécouvrez comment ${safeTopic} peut transformer votre business.\n\n### Pourquoi c'est important\n\nDans un monde digital en constante évolution, ${safeTopic} est devenu incontournable.\n\n### Les bénéfices clés\n\n- Gain de temps considérable\n- Réduction des coûts\n- Amélioration de la qualité\n\n### Conclusion\n\nPrêt à passer à l'action ? ${safeTopic} est votre allié.`,
 
-    product: `## ${request?.topic}\n\nLe ${request?.topic} premium pour les professionnels.\n\n**Bénéfices :**\n- Solution tout-en-un\n- Support dédié 24/7\n- Mises à jour gratuites\n\n**Tarif :** À partir de 29€\n\n[Commencer maintenant →]`,
+    product: `## ${safeTopic}\n\nLe ${safeTopic} premium pour les professionnels.\n\n**Bénéfices :**\n- Solution tout-en-un\n- Support dédié 24/7\n- Mises à jour gratuites\n\n**Tarif :** À partir de 29€\n\n[Commencer maintenant →]`,
 
-    social: `🚀 ${request?.topic} - La révolution est là !\n\n✅ Gain de temps\n✅ Résultats garantis\n✅ Support premium\n\nDécouvrez → [lien]\n\n#${request.keywords?.[0] || 'neuraapi'} #ia #tech`,
+    social: `🚀 ${safeTopic} - La révolution est là !\n\n✅ Gain de temps\n✅ Résultats garantis\n✅ Support premium\n\nDécouvrez → [lien]\n\n#${request.keywords?.[0] || 'neuraapi'} #ia #tech`,
 
-    email: `Objet : ${request?.topic} - Offre exclusive\n\nBonjour,\n\n${request?.topic} peut changer votre façon de travailler.\n\nNos clients constatent en moyenne 3x plus de productivité.\n\n👉 Découvrez l'offre\n\nÀ bientôt,\nL'équipe NeuraAPI`
+    email: `Objet : ${safeTopic} - Offre exclusive\n\nBonjour,\n\n${safeTopic} peut changer votre façon de travailler.\n\nNos clients constatent en moyenne 3x plus de productivité.\n\n👉 Découvrez l'offre\n\nÀ bientôt,\nL'équipe NeuraAPI`
   }
 
   return templates[request?.type] || templates.blog

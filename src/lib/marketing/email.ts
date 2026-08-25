@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { escapeHtml } from '@/lib/html-escape'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
@@ -11,7 +12,7 @@ interface EmailOptions {
 
 async function sendEmail({ to, subject, html }: EmailOptions) {
   const { data, error } = await resend.emails.send({
-    from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
+    from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
     to,
     subject,
     html,
@@ -63,7 +64,7 @@ export interface WelcomeEmailData {
 
 export async function sendWelcomeEmail1({ to, name }: WelcomeEmailData) {
   const content = `
-    <h2 style="margin: 0 0 16px; color: #1e293b;">Bienvenue ${name} ! 🎉</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">Bienvenue ${escapeHtml(name)} ! 🎉</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Merci de rejoindre NeuraAPI. Vous avez maintenant accès à des APIs IA puissantes et des templates premium.
     </p>
@@ -86,7 +87,7 @@ export async function sendWelcomeEmail1({ to, name }: WelcomeEmailData) {
 
 export async function sendWelcomeEmail2({ to, name }: WelcomeEmailData) {
   const content = `
-    <h2 style="margin: 0 0 16px; color: #1e293b;">${name}, découvrez nos APIs IA 🚀</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(name)}, découvrez nos APIs IA 🚀</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Voici ce que vous pouvez créer avec NeuraAPI dès maintenant :
     </p>
@@ -111,7 +112,7 @@ export async function sendWelcomeEmail2({ to, name }: WelcomeEmailData) {
 
 export async function sendWelcomeEmail3({ to, name }: WelcomeEmailData) {
   const content = `
-    <h2 style="margin: 0 0 16px; color: #1e293b;">${name}, boostez votre productivité 💡</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(name)}, boostez votre productivité 💡</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Voici 3 astuces pour tirer le meilleur parti de NeuraAPI :
     </p>
@@ -245,7 +246,7 @@ export interface ReengagementData {
 
 export async function sendReengagementEmail({ to, name, lastActivity }: ReengagementData) {
   const content = `
-    <h2 style="margin: 0 0 16px; color: #1e293b;">${name}, nous vous avons manqué ! 💜</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(name)}, nous vous avons manqué ! 💜</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Cela fait un moment que vous n'avez pas utilisé NeuraAPI. Voici ce qui a changé :
     </p>
@@ -262,5 +263,5 @@ export async function sendReengagementEmail({ to, name, lastActivity }: Reengage
       Reprendre là où vous en étiez
     </a>
   `
-  return sendEmail({ to, subject: `${name}, vos crédits gratuits vous attendent !`, html: baseTemplate(content) })
+  return sendEmail({ to, subject: `${escapeHtml(name)}, vos crédits gratuits vous attendent !`, html: baseTemplate(content) })
 }

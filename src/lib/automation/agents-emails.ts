@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { escapeHtml } from '@/lib/html-escape'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
@@ -38,7 +39,7 @@ function baseTemplate(content: string): string {
 async function sendEmail(to: string, subject: string, html: string): Promise<boolean> {
   try {
     const { error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
+      from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
       to,
       subject,
       html,
@@ -57,7 +58,7 @@ function email1_Welcome(userName: string): { subject: string; html: string } {
     <div style="text-align: center; margin-bottom: 24px;">
       <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=200&fit=crop" alt="AI Hero" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
     </div>
-    <h2 style="margin: 0 0 16px; color: #1e293b;">Bienvenue ${userName} dans AI Agent Factory 🤖</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">Bienvenue ${escapeHtml(userName)} dans AI Agent Factory 🤖</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Vous venez de rejoindre la plateforme d'agents IA la plus puissante. Voici votre guide de démarrage rapide :
     </p>
@@ -120,7 +121,7 @@ function email2_SupportAgent(userName: string): { subject: string; html: string 
     <div style="text-align: center; margin-bottom: 24px;">
       <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=200&fit=crop" alt="Feature" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
     </div>
-    <h2 style="margin: 0 0 16px; color: #1e293b;">${userName}, découvrez le Support Agent 💬</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(userName)}, découvrez le Support Agent 💬</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Le Support Agent peut traiter 80% de vos tickets d'assistance sans aucune intervention humaine. Voici comment :
     </p>
@@ -188,7 +189,7 @@ function email3_SuccessStory(userName: string): { subject: string; html: string 
     </div>
     <h2 style="margin: 0 0 16px; color: #1e293b;">Comment Sarah a transformé son business 🚀</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
-      ${userName}, voici l'histoire de Sarah, fondatrice d'une agence marketing qui a utilisé AI Agent Factory pour automatiser 70% de ses tâches répétitives.
+      ${escapeHtml(userName)}, voici l'histoire de Sarah, fondatrice d'une agence marketing qui a utilisé AI Agent Factory pour automatiser 70% de ses tâches répétitives.
     </p>
     <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin-bottom: 24px;">
       <h3 style="margin: 0 0 12px; color: #1e293b;">📊 Les résultats en chiffres</h3>
@@ -236,7 +237,7 @@ function email4_UpgradePro(userName: string): { subject: string; html: string } 
     <div style="text-align: center; margin-bottom: 24px;">
       <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=200&fit=crop" alt="Upgrade" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
     </div>
-    <h2 style="margin: 0 0 16px; color: #1e293b;">${userName}, passez à Pro 🚀</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(userName)}, passez à Pro 🚀</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Vous utilisez AI Agent Factory depuis quelques jours. Voici ce que le plan Pro vous apporte pour aller plus loin.
     </p>
@@ -303,7 +304,7 @@ function email5_LastChance(userName: string): { subject: string; html: string } 
         L'offre -30% expire dans 24 heures
       </p>
     </div>
-    <h2 style="margin: 0 0 16px; color: #1e293b;">${userName}, ne manquez pas cette offre ⏰</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(userName)}, ne manquez pas cette offre ⏰</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       C'est le dernier rappel. L'offre de lancement AI Agent Factory avec -30% sur le plan Pro expire demain.
     </p>
@@ -366,7 +367,7 @@ function emailWinBack1(userName: string, daysInactive: number): { subject: strin
     <div style="text-align: center; margin-bottom: 24px;">
       <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=200&fit=crop" alt="We miss you" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
     </div>
-    <h2 style="margin: 0 0 16px; color: #1e293b;">${userName}, nous vous avons manqué ! 💜</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(userName)}, nous vous avons manqué ! 💜</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Cela fait ${daysInactive} jours que vous n'avez pas utilisé AI Agent Factory. Voici ce qui a changé :
     </p>
@@ -392,7 +393,7 @@ function emailWinBack1(userName: string, daysInactive: number): { subject: strin
       Code promo : <strong>RETOUR100</strong> — valable 7 jours
     </p>
   `
-  return { subject: `${userName}, nous vous avons manqué !`, html: baseTemplate(content) }
+  return { subject: `${escapeHtml(userName)}, nous vous avons manqué !`, html: baseTemplate(content) }
 }
 
 function emailWinBack2(userName: string): { subject: string; html: string } {
@@ -400,7 +401,7 @@ function emailWinBack2(userName: string): { subject: string; html: string } {
     <div style="text-align: center; margin-bottom: 24px;">
       <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=200&fit=crop" alt="Special offer" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
     </div>
-    <h2 style="margin: 0 0 16px; color: #1e293b;">Offre exclusive pour ${userName} 🎁</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">Offre exclusive pour ${escapeHtml(userName)} 🎁</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Pour vous faire revenir, nous vous offrons <strong>-40% sur le plan Pro</strong> pendant 3 mois.
     </p>
@@ -437,7 +438,7 @@ function emailWinBack3(userName: string): { subject: string; html: string } {
         Votre offre expire dans 24 heures
       </p>
     </div>
-    <h2 style="margin: 0 0 16px; color: #1e293b;">${userName}, c'est votre dernier rappel</h2>
+    <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(userName)}, c'est votre dernier rappel</h2>
     <p style="color: #64748b; margin: 0 0 16px;">
       Votre offre exclusive de -40% sur le plan Pro expire demain. Après cela, le prix revient à 29€/mois.
     </p>
@@ -457,7 +458,7 @@ function emailWinBack3(userName: string): { subject: string; html: string } {
       Code promo : <strong>RETOUR40</strong> — valable 24 heures
     </p>
   `
-  return { subject: `${userName}, dernière chance — -40% expire demain`, html: baseTemplate(content) }
+  return { subject: `${escapeHtml(userName)}, dernière chance — -40% expire demain`, html: baseTemplate(content) }
 }
 
 export async function sendWinBackSequence(userEmail: string, userName?: string, daysInactive: number = 14): Promise<void> {

@@ -1,4 +1,5 @@
 import { callAI } from '@/lib/ai'
+import { escapeHtml, sanitizePromptInput } from '@/lib/html-escape'
 import { Resend } from 'resend'
 
 const resend = new Resend(process.env.RESEND_API_KEY)
@@ -62,7 +63,7 @@ export async function executeSalesAgent(request: SalesRequest): Promise<SalesRes
   switch (request?.type) {
     case 'welcome':
       prompt = `Crée un email de bienvenue pour un nouvel inscrit à NeuraAPI.
-Nom: ${request.customerName || 'Client'}
+Nom: ${sanitizePromptInput(request.customerName) || 'Client'}
 Objectif: Lui faire découvrir les templates et le convertir rapidement.
 Inclus: offres de bienvenue, lien vers les meilleurs templates, support.
 Format: Objet email + corps email HTML.`
@@ -70,22 +71,22 @@ Format: Objet email + corps email HTML.`
 
     case 'abandoned-cart':
       prompt = `Crée une séquence de relance panier abandonné pour NeuraAPI.
-Client: ${request.customerName || 'Client'}
-Articles abandonnés: ${request?.cartItems?.map(i => `${i.name} (${i.price/100}€)`).join(', ') || 'Template premium'}
+Client: ${sanitizePromptInput(request.customerName) || 'Client'}
+Articles abandonnés: ${request?.cartItems?.map(i => `${sanitizePromptInput(i.name, 200)} (${i.price/100}€)`).join(', ') || 'Template premium'}
 Séquence: 3 emails sur 7 jours.
 Format: [{delay, subject, content, cta}]`
       break
 
     case 'upsell':
       prompt = `Propose un upsell pertinent pour un client NeuraAPI.
-Achats: ${request?.purchaseHistory?.map(p => p.templateName).join(', ') || 'Template Landing Page'}
+Achats: ${request?.purchaseHistory?.map(p => sanitizePromptInput(p.templateName, 200)).join(', ') || 'Template Landing Page'}
 Objectif: Augmenter la valeur moyenne de commande.
 Format: Email personnalisé avec recommandation + offre spéciale.`
       break
 
     case 'referral':
       prompt = `Crée le contenu pour le programme de parrainage NeuraAPI.
-Code parrain: ${request?.referralCode || 'AMI-2024'}
+Code parrain: ${sanitizePromptInput(request.referralCode, 100) || 'AMI-2024'}
 Objectif: Encourager le parrainage avec une offre attractive.
 Format: Email activation + Landing page copy.
 Offre: -20% pour le parrain et le filleul.`
@@ -100,7 +101,7 @@ Offre: -20% pour le parrain et le filleul.`
   if (request?.customerEmail && request?.type === 'welcome') {
     try {
       await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
+        from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
         to: request?.customerEmail,
         subject: parsed.subject || '',
         html: buildEmailHTML(parsed.content || '', request.customerName)
@@ -146,9 +147,9 @@ function buildEmailHTML(content: string, name?: string): string {
           <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
         </div>
         <div style="padding: 32px;">
-          <p style="color: #1e293b; margin: 0 0 16px;">Bonjour ${name || 'CLIENT'},</p>
+          <p style="color: #1e293b; margin: 0 0 16px;">Bonjour ${escapeHtml(name || 'CLIENT')},</p>
           <div style="color: #64748b; line-height: 1.6; margin-bottom: 24px;">
-            ${content.split('\n').map(l => `<p style="margin: 0 0 12px;">${l}</p>`).join('')}
+            ${content.split('\n').map(l => `<p style="margin: 0 0 12px;">${escapeHtml(l)}</p>`).join('')}
           </div>
           <a href="${appUrl}/templates" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600;">
             Découvrir nos templates →

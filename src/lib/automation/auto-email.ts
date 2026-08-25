@@ -1,4 +1,5 @@
 import { Resend } from 'resend'
+import { escapeHtml } from '@/lib/html-escape'
 import { prisma, safeQuery } from '@/lib/db'
 import { callAI } from '@/lib/ai'
 export { sendAgentsOnboardingSequence } from './agents-emails'
@@ -67,7 +68,7 @@ function baseTemplate(content: string): string {
 async function sendEmail(to: string, subject: string, html: string): Promise<boolean> {
   try {
     const { error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
+      from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
       to,
       subject,
       html,
@@ -100,7 +101,7 @@ export async function sendWelcomeEmails(): Promise<AutomationLog[]> {
       <div style="text-align: center; margin-bottom: 24px;">
         <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=200&fit=crop" alt="Welcome" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
       </div>
-      <h2 style="margin: 0 0 16px; color: #1e293b;">Bienvenue ${user.email.split('@')[0]} ! 🎉</h2>
+      <h2 style="margin: 0 0 16px; color: #1e293b;">Bienvenue ${escapeHtml(user.email.split('@')[0])} ! 🎉</h2>
       <p style="color: #64748b; margin: 0 0 16px;">
         Merci de rejoindre NeuraAPI. Vous avez maintenant accès à des APIs IA puissantes et des templates premium.
       </p>
@@ -369,7 +370,7 @@ export async function sendReengagementEmails(): Promise<AutomationLog[]> {
       <div style="text-align: center; margin-bottom: 24px;">
         <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=600&h=200&fit=crop" alt="We miss you" style="width: 100%; max-width: 536px; height: 160px; object-fit: cover; border-radius: 12px;" />
       </div>
-      <h2 style="margin: 0 0 16px; color: #1e293b;">${user.email.split('@')[0]}, nous vous avons manqué ! 💜</h2>
+      <h2 style="margin: 0 0 16px; color: #1e293b;">${escapeHtml(user.email.split('@')[0])}, nous vous avons manqué ! 💜</h2>
       <p style="color: #64748b; margin: 0 0 16px;">
         Cela fait ${daysSinceCreation} jours que vous n'avez pas utilisé NeuraAPI. Voici ce qui a changé :
       </p>
@@ -404,7 +405,7 @@ export async function sendReengagementEmails(): Promise<AutomationLog[]> {
 
     const sent = await sendEmail(
       user.email,
-      `${user.email.split('@')[0]}, vos crédits gratuits vous attendent !`,
+      `${escapeHtml(user.email.split('@')[0])}, vos crédits gratuits vous attendent !`,
       baseTemplate(content)
     )
 

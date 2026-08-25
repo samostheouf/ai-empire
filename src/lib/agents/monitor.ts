@@ -78,13 +78,10 @@ export class PerformanceMonitor {
 
     this.metrics.set(agentId, agentMetrics)
 
-    this.logMetric(metric)
 
     return metric
   }
 
-  private logMetric(metric: PerformanceMetric): void {
-  }
 
   getAgentStats(agentId: string): PerformanceStats {
     const agentMetrics = this.metrics.get(agentId) || []

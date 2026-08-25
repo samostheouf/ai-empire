@@ -4,7 +4,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app';
 
-const EMAIL_FROM = process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>';
+const EMAIL_FROM = process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>';
 
 export { EMAIL_FROM };
 

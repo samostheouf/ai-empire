@@ -19,7 +19,7 @@ export async function sendAlert(type: string, message: string): Promise<void> {
   const safeMessage = escapeHtml(message)
 
   const { error } = await resend.emails.send({
-    from: 'NeuraAPI Alerts <samilaboulette21@gmail.com>',
+    from: `NeuraAPI Alerts <${process.env.EMAIL_FROM || 'onboarding@resend.dev'}>`,
     to: adminEmail,
     subject: `[NeuraAPI Alert] ${safeType}`,
     html: `
