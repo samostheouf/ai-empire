@@ -70,16 +70,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: BASE_URL,
     languages: {
+      // Only fr-FR exists as a real route root; localized roots (/en, /es...)
+      // are 404, so we must not emit hreflang alternates to them.
       'fr-FR': 'https://ai-empire-steel.vercel.app/',
-      'en-US': 'https://ai-empire-steel.vercel.app/en',
-      'es-ES': 'https://ai-empire-steel.vercel.app/es',
-      'de-DE': 'https://ai-empire-steel.vercel.app/de',
-      'it-IT': 'https://ai-empire-steel.vercel.app/it',
-      'pt-BR': 'https://ai-empire-steel.vercel.app/pt',
-      'ja-JP': 'https://ai-empire-steel.vercel.app/ja',
-      'ko-KR': 'https://ai-empire-steel.vercel.app/ko',
-      'zh-CN': 'https://ai-empire-steel.vercel.app/zh',
-      'ar-SA': 'https://ai-empire-steel.vercel.app/ar',
       'x-default': 'https://ai-empire-steel.vercel.app/',
     },
   },

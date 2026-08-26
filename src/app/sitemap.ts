@@ -34,6 +34,23 @@ const LOCALE_PREFIX: Record<string, string> = {
   pt: '/pt', ja: '/ja', ko: '/ko', zh: '/zh', ar: '/ar',
 }
 
+// Discover which localized routes actually exist on disk so we never emit
+// hreflang alternates pointing at 404s. Key: `${locale}${path}`.
+const existingLocalizedRoutes = new Set<string>(
+  NON_LOCALE_DIRS.flatMap((locale) => {
+    try {
+      const localeDir = path.join(process.cwd(), 'src', 'app', locale)
+      return fs
+        .readdirSync(localeDir, { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .filter((d) => fs.existsSync(path.join(localeDir, d.name, 'page.tsx')))
+        .map((d) => `${locale}/${d.name}`)
+    } catch {
+      return []
+    }
+  })
+)
+
 interface SitemapEntry {
   url: string
   lastModified: Date
@@ -42,13 +59,16 @@ interface SitemapEntry {
   alternates?: { languages: Record<string, string> }
 }
 
-function buildAlternates(path: string): { languages: Record<string, string> } {
+function buildAlternates(path: string): { languages: Record<string, string> } | undefined {
   const languages: Record<string, string> = {}
   for (const locale of LOCALES) {
+    if (locale === 'fr') continue
     const prefix = LOCALE_PREFIX[locale]
+    if (!existingLocalizedRoutes.has(`${locale}${path}`)) continue
     languages[LOCALE_CODE_MAP[locale]] = `${baseUrl}${prefix}${path}`
   }
-  languages['x-default'] = `${baseUrl}${path}`
+  // No real translation of this page exists anywhere -> FR only, no alternates.
+  if (Object.keys(languages).length === 0) return undefined
   return { languages }
 }
 
