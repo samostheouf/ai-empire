@@ -49,10 +49,10 @@ function SuccessContent() {
             setLoading(false)
             return
           }
-        }
-
-        if (templates.length > 0) {
-          setTemplate(templates[0])
+          // Never show the wrong product after a paid checkout: fail loudly instead.
+          setError(t('checkoutErrorDetails'))
+          setLoading(false)
+          return
         }
       } catch {
         setError(t('checkoutErrorDetails'))
