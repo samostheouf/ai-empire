@@ -15,22 +15,9 @@ const securityHeaders = [
   { key: 'Cross-Origin-Embedder-Policy', value: 'unsafe-none' },
   { key: 'Cross-Origin-Opener-Policy', value: 'same-origin' },
   { key: 'Cross-Origin-Resource-Policy', value: 'same-origin' },
-  { key: 'Content-Security-Policy', value: [
-    "default-src 'self'",
-    "script-src 'self' 'strict-dynamic' https://js.stripe.com https://fonts.googleapis.com",
-    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-    "img-src 'self' https://images.unsplash.com https://*.stripe.com data: blob:",
-    "font-src 'self' https://fonts.gstatic.com",
-    "connect-src 'self' https://api.stripe.com https://js.stripe.com https://checkout.stripe.com https://api.groq.com https://api.openai.com",
-    "frame-src 'self' https://js.stripe.com https://hooks.stripe.com https://checkout.stripe.com",
-    "worker-src 'self' blob:",
-    "child-src 'self' blob:",
-    "object-src 'none'",
-    "base-uri 'self'",
-    "form-action 'self'",
-    "upgrade-insecure-requests",
-    "report-uri /api/csp-report",
-  ].join('; ') },
+  // NOTE: Content-Security-Policy is intentionally NOT set here.
+  // src/middleware.ts injects a CSP with per-request nonce; a static CSP here
+  // would override/conflict with it. Keep CSP management in the middleware only.
 ]
 
 const nextConfig = {
