@@ -36,26 +36,28 @@ export async function POST(request: NextRequest) {
   const evtType = (stripeEvent.type as string) || '';
   const eventId = (stripeEvent.id as string) || '';
 
-  const alreadyProcessed = await safeQuery(async () => {
-    const { prisma } = await import('@/lib/db');
-    const existing = await prisma.webhookEvent.findUnique({ where: { eventId } });
-    return existing?.status === 'completed';
-  }, false);
-
-  if (alreadyProcessed) {
-    return NextResponse.json({ received: true, message: 'Duplicate event ignored' });
-  }
-
   // Persist payload so the cron retry job can replay this event even after a
   // cold start / new serverless instance.
-  await safeQuery(async () => {
+  // Create-first (atomic): if the unique constraint on eventId is violated
+  // (P2002), the event is already processed or being processed concurrently.
+  const claimResult = await safeQuery(async () => {
     const { prisma } = await import('@/lib/db');
-    await prisma.webhookEvent.upsert({
-      where: { eventId },
-      update: { status: 'processing', payload: JSON.parse(JSON.stringify(stripeEvent)) },
-      create: { eventId, provider: 'stripe', type: evtType, status: 'processing', payload: JSON.parse(JSON.stringify(stripeEvent)) },
-    });
+    try {
+      await prisma.webhookEvent.create({
+        data: { eventId, provider: 'stripe', type: evtType, status: 'processing', payload: JSON.parse(JSON.stringify(stripeEvent)) },
+      });
+      return 'claimed';
+    } catch (err) {
+      if (err instanceof Error && 'code' in err && (err as { code?: string }).code === 'P2002') {
+        return 'duplicate';
+      }
+      throw err;
+    }
   }, null);
+
+  if (claimResult === 'duplicate') {
+    return NextResponse.json({ received: true, message: 'Duplicate event ignored' });
+  }
 
   try {
     await processStripeWebhookEvent(stripeEvent as unknown as Record<string, unknown>)

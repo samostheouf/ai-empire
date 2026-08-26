@@ -128,7 +128,7 @@ export async function POST(request: NextRequest) {
     }
 
     const idempotencyKey = createHash('sha256')
-      .update(`${email}:${templateId}:${promoCode || ''}`)
+      .update(`${email}:${templateId}:${promoCode || ''}:${Math.floor(Date.now() / 3600000)}`)
       .digest('hex')
 
     const session = await stripe.checkout.sessions.create(

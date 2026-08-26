@@ -7,6 +7,12 @@ import { validateEmail } from '@/lib/input-validation';
 const MAX_ATTEMPTS = 5
 const LOCKOUT_MS = 15 * 60 * 1000
 
+// Precomputed decoy hash: PBKDF2("dummy", salt "fixed-salt-cv", 100k iter, sha512, hex).
+// Used to equalize timing when the user does not exist, preventing email
+// enumeration via response-time analysis.
+const DECOY_HASH =
+  'fixed-salt-cv:eb4224a66953fce9bd5631bedfaeddf5b70660619b5c1b7717edede1fc7b99e8800e667c21cd532baa753fa79bebf6fc3257056e83df05bc569010cf3f4398ef'
+
 export async function POST(request: NextRequest) {
   try {
     let email: string;
@@ -39,11 +45,11 @@ export async function POST(request: NextRequest) {
     );
 
     if (!user || !user.password) {
-      await safeQuery(async () => {
-        const { prisma } = await import('@/lib/db');
-        const fake = await prisma.apiUser.findFirst({ where: { email: 'nonexistent@test.com' } });
-        if (fake) await verifyPassword(password, fake.password || 'x');
-      }, null);
+      // Constant-time mitigation: run the same PBKDF2 work as a real login
+      // so response timing does not reveal whether the email exists.
+      try {
+        await verifyPassword(password, DECOY_HASH);
+      } catch {}
       return NextResponse.json({ error: 'Email ou mot de passe incorrect' }, { status: 401 });
     }
 
