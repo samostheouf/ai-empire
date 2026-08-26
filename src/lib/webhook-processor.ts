@@ -151,6 +151,29 @@ export async function processStripeWebhookEvent(stripeEvent: Record<string, unkn
       break;
     }
 
+    case 'charge.refunded': {
+      const charge = evtObject;
+      const paymentIntentId = charge.payment_intent as string | null;
+      logger.info('webhook', `Event ${evtType} received for charge ${charge.id}, paymentIntent ${paymentIntentId}`);
+      await safeQuery(async () => {
+        const { prisma } = await import('@/lib/db');
+        // Locate the Order by sessionId stored in metadata (checkout session id),
+        // falling back to matching the Stripe payment intent id against sessions.
+        const metadata = (charge.metadata || {}) as Record<string, string>;
+        const sessionId = metadata.sessionId || metadata.session_id || '';
+
+        if (sessionId) {
+          await prisma.order.updateMany({ where: { sessionId }, data: { refunded: true } });
+        } else if (paymentIntentId) {
+          // No sessionId in charge metadata: resolve via the payment intent's
+          // checkout session stored on the Order side is not possible without a
+          // Stripe lookup here; log for manual reconciliation instead of crashing.
+          logger.warn('webhook', `Refund event ${charge.id} has no sessionId in metadata; order not auto-marked`, { paymentIntentId });
+        }
+      }, null);
+      break;
+    }
+
     case 'payment_intent.payment_failed': {
       logger.info('webhook', `Event ${evtType} received for session ${evtObject.id}`);
       break;
