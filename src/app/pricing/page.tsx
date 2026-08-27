@@ -25,7 +25,7 @@ export default function PricingPage() {
             offers: [
               { '@type': 'Offer', price: '0', priceCurrency: 'EUR', name: 'Starter', description: '100 credits/month' },
               { '@type': 'Offer', price: '19', priceCurrency: 'EUR', name: 'Pro', description: '10,000 credits/month', availability: 'https://schema.org/InStock' },
-              { '@type': 'Offer', price: '99', priceCurrency: 'EUR', name: 'Enterprise', description: 'Unlimited credits' },
+              { '@type': 'Offer', price: '69', priceCurrency: 'EUR', name: 'Enterprise', description: 'Unlimited credits' },
             ],
           }),
         }}
