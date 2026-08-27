@@ -19,6 +19,7 @@ const QuickDemo = dynamic(() => import('@/components/QuickDemo'))
 const TemplateCarousel = dynamic(() => import('@/components/HomeInteractive').then(mod => ({ default: mod.TemplateCarousel })))
 import EarlyAdopterBanner from '@/components/EarlyAdopterBanner'
 import TestimonialsSection from '@/components/TestimonialsSection'
+import EcosystemBanner from '@/components/EcosystemBanner'
 const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -292,6 +293,8 @@ export default async function Home() {
       <RealTestimonials />
 
       <TestimonialsSection />
+
+      <EcosystemBanner current="NeuraAPI" />
 
       <TemplateCarousel />
 
