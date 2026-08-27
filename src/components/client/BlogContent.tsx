@@ -8,6 +8,15 @@ import Breadcrumb from '@/components/Breadcrumb'
 
 const articles = [
   {
+    slug: 'nextjs-15-server-actions-ia',
+    title: 'Next.js 15 Server Actions + IA : guide pratique',
+    excerpt: 'Intégrer une API IA en production avec les Server Actions : streaming, sécurité, failover.',
+    date: '2026-08-27',
+    readTime: '11 min',
+    category: 'Tutoriel',
+    image: '/blog/nextjs-server-actions.svg',
+  },
+  {
     slug: 'cout-reel-api-ia-2026',
     title: 'Coût réel des API IA en 2026 : comparatif OpenAI, Gemini, Groq',
     excerpt: 'Combien coûte vraiment une API IA en 2026 ? Comparatif honnête avec chiffres réels et stratégies d’optimisation.',
