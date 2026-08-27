@@ -8,6 +8,15 @@ import Breadcrumb from '@/components/Breadcrumb'
 
 const articles = [
   {
+    slug: 'cout-reel-api-ia-2026',
+    title: 'Coût réel des API IA en 2026 : comparatif OpenAI, Gemini, Groq',
+    excerpt: 'Combien coûte vraiment une API IA en 2026 ? Comparatif honnête avec chiffres réels et stratégies d’optimisation.',
+    date: '2026-08-27',
+    readTime: '10 min',
+    category: 'Analyse',
+    image: '/blog/cout-api-ia.svg',
+  },
+  {
     slug: 'chatbot-ia-nextjs-groq',
     title: 'Créer un chatbot IA avec Next.js et Groq (2026)',
     titleEn: 'Build an AI chatbot with Next.js and Groq (2026)',
