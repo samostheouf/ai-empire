@@ -47,26 +47,8 @@ const BEFORE_AFTER_COMPARISONS = [
   },
 ]
 
-const TESTIMONIALS = [
-  {
-    quote: 'I shipped my SaaS MVP in 3 days instead of 3 weeks. The Stripe integration alone saved me a full sprint.',
-    author: 'Marcus Chen',
-    role: 'CTO, DataPulse Analytics',
-    metric: '3 days vs 3 weeks',
-  },
-  {
-    quote: 'We delivered 6 client projects this quarter using AI Empire templates. Our revenue is up 68%.',
-    author: 'Sophie Laurent',
-    role: 'Agency Director, Bright Studio',
-    metric: '+68% revenue',
-  },
-  {
-    quote: 'As a solo developer, going from 2 MVPs/month to 5 changed my freelance business completely.',
-    author: 'Alex Rivera',
-    role: 'Freelance Full-Stack Developer',
-    metric: '2→5 MVPs/month',
-  },
-]
+// 100% éthique : aucun faux témoignage. Tableau vide jusqu'à preuves vérifiées.
+const TESTIMONIALS: { quote: string; author: string; role: string; metric: string }[] = []
 
 const API_METRICS = [
   { label: 'Groq Llama 3.1 8B', speed: '~500 tokens/sec', color: 'from-green-400 to-emerald-500' },
@@ -190,26 +172,36 @@ export default async function TemplatesPage() {
           </div>
         </div>
 
-        {/* Developer Testimonials */}
+        {/* Developer Testimonials — 100% éthique : preuves vérifiées uniquement */}
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-white text-center mb-2">{t('templatesTestimonialsTitle')}</h2>
           <p className="text-indigo-300/60 text-center mb-8">{t('templatesTestimonialsSubtitle')}</p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {TESTIMONIALS.map((testimonial) => (
-              <div key={testimonial.author} className="glass-card rounded-2xl p-6 group hover:border-indigo-500/30 transition-all">
-                <div className="mb-4">
-                  <span className="inline-flex items-center rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-bold text-indigo-400">
-                    {testimonial.metric}
-                  </span>
-                </div>
-                <p className="text-sm text-indigo-200/80 leading-relaxed italic">&ldquo;{testimonial.quote}&rdquo;</p>
-                <div className="mt-4 pt-4 border-t border-white/5">
-                  <p className="text-sm font-medium text-white">{testimonial.author}</p>
-                  <p className="text-xs text-indigo-400/60">{testimonial.role}</p>
-                </div>
+          {TESTIMONIALS.length === 0 ? (
+            <div className="text-center">
+              <div className="inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-indigo-600/20 to-purple-600/20 border border-indigo-500/20 px-8 py-4">
+                <span className="text-lg font-semibold text-indigo-300">
+                  Vos retours vérifiés arriveront ici — soyez le premier à partager votre expérience.
+                </span>
               </div>
-            ))}
-          </div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {TESTIMONIALS.map((testimonial) => (
+                <div key={testimonial.author} className="glass-card rounded-2xl p-6 group hover:border-indigo-500/30 transition-all">
+                  <div className="mb-4">
+                    <span className="inline-flex items-center rounded-full bg-indigo-500/10 px-3 py-1 text-xs font-bold text-indigo-400">
+                      {testimonial.metric}
+                    </span>
+                  </div>
+                  <p className="text-sm text-indigo-200/80 leading-relaxed italic">&ldquo;{testimonial.quote}&rdquo;</p>
+                  <div className="mt-4 pt-4 border-t border-white/5">
+                    <p className="text-sm font-medium text-white">{testimonial.author}</p>
+                    <p className="text-xs text-indigo-400/60">{testimonial.role}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Template Grid (client component for search/filter/interactivity) */}
