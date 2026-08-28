@@ -17,6 +17,15 @@ const articles = [
     image: '/blog/edge-runtime.svg',
   },
   {
+    slug: 'api-ia-nextjs-production',
+    title: 'Intégrer une API IA dans Next.js : patterns production',
+    excerpt: 'Endpoint /api/chat, failover 4 providers, rate-limit IP+user, streaming.',
+    date: '2026-08-28',
+    readTime: '10 min',
+    category: 'Tutoriel',
+    image: '/blog/api-ia-nextjs.svg',
+  },
+  {
     slug: 'rag-tutoriel-francais',
     title: 'RAG en français : tutoriel 2026',
     excerpt: 'Construire un système RAG avec embedding, vector store et coûts réels.',
