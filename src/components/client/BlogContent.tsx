@@ -182,6 +182,36 @@ const articles = [
     readTime: '9 min',
     category: 'SEO',
   },
+  {
+    slug: 'template-saas-nextjs-2026',
+    title: 'Template SaaS Next.js 2026 : lequel choisir pour démarrer',
+    titleEn: 'Best Next.js SaaS Template 2026: how to choose',
+    excerpt: 'Comment choisir un template SaaS Next.js en 2026 : critères, stack, auth, billing, API IA incluses, et pièges à éviter.',
+    excerptEn: 'How to pick a Next.js SaaS template in 2026: stack, auth, billing, built-in AI, and traps to avoid.',
+    date: '28 Août 2026',
+    readTime: '9 min',
+    category: 'Templates',
+  },
+  {
+    slug: 'neuraapi-vs-concurrents',
+    title: 'NeuraAPI vs concurrents 2026 : comparatif honnête des API IA',
+    titleEn: 'NeuraAPI vs competitors 2026: an honest API comparison',
+    excerpt: 'NeuraAPI vs OpenAI, Groq, Gemini, Anthropic : comparatif honnête des API IA en 2026 (prix, latence, failover, SDK).',
+    excerptEn: 'NeuraAPI vs OpenAI, Groq, Gemini, Anthropic: an honest 2026 API comparison (price, latency, failover, SDK).',
+    date: '28 Août 2026',
+    readTime: '11 min',
+    category: 'Comparatif',
+  },
+  {
+    slug: 'lancer-saas-sans-code',
+    title: 'Lancer un SaaS sans code en 2026 : la roadmap réaliste',
+    titleEn: 'Launch a no-code SaaS in 2026: the realistic roadmap',
+    excerpt: 'Peut-on lancer un SaaS sans coder en 2026 ? Outils no-code, quand ça tient en production, et quand passer au code avec Next.js.',
+    excerptEn: 'Can you launch a SaaS without code in 2026? No-code tools, when it holds in production, and when to switch to Next.js.',
+    date: '28 Août 2026',
+    readTime: '10 min',
+    category: 'Guide',
+  },
 ]
 
 export default function BlogContent() {

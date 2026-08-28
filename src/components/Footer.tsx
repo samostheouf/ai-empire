@@ -128,6 +128,7 @@ const Footer = memo(function Footer() {
               <li><Link href="/cgv" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerCGV')}</Link></li>
               <li><Link href="/politique-confidentialite" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerConfidentialite')}</Link></li>
               <li><Link href="/politique-cookies" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">{t('footerCookies')}</Link></li>
+              <li><Link href="/remboursement" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">Remboursement</Link></li>
               <li><Link href="/dpa" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">DPA</Link></li>
             </ul>
           </div>
