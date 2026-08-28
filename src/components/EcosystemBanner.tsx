@@ -21,7 +21,7 @@ const SITES: EcosystemSite[] = [
   },
   {
     name: 'Prévio',
-    url: 'https://previo.app',
+    url: 'https://site-ruby-eight-11.vercel.app',
     tagline: 'Business plan instantané pour créateurs (29$)',
   },
 ]
