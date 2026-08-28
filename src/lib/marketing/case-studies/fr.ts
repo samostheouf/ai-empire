@@ -55,7 +55,7 @@ export const caseStudies: CaseStudiesByLanguage = {
     testimonial: {
       quote: 'AI Empire a réduit notre temps de configuration de projet de 4 semaines à 3 jours. Nous livrons maintenant des projets SaaS en 2-3 semaines au lieu de 6-8. Nos clients sont plus satisfaits et nos marges sont meilleures.',
       author: 'Équipe cliente (anonyme)',
-      role: 'Profil non identifié — étude illustrative'Agence, une agence digitale',
+      role: 'Profil non identifié — étude illustrative',
     },
     templateUsed: 'NeuraSaaS, NeuraStore, NeuraBlog',
     timeToValue: '2 semaines (formation équipe)',
