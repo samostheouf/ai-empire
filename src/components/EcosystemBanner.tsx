@@ -47,7 +47,8 @@ export default function EcosystemBanner({ current }: { current?: string }) {
             <a
               key={s.name}
               href={s.url}
-              rel="noopener"
+              target="_blank"
+              rel="noopener noreferrer"
               className="group glass-card rounded-2xl p-6 text-center transition-all hover:scale-[1.02]"
             >
               <div className="text-lg font-semibold text-white">{s.name}</div>

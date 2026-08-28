@@ -64,7 +64,10 @@ export const metadata: Metadata = {
     images: [`${BASE_URL}/api/og?title=NeuraAPI&subtitle=APIs+IA+%26+Templates+Premium+Next.js`],
   },
   icons: {
-    icon: '/logo.jpg',
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/logo.jpg', sizes: '192x192', type: 'image/jpeg' },
+    ],
     apple: '/logo.jpg',
   },
   alternates: {
