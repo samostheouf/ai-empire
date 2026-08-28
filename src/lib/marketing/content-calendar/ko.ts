@@ -55,7 +55,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Thought Leadership',
-      content: 'AI는 더 이상 대기업 전유물이 아닙니다.\n\n큰 예산 없이 AI에 접근하는 방법:\n\n→ AI Empire 템플릿 (€19부터)\n→ 무료 AI API (GPT-4, Groq)\n→ 5분 만에 통합\n\n5,000명 이상의 개발자가 이미 실천했습니다.\n\n여러분은 어떠신가요?\n\n#AIEmpire #AI #StartupKorea',
+      content: 'AI는 더 이상 대기업 전유물이 아닙니다.\n\n큰 예산 없이 AI에 접근하는 방법:\n\n→ AI Empire 템플릿 (€19부터)\n→ 무료 AI API (GPT-4, Groq)\n→ 5분 만에 통합\n\nNeuraAPI 커뮤니티가 이미 실천했습니다.\n\n여러분은 어떠신가요?\n\n#AIEmpire #AI #StartupKorea',
       hashtags: ['#AIEmpire', '#AI', '#StartupKorea']
     },
     {
@@ -128,7 +128,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Product',
-      content: '📦 소개: NeuraStore v2\n\nNext.js 14용 가장 완벽한 이커머스 템플릿:\n\n→ 스마트 장바구니\n→ 안전한 Stripe 결제\n→ 전문 관리자 대시보드\n→ 반응형 디자인 + 다크모드\n\n가격: €29 (출시 -40%)\n\n5,000명 이상의 개발자가 신뢰합니다.\n\n#AIEmpire #Ecommerce',
+      content: '📦 소개: NeuraStore v2\n\nNext.js 14용 가장 완벽한 이커머스 템플릿:\n\n→ 스마트 장바구니\n→ 안전한 Stripe 결제\n→ 전문 관리자 대시보드\n→ 반응형 디자인 + 다크모드\n\n가격: €29 (출시 -40%)\n\nNeuraAPI 커뮤니티가 신뢰합니다.\n\n#AIEmpire #Ecommerce',
       hashtags: ['#AIEmpire', '#Ecommerce']
     },
     {
@@ -153,7 +153,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Founder Story',
-      content: '💡 "AI Empire를 만들기 위해 퇴사했습니다. 그 이유는 이것입니다."\n\n한국 시장에는 미국 AI API에 대한 로컬 대안이 필요합니다.\n\nAI Empire가 그 대안입니다:\n→ 한국 우선\n→ 한국어 지원\n→ EUR 결제\n→ GDPR 네이티브\n\n5,000명 이상의 개발자가 신뢰합니다.\n\n#AIEmpire #FounderStory',
+      content: '💡 "AI Empire를 만들기 위해 퇴사했습니다. 그 이유는 이것입니다."\n\n한국 시장에는 미국 AI API에 대한 로컬 대안이 필요합니다.\n\nAI Empire가 그 대안입니다:\n→ 한국 우선\n→ 한국어 지원\n→ EUR 결제\n→ GDPR 네이티브\n\nNeuraAPI 커뮤니티가 신뢰합니다.\n\n#AIEmpire #FounderStory',
       hashtags: ['#AIEmpire', '#FounderStory']
     },
     // 주 4
@@ -362,7 +362,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🎉 근로자의 날快乐!\n\n오늘은 미래를 만들어가는 개발자들을 축하합니다.\n\n5,000명 이상의 사용자 여러분 감사합니다! 🙏\n\n#AIEmpire #근로자의날 #DevLife',
+        content: '🎉 근로자의 날快乐!\n\n오늘은 미래를 만들어가는 개발자들을 축하합니다.\n\nNeuraAPI 커뮤니티 여러분 감사합니다! 🙏\n\n#AIEmpire #근로자의날 #DevLife',
         hashtags: ['#AIEmpire', '#근로자의날', '#DevLife']
       }
     ]
@@ -408,7 +408,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🇫🇷 국경일快乐!\n\n오늘은 한국 테크를 축하합니다:\n→ 5,000명 이상의 개발자\n→ 200개 이상의 SaaS 출시\n→ 100% 메이드인코리아\n\n한국 테크 만세! 🇰🇷🚀\n\n#AIEmpire #국경일 #KoreaTech',
+        content: '🇫🇷 국경일快乐!\n\n오늘은 한국 테크를 축하합니다:\n→ NeuraAPI 커뮤니티\n→ 200개 이상의 SaaS 출시\n→ 100% 메이드인코리아\n\n한국 테크 만세! 🇰🇷🚀\n\n#AIEmpire #국경일 #KoreaTech',
         hashtags: ['#AIEmpire', '#국경일', '#KoreaTech']
       },
       {
@@ -416,7 +416,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Patriotic',
-        content: '🇫🇷 국경일: 한국 테크의 시간!\n\nAI Empire는 한국 혁신을 대표하는 것을 자랑스럽게 생각합니다:\n→ 5,000명 이상의 개발자\n→ 200개 이상의 SaaS 출시\n→ 한국어 지원\n→ EUR 결제\n→ GDPR 네이티브\n\n한국 테크 만세! 🇰🇷\n\n#AIEmpire #국경일 #KoreaTech',
+        content: '🇫🇷 국경일: 한국 테크의 시간!\n\nAI Empire는 한국 혁신을 대표하는 것을 자랑스럽게 생각합니다:\n→ NeuraAPI 커뮤니티\n→ 200개 이상의 SaaS 출시\n→ 한국어 지원\n→ EUR 결제\n→ GDPR 네이티브\n\n한국 테크 만세! 🇰🇷\n\n#AIEmpire #국경일 #KoreaTech',
         hashtags: ['#AIEmpire', '#국경일', '#KoreaTech']
       }
     ]
@@ -501,7 +501,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🎄 메리 크리스마스! 🎄\n\n5,000명 이상의 사용자 여러분 감사합니다!\n\n선물: 전체 템플릿 -30%\n코드: NOEL2025\n\n행복한 연말 보내세요! 🎅\n\n#AIEmpire #크리스마스',
+        content: '🎄 메리 크리스마스! 🎄\n\nNeuraAPI 커뮤니티 여러분 감사합니다!\n\n선물: 전체 템플릿 -30%\n코드: NOEL2025\n\n행복한 연말 보내세요! 🎅\n\n#AIEmpire #크리스마스',
         hashtags: ['#AIEmpire', '#크리스마스']
       }
     ]
@@ -532,7 +532,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Motivational',
-        content: '🎆 새해, 새로운 SaaS.\n\n2025년은 행동으로 옮기는 해입니다.\n\nAI Empire가 지원합니다:\n→ 바로 사용 가능한 템플릿\n→ 무료 AI API\n→ 24/7 지원\n\n이미 SaaS를 출시한 5,000명 이상의 개발자에 합류하세요.\n\n새해 복 많이 받으세요! 🎆\n\n#AIEmpire #새해 #2025',
+        content: '🎆 새해, 새로운 SaaS.\n\n2025년은 행동으로 옮기는 해입니다.\n\nAI Empire가 지원합니다:\n→ 바로 사용 가능한 템플릿\n→ 무료 AI API\n→ 24/7 지원\n\n이미 SaaS를 출시한 NeuraAPI 커뮤니티에 합류하세요.\n\n새해 복 많이 받으세요! 🎆\n\n#AIEmpire #새해 #2025',
         hashtags: ['#AIEmpire', '#새해', '#2025']
       }
     ]

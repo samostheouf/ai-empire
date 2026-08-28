@@ -55,7 +55,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Thought Leadership',
-      content: 'لم يعد الذكاء الاصطناعي حكراً على العمالقة.\n\nإليك كيف يمكن لشركات الناشئة الوصول إليه بميزانية محدودة:\n\n→ قوالب AI Empire (ابتداءً من €19)\n→ APIs ذكاء اصطناعي مجانية (GPT-4, Groq)\n→ تكامل في 5 دقائق\n\n5,000+ مطور فعلوا ذلك بالفعل.\n\nوأنت؟\n\n#AIEmpire #AI #StartupArabia',
+      content: 'لم يعد الذكاء الاصطناعي حكراً على العمالقة.\n\nإليك كيف يمكن لشركات الناشئة الوصول إليه بميزانية محدودة:\n\n→ قوالب AI Empire (ابتداءً من €19)\n→ APIs ذكاء اصطناعي مجانية (GPT-4, Groq)\n→ تكامل في 5 دقائق\n\nمجتمع NeuraAPI فعلوا ذلك بالفعل.\n\nوأنت؟\n\n#AIEmpire #AI #StartupArabia',
       hashtags: ['#AIEmpire', '#AI', '#StartupArabia']
     },
     {
@@ -128,7 +128,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Product',
-      content: '📦 تقديم: NeuraStore v2\n\nالقالب الأكثر شمولاً للتجارة الإلكترونية لـ Next.js 14:\n\n→ سلة تسوق ذكية\n→ مدفوعات Stripe آمنة\n→ لوحة تحكم احترافية\n→ تصميم متجاوب + الوضع الداكن\n\nالسعر: €29 (-40% خصم الإطلاق)\n\n5,000+ مطور يثقون بنا.\n\n#AIEmpire #Ecommerce',
+      content: '📦 تقديم: NeuraStore v2\n\nالقالب الأكثر شمولاً للتجارة الإلكترونية لـ Next.js 14:\n\n→ سلة تسوق ذكية\n→ مدفوعات Stripe آمنة\n→ لوحة تحكم احترافية\n→ تصميم متجاوب + الوضع الداكن\n\nالسعر: €29 (-40% خصم الإطلاق)\n\nمجتمع NeuraAPI يثقون بنا.\n\n#AIEmpire #Ecommerce',
       hashtags: ['#AIEmpire', '#Ecommerce']
     },
     {
@@ -153,7 +153,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Founder Story',
-      content: '💡 "تركت وظيفتي لإنشاء AI Empire. إليك السبب."\n\nالسوق العربي يحتاج بديلاً محلياً لـ APIs الذكاء الاصطناعي الأمريكية.\n\nAI Empire هو ذلك البديل:\n→ عربي أولاً\n→ دعم بالعربية\n→ فوترة باليورو\n→ امتثال GDPR أصلي\n\n5,000+ مطور يثقون بنا.\n\n#AIEmpire #FounderStory',
+      content: '💡 "تركت وظيفتي لإنشاء AI Empire. إليك السبب."\n\nالسوق العربي يحتاج بديلاً محلياً لـ APIs الذكاء الاصطناعي الأمريكية.\n\nAI Empire هو ذلك البديل:\n→ عربي أولاً\n→ دعم بالعربية\n→ فوترة باليورو\n→ امتثال GDPR أصلي\n\nمجتمع NeuraAPI يثقون بنا.\n\n#AIEmpire #FounderStory',
       hashtags: ['#AIEmpire', '#FounderStory']
     },
     // الأسبوع 4
@@ -408,7 +408,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🇫🇷 عيد وطني سعيد!\n\nاليوم نحتفي بالتكنولوجيا العربية:\n→ 5,000+ مطور\n→ 200+ SaaS تم إطلاقها\n→ 100% صنع عربي\n\nعاشت التكنولوجيا العربية! 🇸🇦🚀\n\n#AIEmpire #عيد_وطني #ArabTech',
+        content: '🇫🇷 عيد وطني سعيد!\n\nاليوم نحتفي بالتكنولوجيا العربية:\n→ مجتمع NeuraAPI\n→ des SaaS lancés\n→ 100% صنع عربي\n\nعاشت التكنولوجيا العربية! 🇸🇦🚀\n\n#AIEmpire #عيد_وطني #ArabTech',
         hashtags: ['#AIEmpire', '#عيد_وطني', '#ArabTech']
       },
       {
@@ -416,7 +416,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Patriotic',
-        content: '🇫🇷 العيد الوطني: حان وقت التكنولوجيا العربية!\n\nAI Empire فخورة بتمثيل الابتكار العربي:\n→ 5,000+ مطور\n→ 200+ SaaS تم إطلاقها\n→ دعم بالعربية\n→ فوترة باليورو\n→ امتثال GDPR أصلي\n\nعاشت التكنولوجيا العربية! 🇸🇦\n\n#AIEmpire #عيد_وطني #ArabTech',
+        content: '🇫🇷 العيد الوطني: حان وقت التكنولوجيا العربية!\n\nAI Empire فخورة بتمثيل الابتكار العربي:\n→ مجتمع NeuraAPI\n→ des SaaS lancés\n→ دعم بالعربية\n→ فوترة باليورو\n→ امتثال GDPR أصلي\n\nعاشت التكنولوجيا العربية! 🇸🇦\n\n#AIEmpire #عيد_وطني #ArabTech',
         hashtags: ['#AIEmpire', '#عيد_وطني', '#ArabTech']
       }
     ]
@@ -532,7 +532,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Motivational',
-        content: '🎆 سنة جديدة، SaaS جديد.\n\n2025 هي سنة اتخاذ الإجراء.\n\nAI Empire هنا لدعمك:\n→ قوالب جاهزة للاستخدام\n→ APIs ذكاء اصطناعي مجانية\n→ دعم على مدار الساعة\n\nانضم إلى أكثر من 5,000 مطور أطلقوا SaaS الخاص بهم بالفعل.\n\nسنة جديدة سعيدة! 🎆\n\n#AIEmpire #رأس_السنة #2025',
+        content: '🎆 سنة جديدة، SaaS جديد.\n\n2025 هي سنة اتخاذ الإجراء.\n\nAI Empire هنا لدعمك:\n→ قوالب جاهزة للاستخدام\n→ APIs ذكاء اصطناعي مجانية\n→ دعم على مدار الساعة\n\nانضم إلى مجتمع NeuraAPI أطلقوا SaaS الخاص بهم بالفعل.\n\nسنة جديدة سعيدة! 🎆\n\n#AIEmpire #رأس_السنة #2025',
         hashtags: ['#AIEmpire', '#رأس_السنة', '#2025']
       }
     ]

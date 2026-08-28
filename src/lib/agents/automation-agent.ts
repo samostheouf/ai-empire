@@ -99,7 +99,7 @@ Email 2 (Jour 3): Valeur
 - Contenu: Cas clients, bénéfices concrets, témoignages
 
 Email 3 (Jour 7): Social Proof
-- Objet: Pourquoi 500+ développeurs nous font confiance
+- Objet: Pourquoi la communauté NeuraAPI
 - Contenu: Statistiques, avis clients, garantie satisfait
 
 Email 4 (Jour 14): Urgence

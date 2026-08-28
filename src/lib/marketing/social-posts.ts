@@ -103,7 +103,7 @@ Utilisez le code AIEMPIRE50`,
 
 AI Empire : La référence pour les développeurs modernes.
 
-Découvrez pourquoi les premiers utilisateurs nous font confiance 👇`,
+Découvrez la communauté NeuraAPI 👇`,
     hashtags: ['#Stats', '#AI', '#WebDev', '#Productivity'],
     cta: 'Rejoignez-nous',
     emojis: ['📊', '📈', '🎯', '✅']

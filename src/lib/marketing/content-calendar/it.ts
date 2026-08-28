@@ -55,7 +55,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Thought Leadership',
-      content: 'L\'IA non è più riservata ai giganti della FTSE MIB.\n\nEcco come le startup possono accedervi senza un grande budget:\n\n→ Template AI Empire (da €19)\n→ API IA gratuite (GPT-4, Groq)\n→ Integrazione in 5 minuti\n\nOltre 5.000 sviluppatori l\'hanno già fatto.\n\nE tu?\n\n#AIEmpire #IA #StartupItaly',
+      content: 'L\'IA non è più riservata ai giganti della FTSE MIB.\n\nEcco come le startup possono accedervi senza un grande budget:\n\n→ Template AI Empire (da €19)\n→ API IA gratuite (GPT-4, Groq)\n→ Integrazione in 5 minuti\n\nla community NeuraAPI l\'hanno già fatto.\n\nE tu?\n\n#AIEmpire #IA #StartupItaly',
       hashtags: ['#AIEmpire', '#IA', '#StartupItaly']
     },
     {
@@ -128,7 +128,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Product',
-      content: '📦 Presentazione: NeuraStore v2\n\nIl template e-commerce più completo per Next.js 14:\n\n→ Carrello intelligente\n→ Pagamenti Stripe sicuri\n→ Dashboard admin professionale\n→ Design responsive + dark mode\n\nPrezzo: €29 (-40% lancio)\n\nOltre 5.000 sviluppatori ci fidano.\n\n#AIEmpire #Ecommerce',
+      content: '📦 Presentazione: NeuraStore v2\n\nIl template e-commerce più completo per Next.js 14:\n\n→ Carrello intelligente\n→ Pagamenti Stripe sicuri\n→ Dashboard admin professionale\n→ Design responsive + dark mode\n\nPrezzo: €29 (-40% lancio)\n\nla community NeuraAPI ci fidano.\n\n#AIEmpire #Ecommerce',
       hashtags: ['#AIEmpire', '#Ecommerce']
     },
     {
@@ -153,7 +153,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Founder Story',
-      content: '💡 "Ho lasciato il mio lavoro per creare AI Empire. Ecco perché."\n\nIl mercato italiano ha bisogno di un\'alternativa locale alle API IA americane.\n\nAI Empire è quell\'alternativa:\n→ Fatto in Italia\n→ Supporto in italiano\n→ Fatturazione EUR\n→ GDPR nativo\n\nOltre 5.000 sviluppatori ci fidano.\n\n#AIEmpire #FounderStory',
+      content: '💡 "Ho lasciato il mio lavoro per creare AI Empire. Ecco perché."\n\nIl mercato italiano ha bisogno di un\'alternativa locale alle API IA americane.\n\nAI Empire è quell\'alternativa:\n→ Fatto in Italia\n→ Supporto in italiano\n→ Fatturazione EUR\n→ GDPR nativo\n\nla community NeuraAPI ci fidano.\n\n#AIEmpire #FounderStory',
       hashtags: ['#AIEmpire', '#FounderStory']
     },
     // SETTIMANA 4
@@ -362,7 +362,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🎉 Buona Festa del Lavoro!\n\nOggi celebriamo gli sviluppatori che costruiscono il futuro.\n\nGrazie a tutti i nostri oltre 5.000 utenti! 🙏\n\n#AIEmpire #FestaDelLavoro #DevLife',
+        content: '🎉 Buona Festa del Lavoro!\n\nOggi celebriamo gli sviluppatori che costruiscono il futuro.\n\nGrazie a la community NeuraAPI! 🙏\n\n#AIEmpire #FestaDelLavoro #DevLife',
         hashtags: ['#AIEmpire', '#FestaDelLavoro', '#DevLife']
       }
     ]
@@ -408,7 +408,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🇫🇷 Buona Festa Nazionale!\n\nOggi celebriamo la tech italiana:\n→ Oltre 5.000 sviluppatori\n→ 200+ SaaS lanciati\n→ 100% made in Italy\n\nViva la tech italiana! 🇮🇹🚀\n\n#AIEmpire #FestaNazionale #ItalyTech',
+        content: '🇫🇷 Buona Festa Nazionale!\n\nOggi celebriamo la tech italiana:\n→ la community NeuraAPI\n→ des SaaS lancés\n→ 100% made in Italy\n\nViva la tech italiana! 🇮🇹🚀\n\n#AIEmpire #FestaNazionale #ItalyTech',
         hashtags: ['#AIEmpire', '#FestaNazionale', '#ItalyTech']
       },
       {
@@ -416,7 +416,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Patriotic',
-        content: '🇫🇷 Festa Nazionale: È ora della tech italiana!\n\nAI Empire è orgogliosa di rappresentare l\'innovazione italiana:\n→ Oltre 5.000 sviluppatori\n→ 200+ SaaS lanciati\n→ Supporto in italiano\n→ Fatturazione EUR\n→ GDPR nativo\n\nViva la tech italiana! 🇮🇹\n\n#AIEmpire #FestaNazionale #ItalyTech',
+        content: '🇫🇷 Festa Nazionale: È ora della tech italiana!\n\nAI Empire è orgogliosa di rappresentare l\'innovazione italiana:\n→ la community NeuraAPI\n→ des SaaS lancés\n→ Supporto in italiano\n→ Fatturazione EUR\n→ GDPR nativo\n\nViva la tech italiana! 🇮🇹\n\n#AIEmpire #FestaNazionale #ItalyTech',
         hashtags: ['#AIEmpire', '#FestaNazionale', '#ItalyTech']
       }
     ]
@@ -501,7 +501,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🎄 Buon Natale! 🎄\n\nGrazie a tutti i nostri oltre 5.000 utenti!\n\nRegalo: -30% su tutti i template\nCodice: NOEL2025\n\nBuone feste! 🎅\n\n#AIEmpire #Natale',
+        content: '🎄 Buon Natale! 🎄\n\nGrazie a la community NeuraAPI!\n\nRegalo: -30% su tutti i template\nCodice: NOEL2025\n\nBuone feste! 🎅\n\n#AIEmpire #Natale',
         hashtags: ['#AIEmpire', '#Natale']
       }
     ]
@@ -532,7 +532,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Motivational',
-        content: '🎆 Nuovo anno, nuovo SaaS.\n\nIl 2025 è l\'anno in cui passi all\'azione.\n\nAI Empire è qui per supportarti:\n→ Template pronti all\'uso\n→ API IA gratuite\n→ Supporto 24/7\n\nUnisciti a oltre 5.000 sviluppatori che hanno già lanciato il loro SaaS.\n\nBuon Anno! 🎆\n\n#AIEmpire #Capodanno #2025',
+        content: '🎆 Nuovo anno, nuovo SaaS.\n\nIl 2025 è l\'anno in cui passi all\'azione.\n\nAI Empire è qui per supportarti:\n→ Template pronti all\'uso\n→ API IA gratuite\n→ Supporto 24/7\n\nUnisciti a oltre la community NeuraAPI che hanno già lanciato il loro SaaS.\n\nBuon Anno! 🎆\n\n#AIEmpire #Capodanno #2025',
         hashtags: ['#AIEmpire', '#Capodanno', '#2025']
       }
     ]

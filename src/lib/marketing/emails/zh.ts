@@ -192,11 +192,11 @@ AI Empire 客户支持团队`,
     },
     {
       day: 2,
-      subject: '🏆 5,000+开发者已通过AI Empire启动SaaS',
+      subject: '🏆 NeuraAPI社区已通过AI Empire启动SaaS',
       preview: '加入不断成长的开发者社区。',
       body: `[姓名]您好
 
-超过5,000名开发者信任AI Empire。
+NeuraAPI社区信任AI Empire。
 
 以下是他们构建的项目：
 → 200+电商SaaS

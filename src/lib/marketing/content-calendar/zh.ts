@@ -55,7 +55,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Thought Leadership',
-      content: 'AI不再是巨头企业的专属。\n\n创业公司无需大预算即可使用AI：\n\n→ AI Empire模板（€19起）\n→ 免费AI API（GPT-4、Groq）\n→ 5分钟集成\n\n5,000+开发者已经在使用。\n\n你呢？\n\n#AIEmpire #AI #StartupChina',
+      content: 'AI不再是巨头企业的专属。\n\n创业公司无需大预算即可使用AI：\n\n→ AI Empire模板（€19起）\n→ 免费AI API（GPT-4、Groq）\n→ 5分钟集成\n\nNeuraAPI社区已经在使用。\n\n你呢？\n\n#AIEmpire #AI #StartupChina',
       hashtags: ['#AIEmpire', '#AI', '#StartupChina']
     },
     {
@@ -128,7 +128,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Product',
-      content: '📦 介绍：NeuraStore v2\n\nNext.js 14最完整的电商模板：\n\n→ 智能购物车\n→ 安全的Stripe支付\n→ 专业管理后台\n→ 响应式设计 + 暗色模式\n\n价格：€29（上线优惠-40%）\n\n5,000+开发者信赖我们。\n\n#AIEmpire #Ecommerce',
+      content: '📦 介绍：NeuraStore v2\n\nNext.js 14最完整的电商模板：\n\n→ 智能购物车\n→ 安全的Stripe支付\n→ 专业管理后台\n→ 响应式设计 + 暗色模式\n\n价格：€29（上线优惠-40%）\n\nNeuraAPI社区信赖我们。\n\n#AIEmpire #Ecommerce',
       hashtags: ['#AIEmpire', '#Ecommerce']
     },
     {
@@ -153,7 +153,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Founder Story',
-      content: '💡 "我辞职创建了AI Empire。这是原因。"\n\n中国市场需要一个本地化的AI API替代方案。\n\nAI Empire就是那个替代方案：\n→ 中国优先\n→ 中文支持\n→ EUR计费\n→ 原生GDPR合规\n\n5,000+开发者信赖我们。\n\n#AIEmpire #FounderStory',
+      content: '💡 "我辞职创建了AI Empire。这是原因。"\n\n中国市场需要一个本地化的AI API替代方案。\n\nAI Empire就是那个替代方案：\n→ 中国优先\n→ 中文支持\n→ EUR计费\n→ 原生GDPR合规\n\nNeuraAPI社区信赖我们。\n\n#AIEmpire #FounderStory',
       hashtags: ['#AIEmpire', '#FounderStory']
     },
     // 第4周
@@ -362,7 +362,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🎉 劳动节快乐！\n\n今天，我们庆祝构建未来的开发者们。\n\n感谢5,000+用户的大力支持！ 🙏\n\n#AIEmpire #劳动节 #DevLife',
+        content: '🎉 劳动节快乐！\n\n今天，我们庆祝构建未来的开发者们。\n\n感谢NeuraAPI社区的大力支持！ 🙏\n\n#AIEmpire #劳动节 #DevLife',
         hashtags: ['#AIEmpire', '#劳动节', '#DevLife']
       }
     ]
@@ -408,7 +408,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🇫🇷 国庆节快乐！\n\n今天，我们庆祝中国科技：\n→ 5,000+开发者\n→ 200+个SaaS上线\n→ 100%中国制造\n\n中国科技万岁！ 🇨🇳🚀\n\n#AIEmpire #国庆节 #ChinaTech',
+        content: '🇫🇷 国庆节快乐！\n\n今天，我们庆祝中国科技：\n→ NeuraAPI社区\n→ 200+个SaaS上线\n→ 100%中国制造\n\n中国科技万岁！ 🇨🇳🚀\n\n#AIEmpire #国庆节 #ChinaTech',
         hashtags: ['#AIEmpire', '#国庆节', '#ChinaTech']
       },
       {
@@ -416,7 +416,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Patriotic',
-        content: '🇫🇷 国庆节：中国科技的时刻！\n\nAI Empire自豪地代表中国创新：\n→ 5,000+开发者\n→ 200+个SaaS上线\n→ 中文支持\n→ EUR计费\n→ 原生GDPR合规\n\n中国科技万岁！ 🇨🇳\n\n#AIEmpire #国庆节 #ChinaTech',
+        content: '🇫🇷 国庆节：中国科技的时刻！\n\nAI Empire自豪地代表中国创新：\n→ NeuraAPI社区\n→ 200+个SaaS上线\n→ 中文支持\n→ EUR计费\n→ 原生GDPR合规\n\n中国科技万岁！ 🇨🇳\n\n#AIEmpire #国庆节 #ChinaTech',
         hashtags: ['#AIEmpire', '#国庆节', '#ChinaTech']
       }
     ]
@@ -501,7 +501,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🎄 圣诞快乐！ 🎄\n\n感谢5,000+用户的支持！\n\n礼物：全部模板-30%\n优惠码：NOEL2025\n\n节日快乐！ 🎅\n\n#AIEmpire #圣诞节',
+        content: '🎄 圣诞快乐！ 🎄\n\n感谢NeuraAPI社区的支持！\n\n礼物：全部模板-30%\n优惠码：NOEL2025\n\n节日快乐！ 🎅\n\n#AIEmpire #圣诞节',
         hashtags: ['#AIEmpire', '#圣诞节']
       }
     ]

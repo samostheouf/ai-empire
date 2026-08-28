@@ -294,7 +294,7 @@ Nous avons remarqué que vous n'avez pas utilisé AI Empire depuis un moment. No
 
 ## Ce que vous avez raté :
 
-📊 **Communauté grandissante** : des développeurs actifs nous font confiance
+📊 **Communauté grandissante** : rejoignez la communauté NeuraAPI
 🏆 **Succès clients** : Plus de 1000 SaaS lancés avec succès
 📈 **Performance** : 98% de satisfaction client
 

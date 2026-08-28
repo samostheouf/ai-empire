@@ -55,7 +55,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Thought Leadership',
-      content: 'L\'IA n\'est plus réservée aux géants du CAC40.\n\nVoici comment les startups françaises peuvent y accéder sans budget conséquent :\n\n→ Templates AI Empire (à partir de €19)\n→ APIs IA gratuites (GPT-4, Groq)\n→ Intégration en 5 minutes\n\n5 000+ développeurs l\'ont déjà fait.\n\nEt vous ?\n\n#AIEmpire #IA #StartupFrance',
+      content: 'L\'IA n\'est plus réservée aux géants du CAC40.\n\nVoici comment les startups françaises peuvent y accéder sans budget conséquent :\n\n→ Templates AI Empire (à partir de €19)\n→ APIs IA gratuites (GPT-4, Groq)\n→ Intégration en 5 minutes\n\nla communauté NeuraAPI l\'ont déjà fait.\n\nEt vous ?\n\n#AIEmpire #IA #StartupFrance',
       hashtags: ['#AIEmpire', '#IA', '#StartupFrance']
     },
     {
@@ -128,7 +128,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Product',
-      content: '📦 Présentation : NeuraStore v2\n\nLe template e-commerce le plus complet pour Next.js 14 :\n\n→ Panier d\'achat intelligent\n→ Paiements Stripe sécurisés\n→ Dashboard admin professionnel\n→ Design responsive + dark mode\n\nPrix : €29 (-40% lancement)\n\n5 000+ développeurs nous font confiance.\n\n#AIEmpire #Ecommerce',
+      content: '📦 Présentation : NeuraStore v2\n\nLe template e-commerce le plus complet pour Next.js 14 :\n\n→ Panier d\'achat intelligent\n→ Paiements Stripe sécurisés\n→ Dashboard admin professionnel\n→ Design responsive + dark mode\n\nPrix : €29 (-40% lancement)\n\nrejoignez la communauté NeuraAPI.\n\n#AIEmpire #Ecommerce',
       hashtags: ['#AIEmpire', '#Ecommerce']
     },
     {
@@ -153,7 +153,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Founder Story',
-      content: '💡 "J\'ai quitté mon emploi pour construire AI Empire. Voici pourquoi."\n\nLe marché français a besoin d\'une alternative locale aux APIs IA américaines.\n\nAI Empire est cette alternative :\n→ French-first\n→ Support en français\n→ Facturation EUR\n→ RGPD natif\n\n5 000+ développeurs nous font confiance.\n\n#AIEmpire #FounderStory',
+      content: '💡 "J\'ai quitté mon emploi pour construire AI Empire. Voici pourquoi."\n\nLe marché français a besoin d\'une alternative locale aux APIs IA américaines.\n\nAI Empire est cette alternative :\n→ French-first\n→ Support en français\n→ Facturation EUR\n→ RGPD natif\n\nrejoignez la communauté NeuraAPI.\n\n#AIEmpire #FounderStory',
       hashtags: ['#AIEmpire', '#FounderStory']
     },
     // SEMAINE 4
@@ -362,7 +362,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🎉 Bonne fête du travail !\n\nAujourd\'hui, on fête les développeurs qui construisent l\'avenir.\n\nMerci à tous nos 5 000+ utilisateurs ! 🙏\n\n#AIEmpire #FêteDuTravail #DevLife',
+        content: '🎉 Bonne fête du travail !\n\nAujourd\'hui, on fête les développeurs qui construisent l\'avenir.\n\nMerci à tous nos la communauté NeuraAPI ! 🙏\n\n#AIEmpire #FêteDuTravail #DevLife',
         hashtags: ['#AIEmpire', '#FêteDuTravail', '#DevLife']
       }
     ]
@@ -408,7 +408,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🇫🇷 Bonne fête nationale !\n\nAujourd\'hui, on célèbre la France tech :\n→ 5 000+ développeurs\n→ 200+ SaaS lancés\n→ 100% made in France\n\nVive la France tech ! 🇫🇷🚀\n\n#AIEmpire #FêteNationale #FranceTech',
+        content: '🇫🇷 Bonne fête nationale !\n\nAujourd\'hui, on célèbre la France tech :\n→ la communauté NeuraAPI\n→ des SaaS lancés\n→ 100% made in France\n\nVive la France tech ! 🇫🇷🚀\n\n#AIEmpire #FêteNationale #FranceTech',
         hashtags: ['#AIEmpire', '#FêteNationale', '#FranceTech']
       },
       {
@@ -416,7 +416,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Patriotic',
-        content: '🇫🇷 Fête nationale : L\'heure de la France tech !\n\nAI Empire est fier de représenter l\'innovation française :\n→ 5 000+ développeurs\n→ 200+ SaaS lancés\n→ Support en français\n→ Facturation EUR\n→ RGPD natif\n\nVive la France tech ! 🇫🇷\n\n#AIEmpire #FêteNationale #FranceTech',
+        content: '🇫🇷 Fête nationale : L\'heure de la France tech !\n\nAI Empire est fier de représenter l\'innovation française :\n→ la communauté NeuraAPI\n→ des SaaS lancés\n→ Support en français\n→ Facturation EUR\n→ RGPD natif\n\nVive la France tech ! 🇫🇷\n\n#AIEmpire #FêteNationale #FranceTech',
         hashtags: ['#AIEmpire', '#FêteNationale', '#FranceTech']
       }
     ]
@@ -501,7 +501,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🎄 Joyeux Noël ! 🎄\n\nMerci à tous nos 5 000+ utilisateurs !\n\nEn cadeau : -30% sur tous les templates\nCode : NOEL2025\n\nBonne fête ! 🎅\n\n#AIEmpire #Noël',
+        content: '🎄 Joyeux Noël ! 🎄\n\nMerci à tous nos la communauté NeuraAPI !\n\nEn cadeau : -30% sur tous les templates\nCode : NOEL2025\n\nBonne fête ! 🎅\n\n#AIEmpire #Noël',
         hashtags: ['#AIEmpire', '#Noël']
       }
     ]
@@ -532,7 +532,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Motivational',
-        content: '🎆 Nouvel an, nouveau SaaS.\n\n2025, c\'est l\'année où tu passes à l\'action.\n\nAI Empire est là pour t\'accompagner :\n→ Templates prêts à l\'emploi\n→ APIs IA gratuites\n→ Support 24/7\n\nRejoins 5 000+ développeurs qui ont déjà lancé leur SaaS.\n\nBonne année ! 🎆\n\n#AIEmpire #NouvelAn #2025',
+        content: '🎆 Nouvel an, nouveau SaaS.\n\n2025, c\'est l\'année où tu passes à l\'action.\n\nAI Empire est là pour t\'accompagner :\n→ Templates prêts à l\'emploi\n→ APIs IA gratuites\n→ Support 24/7\n\nRejoins la communauté NeuraAPI qui ont déjà lancé leur SaaS.\n\nBonne année ! 🎆\n\n#AIEmpire #NouvelAn #2025',
         hashtags: ['#AIEmpire', '#NouvelAn', '#2025']
       }
     ]

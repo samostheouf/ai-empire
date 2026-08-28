@@ -192,11 +192,11 @@ AI Empire 고객 지원팀`,
     },
     {
       day: 2,
-      subject: '🏆 5,000명 이상의 개발자가 SaaS를 출시했습니다',
+      subject: '🏆 NeuraAPI 커뮤니티가 SaaS를 출시했습니다',
       preview: '성장하는 커뮤니티에 참여하세요.',
       body: `[이름]님
 
-5,000명 이상의 개발자가 AI Empire을 신뢰하고 있습니다.
+NeuraAPI 커뮤니티가 AI Empire을 신뢰하고 있습니다.
 
 다음과 같은 프로젝트가 만들어졌습니다:
 → 200개 이상의 이커머스 SaaS

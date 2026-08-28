@@ -258,7 +258,7 @@ export const twitterAdsVariants: AdCopy[] = [
 
 🎁 -30% lancement : code LAUNCH30
 
-Les premiers utilisateurs nous font confiance.
+Rejoignez la communauté NeuraAPI.
 
 👉 ai-empire-steel.vercel.app
 

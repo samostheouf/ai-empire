@@ -199,11 +199,11 @@ L'équipe AI Empire`,
     },
     {
       day: 2,
-      subject: 'Des milliers de développeurs utilisent déjà AI Empire',
+      subject: 'Rejoignez la communauté NeuraAPI',
       preview: 'Rejoins une communauté grandissante.',
       body: `Salut [Prénom],
 
-Des milliers de développeurs font déjà confiance à AI Empire.
+Rejoignez la communauté NeuraAPI : templates et APIs IA.
 
 Voici ce qu'ils ont créé :
 - Des dizaines de SaaS e-commerce

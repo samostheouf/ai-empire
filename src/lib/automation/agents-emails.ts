@@ -101,7 +101,7 @@ function email1_Welcome(userName: string): { subject: string; html: string } {
       </table>
     </div>
     <div style="background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-      <p style="margin: 0; color: #7c3aed; font-weight: 600;">👥 Rejoignez 2,400+ utilisateurs actifs</p>
+      <p style="margin: 0; color: #7c3aed; font-weight: 600;">👥 Rejoignez la communauté NeuraAPI</p>
       <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
         Notre communauté est active sur Discord. Posez vos questions, partagez vos résultats.
       </p>
@@ -275,7 +275,7 @@ function email4_UpgradePro(userName: string): { subject: string; html: string } 
       </table>
     </div>
     <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-      <p style="margin: 0; color: #166534; font-weight: 600;">👥 2,400+ entreprises nous font confiance</p>
+      <p style="margin: 0; color: #166534; font-weight: 600;">👥 Rejoignez la communauté NeuraAPI — templates et APIs IA</p>
       <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
         Rejoignez les entreprises qui ont transformé leur productivité avec AI Agent Factory.
       </p>
@@ -320,7 +320,7 @@ function email5_LastChance(userName: string): { subject: string; html: string } 
       <li style="margin-bottom: 8px;"><strong>Sans engagement</strong> — annulez quand vous voulez</li>
     </ul>
     <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-      <p style="margin: 0; color: #166534; font-weight: 600;">👥 2,400+ entreprises ont déjà fait le pas</p>
+      <p style="margin: 0; color: #166534; font-weight: 600;">👥 Lancez votre projet avec NeuraAPI dès aujourd'hui</p>
       <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
         Rejoignez-les et transformez votre productivité dès aujourd'hui.
       </p>
@@ -446,7 +446,7 @@ function emailWinBack3(userName: string): { subject: string; html: string } {
       <p style="margin: 0; color: #991b1b; font-weight: 600;">⚠️ Offre expire demain — Pas de prolongation</p>
     </div>
     <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-      <p style="margin: 0; color: #166534; font-weight: 600;">👥 2,400+ entreprises nous font confiance</p>
+      <p style="margin: 0; color: #166534; font-weight: 600;">👥 Rejoignez la communauté NeuraAPI — templates et APIs IA</p>
       <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
         Ne manquez pas l'occasion de transformer votre productivité.
       </p>

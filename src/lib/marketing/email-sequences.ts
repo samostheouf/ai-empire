@@ -230,14 +230,14 @@ L'équipe AI Empire 🇫🇷`,
     },
     {
       day: 2,
-      subject: '🏆 5 000+ développeurs ont déjà lancé leur SaaS',
+      subject: '🏆 la communauté NeuraAPI ont déjà lancé leur SaaS',
       preview: 'Rejoins une communauté grandissante.',
       body: `Salut [Prénom],
 
-5 000+ développeurs font déjà confiance à AI Empire.
+la communauté NeuraAPI font déjà confiance à AI Empire.
 
 Voici ce qu'ils ont créé :
-→ 200+ SaaS e-commerce
+→ des SaaS e-commerce
 → 150+ blogs professionnels
 → 100+ portfolios créatifs
 → 50+ chatbots IA
@@ -247,7 +247,7 @@ Et toi ? Qu'est-ce que tu vas créer ?
 [CTA: Rejoindre la communauté →]
 
 L'équipe AI Empire 🇫🇷`,
-      cta: '🤝 Rejoindre 5 000+ devs',
+      cta: '🤝 Rejoindre la communauté NeuraAPI',
       ctaUrl: 'https://ai-empire-steel.vercel.app'
     },
     {

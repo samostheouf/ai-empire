@@ -165,7 +165,7 @@ export async function generateSocialMediaPosts(): Promise<SocialMediaContent[]> 
       twitter: [
         { content: '🚀 Découvrez nos nouveaux templates Next.js premium !\n\n✅ Design moderne\n✅ Code optimisé\n✅ Support inclus\n\nDécouvrez → ' + appUrl + '/templates', hashtags: ['NextJS', 'Templates', 'WebDev'] },
         { content: '💡 Astuce du jour : Intégrez l\'IA dans votre SaaS en 5 minutes avec NeuraAPI\n\n→ APIs performantes\n→ Documentation claire\n→ Déploiement rapide', hashtags: ['IA', 'SaaS', 'DevTips'] },
-        { content: '🎉 +500 développeurs font déjà confiance à NeuraAPI\n\nRejoignez la communauté et transformez vos projets avec l\'IA.', hashtags: ['Community', 'Developers', 'AI'] },
+        { content: '🎉 +la communauté NeuraAPI à NeuraAPI\n\nRejoignez la communauté et transformez vos projets avec l\'IA.', hashtags: ['Community', 'Developers', 'AI'] },
       ],
       linkedin: [
         { content: '🚀 Nous venons de lancer de nouveaux templates professionnels pour développeurs.\n\nCe qui les rend uniques :\n→ Code Next.js 14 + Tailwind CSS\n→ Intégration IA native\n→ Déploiement en minutes\n\nDécouvrez-les sur neuraapi.com', hashtags: ['WebDevelopment', 'NextJS', 'AI'] },

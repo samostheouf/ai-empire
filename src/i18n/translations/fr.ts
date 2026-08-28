@@ -781,7 +781,8 @@ const fr: Record<string, string> = {
   launchOfferHeures: 'Heures',
   launchOfferMinutes: 'Minutes',
   launchOfferSecondes: 'Secondes',
-  launchOfferValable: 'Offre valable 7 jours — Profitez de l\'offre avant la fin',
+  launchOfferValable: 'Code permanent LANCEMENT30 — -30% sans date limite',
+  launchOfferNoDeadline: 'Ce code de lancement -30% est permanent, sans date limite.',
   launchOfferViewTemplate: 'Voir le template',
   launchOfferDownloads: 'téléchargements',
 

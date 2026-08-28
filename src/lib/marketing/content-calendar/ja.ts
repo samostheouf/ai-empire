@@ -55,7 +55,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Thought Leadership',
-      content: 'AIはもはや大手企業だけのものではありません。\n\n大きな予算なしにAIにアクセスする方法：\n\n→ AI Empireテンプレート（€19〜）\n→ 無料AI API（GPT-4、Groq）\n→ 5分でインテグレーション\n\n5,000人以上の開発者が既に実践済み。\n\nあなたはどうですか？\n\n#AIEmpire #AI #StartupJapan',
+      content: 'AIはもはや大手企業だけのものではありません。\n\n大きな予算なしにAIにアクセスする方法：\n\n→ AI Empireテンプレート（€19〜）\n→ 無料AI API（GPT-4、Groq）\n→ 5分でインテグレーション\n\nNeuraAPIコミュニティが既に実践済み。\n\nあなたはどうですか？\n\n#AIEmpire #AI #StartupJapan',
       hashtags: ['#AIEmpire', '#AI', '#StartupJapan']
     },
     {
@@ -128,7 +128,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Product',
-      content: '📦 ご紹介：NeuraStore v2\n\nNext.js 14向けの最も包括的なEコマーステンプレート：\n\n→ インテリジェントカート\n→ 安全なStripe決済\n→ プロフェッショナル管理ダッシュボード\n→ レスポンシブデザイン＋ダークモード\n\n価格：€29（ローンチ-40%）\n\n5,000人以上の開発者に信頼されています。\n\n#AIEmpire #Ecommerce',
+      content: '📦 ご紹介：NeuraStore v2\n\nNext.js 14向けの最も包括的なEコマーステンプレート：\n\n→ インテリジェントカート\n→ 安全なStripe決済\n→ プロフェッショナル管理ダッシュボード\n→ レスポンシブデザイン＋ダークモード\n\n価格：€29（ローンチ-40%）\n\nNeuraAPIコミュニティに信頼されています。\n\n#AIEmpire #Ecommerce',
       hashtags: ['#AIEmpire', '#Ecommerce']
     },
     {
@@ -153,7 +153,7 @@ export const monthlyContentPlan: ContentCalendar = {
       time: '12:00',
       platform: 'LinkedIn',
       type: 'Founder Story',
-      content: '💡 「AI Empireを構築するために仕事を辞めました。その理由はこれです。」\n\n日本の市場には、アメリカのAI APIに代わるローカルな選択肢が必要です。\n\nAI Empireがその選択肢です：\n→ 日本ファースト\n→ 日本語サポート\n→ EUR請求\n→ GDPR準拠\n\n5,000人以上の開発者が信頼しています。\n\n#AIEmpire #FounderStory',
+      content: '💡 「AI Empireを構築するために仕事を辞めました。その理由はこれです。」\n\n日本の市場には、アメリカのAI APIに代わるローカルな選択肢が必要です。\n\nAI Empireがその選択肢です：\n→ 日本ファースト\n→ 日本語サポート\n→ EUR請求\n→ GDPR準拠\n\nNeuraAPIコミュニティが信頼しています。\n\n#AIEmpire #FounderStory',
       hashtags: ['#AIEmpire', '#FounderStory']
     },
     // 週4
@@ -408,7 +408,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '09:00',
         platform: 'Twitter/X',
         type: 'Message',
-        content: '🇫🇷 国慶日おめでとう！\n\n本日は日本のテックを祝います：\n→ 5,000人以上の開発者\n→ 200以上のSaaSローンチ\n→ 100%メイドインジャパン\n\n日本のテック万歳！ 🇯🇵🚀\n\n#AIEmpire #国慶日 #JapanTech',
+        content: '🇫🇷 国慶日おめでとう！\n\n本日は日本のテックを祝います：\n→ NeuraAPIコミュニティ\n→ 200以上のSaaSローンチ\n→ 100%メイドインジャパン\n\n日本のテック万歳！ 🇯🇵🚀\n\n#AIEmpire #国慶日 #JapanTech',
         hashtags: ['#AIEmpire', '#国慶日', '#JapanTech']
       },
       {
@@ -416,7 +416,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Patriotic',
-        content: '🇫🇷 国慶日：日本のテックの時です！\n\nAI Empireは日本のイノベーションを代表することを誇りに思います：\n→ 5,000人以上の開発者\n→ 200以上のSaaSローンチ\n→ 日本語サポート\n→ EUR請求\n→ GDPR準拠\n\n日本のテック万歳！ 🇯🇵\n\n#AIEmpire #国慶日 #JapanTech',
+        content: '🇫🇷 国慶日：日本のテックの時です！\n\nAI Empireは日本のイノベーションを代表することを誇りに思います：\n→ NeuraAPIコミュニティ\n→ 200以上のSaaSローンチ\n→ 日本語サポート\n→ EUR請求\n→ GDPR準拠\n\n日本のテック万歳！ 🇯🇵\n\n#AIEmpire #国慶日 #JapanTech',
         hashtags: ['#AIEmpire', '#国慶日', '#JapanTech']
       }
     ]
@@ -532,7 +532,7 @@ export const holidayContentPlan: HolidayPlan[] = [
         time: '12:00',
         platform: 'LinkedIn',
         type: 'Motivational',
-        content: '🎆 新年、新しいSaaS。\n\n2025年は行動に移す年です。\n\nAI Empireがサポートします：\n→ すぐに使えるテンプレート\n→ 無料AI API\n→ 24時間365日サポート\n\nすでにSaaSを立ち上げた5,000人以上の開発者に参加しましょう。\n\n新年おめでとう！ 🎆\n\n#AIEmpire #新年 #2025',
+        content: '🎆 新年、新しいSaaS。\n\n2025年は行動に移す年です。\n\nAI Empireがサポートします：\n→ すぐに使えるテンプレート\n→ 無料AI API\n→ 24時間365日サポート\n\nすでにSaaSを立ち上げたNeuraAPIコミュニティに参加しましょう。\n\n新年おめでとう！ 🎆\n\n#AIEmpire #新年 #2025',
         hashtags: ['#AIEmpire', '#新年', '#2025']
       }
     ]

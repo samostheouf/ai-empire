@@ -149,7 +149,7 @@ export async function sendWelcomeEmails(): Promise<AutomationLog[]> {
         Accéder au Dashboard
       </a>
       <div style="background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-        <p style="margin: 0; color: #7c3aed; font-weight: 600;">👥 Rejoignez 2,400+ utilisateurs actifs</p>
+        <p style="margin: 0; color: #7c3aed; font-weight: 600;">👥 Rejoignez la communauté NeuraAPI</p>
         <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
           Besoin d'aide ? Répondez à cet email — nous répondons en moins de 2h.
         </p>
@@ -214,7 +214,7 @@ export async function sendAbandonedCartEmails(): Promise<AutomationLog[]> {
         <p style="margin: 0; color: #64748b; font-size: 14px;">${price}€</p>
       </div>
       <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-        <p style="margin: 0; color: #166534; font-weight: 600;">👥 2,400+ développeurs nous font confiance</p>
+        <p style="margin: 0; color: #166534; font-weight: 600;">👥 Rejoignez la communauté NeuraAPI — templates et APIs IA</p>
       </div>
       <a href="${appUrl}/templates/${order.template?.slug || ''}" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 16px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; margin-bottom: 12px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);">
         Finaliser mon achat
@@ -390,7 +390,7 @@ export async function sendReengagementEmails(): Promise<AutomationLog[]> {
         </p>
       </div>
       <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 16px; margin-bottom: 24px;">
-        <p style="margin: 0; color: #166534; font-weight: 600;">👥 2,400+ utilisateurs actifs</p>
+        <p style="margin: 0; color: #166534; font-weight: 600;">👥 Rejoignez la communauté NeuraAPI</p>
         <p style="margin: 8px 0 0; color: #64748b; font-size: 14px;">
           Rejoignez-les et transformez votre productivité.
         </p>
