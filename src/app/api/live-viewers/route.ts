@@ -48,7 +48,7 @@ export async function GET() {
     const count = Math.max(memoryCount, Math.min(dbCount, 50))
 
     return NextResponse.json({
-      count: Math.max(count, 1),
+      count,
     }, {
       headers: { 'Cache-Control': 'no-cache, no-store, must-revalidate' },
     })

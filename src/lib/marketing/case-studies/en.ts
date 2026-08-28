@@ -3,15 +3,15 @@ import type { CaseStudiesByLanguage } from './index'
 export const caseStudies: CaseStudiesByLanguage = {
   saas: {
     id: 'cs-en-saas-01',
-    company: 'DataPulse Analytics',
+    company: 'un éditeur SaaS (étude de cas illustrative)',
     companyType: 'saas',
     industry: 'Data Analytics SaaS',
     teamSize: '4 engineers',
-    challenge: 'DataPulse needed to launch their AI-powered analytics dashboard within 6 weeks. Their team was spending 80% of development time on authentication, Stripe billing integration, and building the admin panel from scratch. The AI API integration alone was estimated to take 3 weeks with their current approach of managing multiple provider keys.',
+    challenge: 'ce éditeur SaaS needed to launch their AI-powered analytics dashboard within 6 weeks. Their team was spending 80% of development time on authentication, Stripe billing integration, and building the admin panel from scratch. The AI API integration alone was estimated to take 3 weeks with their current approach of managing multiple provider keys.',
     solution: 'Adopted AI Empire\'s NeuraDashboard template with pre-built Groq AI integration, Stripe billing, and role-based access control. The team replaced their custom auth setup and manual Stripe integration with the template\'s production-ready implementations.',
     implementation: [
       { step: 1, title: 'Clone and configure', description: 'Cloned NeuraDashboard template, configured environment variables with Groq API key and Stripe credentials.', duration: '2 hours' },
-      { step: 2, title: 'Customize branding', description: 'Updated color scheme, logo, and typography to match DataPulse brand identity. Modified dashboard layout for analytics-specific widgets.', duration: '1 day' },
+      { step: 2, title: 'Customize branding', description: 'Updated color scheme, logo, and typography to match ce éditeur SaaS brand identity. Modified dashboard layout for analytics-specific widgets.', duration: '1 day' },
       { step: 3, title: 'Add AI features', description: 'Integrated Groq-powered natural language query feature into the analytics dashboard using the pre-built /api/chat endpoint.', duration: '2 days' },
       { step: 4, title: 'Configure billing', description: 'Set up three subscription tiers (Starter, Pro, Enterprise) using the template\'s Stripe integration. Enabled usage-based billing for API calls.', duration: '1 day' },
       { step: 5, title: 'Deploy and launch', description: 'Deployed to Vercel, connected custom domain, and launched beta to first 50 customers.', duration: '1 day' },
@@ -24,8 +24,8 @@ export const caseStudies: CaseStudiesByLanguage = {
     ],
     testimonial: {
       quote: 'We launched our AI analytics SaaS in 8 days instead of 6 weeks. The Groq integration was already wired up — we just added our domain-specific prompts. Best investment our startup has made.',
-      author: 'Marcus Chen',
-      role: 'CTO, DataPulse Analytics',
+      author: 'Équipe cliente (anonyme)',
+      role: 'Profil non identifié — étude illustrative',
     },
     templateUsed: 'NeuraDashboard — Admin Panel',
     timeToValue: '8 days',
@@ -33,11 +33,11 @@ export const caseStudies: CaseStudiesByLanguage = {
 
   agency: {
     id: 'cs-en-agency-01',
-    company: 'Bright Studio',
+    company: 'une agence digitale (étude de cas illustrative)',
     companyType: 'agency',
     industry: 'Digital Agency',
     teamSize: '12 people',
-    challenge: 'Bright Studio was building custom SaaS solutions for clients but each project required 3-4 weeks of boilerplate setup. Auth, billing, and AI integration were rebuilt from scratch every time. This reduced their project margins and delayed client deliveries.',
+    challenge: 'une agence digitale was building custom SaaS solutions for clients but each project required 3-4 weeks of boilerplate setup. Auth, billing, and AI integration were rebuilt from scratch every time. This reduced their project margins and delayed client deliveries.',
     solution: 'Standardized on AI Empire templates as the starting point for all client projects. Used NeuraSaaS for general SaaS clients, NeuraStore for e-commerce clients, and NeuraBlog for content platforms. AI Empire\'s consistent codebase reduced onboarding time for new team members.',
     implementation: [
       { step: 1, title: 'Template library setup', description: 'Created an internal template library based on AI Empire templates with agency-specific customizations.', duration: '3 days' },
@@ -54,8 +54,8 @@ export const caseStudies: CaseStudiesByLanguage = {
     ],
     testimonial: {
       quote: 'AI Empire cut our project setup time from 4 weeks to 3 days. We now deliver SaaS projects in 2-3 weeks instead of 6-8. Our clients are happier and our margins are better.',
-      author: 'Sophie Laurent',
-      role: 'Agency Director, Bright Studio',
+      author: 'Équipe cliente (anonyme)',
+      role: 'Profil non identifié — étude illustrative',
     },
     templateUsed: 'NeuraSaaS, NeuraStore, NeuraBlog',
     timeToValue: '2 weeks (team training)',
@@ -63,7 +63,7 @@ export const caseStudies: CaseStudiesByLanguage = {
 
   freelancer: {
     id: 'cs-en-freelancer-01',
-    company: 'Alex Rivera (Independent)',
+    company: 'un lead dev (Independent)',
     companyType: 'freelancer',
     industry: 'Web Development',
     teamSize: '1 person',
@@ -84,8 +84,8 @@ export const caseStudies: CaseStudiesByLanguage = {
     ],
     testimonial: {
       quote: 'As a solo developer, AI Empire is a game-changer. I went from delivering 2 MVPs a month to 4-5. The Stripe integration alone saves me a week per project.',
-      author: 'Alex Rivera',
-      role: 'Freelance Full-Stack Developer',
+      author: 'Équipe cliente (anonyme)',
+      role: 'Profil non identifié — étude illustrative',
     },
     templateUsed: 'NeuraSaaS, NeuraPortfolio',
     timeToValue: '5 days',
@@ -114,8 +114,8 @@ export const caseStudies: CaseStudiesByLanguage = {
     ],
     testimonial: {
       quote: 'AI Empire saved us 3 months of development time and €58,000 in engineering costs. The pre-built auth and AI integration meant our team could focus on the actual product logic instead of infrastructure.',
-      author: 'James Whitfield',
-      role: 'VP Engineering, Meridian Technologies',
+      author: 'Équipe cliente (anonyme)',
+      role: 'Profil non identifié — étude illustrative',
     },
     templateUsed: 'NeuraSaaS — Kit Complet SaaS',
     timeToValue: '6 weeks',

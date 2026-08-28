@@ -3,15 +3,15 @@ import type { CaseStudiesByLanguage } from './index'
 export const caseStudies: CaseStudiesByLanguage = {
   saas: {
     id: 'cs-fr-saas-01',
-    company: 'DataPulse Analytics',
+    company: 'un éditeur SaaS (étude de cas illustrative)',
     companyType: 'saas',
     industry: 'SaaS Analytique de Données',
     teamSize: '4 ingénieurs',
-    challenge: 'DataPulse devait lancer son tableau de bord analytique alimenté par l\'IA dans les 6 semaines. Son équipe passait 80% de son temps de développement sur l\'authentification, l\'intégration de facturation Stripe et la construction du panneau d\'administration desde cero. L\'intégration de l\'API IA seule était estimée à 3 semaines avec leur approche actuelle.',
+    challenge: 'ce éditeur SaaS devait lancer son tableau de bord analytique alimenté par l\'IA dans les 6 semaines. Son équipe passait 80% de son temps de développement sur l\'authentification, l\'intégration de facturation Stripe et la construction du panneau d\'administration desde cero. L\'intégration de l\'API IA seule était estimée à 3 semaines avec leur approche actuelle.',
     solution: 'Adoption du template NeuraDashboard d\'AI Empire avec intégration Groq AI pré-construite, facturation Stripe et contrôle d\'accès basé sur les rôles. L\'équipe a remplacé sa configuration d\'auth personnalisée et l\'intégration Stripe manuelle par les implémentations prêtes pour la production du template.',
     implementation: [
       { step: 1, title: 'Cloner et configurer', description: 'Clonage du template NeuraDashboard, configuration des variables d\'environnement avec la clé API Groq et les identifiants Stripe.', duration: '2 heures' },
-      { step: 2, title: 'Personnaliser l\'identité visuelle', description: 'Mise à jour du schéma de couleurs, du logo et de la typographie pour correspondre à l\'identité de marque DataPulse. Modification de la disposition du tableau de bord pour les widgets analytiques.', duration: '1 jour' },
+      { step: 2, title: 'Personnaliser l\'identité visuelle', description: 'Mise à jour du schéma de couleurs, du logo et de la typographie pour correspondre à l\'identité de marque ce éditeur SaaS. Modification de la disposition du tableau de bord pour les widgets analytiques.', duration: '1 jour' },
       { step: 3, title: 'Ajouter les fonctionnalités IA', description: 'Intégration de la fonctionnalité de requête en langage naturel propulsée par Groq dans le tableau de bord analytique via le point de terminaison /api/chat pré-construit.', duration: '2 jours' },
       { step: 4, title: 'Configurer la facturation', description: 'Mise en place de trois niveaux d\'abonnement (Starter, Pro, Enterprise) grâce à l\'intégration Stripe du template. Activation de la facturation à l\'usage pour les appels API.', duration: '1 jour' },
       { step: 5, title: 'Déployer et lancer', description: 'Déploiement sur Vercel, connexion du domaine personnalisé et lancement de la bêta auprès des 50 premiers clients.', duration: '1 jour' },
@@ -24,8 +24,8 @@ export const caseStudies: CaseStudiesByLanguage = {
     ],
     testimonial: {
       quote: 'Nous avons lancé notre SaaS analytique IA en 8 jours au lieu de 6 semaines. L\'intégration Groq était déjà câblée — nous avons simplement ajouté nos prompts spécifiques au domaine. Meilleur investissement que notre startup ait fait.',
-      author: 'Marcus Chen',
-      role: 'CTO, DataPulse Analytics',
+      author: 'Équipe cliente (anonyme)',
+      role: 'Profil non identifié — étude illustrative',
     },
     templateUsed: 'NeuraDashboard — Panneau Admin',
     timeToValue: '8 jours',
@@ -33,11 +33,11 @@ export const caseStudies: CaseStudiesByLanguage = {
 
   agency: {
     id: 'cs-fr-agency-01',
-    company: 'Bright Studio',
+    company: 'une agence digitale (étude de cas illustrative)',
     companyType: 'agency',
     industry: 'Agence Digitale',
     teamSize: '12 personnes',
-    challenge: 'Bright Studio construisait des solutions SaaS personnalisées pour ses clients mais chaque projet nécessitait 3-4 semaines de configuration de boilerplate. L\'auth, la facturation et l\'intégration IA étaient reconstruites desde cero à chaque fois. Cela réduisait leurs marges projet et retardait les livraisons clients.',
+    challenge: 'une agence digitale construisait des solutions SaaS personnalisées pour ses clients mais chaque projet nécessitait 3-4 semaines de configuration de boilerplate. L\'auth, la facturation et l\'intégration IA étaient reconstruites desde cero à chaque fois. Cela réduisait leurs marges projet et retardait les livraisons clients.',
     solution: 'Standardisation sur les templates AI Empire comme point de départ pour tous les projets clients. Utilisation de NeuraSaaS pour les clients SaaS généralistes, NeuraStore pour les clients e-commerce et NeuraBlog pour les plateformes de contenu. La base de code cohérente d\'AI Empire a réduit le temps d\'intégration des nouveaux membres.',
     implementation: [
       { step: 1, title: 'Mise en place de la bibliothèque', description: 'Création d\'une bibliothèque de templates internes basée sur les templates AI Empire avec des personnalisations spécifiques à l\'agence.', duration: '3 jours' },
@@ -54,8 +54,8 @@ export const caseStudies: CaseStudiesByLanguage = {
     ],
     testimonial: {
       quote: 'AI Empire a réduit notre temps de configuration de projet de 4 semaines à 3 jours. Nous livrons maintenant des projets SaaS en 2-3 semaines au lieu de 6-8. Nos clients sont plus satisfaits et nos marges sont meilleures.',
-      author: 'Sophie Laurent',
-      role: 'Directrice d\'Agence, Bright Studio',
+      author: 'Équipe cliente (anonyme)',
+      role: 'Profil non identifié — étude illustrative'Agence, une agence digitale',
     },
     templateUsed: 'NeuraSaaS, NeuraStore, NeuraBlog',
     timeToValue: '2 semaines (formation équipe)',
@@ -63,7 +63,7 @@ export const caseStudies: CaseStudiesByLanguage = {
 
   freelancer: {
     id: 'cs-fr-freelancer-01',
-    company: 'Alex Rivera (Indépendant)',
+    company: 'un lead dev (Indépendant)',
     companyType: 'freelancer',
     industry: 'Développement Web',
     teamSize: '1 personne',
@@ -84,8 +84,8 @@ export const caseStudies: CaseStudiesByLanguage = {
     ],
     testimonial: {
       quote: 'En tant que développeur solo, AI Empire change la donne. Je suis passé de 2 MVP livrés par mois à 4-5. L\'intégration Stripe seule me fait gagner une semaine par projet.',
-      author: 'Alex Rivera',
-      role: 'Développeur Full-Stack Indépendant',
+      author: 'Équipe cliente (anonyme)',
+      role: 'Profil non identifié — étude illustrative',
     },
     templateUsed: 'NeuraSaaS, NeuraPortfolio',
     timeToValue: '5 jours',
@@ -114,8 +114,8 @@ export const caseStudies: CaseStudiesByLanguage = {
     ],
     testimonial: {
       quote: 'AI Empire nous a fait économiser 3 mois de développement et 58 000€ de coûts d\'ingénierie. L\'auth et l\'intégration IA pré-construites ont permis à notre équipe de se concentrer sur la logique produit plutôt que sur l\'infrastructure.',
-      author: 'James Whitfield',
-      role: 'VP Engineering, Meridian Technologies',
+      author: 'Équipe cliente (anonyme)',
+      role: 'Profil non identifié — étude illustrative',
     },
     templateUsed: 'NeuraSaaS — Kit Complet SaaS',
     timeToValue: '6 semaines',

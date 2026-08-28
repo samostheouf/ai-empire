@@ -153,15 +153,7 @@ export default async function Home() {
 
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm animate-fade-in-up animate-delay-500">
             <span className="flex items-center gap-2 text-indigo-300/60">
-              <span className="text-lg font-bold text-white">2 500+</span> développeurs inscrits
-            </span>
-            <span className="hidden sm:block w-px h-4 bg-white/10" />
-            <span className="flex items-center gap-2 text-indigo-300/60">
-              <span className="text-lg font-bold text-white">50 000+</span> appels API
-            </span>
-            <span className="hidden sm:block w-px h-4 bg-white/10" />
-            <span className="flex items-center gap-2 text-indigo-300/60">
-              <FileCode className="w-4 h-4 text-purple-400" aria-hidden="true" />
+              {/* 100% éthique : chiffres vérifiables — voir /api/stats pour les vrais compteurs */}
               <span className="text-lg font-bold text-white">10</span> templates Next.js
             </span>
           </div>
@@ -170,7 +162,7 @@ export default async function Home() {
             <span className="flex items-center gap-1.5"><CreditCard className="w-3.5 h-3.5" aria-hidden="true" /> Paiements Stripe</span>
             <span className="flex items-center gap-1.5"><ShieldCheck className="w-3.5 h-3.5" aria-hidden="true" /> RGPD Conforme</span>
             <span className="flex items-center gap-1.5"><Lock className="w-3.5 h-3.5" aria-hidden="true" /> SSL/TLS chiffré</span>
-            <span className="flex items-center gap-1.5"><Star className="w-3.5 h-3.5 text-amber-400" aria-hidden="true" /> 4.9/5 sur Product Hunt</span>
+            <span className="flex items-center gap-1.5"><FileCode className="w-3.5 h-3.5 text-purple-400" aria-hidden="true" /> 10 templates Next.js</span>
           </div>
 
           <div className="mt-16 relative h-64 sm:h-48 hidden sm:block animate-fade-in animate-delay-600">

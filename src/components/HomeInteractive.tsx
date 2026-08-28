@@ -34,6 +34,7 @@ export function LiveUserCountBadge() {
 
   if (viewerCount === 0) return null
 
+  // 100% éthique : affiche le vrai compteur, 0 = rien (pas de floor artificiel à 1)
   return <>{viewerCount}</>
 }
 
