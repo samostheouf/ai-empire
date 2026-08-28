@@ -17,6 +17,15 @@ const articles = [
     image: '/blog/edge-runtime.svg',
   },
   {
+    slug: 'ia-rgpd-conformite-2026',
+    title: 'IA et RGPD : conformité des apps IA en 2026',
+    excerpt: 'Finalité, minimisation, droit à l’effacement, transparence des modèles.',
+    date: '2026-08-28',
+    readTime: '10 min',
+    category: 'Guide',
+    image: '/blog/ia-rgpd.svg',
+  },
+  {
     slug: 'api-ia-nextjs-production',
     title: 'Intégrer une API IA dans Next.js : patterns production',
     excerpt: 'Endpoint /api/chat, failover 4 providers, rate-limit IP+user, streaming.',
