@@ -8,6 +8,24 @@ import Breadcrumb from '@/components/Breadcrumb'
 
 const articles = [
   {
+    slug: 'edge-runtime-ia',
+    title: 'Edge Runtime + IA : latence quasi-nulle',
+    excerpt: 'Servir une API IA depuis le Edge Runtime pour une latence sous la milliseconde.',
+    date: '2026-08-27',
+    readTime: '9 min',
+    category: 'Guide',
+    image: '/blog/edge-runtime.svg',
+  },
+  {
+    slug: 'rag-tutoriel-francais',
+    title: 'RAG en français : tutoriel 2026',
+    excerpt: 'Construire un système RAG avec embedding, vector store et coûts réels.',
+    date: '2026-08-27',
+    readTime: '12 min',
+    category: 'Tutoriel',
+    image: '/blog/rag-fr.svg',
+  },
+  {
     slug: 'nextjs-15-server-actions-ia',
     title: 'Next.js 15 Server Actions + IA : guide pratique',
     excerpt: 'Intégrer une API IA en production avec les Server Actions : streaming, sécurité, failover.',
