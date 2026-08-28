@@ -30,7 +30,7 @@ const SOCIAL_POSTS: Record<string, Array<{ content: string; hashtags: string[] }
       hashtags: ['#Productivity', '#DevTools', '#AI', '#Templates'],
     },
     {
-      content: '📊 AI Empire en chiffres :\n\n• 5000+ développeurs actifs\n• 98% satisfaction client\n• 24h pour lancer un SaaS\n• 60% de temps gagné\n\nRejoignez la communauté → ai-empire-steel.vercel.app',
+      content: '📊 AI Empire : templates Next.js 14 + APIs IA intégrées + Stripe configuré. Déploiement en 24h, garantie 14 jours. Découvre les templates → ai-empire-steel.vercel.app',
       hashtags: ['#Stats', '#Community', '#AI', '#SaaS'],
     },
     {
@@ -64,7 +64,7 @@ const SOCIAL_POSTS: Record<string, Array<{ content: string; hashtags: string[] }
       hashtags: ['#Innovation', '#Business', '#AI', '#Productivity'],
     },
     {
-      content: '🧠 L\'avenir du développement web est intelligent\n\nAI Empire combine l\'IA avec des outils modernes :\n✨ Génération de code assistée par IA\n✨ Templates adaptatifs\n✨ Optimisation automatique des performances\n✨ Suggestions en temps réel\n\nRejoignez 5000+ développeurs → ai-empire-steel.vercel.app',
+      content: '🧠 L\'avenir du développement web est intelligent\n\nAI Empire combine l\'IA avec des outils modernes :\n✨ Génération de code assistée par IA\n✨ Templates adaptatifs\n✨ Optimisation automatique des performances\n✨ Suggestions en temps réel\n\nDécouvre les templates → ai-empire-steel.vercel.app',
       hashtags: ['#FutureOfWork', '#AI', '#Innovation', '#WebDev'],
     },
     {

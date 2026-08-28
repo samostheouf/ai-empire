@@ -86,27 +86,7 @@ export const landingVariantUrgency: LandingVariant = {
     }
   ],
   testimonials: [
-    {
-      name: 'Thomas M.',
-      role: 'CTO',
-      company: 'InnovateLab',
-      quote: 'J\'hésitais depuis des mois. J\'ai finalement sauté le pas avec l\'offre de lancement. Meilleur investissement de l\'année !',
-      rating: 5
-    },
-    {
-      name: 'Sophie B.',
-      role: 'Fondatrice',
-      company: 'DigitalAgency',
-      quote: 'J\'ai lancé mon SaaS en 24h. 24 heures ! Mes concurrents en prennent 6 mois.',
-      rating: 5
-    },
-    {
-      name: 'Lucas P.',
-      role: 'Indépendant',
-      company: 'FreelanceDev',
-      quote: 'Le prix est incroyable pour ce que tu obtiens. Et en plus, il y a cette offre -30%...',
-      rating: 5
-    }
+    // 100% éthique : aucun faux témoignage — tableau vide jusqu'à preuves vérifiées
   ],
   cta: {
     headline: '⏰ 72 heures. C\'est tout ce qu\'il te reste.',
@@ -129,71 +109,51 @@ export const landingVariantSocialProof: LandingVariant = {
   id: 'variant_b_social_proof',
   name: 'Variante B — Preuve Sociale',
   type: 'social-proof',
-  description: 'Mise sur les témoignages, le nombre d\'utilisateurs et la confiance sociale.',
+  description: 'Mise sur les témoignages vérifiés et la confiance (affichage conditionnel si témoignages disponibles).',
   hero: {
-    headline: '5 000+ développeurs nous font confiance 🤝',
-    subheadline: 'La plateforme #1 pour créer des SaaS avec l\'IA en France',
-    body: 'Rejoins 5 000+ développeurs, CTOs et fondateurs qui ont déjà lancé leur SaaS avec AI Empire. Templates Next.js 14, APIs IA, Stripe — tout est prêt.',
-    primaryCTA: '🚀 Rejoindre 5 000+ développeurs',
-    secondaryCTA: '📋 Voir les témoignages',
-    badge: '⭐ 4.9/5 sur 500+ avis'
+    headline: 'Des templates pensés pour ton prochain SaaS 🤝',
+    subheadline: 'Templates Next.js + APIs IA + Stripe, prêts en 24h',
+    body: 'Templates Next.js 14, APIs IA, Stripe — tout est prêt pour lancer ton SaaS rapidement. Témoignages vérifiés affichés dès les premiers retours clients.',
+    primaryCTA: '🚀 Découvrir les templates',
+    secondaryCTA: '📋 Voir les templates',
+    badge: '⭐ Templates vérifiés par la communauté'
   },
   features: [
     {
-      title: '🏆 N°1 des templates SaaS en France',
-      description: 'Le template le plus vendu et le mieux noté du marché français. 5 000+ ventes.',
+      title: '🏆 Templates SaaS complets',
+      description: 'Auth, Stripe, dashboard admin, emails — tout est déjà câblé.',
       icon: '🏆'
     },
     {
-      title: '⭐ 4.9/5 de satisfaction client',
-      description: '500+ avis vérifiés. Nos clients sont nos meilleurs vendeurs.',
+      title: '⭐ Satisfaction prioritaire',
+      description: 'Garantie 14 jours satisfait ou remboursé. Ton avis compte.',
       icon: '⭐'
     },
     {
-      title: '🤝 5 000+ développeurs actifs',
-      description: 'Une communauté grandissante de développeurs qui partagent leurs projets.',
+      title: '🤝 Communauté grandissante',
+      description: 'Rejoins les premiers développeurs qui construisent avec AI Empire.',
       icon: '🤝'
     },
     {
-      title: '🏆 98% de recommandation',
-      description: '98% de nos clients recommandent AI Empire à leurs collègues.',
+      title: '🏆 Garantie 14 jours',
+      description: 'Pas satisfait ? Remboursement intégral sous 14 jours.',
       icon: '🏆'
     }
   ],
   testimonials: [
-    {
-      name: 'Marie D.',
-      role: 'Développeuse Full Stack',
-      company: 'StartupTech',
-      quote: 'AI Empire m\'a permis de lancer mon SaaS en 24h. Le support est exceptionnel. Je recommande à 100%.',
-      rating: 5
-    },
-    {
-      name: 'Thomas M.',
-      role: 'CTO',
-      company: 'InnovateLab',
-      quote: 'On a réduit notre temps de développement de 60%. Les APIs IA sont un vrai plus. 5/5.',
-      rating: 5
-    },
-    {
-      name: 'Sophie B.',
-      role: 'Fondatrice',
-      company: 'DigitalAgency',
-      quote: 'En tant que non-technique, AI Empire m\'a permis de comprendre et de lancer mon propre SaaS.',
-      rating: 5
-    }
+    // 100% éthique : aucun faux témoignage — tableau vide jusqu'à preuves vérifiées
   ],
   cta: {
-    headline: 'Rejoins 5 000+ développeurs satisfaits',
-    body: 'AI Empire est la plateforme la plus utilisée pour créer des SaaS avec l\'IA en France. 98% de nos clients nous recommandent.',
-    primaryCTA: '🚀 Rejoindre la communauté',
-    secondaryCTA: '📋 Lire les 500+ avis',
-    urgencyMessage: '⭐ 4.9/5 sur 500+ avis vérifiés',
-    guarantee: '✅ 98% de recommandation ✓ 5 000+ utilisateurs ✓ Support 24/7'
+    headline: 'Des templates prêts quand tu l’es',
+    body: 'Templates Next.js complets, APIs IA et Stripe déjà configurés. Garantie 14 jours.',
+    primaryCTA: '🚀 Découvrir les templates',
+    secondaryCTA: '📋 Voir la doc',
+    urgencyMessage: '⭐ Avis vérifiés dès les premiers clients',
+    guarantee: '✅ Garantie 14 jours ✓ Support inclus ✓ Mises à jour à vie'
   },
   pricing: {
-    headline: '⭐ La plateforme n°1 en France — à partir de €19',
-    highlight: '5 000+ développeurs nous font confiance'
+    headline: '⭐ Templates Next.js complets — à partir de €19',
+    highlight: 'Garantie 14 jours satisfait ou remboursé'
   }
 }
 
@@ -236,27 +196,7 @@ export const landingVariantValue: LandingVariant = {
     }
   ],
   testimonials: [
-    {
-      name: 'Thomas M.',
-      role: 'CTO',
-      company: 'InnovateLab',
-      quote: 'On a économisé €45 000 en utilisant AI Empire au lieu d\'un développeur custom. Le ROI est dingue.',
-      rating: 5
-    },
-    {
-      name: 'Lucas P.',
-      role: 'Indépendant',
-      company: 'FreelanceDev',
-      quote: '€29 pour un template qui m\'aurait coûté bien plus à développer sur mesure. Je n\'aurais jamais dû hésiter.',
-      rating: 5
-    },
-    {
-      name: 'Emma M.',
-      role: 'Product Manager',
-      company: 'ScaleUp',
-      quote: 'On a migré notre ancien SaaS vers AI Empire en une semaine. Les performances sont au rendez-vous.',
-      rating: 5
-    }
+    // 100% éthique : aucun faux témoignage — tableau vide jusqu'à preuves vérifiées
   ],
   cta: {
     headline: '💰 €19 = Un SaaS complet. €50 000 = Un SaaS custom.',
