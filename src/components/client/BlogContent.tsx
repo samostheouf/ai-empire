@@ -8,6 +8,16 @@ import Breadcrumb from '@/components/Breadcrumb'
 
 const articles = [
   {
+    slug: 'rag-nextjs-groq',
+    title: 'RAG avec Next.js et Groq : système de retrieval augmenté',
+    titleEn: 'RAG with Next.js and Groq: retrieval-augmented generation',
+    excerpt: 'Construire un système RAG complet : chunking, embeddings, vector store, retrieval et génération avec Groq.',
+    excerptEn: 'Build a complete RAG pipeline: chunking, embeddings, vector store, retrieval and generation with Groq.',
+    date: '29 Août 2026',
+    readTime: '11 min',
+    category: 'Tutoriel',
+  },
+  {
     slug: 'edge-runtime-ia',
     title: 'Edge Runtime + IA : latence quasi-nulle',
     excerpt: 'Servir une API IA depuis le Edge Runtime pour une latence sous la milliseconde.',
