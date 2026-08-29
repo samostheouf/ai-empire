@@ -137,7 +137,7 @@ async function checkDataDrift(prompt: string) {
             mais la bonne reponse a change. Deux signaux croises :
           </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Feedback utilisateur explicite</strong> : 👎, signalement, reformulation de la question. Agrege par topic (clustering embeddings).</li>
+            <li><strong>Feedback utilisateur explicite</strong> : pouce bas, signalement, reformulation de la question. Agrege par topic (clustering embeddings).</li>
             <li><strong>Auto-evaluation LLM-as-judge</strong> : un modele leger (Haiku, 4o-mini, Nemotron-3-Ultra) note chaque reponse sur : pertinence (1-5), respect format (oui/non), ton (1-5), hallucination (oui/non). Cout : ~0,001 $/eval.</li>
           </ul>
           <pre className="mt-3 overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-4 text-sm"><code>{`# Prompt auto-eval (LLM-as-judge)
