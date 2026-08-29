@@ -61,50 +61,35 @@ const nextConfig = {
         ],
       },
       {
-        source: '/templates',
-        headers: [
-          ...securityHeaders,
-          { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=600' },
-        ],
-      },
-      {
-        source: '/pricing',
-        headers: [
-          ...securityHeaders,
-          { key: 'Cache-Control', value: 'public, s-maxage=600, stale-while-revalidate=3600' },
-        ],
-      },
-      {
-        source: '/docs',
-        headers: [
-          ...securityHeaders,
-          { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=600' },
-        ],
-      },
-      {
-        source: '/about',
-        headers: [
-          ...securityHeaders,
-          { key: 'Cache-Control', value: 'public, s-maxage=600, stale-while-revalidate=3600' },
-        ],
-      },
-      {
-        source: '/guide',
-        headers: [
-          ...securityHeaders,
-          { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=600' },
-        ],
-      },
-      {
-        source: '/',
-        headers: [
-          ...securityHeaders,
-          { key: 'Cache-Control', value: 'public, s-maxage=300, stale-while-revalidate=600' },
-        ],
-      },
-      {
         source: '/(.*)',
-        headers: securityHeaders,
+        headers: [
+          ...securityHeaders,
+          { key: 'Cache-Control', value: 'public, max-age=0, s-maxage=60, stale-while-revalidate=300' },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/_next/image/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/images/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/fonts/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
       },
     ]
   },
