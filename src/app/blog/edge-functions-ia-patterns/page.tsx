@@ -9,7 +9,7 @@ export async function generateMetadata() {
   return genMeta({
     title: 'Edge Functions pour l\'IA : patterns production 2026',
     description:
-      'Déployer l\'inférence IA au edge : streaming token par token, cache prompts, failover edge→origin, auth légère. Patterns Vercel Edge / Cloudflare Workers testés en prod.',
+      'Deployer l\'inference IA au edge : streaming token par token, cache prompts, failover edge vers origin, auth legere. Patterns Vercel Edge / Cloudflare Workers testes en prod.',
     path: '/blog/edge-functions-ia-patterns',
     type: 'article',
     keywords: [
@@ -27,7 +27,7 @@ export async function generateMetadata() {
 const articleSchema = generateArticleSchema({
   title: 'Edge Functions pour l\'IA : patterns production 2026',
   description:
-    'Déployer l\'inférence IA au edge : streaming token par token, cache prompts, failover edge→origin, auth légère. Patterns Vercel Edge / Cloudflare Workers testés en prod.',
+    'Deployer l\'inference IA au edge : streaming token par token, cache prompts, failover edge vers origin, auth legere. Patterns Vercel Edge / Cloudflare Workers testes en prod.',
   slug: 'edge-functions-ia-patterns',
   datePublished: '2026-08-29',
   dateModified: '2026-08-29',
@@ -58,7 +58,7 @@ export default function BlogEdgeFunctionsIaPatterns() {
               <Tag className="w-3 h-3" /> Edge
             </span>
             <span className="flex items-center gap-1 text-sm text-indigo-400/60">
-              <Calendar className="w-4 h-4" /> 29 août 2026
+              <Calendar className="w-4 h-4" /> 29 aout 2026
             </span>
             <span className="flex items-center gap-1 text-sm text-indigo-400/60">
               <Clock className="w-4 h-4" /> 10 min de lecture
@@ -66,30 +66,30 @@ export default function BlogEdgeFunctionsIaPatterns() {
           </div>
 
           <h1 className="text-4xl font-bold text-white leading-tight sm:text-5xl">
-            Edge Functions pour l\'IA : patterns production 2026
+            Edge Functions pour l'IA : patterns production 2026
           </h1>
         </div>
 
         <div className="mt-12 space-y-8 leading-relaxed">
           <p className="text-lg">
-            Déployer l\'inférence IA au edge : streaming token par token, cache prompts, failover edge→origin, auth légère.
-            Patterns Vercel Edge / Cloudflare Workers testés en prod.
+            Deployer l'inference IA au edge : streaming token par token, cache prompts, failover edge vers origin, auth legere.
+            Patterns Vercel Edge / Cloudflare Workers testes en prod.
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">1. Pourquoi l\'edge pour l\'IA ?</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">1. Pourquoi l'edge pour l'IA ?</h2>
           <p>
-            Latence, coût, résilience. L\'edge rapproche le calcul de l\'utilisateur (pop Vercel/Cloudflare partout).
-            Pour l\'IA : streaming token-par-token perçu instantané, cache de prompts répétitifs, failover vers origin si edge rate-limited.
+            Latence, cout, resilience. L'edge rapproche le calcul de l'utilisateur (pop Vercel/Cloudflare partout).
+            Pour l'IA : streaming token-par-token percu instantane, cache de prompts repetitifs, failover vers origin si edge rate-limited.
           </p>
           <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Latence perçue</strong> : premier token < 100ms vs 500-1000ms origin (Europe→US).</li>
-            <li><strong>Coût bande passante</strong> : réponses courtes (cache hit) = 0 tokens facturés provider.</li>
-            <li><strong>Résilience</strong> : edge = plusieurs régions. Si une région down, traffic route ailleurs.</li>
+            <li><strong>Latence percue</strong> : premier token < 100ms vs 500-1000ms origin (Europe vers US).</li>
+            <li><strong>Cout bande passante</strong> : reponses courtes (cache hit) = 0 tokens factures provider.</li>
+            <li><strong>Resilience</strong> : edge = plusieurs regions. Si une region down, traffic route ailleurs.</li>
           </ul>
 
           <h2 className="text-2xl font-bold text-white mt-12">2. Streaming token par token au edge</h2>
           <p>
-            Le secret : Response streaming + ReadableStream. L\'edge function ne bufferise pas, elle pipe directement.
+            Le secret : Response streaming + ReadableStream. L'edge function ne bufferise pas, elle pipe directement.
           </p>
           <pre className="mt-3 overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-4 text-sm"><code>{`// Edge function streaming (Vercel Edge Runtime)
 export const config = { runtime: 'edge' }
@@ -122,7 +122,7 @@ export default async function handler(req: Request) {
 
           <h2 className="text-2xl font-bold text-white mt-12">3. Cache prompts au edge (KV / Edge Config)</h2>
           <p>
-            Prompts identiques → même réponse. Cache au edge = 0 tokens provider, latence ~5ms.
+            Prompts identiques -> meme reponse. Cache au edge = 0 tokens provider, latence ~5ms.
           </p>
           <pre className="mt-3 overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-4 text-sm"><code>{// Edge Config / KV cache pattern
 import { getEdgeConfig } from '@vercel/edge-config'
@@ -139,7 +139,7 @@ export default async function handler(req: Request) {
     })
   }
   
-  // Miss → call provider
+  // Miss -> call provider
   const completion = await callProvider(prompt)
   
   // Store in edge cache (TTL 24h)
@@ -148,9 +148,9 @@ export default async function handler(req: Request) {
   return Response.json(completion, { headers: { 'X-Cache': 'MISS' } })
 }`}</code></pre>
 
-          <h2 className="text-2xl font-bold text-white mt-12">4. Failover edge → origin</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">4. Failover edge vers origin</h2>
           <p>
-            Edge rate-limited ou modèle indisponible → fallback transparent vers origin (serverless function full).
+            Edge rate-limited ou modele indisponible -> fallback transparent vers origin (serverless function full).
           </p>
           <pre className="mt-3 overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-4 text-sm"><code>{// Failover pattern
 export const config = { runtime: 'edge' }
@@ -173,9 +173,9 @@ export default async function handler(req: Request) {
   }
 }`}</code></pre>
 
-          <h2 className="text-2xl font-bold text-white mt-12">5. Auth légère au edge (JWT verification)</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">5. Auth legere au edge (JWT verification)</h2>
           <p>
-            Vérifier JWT sans round-trip DB. Edge runtime a Web Crypto API native.
+            Verifier JWT sans round-trip DB. Edge runtime a Web Crypto API native.
           </p>
           <pre className="mt-3 overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-4 text-sm"><code>{// JWT verification at edge (no DB call)
 import { SignJWT, jwtVerify } from 'jose'
@@ -207,7 +207,7 @@ export default async function handler(req: Request) {
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b border-white/20">
-                <th className="text-left p-2">Critère</th>
+                <th className="text-left p-2">Critere</th>
                 <th className="text-left p-2">Vercel Edge</th>
                 <th className="text-left p-2">Cloudflare Workers</th>
               </tr>
@@ -221,7 +221,7 @@ export default async function handler(req: Request) {
               <tr className="border-b border-white/10">
                 <td className="p-2">CPU limit</td>
                 <td className="p-2">50ms (pro: 300ms)</td>
-                <td className="p-2">10ms (paid: 30s)</td>
+                <td className="p-2">10ms (payant: 30s)</td>
               </tr>
               <tr className="border-b border-white/10">
                 <td className="p-2">Streaming</td>
@@ -242,39 +242,39 @@ export default async function handler(req: Request) {
           </table>
 
           <div className="rounded-2xl bg-indigo-900/30 border border-indigo-500/20 p-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Edge IA clé en main</h3>
+            <h3 className="text-lg font-semibold text-white mb-2">Edge IA cle en main</h3>
             <p className="text-indigo-200/70 mb-4">
-              NeuraAPI : edge functions pré-configurées (streaming, cache, failover, auth),
-              déployables en 1 clic sur Vercel/Cloudflare. Zéro config infrastructure.
+              NeuraAPI : edge functions pre-configurees (streaming, cache, failover, auth),
+              deployables en 1 clic sur Vercel/Cloudflare. Zero config infrastructure.
             </p>
             <Link
               href="/register"
               className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300"
             >
-              Voir le dashboard →
+              Voir le dashboard ->
             </Link>
           </div>
         </div>
 
         <div className="mt-12 pt-8 border-t border-white/10">
-          <h3 className="text-lg font-semibold text-white mb-4">Articles liés</h3>
+          <h3 className="text-lg font-semibold text-white mb-4">Articles lies</h3>
           <ul className="space-y-3">
             <li>
               <Link href="/blog/optimisation-couts-llm-production" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Optimisation coûts LLM en production
+                Optimisation couts LLM en production
               </Link>
             </li>
             <li>
               <Link href="/blog/rag-vs-finetuning-architecture-decision" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                RAG vs Fine-tuning : décision architecture
+                RAG vs Fine-tuning : decision architecture
               </Link>
             </li>
             <li>
               <Link href="/blog/monitoring-ia-avance-drift-eval" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Monitoring IA avancé : détection dérive
+                Monitoring IA avance : detection derive
               </Link>
             </li>
           </ul>
