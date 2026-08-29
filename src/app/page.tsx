@@ -25,12 +25,15 @@ const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
 export async function generateMetadata(): Promise<Metadata> {
   return genMeta({
     title: 'APIs IA & Templates Premium Next.js',
-    description: 'Intégrez l\'intelligence artificielle dans vos applications en quelques minutes. APIs IA puissantes et templates Next.js premium pour développeurs.',
+    description: "Intégrez l'intelligence artificielle dans vos applications en quelques minutes. APIs IA puissantes et templates Next.js premium pour développeurs.",
     path: '',
     type: 'website',
     keywords: ['APIs IA', 'Templates Next.js', 'Intelligence artificielle', 'SaaS', 'Développeurs', 'NeuraAPI', 'OpenAI', 'GPT-4'],
   })
 }
+
+// ISR: revalidate every 5 minutes for public caching with locale cookie
+export const revalidate = 300
 
 export default async function Home() {
   const locale = getLocaleFromCookies()

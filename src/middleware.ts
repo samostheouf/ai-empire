@@ -31,6 +31,37 @@ const PUBLIC_POST_ENDPOINTS = [
   '/api/ai/chat',
 ]
 
+// i18n locale cookie name and supported locales
+const LOCALE_COOKIE = 'neuralocale'
+const LOCALES = ['fr', 'en', 'es', 'de', 'it', 'pt', 'ja', 'zh', 'ko', 'ar'] as const
+const DEFAULT_LOCALE = 'fr'
+
+const ACCEPT_LANGUAGE_MAP: Record<string, string> = {
+  'fr': 'fr', 'fr-FR': 'fr', 'fr-CA': 'fr', 'fr-BE': 'fr', 'fr-CH': 'fr',
+  'en': 'en', 'en-US': 'en', 'en-GB': 'en', 'en-AU': 'en',
+  'es': 'es', 'es-ES': 'es', 'es-MX': 'es', 'es-AR': 'es',
+  'de': 'de', 'de-DE': 'de', 'de-AT': 'de', 'de-CH': 'de',
+  'it': 'it', 'it-IT': 'it',
+  'pt': 'pt', 'pt-BR': 'pt', 'pt-PT': 'pt',
+  'ja': 'ja', 'zh': 'zh', 'ko': 'ko', 'ar': 'ar',
+}
+
+function parseAcceptLanguage(header: string): string | null {
+  const langs = header.split(',').map((part) => {
+    const [tag, q] = part.trim().split(';q=')
+    return { tag: tag.trim(), q: q ? parseFloat(q) : 1 }
+  })
+  langs.sort((a, b) => b.q - a.q)
+  for (const { tag } of langs) {
+    const exact = ACCEPT_LANGUAGE_MAP[tag]
+    if (exact) return exact
+    const base = tag.split('-')[0]
+    const mapped = ACCEPT_LANGUAGE_MAP[base]
+    if (mapped) return mapped
+  }
+  return null
+}
+
 function getClientIp(request: NextRequest): string {
   const vercelForwardedFor = request.headers.get('x-vercel-forwarded-for')
   if (vercelForwardedFor) {
@@ -103,8 +134,25 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   const method = request.method
 
+  // Set locale cookie early for ISR caching (before page renders)
+  const response = NextResponse.next({ request })
+  const existingLocale = request.cookies.get(LOCALE_COOKIE)?.value
+  if (!existingLocale) {
+    const acceptLanguage = request.headers.get('accept-language')
+    let locale = DEFAULT_LOCALE
+    if (acceptLanguage) {
+      const detected = parseAcceptLanguage(acceptLanguage)
+      if (detected) locale = detected
+    }
+    response.cookies.set(LOCALE_COOKIE, locale, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365, // 1 year
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    })
+  }
+
   if (pathname.startsWith('/api/webhooks/')) {
-    const response = NextResponse.next()
     const corsHeaders = getCorsHeaders(request)
     for (const [key, value] of Object.entries(corsHeaders)) {
       response.headers.set(key, value)
@@ -150,7 +198,6 @@ export async function middleware(request: NextRequest) {
       }
     }
 
-    const response = NextResponse.next()
     const corsHeaders = getCorsHeaders(request)
     for (const [key, value] of Object.entries(corsHeaders)) {
       response.headers.set(key, value)
@@ -177,10 +224,9 @@ export async function middleware(request: NextRequest) {
   ].join('; ')
 
   request.headers.set('x-nonce', nonce)
-  const finalResponse = NextResponse.next({ request })
-  finalResponse.headers.set('Content-Security-Policy', csp)
+  response.headers.set('Content-Security-Policy', csp)
 
-  return finalResponse
+  return response
 }
 
 export const config = {
