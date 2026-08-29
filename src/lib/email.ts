@@ -1,6 +1,21 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Lazily construct the Resend client so that merely importing this module
+// (e.g. during Next.js "collect page data" at build time) does not throw
+// when RESEND_API_KEY is absent. The client is created on first access.
+let _resend: Resend | null = null
+function getResend(): Resend {
+  if (!_resend) {
+    _resend = new Resend(process.env.RESEND_API_KEY);
+  }
+  return _resend;
+}
+
+const resend: Resend = new Proxy({} as Resend, {
+  get(_target, prop, receiver) {
+    return Reflect.get(getResend(), prop, receiver);
+  },
+});
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app';
 
