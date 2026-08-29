@@ -358,9 +358,9 @@ Partagez ce lien : ${'{referral_link}'}
 
 ## Top parrains du mois :
 
-1. 🥇 **Marie L.** - 12 parrainages - 600 crédits gagnés
-2. 🥈 **Thomas P.** - 8 parrainages - 400 crédits gagnés
-3. 🥉 **Sophie M.** - 6 parrainages - 300 crédits gagnés
+1. 🥇 **[Prénom]** - [X] parrainages - [X] crédits gagnés
+2. 🥈 **[Prénom]** - [X] parrainages - [X] crédits gagnés
+3. 🥉 **[Prénom]** - [X] parrainages - [X] crédits gagnés
 
 ## Partagez maintenant !
 

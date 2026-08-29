@@ -163,6 +163,11 @@ export default async function AutomatisationApiPage() {
             <p>
               {t('blogAutomatisationApiPConclusion2')}
             </p>
+            <p>
+              Pour aller plus loin sur l&apos;orchestration de ces cas en produit,
+              notre guide <a href="/blog/automatiser-saas-ia" className="text-indigo-300 underline">automatiser son SaaS avec l&apos;IA</a> détaille
+              les 6 leviers concrets à brancher en 2026.
+            </p>
           </div>
 
           <div className="mt-16 rounded-2xl bg-indigo-900/50 border border-indigo-700/50 p-8 text-center">

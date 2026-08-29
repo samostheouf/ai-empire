@@ -21,6 +21,11 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  experimental: {
+    // Termux reports platform=android (aarch64-linux-android) where no native
+    // @next/swc binary exists; this documented flag forces the WASM fallback.
+    useWasmBinary: true,
+  },
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },

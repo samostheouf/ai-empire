@@ -118,7 +118,7 @@ Rejoignez les premiers utilisateurs. Rejoins-les !`,
     platform: 'facebook',
     variant: 'B',
     headline: '⚡ SaaS lancés avec AI Empire',
-    primaryText: `"AI Empire m'a permis de lancer mon SaaS en 24h au lieu des 3 mois prévus." — Marie D.
+    primaryText: `"AI Empire m'a permis de lancer mon SaaS en [X]h au lieu des [Y] mois prévus." — [Prénom]
 
 Voici ce que tu obtiens :
 🎨 Templates Next.js 14 responsive et modernes

@@ -180,6 +180,12 @@ export default function BlogLancerSaasSansCode() {
                 5 cas d&apos;utilisation pour automatiser avec des APIs
               </Link>
             </li>
+            <li>
+              <a href="/blog/comparatif-outils-no-code-2026" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
+                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
+                Comparatif outils No-Code 2026 : quel stack choisir
+              </a>
+            </li>
           </ul>
         </div>
       </div>

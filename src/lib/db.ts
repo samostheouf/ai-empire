@@ -39,7 +39,21 @@ function getPrismaClient(): PrismaClient | null {
  * Cast to non-nullable for convenience; callers should be aware it may
  * be effectively null when `DATABASE_URL` is unset (e.g. at build time).
  */
-export const prisma: PrismaClient = getPrismaClient() as PrismaClient
+// Lazily expose the Prisma client so that merely importing this module
+// (e.g. during Next.js "collect page data" at build time) does not
+// instantiate PrismaClient / load the native query engine. The client is
+// created on first real access. Stays null when DATABASE_URL is unset.
+let _prisma: PrismaClient | null = null
+function getLazyPrisma(): PrismaClient | null {
+  if (!_prisma) _prisma = getPrismaClient()
+  return _prisma
+}
+export const prisma: PrismaClient = new Proxy({} as PrismaClient, {
+  get(_target, prop, receiver) {
+    const client = getLazyPrisma()
+    return Reflect.get(client ?? {}, prop, receiver)
+  },
+})
 
 enum CircuitState {
   CLOSED = 'closed',

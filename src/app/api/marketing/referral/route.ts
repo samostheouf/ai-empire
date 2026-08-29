@@ -44,12 +44,14 @@ export async function GET(request: Request) {
     }
 
     if (action === 'leaderboard') {
+      // Données de démo neutres : à remplacer par les VRAIS parrains depuis la DB.
+      // Aucun faux témoignage (contrainte éthique 100% : noms/refs fictifs interdits en prod).
       const leaderboard = [
-        { rank: 1, name: 'Alice M.', referrals: 45, badge: '🏆 Ambassadeur' },
-        { rank: 2, name: 'Bob D.', referrals: 32, badge: '⭐ Expert' },
-        { rank: 3, name: 'Claire L.', referrals: 28, badge: '🎯 Ambassadeur' },
-        { rank: 4, name: 'David P.', referrals: 15, badge: '🚀 Actif' },
-        { rank: 5, name: 'Emma R.', referrals: 8, badge: '👍 Débutant' },
+        { rank: 1, name: '[Prénom 1]', referrals: 0, badge: '🏆 Ambassadeur' },
+        { rank: 2, name: '[Prénom 2]', referrals: 0, badge: '⭐ Expert' },
+        { rank: 3, name: '[Prénom 3]', referrals: 0, badge: '🎯 Ambassadeur' },
+        { rank: 4, name: '[Prénom 4]', referrals: 0, badge: '🚀 Actif' },
+        { rank: 5, name: '[Prénom 5]', referrals: 0, badge: '👍 Débutant' },
       ]
 
       return NextResponse.json({ leaderboard }, { headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
