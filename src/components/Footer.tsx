@@ -132,6 +132,31 @@ const Footer = memo(function Footer() {
               <li><Link href="/dpa" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block">DPA</Link></li>
             </ul>
           </div>
+
+          {/* Cross-sell: Écosystème créateurs */}
+          <div className="col-span-2 lg:col-span-1">
+            <h3 className="text-sm font-semibold text-white mb-4">Écosystème créateurs</h3>
+            <ul className="space-y-2.5">
+              <li>
+                <a href="https://prompt-empire.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block flex items-center gap-2">
+                  <span className="text-xs bg-indigo-500/20 px-1.5 py-0.5 rounded">Prompts</span>
+                  Prompt Empire — 300+ prompts IA testés
+                </a>
+              </li>
+              <li>
+                <a href="https://copy-vault-nine.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block flex items-center gap-2">
+                  <span className="text-xs bg-indigo-500/20 px-1.5 py-0.5 rounded">Copy</span>
+                  Copy Vault — Copywriting e-commerce prêt à l'emploi
+                </a>
+              </li>
+              <li>
+                <a href="https://site-ruby-eight-11.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block flex items-center gap-2">
+                  <span className="text-xs bg-indigo-500/20 px-1.5 py-0.5 rounded">Biz</span>
+                  Prévio — Business plan en une soirée
+                </a>
+              </li>
+            </ul>
+          </div>
         </div>
 
         <div className="border-t border-white/5 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">

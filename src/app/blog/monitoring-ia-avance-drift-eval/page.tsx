@@ -73,8 +73,8 @@ export default function BlogMonitoringIaAvance() {
         <div className="mt-12 space-y-8 leading-relaxed">
           <p className="text-lg">
             Latence, erreurs, coûts : nécessaire mais insuffisant. Le vrai risque en production IA,
-            c&apos;est la dérive silencieuse — le modèle répond encore, mais mal. Voici comment
-            détecter data drift, concept drift, model drift avant qu&apos;ils n&apos;impactent
+            c'est la dérive silencieuse — le modèle répond encore, mais mal. Voici comment
+            détecter data drift, concept drift, model drift avant qu'ils n'impactent
             vos utilisateurs, avec une auto-évaluation continue et un golden set nightly.
           </p>
 
@@ -133,7 +133,7 @@ async function checkDataDrift(prompt: string) {
 
           <h2 className="text-2xl font-bold text-white mt-12">3. Détection concept drift : feedback + auto-éval croisés</h2>
           <p>
-            Le concept drift n&apos;apparaît pas dans les embeddings — la question semble normale,
+            Le concept drift n'apparaît pas dans les embeddings — la question semble normale,
             mais la bonne réponse a changé. Deux signaux croisés :
           </p>
           <ul className="list-disc pl-6 space-y-2">
@@ -162,7 +162,7 @@ Réponds en JSON : {pertinence, format, ton, hallucination, commentaire}\`}`}</c
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Exécution</strong> : tous les jours 03h00 UTC + à chaque déploiement + à chaque changement provider.</li>
             <li><strong>Métriques</strong> : similarité sémantique (embedding réponse vs référence), respect format (%), hallucination détectée (%), latence p95.</li>
-            <li><strong>Seuils d&apos;alerte</strong> : similarité < 0,85 OU format invalide > 2 % OU hallucination > 1 % = alerte critical + blocage déploiement si en cours.</li>
+            <li><strong>Seuils d'alerte</strong> : similarité < 0,85 OU format invalide > 2 % OU hallucination > 1 % = alerte critical + blocage déploiement si en cours.</li>
             <li><strong>Dashboard</strong> : courbes temporelles par métrique, détection tendance (régression lente).</li>
           </ul>
 

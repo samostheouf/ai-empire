@@ -25,7 +25,6 @@ const nextConfig = {
     // Termux reports platform=android (aarch64-linux-android) where no native
     // @next/swc binary exists; this documented flag forces the WASM fallback.
     useWasmBinary: true,
-    optimizePackageImports: ['lucide-react', 'stripe', 'openai', '@radix-ui/react-icons', 'date-fns', 'zod'],
   },
   images: {
     remotePatterns: [
@@ -34,7 +33,6 @@ const nextConfig = {
     ],
     formats: ['image/avif', 'image/webp'],
   },
-  optimizePackageImports: ['lucide-react', 'stripe', 'openai', '@radix-ui/react-icons', 'date-fns', 'zod'],
   poweredByHeader: false,
   compress: true,
   async redirects() {
