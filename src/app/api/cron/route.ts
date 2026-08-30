@@ -206,7 +206,7 @@ async function runReEngagement(errors: string[]) {
 
       try {
         const { Resend } = await import('resend')
-        const resend = new Resend(process.env.RESEND_API_KEY)
+        const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
         await resend.emails.send({
           from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
           to: emailFromData,

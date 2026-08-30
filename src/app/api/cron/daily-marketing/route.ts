@@ -184,13 +184,14 @@ async function scheduleReengagementEmails() {
     for (const user of candidates) {
       try {
         const { Resend } = await import('resend')
-        const resend = new Resend(process.env.RESEND_API_KEY)
+        const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
-        await resend.emails.send({
-          from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
-          to: user.email,
-          subject: '🎯 Nouveaux templates disponibles — Découvrez-les !',
-          html: `
+        if (resend) {
+          await resend.emails.send({
+            from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
+            to: user.email,
+            subject: '🎯 Nouveaux templates disponibles — Découvrez-les !',
+            html: `
             <!DOCTYPE html>
             <html>
             <head><meta charset="utf-8"></head>
@@ -211,13 +212,14 @@ async function scheduleReengagementEmails() {
             </body>
             </html>
           `,
-        })
+          })
 
-        await prisma.recoveryEmail.create({
-          data: { email: user.email, sent: true },
-        })
+          await prisma.recoveryEmail.create({
+            data: { email: user.email, sent: true },
+          })
 
-        queued++
+          queued++
+        }
       } catch {
         // Ignore email errors
       }

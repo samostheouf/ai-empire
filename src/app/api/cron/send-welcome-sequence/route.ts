@@ -65,7 +65,7 @@ async function sendWelcomeEmails() {
   for (const user of toSend) {
     try {
       const { Resend } = await import('resend')
-      const resend = new Resend(process.env.RESEND_API_KEY)
+      const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
       const html = `
         <!DOCTYPE html>
@@ -177,7 +177,7 @@ async function processOnboardingSequence() {
 
       try {
         const { Resend } = await import('resend')
-        const resend = new Resend(process.env.RESEND_API_KEY)
+        const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
         const html = buildOnboardingHtml(seqEmail.template, user.email)
 

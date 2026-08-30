@@ -2,7 +2,7 @@ import { callAI } from '@/lib/ai'
 import { escapeHtml, sanitizePromptInput } from '@/lib/html-escape'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
 export interface SalesRequest {
   type: 'welcome' | 'abandoned-cart' | 'upsell' | 'referral'

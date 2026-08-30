@@ -1,7 +1,7 @@
 import { Resend } from 'resend'
 import { escapeHtml } from '@/lib/html-escape'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 interface EmailOptions {
@@ -11,18 +11,21 @@ interface EmailOptions {
 }
 
 async function sendEmail({ to, subject, html }: EmailOptions) {
-  const { data, error } = await resend.emails.send({
-    from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
-    to,
-    subject,
-    html,
-  })
+  if (resend) {
+    const { data, error } = await resend.emails.send({
+      from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
+      to,
+      subject,
+      html,
+    })
 
-  if (error) {
-    return { success: false, error }
+    if (error) {
+      return { success: false, error }
+    }
+
+    return { success: true, data }
   }
-
-  return { success: true, data }
+  return { success: false, error: 'Resend not configured' }
 }
 
 function baseTemplate(content: string): string {

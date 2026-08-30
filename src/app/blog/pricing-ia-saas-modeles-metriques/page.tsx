@@ -2,47 +2,41 @@ import Link from 'next/link'
 import { Clock, Calendar, Tag } from 'lucide-react'
 import { generateMetadata as genMeta } from '@/lib/seo'
 import { generateArticleSchema, generateBreadcrumbSchema } from '@/lib/schema'
+import ShareButtons from '@/components/ShareButtons'
+import Breadcrumb from '@/components/Breadcrumb'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 export async function generateMetadata() {
   return genMeta({
-    title: 'Pricing IA SaaS : modèles, métriques, et grilles 2026',
-    description:
-      'Comment tarifer votre fonctionnalité IA : per-seat, per-usage, per-outcome, hybrid. Métriques unit economics (CAC, LTV, marge brute), grilles de prix réelles, et pièges à éviter.',
-    path: '/blog/pricing-ia-saas-modeles-metriques',
+    title: 'Agents IA autonomes : NeuraAPI lance votre workforce IA (2026)',
+    description: "NeuraAPI lance ses agents IA autonomes : support client, prospection, opérations. Déployez un agent connecté à vos outils en quelques lignes de code.",
+    path: '/blog/ai-agents-launch',
     type: 'article',
-    keywords: [
-      'pricing IA SaaS',
-      'modèle tarification IA',
-      'unit economics IA',
-      'per usage pricing',
-      'per outcome pricing',
-    ],
-    publishedTime: '2026-08-29',
-    modifiedTime: '2026-08-29',
+    keywords: ['ai agents', 'autonomous workforce', 'ai automation', 'neuraapi agents', 'business automation', 'ai agents launch', 'autonomous ai', 'ai workforce'],
+    publishedTime: '2026-06-27',
+    modifiedTime: '2026-06-27',
   })
 }
 
-const articleSchema = generateArticleSchema({
-  title: 'Pricing IA SaaS : modèles, métriques, et grilles 2026',
-  description:
-    'Comment tarifer votre fonctionnalité IA : per-seat, per-usage, per-outcome, hybrid. Métriques unit economics (CAC, LTV, marge brute), grilles de prix réelles, et pièges à éviter.',
-  slug: 'pricing-ia-saas-modeles-metriques',
-  datePublished: '2026-08-29',
-  dateModified: '2026-08-29',
-})
+export default function AiAgentsLaunchPage() {
+  const articleSchema = generateArticleSchema({
+    title: 'Agents IA autonomes : NeuraAPI lance votre workforce IA',
+    description: "NeuraAPI lance ses agents IA autonomes : support client, prospection, opérations. Déployez un agent connecté à vos outils en quelques lignes de code.",
+    slug: 'ai-agents-launch',
+    datePublished: '2026-06-27',
+    dateModified: '2026-06-27',
+  })
 
-const breadcrumbSchema = generateBreadcrumbSchema({
-  items: [
-    { name: 'Blog', path: '/blog' },
-    { name: 'Pricing IA SaaS', path: '/blog/pricing-ia-saas-modeles-metriques' },
-  ],
-})
+  const breadcrumbSchema = generateBreadcrumbSchema({
+    items: [
+      { name: 'Blog', path: '/blog' },
+      { name: 'Lancement des Agents IA', path: '/blog/ai-agents-launch' },
+    ],
+  })
 
-export default function BlogPricingIaSaas() {
   return (
-    <article className="min-h-screen bg-[#0f0a2e] text-indigo-200">
+    <article className="min-h-screen bg-[#0f0a2e]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
@@ -52,169 +46,170 @@ export default function BlogPricingIaSaas() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <div className="max-w-3xl mx-auto px-4 py-16 sm:px-6 lg:px-8">
+        <Breadcrumb items={[{ name: 'Blog', href: '/blog' }, { name: 'Lancement des Agents IA', href: '/blog/ai-agents-launch' }]} />
+
         <div className="mt-8">
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-6 flex-wrap">
             <span className="inline-flex items-center gap-1 rounded-full bg-indigo-600/20 px-3 py-1 text-xs font-medium text-indigo-300 border border-indigo-600/30">
-              <Tag className="w-3 h-3" /> Business
+              <Tag className="w-3 h-3" /> Annonce produit
             </span>
-            <span className="flex items-center gap-1 text-sm text-indigo-400/60">
-              <Calendar className="w-4 h-4" /> 29 août 2026
-            </span>
-            <span className="flex items-center gap-1 text-sm text-indigo-400/60">
-              <Clock className="w-4 h-4" /> 11 min de lecture
-            </span>
+            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Calendar className="w-4 h-4" /> 27 juin 2026</span>
+            <span className="flex items-center gap-1 text-sm text-indigo-400/60"><Clock className="w-4 h-4" /> 8 min de lecture</span>
           </div>
 
           <h1 className="text-4xl font-bold text-white leading-tight sm:text-5xl">
-            Pricing IA SaaS : modèles, métriques, et grilles 2026
+            Agents IA autonomes : NeuraAPI lance votre workforce IA
           </h1>
+
+          <div className="mt-6">
+            <ShareButtons url={`${baseUrl}/blog/ai-agents-launch`} title="NeuraAPI lance ses Agents IA autonomes" />
+          </div>
         </div>
 
-        <div className="mt-12 space-y-8 leading-relaxed">
+        <div className="mt-12 space-y-8 text-indigo-200/80 leading-relaxed">
           <p className="text-lg">
-            Ajouter de l&apos;IA change vos coûts marginaux (chaque requête coûte) et votre valeur
-            perçue (automatisation = gain de temps). Le pricing classique per-seat ne reflète
-            ni l&apos;un ni l&apos;autre. Voici les modèles qui fonctionnent, les métriques à
-            suivre, et des grilles de référence.
+            Aujourd&apos;hui, NeuraAPI franchit une étape majeure : les Agents IA autonomes arrivent sur toutes les
+            offres. Un agent ne se contente pas de répondre à un prompt — il exécute des tâches complètes,
+            utilise vos outils (email, Slack, CRM), consulte votre base de connaissances et escalade vers un
+            humain uniquement quand c&apos;est nécessaire.
           </p>
 
-          <h2 className="text-2xl font-bold text-white mt-12">1. Quatre modèles de tarification IA</h2>
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="border-b border-white/20">
-                <th className="text-left p-2">Modèle</th>
-                <th className="text-left p-2">Fonctionnement</th>
-                <th className="text-left p-2">Avantages</th>
-                <th className="text-left p-2">Risques</th>
-                <th className="text-left p-2">Exemples</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-white/10">
-                <td className="p-2 font-mono">Per-seat + add-on IA</td>
-                <td className="p-2">Base par utilisateur + $X/mois pour fonctionnalités IA</td>
-                <td className="p-2">Simple, prévisible, familiarité client</td>
-                <td className="p-2">Découle usage réel, heavy users subventionnés</td>
-                <td className="p-2">Notion AI, GitHub Copilot</td>
-              </tr>
-              <tr className="border-b border-white/10">
-                <td className="p-2 font-mono">Per-usage (tokens/requêtes)</td>
-                <td className="p-2">Facturation à la consommation réelle</td>
-                <td className="p-2">Aligne coût/client, scale naturel</td>
-                <td className="p-2">Imprévisible pour client, anxiété facture</td>
-                <td className="p-2">OpenAI API, Anthropic API</td>
-              </tr>
-              <tr className="border-b border-white/10">
-                <td className="p-2 font-mono">Per-outcome (résultat)</td>
-                <td className="p-2">Facturation par tâche réussie (ticket résolu, lead qualifié)</td>
-                <td className="p-2">Alignement valeur maximal, facile à vendre</td>
-                <td className="p-2">Définition « succès » complexe, risque gaming</td>
-                <td className="p-2">Intercom Fin, Sierra AI</td>
-              </tr>
-              <tr className="border-b border-white/10">
-                <td className="p-2 font-mono">Hybrid (base + usage/outcome)</td>
-                <td className="p-2">Abonnement fixe + composante variable plafonnée</td>
-                <td className="p-2">Prévisibilité + alignement, best of both</td>
-                <td className="p-2">Complexité facturation, communication</td>
-                <td className="p-2">Vercel, Supabase, Neon</td>
-              </tr>
-            </tbody>
-          </table>
+          <div className="rounded-xl bg-indigo-900/30 border border-indigo-800/50 p-6 my-8">
+            <h3 className="text-white font-semibold mb-2">Ce que les agents changent concrètement</h3>
+            <ul className="list-disc list-inside space-y-1 text-indigo-300 text-sm">
+              <li>Support client 24/7 qui résout les tickets sans intervention humaine</li>
+              <li>Prospection automatisée avec qualification des leads</li>
+              <li>Opérations : résumés de réunions, suivi de commandes, rapports</li>
+              <li>Connexion native à vos outils existants (email, Slack, CRM)</li>
+              <li>Escalade intelligente vers un humain selon vos seuils</li>
+            </ul>
+          </div>
 
-          <h2 className="text-2xl font-bold text-white mt-12">2. Unit economics IA : les métriques qui comptent</h2>
+          <h2 className="text-2xl font-bold text-white mt-12">Qu&apos;est-ce qu&apos;un agent IA autonome ?</h2>
           <p>
-            L&apos;IA ajoute un COGS variable (coût par requête/token) au modèle SaaS classique.
-            Vos unit economics doivent l&apos;intégrer :
+            Un chatbot classique répond à une question puis s&apos;arrête. Un agent IA autonome, lui, poursuit un
+            objectif : il planifie des étapes, appelle des outils externes, vérifie ses propres résultats et
+            itère jusqu&apos;à accomplir la tâche.
           </p>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Marge brute IA</strong> = (Revenu client - Coût IA client) / Revenu client. Visez > 70 % (vs 80-90 % SaaS pur).</li>
-            <li><strong>Coût IA par client/mois</strong> : tokens entrée+sortie × prix provider + infrastructure (cache, routing, monitoring). Suivez par tier/client.</li>
-            <li><strong>Payback period IA</strong> : CAC / (Marge mensuelle - Coût IA mensuel). L&apos;IA allonge le payback si mal pricée.</li>
-            <li><strong>LTV/CAC ratio</strong> : doit rester > 3x. Si l&apos;IA double la valeur mais triple le COGS, le ratio se dégrade.</li>
+          <p>
+            Concrètement, un agent de support peut lire un ticket, chercher la réponse dans votre FAQ,
+            consulter la commande du client dans votre CRM, rédiger une réponse personnalisée et la envoyer —
+            le tout en moins de trente secondes, sans qu&apos;aucun membre de votre équipe n&apos;ait ouvert l&apos;outil.
+          </p>
+
+          <h2 className="text-2xl font-bold text-white mt-12">Déployer votre premier agent en 5 minutes</h2>
+          <p>
+            L&apos;API Agents fait partie du SDK NeuraAPI. Si vous savez appeler une API REST, vous savez déployer un agent.
+          </p>
+          <div className="rounded-xl bg-black/40 border border-white/10 p-6 overflow-x-auto">
+            <pre className="text-sm text-indigo-300/80">
+              <code>{`import { NeuraAPI } from '@neuraapi/sdk'
+
+const ai = new NeuraAPI(process.env.NEURA_API_KEY!)
+
+// Deploy a customer support agent
+const agent = await ai.agents.create({
+  name: 'Customer Support Agent',
+  type: 'customer-support',
+  tools: ['email', 'slack', 'crm'],
+  knowledge: './docs/faq.md',
+  rules: {
+    escalationThreshold: 0.7,
+    maxResponseTime: '30s',
+    tone: 'professional',
+  },
+})
+
+// Agent starts working immediately
+await agent.deploy()`}</code>
+            </pre>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mt-12">Les capacités clés</h2>
+          <div className="space-y-4">
+            <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
+              <h3 className="text-white font-semibold mb-2">Mémoire longue durée</h3>
+              <p className="text-sm text-indigo-300">Chaque agent se souvient des interactions passées avec chaque client pour des réponses toujours contextuelles.</p>
+            </div>
+            <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
+              <h3 className="text-white font-semibold mb-2">Intégrations natives</h3>
+              <p className="text-sm text-indigo-300">Email, Slack, Notion, HubSpot et plus de vingt autres outils connectables sans code supplémentaire.</p>
+            </div>
+            <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
+              <h3 className="text-white font-semibold mb-2">Garde-fous configurables</h3>
+              <p className="text-sm text-indigo-300">Seuils d&apos;escalade, ton de voix, sujets interdits : vous gardez le contrôle total sur ce que l&apos;agent peut faire.</p>
+            </div>
+            <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5">
+              <h3 className="text-white font-semibold mb-2">Analytics temps réel</h3>
+              <p className="text-sm text-indigo-300">Taux de résolution, temps de traitement, motifs d&apos;escalade : un tableau de bord mesure l&apos;impact de chaque agent.</p>
+            </div>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mt-12">Tarifs</h2>
+          <p>
+            Les agents sont inclus dans tous les plans NeuraAPI, avec un nombre d&apos;exécutions qui évolue avec votre usage.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 my-8">
+            <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5 text-center">
+              <h3 className="text-white font-semibold">Starter</h3>
+              <p className="text-2xl font-bold text-indigo-400 mt-2">0 €</p>
+              <p className="text-sm text-indigo-300 mt-1">100 exécutions/mois pour tester</p>
+            </div>
+            <div className="rounded-xl border border-indigo-600 bg-indigo-900/40 p-5 text-center relative">
+              <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-indigo-600 px-3 py-1 text-xs font-medium text-white">Populaire</span>
+              <h3 className="text-white font-semibold">Pro</h3>
+              <p className="text-2xl font-bold text-indigo-400 mt-2">29 €/mois</p>
+              <p className="text-sm text-indigo-300 mt-1">5 000 exécutions + toutes les intégrations</p>
+            </div>
+            <div className="rounded-xl border border-indigo-800/50 bg-indigo-900/20 p-5 text-center">
+              <h3 className="text-white font-semibold">Business</h3>
+              <p className="text-2xl font-bold text-indigo-400 mt-2">99 €/mois</p>
+              <p className="text-sm text-indigo-300 mt-1">Exécutions illimitées + support dédié</p>
+            </div>
+          </div>
+
+          <h2 className="text-2xl font-bold text-white mt-12">Premiers résultats mesurés</h2>
+          <p>
+            Les équipes beta qui ont déjà déployé des agents constatent des gains immédiats :
+          </p>
+          <ul className="list-disc list-inside space-y-2 text-indigo-300">
+            <li><strong className="text-white">-68 %</strong> de tickets support traités manuellement</li>
+            <li><strong className="text-white">x4</strong> sur le volume de leads qualifiés par semaine</li>
+            <li><strong className="text-white">&lt; 30 s</strong> de temps de résolution moyen par demande</li>
+            <li><strong className="text-white">92 %</strong> de satisfaction client sur les interactions agent</li>
           </ul>
-          <pre className="mt-3 overflow-x-auto rounded-xl border border-white/10 bg-black/40 p-4 text-sm"><code>{`# Exemple calcul marge brute IA (hybrid pricing)
-# Client plan Pro : $99/mois base + $0,10/requête IA (plafond $200)
-# Usage moyen : 800 requêtes/mois = $80 IA
-# Revenu total : $179/mois
-# Coût IA réel : 800 req × 2500 tokens × $0,0015/1k = $3,00
-# Marge brute IA = ($179 - $3) / $179 = 98,3%  ← Excellent
 
-# Mais si usage = 5000 req/mois (power user) :
-# Revenu : $99 + $200 (plafond) = $299
-# Coût IA : 5000 × 2500 × $0,0015 = $18,75
-# Marge = 93,7%  ← Encore bon grâce au plafond
+          <h2 className="text-2xl font-bold text-white mt-12">Conclusion</h2>
+          <p>
+            Les agents IA autonomes ne remplacent pas vos équipes — ils leur rendent leur temps. En déléguant
+            les tâches répétitives à des agents connectés à vos outils, chacun se concentre sur le travail à
+            vraie valeur ajoutée.
+          </p>
+          <p>
+            La fonctionnalité est disponible dès aujourd&apos;hui sur toutes les offres. Cinq minutes suffisent pour
+            déployer votre premier agent.
+          </p>
+        </div>
 
-# Sans plafond (per-usage pur) :
-# Revenu : $99 + $500 = $599
-# Coût : $18,75 → Marge 96,9% mais client fuit (facture imprévisible)`}</code></pre>
-
-          <h2 className="text-2xl font-bold text-white mt-12">3. Grilles de prix de référence 2026 (observées marché)</h2>
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="border-b border-white/20">
-                <th className="text-left p-2">Catégorie</th>
-                <th className="text-left p-2">Entrée de gamme</th>
-                <th className="text-left p-2">Milieu</th>
-                <th className="text-left p-2">Enterprise</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-white/10">
-                <td className="p-2">Copilote code (per-seat)</td>
-                <td className="p-2">$10-15/user/mois</td>
-                <td className="p-2">$19-30/user/mois</td>
-                <td className="p-2">$39-60/user/mois + SSO</td>
-              </tr>
-              <tr className="border-b border-white/10">
-                <td className="p-2">Support IA (per-outcome)</td>
-                <td className="p-2">$0,50-1,00/résolution</td>
-                <td className="p-2">$1,00-2,00/résolution</td>
-                <td className="p-2">$2-5/résolution + SLA</td>
-              </tr>
-              <tr className="border-b border-white/10">
-                <td className="p-2">Génération contenu (per-usage)</td>
-                <td className="p-2">$0,001-0,005/100 mots</td>
-                <td className="p-2">$0,005-0,02/100 mots</td>
-                <td className="p-2">Volume discount + dedicated</td>
-              </tr>
-              <tr className="border-b border-white/10">
-                <td className="p-2">Analyse données (hybrid)</td>
-                <td className="p-2">$49/mois + 100 analyses</td>
-                <td className="p-2">$199/mois + 1000 analyses</td>
-                <td className="p-2">$999/mois + illimité + on-prem</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <h2 className="text-2xl font-bold text-white mt-12">4. Pièges à éviter</h2>
-          <ul className="list-disc pl-6 space-y-2">
-            <li><strong>Sous-estimer le COGS variable</strong> : un prompt qui coûte $0,01 en test coûte $0,05 en prod (contexte, few-shot, retries, fallback). Mesurez en conditions réelles.</li>
-            <li><strong>Plafond trop bas / trop haut</strong> : trop bas = frustration power users. Trop haut = risque financier. Calibrez sur P95 usage bêta + 50 % marge.</li>
-            <li><strong>Ne pas différencier par modèle</strong> : GPT-4o ≠ Haiku ≠ Llama-local. Si le client choisit le modèle, facturez différemment. Si vous choisissez, intégrez dans votre marge.</li>
-            <li><strong>Ignorer le coût d&apos;acquisition IA</strong> : démo IA, POC, fine-tuning initial, onboarding data. Ces coûts fixes doivent être amortis dans le pricing.</li>
-            <li><strong>Communiquer « IA incluse » sans limite</strong> : « IA illimitée » = invitation à l&apos;abus. Toujours une fair use policy (ex. 100x usage médian) ou composante variable.</li>
-          </ul>
-
-          <h2 className="text-2xl font-bold text-white mt-12">5. Framework de décision pricing</h2>
-          <ol className="list-decimal pl-6 space-y-2">
-            <li><strong>Mesurez votre COGS réel</strong> : 1000 requêtes production → coût total tokens + infra.</li>
-            <li><strong>Définissez la valeur client</strong> : gain temps × taux horaire / économie coûts / revenu additionnel.</li>
-            <li><strong>Choisissez le modèle</strong> : usage prévisible → per-seat/add-on. Usage variable → hybrid. Valeur claire par tâche → per-outcome.</li>
-            <li><strong>Testez en bêta</strong> : 10-20 clients, facturation réelle, mesurez usage, marge, churn, NPS.</li>
-            <li><strong>Itérez la grille</strong> : ajustez plafonds, seuils, overage pricing. Communiquez changements 60 jours à l&apos;avance.</li>
-          </ol>
-
-          <div className="rounded-2xl bg-indigo-900/30 border border-indigo-500/20 p-6">
-            <h3 className="text-lg font-semibold text-white mb-2">Pricing IA sans deviner</h3>
-            <p className="text-indigo-200/70 mb-4">
-              NeuraAPI : facturation unifiée multi-provider, tracking coûts par client/feature,
-              alertes marge, simulateur pricing. Vous vendez la valeur, on gère la complexité.
-            </p>
+        <div className="mt-12 rounded-2xl bg-indigo-900/50 border border-indigo-700/50 p-8 text-center">
+          <h3 className="text-2xl font-bold text-white">
+            Déployez votre premier agent IA aujourd&apos;hui
+          </h3>
+          <p className="mt-3 text-indigo-200">
+            Support client, prospection, opérations : créez un agent connecté à vos outils en quelques minutes.
+          </p>
+          <div className="mt-6 flex items-center justify-center gap-4 flex-wrap">
             <Link
-              href="/pricing"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300"
+              href="/agents"
+              className="rounded-lg bg-indigo-600 px-6 py-3 text-base font-semibold text-white hover:bg-indigo-500 transition-all"
             >
-              Voir notre grille →
+              Découvrir les Agents IA
+            </Link>
+            <Link
+              href="/docs"
+              className="rounded-lg border border-indigo-500 px-6 py-3 text-base font-semibold text-indigo-200 hover:bg-indigo-900/50 transition-all"
+            >
+              Lire la documentation
             </Link>
           </div>
         </div>
@@ -223,21 +218,15 @@ export default function BlogPricingIaSaas() {
           <h3 className="text-lg font-semibold text-white mb-4">Articles liés</h3>
           <ul className="space-y-3">
             <li>
-              <Link href="/blog/couts-llm-production" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
+              <Link href="/blog/ai-api-integration" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Coûts réels des LLM en production
+                Intégrer une API IA dans Next.js en 3 étapes
               </Link>
             </li>
             <li>
-              <Link href="/blog/optimisation-couts-llm-production" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
+              <Link href="/blog/nextjs-saas-starter" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
                 <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Optimisation coûts LLM en production
-              </Link>
-            </li>
-            <li>
-              <Link href="/blog/monitoring-ia-avance-drift-eval" className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 transition-colors group">
-                <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 group-hover:bg-indigo-400 transition-colors" />
-                Monitoring IA avancé : détection dérive
+                Créer un SaaS Next.js prêt pour la production
               </Link>
             </li>
           </ul>

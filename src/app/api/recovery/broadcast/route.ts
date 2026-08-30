@@ -3,7 +3,7 @@ import { safeQuery } from '@/lib/db'
 import { EMAIL_FROM } from '@/lib/email'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 export async function POST(request: NextRequest) {

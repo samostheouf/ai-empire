@@ -6,7 +6,7 @@ import { Resend } from 'resend';
 let _resend: Resend | null = null
 function getResend(): Resend {
   if (!_resend) {
-    _resend = new Resend(process.env.RESEND_API_KEY);
+    _resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
   }
   return _resend;
 }
@@ -53,7 +53,12 @@ export async function sendOrderConfirmation({ to, templateName, templatePrice, d
   const price = (templatePrice / 100).toFixed(2);
   const c = EMAIL_COPY[lang || 'fr'] || EMAIL_COPY.fr;
 
-  const { data, error } = await resend.emails.send({
+  const resendClient = getResend();
+  if (!resendClient) {
+    return { success: false, error: 'Resend not configured' };
+  }
+
+  const { data, error } = await resendClient.emails.send({
     from: EMAIL_FROM,
     to,
     subject: `${c.orderSubject}${templateName}`,
@@ -118,7 +123,12 @@ interface SendApiKeyEmailProps {
 export async function sendApiKeyEmail({ to, apiKey, plan, lang }: SendApiKeyEmailProps) {
   const c = EMAIL_COPY[lang || 'fr'] || EMAIL_COPY.fr;
 
-  const { data, error } = await resend.emails.send({
+  const resendClient = getResend();
+  if (!resendClient) {
+    return { success: false, error: 'Resend not configured' };
+  }
+
+  const { data, error } = await resendClient.emails.send({
     from: EMAIL_FROM,
     to,
     subject: c.apiKeySubject,

@@ -6,7 +6,7 @@ import { Resend } from 'resend'
 import { getRateLimitHeaders, rateLimit } from '@/lib/rate-limit'
 import crypto from 'crypto'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
+const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 function generateTrackingCode(): string {
@@ -59,11 +59,12 @@ export async function POST(request: NextRequest) {
       })
 
       try {
-        await resend.emails.send({
-          from: EMAIL_FROM,
-          to: email as string,
-          subject: '🤝 Bienvenue dans le programme d\'affiliation NeuraAPI',
-          html: `
+        if (resend) {
+          await resend.emails.send({
+            from: EMAIL_FROM,
+            to: email as string,
+            subject: '🤝 Bienvenue dans le programme d\'affiliation NeuraAPI',
+            html: `
             <!DOCTYPE html>
             <html><body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
               <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
@@ -88,7 +89,8 @@ export async function POST(request: NextRequest) {
               </div>
             </body></html>
           `,
-        })
+          })
+        }
       } catch (err) {
         console.error('Failed to send affiliate welcome email:', err)
       }

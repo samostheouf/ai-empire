@@ -138,7 +138,7 @@ switch (intention) {
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li><strong>Métriques par agent</strong> : précision/rappel (classificateur), taux de citation correcte (récupérateur), score juge (rédacteur).</li>
-            <li><strong>Seuils d&apos;alerte</strong> : régression > 5 % sur une métrique = blocage du déploiement.</li>
+            <li><strong>Seuils d&apos;alerte</strong> : régression &gt; 5 % sur une métrique = blocage du déploiement.</li>
             <li><strong>Auto-éval LLM-as-judge</strong> : un modèle léger (Haiku, 4o-mini) note la cohérence, le ton, le format. Coût : ~0,001 $/éval.</li>
           </ul>
 

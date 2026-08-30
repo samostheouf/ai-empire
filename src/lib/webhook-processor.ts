@@ -9,7 +9,7 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.verce
 let resendClient: Resend | null = null
 function getResendClient(): Resend {
   if (!resendClient) {
-    resendClient = new Resend(process.env.RESEND_API_KEY)
+    resendClient = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
   }
   return resendClient
 }

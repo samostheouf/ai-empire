@@ -88,7 +88,7 @@ async function findUpsellCandidates() {
 async function sendUpsellEmail(email: string, apiCalls: number) {
   await safeQuery(async () => {
     const { Resend } = await import('resend')
-    const resend = new Resend(process.env.RESEND_API_KEY)
+    const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
     const potentialRevenue = Math.round(apiCalls * 0.02 * 12)
     const currentCost = 0
@@ -201,7 +201,7 @@ async function sendMonthlyReferralReport(errors: string[]) {
 
         try {
           const { Resend } = await import('resend')
-          const resend = new Resend(process.env.RESEND_API_KEY)
+          const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
           const earningsEuros = (earnings / 100).toFixed(2)
           const totalEuros = (total / 100).toFixed(2)
 
