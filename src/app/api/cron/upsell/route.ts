@@ -90,6 +90,10 @@ async function sendUpsellEmail(email: string, apiCalls: number) {
     const { Resend } = await import('resend')
     const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
+    if (!resend) {
+      return // Skip if no RESEND_API_KEY
+    }
+
     const potentialRevenue = Math.round(apiCalls * 0.02 * 12)
     const currentCost = 0
     const monthlySavings = Math.round(potentialRevenue * 0.3)
@@ -204,6 +208,12 @@ async function sendMonthlyReferralReport(errors: string[]) {
           const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
           const earningsEuros = (earnings / 100).toFixed(2)
           const totalEuros = (total / 100).toFixed(2)
+
+          if (!resend) {
+            // Skip email if no RESEND_API_KEY
+            reportsSent++
+            continue
+          }
 
           await resend.emails.send({
             from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',

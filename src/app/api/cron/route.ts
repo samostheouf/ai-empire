@@ -207,11 +207,14 @@ async function runReEngagement(errors: string[]) {
       try {
         const { Resend } = await import('resend')
         const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
-        await resend.emails.send({
-          from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
-          to: emailFromData,
-          subject: '🎉 Dernière chance — Votre template vous attend !',
-          html: `
+        if (!resend) {
+          errors.push('reengagement_email: RESEND_API_KEY not configured')
+        } else {
+          await resend.emails.send({
+            from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
+            to: emailFromData,
+            subject: '🎉 Dernière chance — Votre template vous attend !',
+            html: `
             <!DOCTYPE html>
             <html>
             <head><meta charset="utf-8"></head>
@@ -231,7 +234,8 @@ async function runReEngagement(errors: string[]) {
             </body>
             </html>
           `,
-        })
+          })
+        }
       } catch (e) {
         errors.push('reengagement_email: ' + (e instanceof Error ? e.message : String(e)));
       }

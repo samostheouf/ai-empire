@@ -7,7 +7,7 @@ import { escapeHtml } from '@/lib/html-escape';
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app';
 
 let resendClient: Resend | null = null
-function getResendClient(): Resend {
+function getResendClient(): Resend | null {
   if (!resendClient) {
     resendClient = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
   }
@@ -246,34 +246,37 @@ async function handleReferralCommission(email: string, amount: number, errors: s
   }, null);
 
   if (result) {
-    try {
-      const commissionEuros = (result.commission / 100).toFixed(2);
-      await getResendClient().emails.send({
-        from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
-        to: result.referrerEmail,
-        subject: '🎉 Votre filleul a effectué un achat !',
-        html: `
-          <!DOCTYPE html>
-          <html><body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
-            <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-              <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
-                <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
-                <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Commission gagnée !</p>
+    const client = getResendClient()
+    if (client) {
+      try {
+        const commissionEuros = (result.commission / 100).toFixed(2);
+        await client.emails.send({
+          from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
+          to: result.referrerEmail,
+          subject: '🎉 Votre filleul a effectué un achat !',
+          html: `
+            <!DOCTYPE html>
+            <html><body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
+              <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
+                  <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
+                  <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Commission gagnée !</p>
+                </div>
+                <div style="padding: 32px;">
+                  <h2 style="margin: 0 0 16px; color: #1e293b;">Félicitations ! 🎉</h2>
+                  <p style="color: #64748b; margin: 0 0 16px;">Votre filleul vient d'effectuer un achat. Vous avez gagné <strong>${escapeHtml(commissionEuros)}€</strong> de commission !</p>
+                  <p style="color: #64748b; margin: 0 0 8px;">+50 crédits bonus ajoutés à votre compte.</p>
+                  <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 24px;">
+                    Voir mon tableau de bord
+                  </a>
+                </div>
               </div>
-              <div style="padding: 32px;">
-                <h2 style="margin: 0 0 16px; color: #1e293b;">Félicitations ! 🎉</h2>
-                <p style="color: #64748b; margin: 0 0 16px;">Votre filleul vient d'effectuer un achat. Vous avez gagné <strong>${escapeHtml(commissionEuros)}€</strong> de commission !</p>
-                <p style="color: #64748b; margin: 0 0 8px;">+50 crédits bonus ajoutés à votre compte.</p>
-                <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 24px;">
-                  Voir mon tableau de bord
-                </a>
-              </div>
-            </div>
-          </body></html>
-        `,
-      });
-    } catch (e) {
-      errors.push('referral_commission_email: ' + (e instanceof Error ? e.message : String(e)));
+            </body></html>
+          `,
+        });
+      } catch (e) {
+        errors.push('referral_commission_email: ' + (e instanceof Error ? e.message : String(e)));
+      }
     }
   }
 }
@@ -314,7 +317,10 @@ async function handleAffiliateCommission(
 }
 
 async function sendWelcomeSequence(email: string, templateName: string) {
-  await getResendClient().emails.send({
+  const client = getResendClient()
+  if (!client) return
+
+  await client.emails.send({
     from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
     to: email,
     subject: '🚀 Bienvenue ! Votre guide de démarrage rapide',
@@ -369,8 +375,11 @@ async function autoAssignReferralProgram(email: string, errors: string[]) {
   }, null);
 
   if (code) {
+    const client = getResendClient()
+    if (!client) return
+
     try {
-      await getResendClient().emails.send({
+      await client.emails.send({
         from: process.env.EMAIL_FROM || 'NeuraAPI <samilaboulette21@gmail.com>',
         to: email,
         subject: '🎁 Vous êtes maintenant dans le programme de parrainage !',

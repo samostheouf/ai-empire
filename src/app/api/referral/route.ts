@@ -241,30 +241,34 @@ export async function PUT(request: NextRequest) {
       }
 
       try {
-        await resend.emails.send({
-          from: EMAIL_FROM,
-          to: referral.referrerEmail,
-          subject: '🎉 Votre filleul a effectué un achat !',
-          html: `
-            <!DOCTYPE html>
-            <html><body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
-              <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-                <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
-                  <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
-                  <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Commission gagnée !</p>
+        if (!resend) {
+          // Skip email if no RESEND_API_KEY
+        } else {
+          await resend.emails.send({
+            from: EMAIL_FROM,
+            to: referral.referrerEmail,
+            subject: '🎉 Votre filleul a effectué un achat !',
+            html: `
+              <!DOCTYPE html>
+              <html><body style="font-family: -apple-system, sans-serif; background: #f8fafc; padding: 40px 20px;">
+                <div style="max-width: 500px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+                  <div style="background: linear-gradient(135deg, #4F46E5, #7C3AED); padding: 32px; text-align: center;">
+                    <h1 style="color: white; margin: 0; font-size: 24px;">NeuraAPI</h1>
+                    <p style="color: rgba(255,255,255,0.8); margin: 8px 0 0;">Commission gagnée !</p>
+                  </div>
+                  <div style="padding: 32px;">
+                    <h2 style="margin: 0 0 16px; color: #1e293b;">Félicitations ! 🎉</h2>
+                    <p style="color: #64748b; margin: 0 0 16px;">Votre filleul vient d'effectuer un achat. Vous avez gagné <strong>${commission / 100}€</strong> de commission !</p>
+                    <p style="color: #64748b; margin: 0 0 8px;">+50 crédits bonus ajoutés à votre compte.</p>
+                    <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 24px;">
+                      Voir mon tableau de bord
+                    </a>
+                  </div>
                 </div>
-                <div style="padding: 32px;">
-                  <h2 style="margin: 0 0 16px; color: #1e293b;">Félicitations ! 🎉</h2>
-                  <p style="color: #64748b; margin: 0 0 16px;">Votre filleul vient d'effectuer un achat. Vous avez gagné <strong>${commission / 100}€</strong> de commission !</p>
-                  <p style="color: #64748b; margin: 0 0 8px;">+50 crédits bonus ajoutés à votre compte.</p>
-                  <a href="${appUrl}/dashboard" style="display: block; background: #4F46E5; color: white; text-align: center; padding: 14px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 24px;">
-                    Voir mon tableau de bord
-                  </a>
-                </div>
-              </div>
-            </body></html>
-          `,
-        })
+              </body></html>
+            `,
+          })
+        }
       } catch (e) {
         logger.error('referral', 'Failed to send referral notification email', { error: e instanceof Error ? e.message : String(e) });
       }

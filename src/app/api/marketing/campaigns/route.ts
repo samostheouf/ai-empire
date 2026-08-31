@@ -37,6 +37,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Email not found for specified day' }, { status: 404, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
   }
 
+  if (!resend) {
+    return NextResponse.json({ error: 'Email service not configured' }, { status: 503, headers: { 'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300' } })
+  }
+
   const recipient = to || 'test@neuraapi.com'
 
   try {

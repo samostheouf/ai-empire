@@ -71,6 +71,11 @@ export async function POST(request: NextRequest) {
     const downloadToken = crypto.createHash('sha256').update(`${sanitizedEmail}_${Date.now()}`).digest('hex').slice(0, 32)
     const downloadUrl = `${appUrl}/api/free-template/download?token=${downloadToken}`
 
+    if (!resend) {
+      // Skip email if no RESEND_API_KEY but still return success with download URL
+      return NextResponse.json({ success: true, downloadUrl })
+    }
+
     try {
       await resend.emails.send({
         from: EMAIL_FROM,

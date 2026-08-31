@@ -100,13 +100,17 @@ Offre: -20% pour le parrain et le filleul.`
   let emailSent = false
   if (request?.customerEmail && request?.type === 'welcome') {
     try {
-      await resend.emails.send({
-        from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
-        to: request?.customerEmail,
-        subject: parsed.subject || '',
-        html: buildEmailHTML(parsed.content || '', request.customerName)
-      })
-      emailSent = true
+      if (!resend) {
+        // Skip email if no RESEND_API_KEY
+      } else {
+        await resend.emails.send({
+          from: process.env.EMAIL_FROM || 'NeuraAPI <onboarding@resend.dev>',
+          to: request?.customerEmail,
+          subject: parsed.subject || '',
+          html: buildEmailHTML(parsed.content || '', request.customerName)
+        })
+        emailSent = true
+      }
     } catch (error) {
     }
   }

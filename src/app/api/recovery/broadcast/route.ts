@@ -52,6 +52,10 @@ export async function POST(request: NextRequest) {
       let sentCount = 0
       const errors: string[] = []
 
+      if (!resend) {
+        return NextResponse.json({ error: 'Email service not configured' }, { status: 503 })
+      }
+
       for (const user of users) {
         try {
           const daysSince = Math.floor((Date.now() - new Date(user.createdAt).getTime()) / (1000 * 60 * 60 * 24))

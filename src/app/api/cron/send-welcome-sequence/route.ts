@@ -67,6 +67,11 @@ async function sendWelcomeEmails() {
       const { Resend } = await import('resend')
       const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
 
+      if (!resend) {
+        errors++
+        continue
+      }
+
       const html = `
         <!DOCTYPE html>
         <html>
@@ -178,6 +183,11 @@ async function processOnboardingSequence() {
       try {
         const { Resend } = await import('resend')
         const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null
+
+        if (!resend) {
+          // Skip on error - no RESEND_API_KEY
+          continue
+        }
 
         const html = buildOnboardingHtml(seqEmail.template, user.email)
 

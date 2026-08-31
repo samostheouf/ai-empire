@@ -4,18 +4,12 @@ import { Resend } from 'resend';
 // (e.g. during Next.js "collect page data" at build time) does not throw
 // when RESEND_API_KEY is absent. The client is created on first access.
 let _resend: Resend | null = null
-function getResend(): Resend {
+function getResend(): Resend | null {
   if (!_resend) {
     _resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
   }
   return _resend;
 }
-
-const resend: Resend = new Proxy({} as Resend, {
-  get(_target, prop, receiver) {
-    return Reflect.get(getResend(), prop, receiver);
-  },
-});
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app';
 

@@ -88,6 +88,10 @@ export async function PUT(request: NextRequest) {
 
       let sentCount = 0
 
+      if (!resend) {
+        return { sent: 0 }
+      }
+
       for (const recovery of pendingRecoveries) {
         try {
           const templateListHtml = featuredTemplates.map(t => `
