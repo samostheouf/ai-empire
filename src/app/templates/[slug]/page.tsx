@@ -170,7 +170,7 @@ export default function TemplateDetailPage() {
   if (loading) return <div className="min-h-screen bg-white flex items-center justify-center"><p>{t('templateDetailLoading')}</p></div>
   if (!template) return <div className="min-h-screen bg-white flex items-center justify-center"><p>{t('templateDetailNotFound')}</p></div>
 
-  const structuredData = {
+  const structuredData: Record<string, unknown> = {
     '@context': 'https://schema.org',
     '@type': 'Product',
     name: template.name,
@@ -184,11 +184,7 @@ export default function TemplateDetailPage() {
       availability: 'https://schema.org/InStock',
       seller: { '@type': 'Organization', name: 'NeuraAPI' },
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      reviewCount: String(template.downloads || 50),
-    },
+    // ETHIQUE: aucun aggregateRating fabrique — ajoute uniquement si vrais avis verifies branches.
   }
 
   return (
@@ -277,10 +273,7 @@ export default function TemplateDetailPage() {
                 </div>
 
                 <div className="flex items-center gap-4 py-2">
-                  <div className="flex items-center gap-1">
-                    {[1, 2, 3, 4, 5].map(s => <Star key={s} className="w-4 h-4 fill-yellow-400 text-yellow-400" />)}
-                    <span className="text-sm text-gray-500 ml-1">4.8</span>
-                  </div>
+                  {/* ETHIQUE: aucun 4.8 fabrique — note affichee uniquement si vrais avis verifies */}
                   <span className="text-sm text-gray-400">{template.downloads} {t('templateDetailDownloads')}</span>
                 </div>
 
@@ -288,7 +281,8 @@ export default function TemplateDetailPage() {
 
                 <div className="flex items-center gap-2 text-xs text-orange-500 bg-orange-50 rounded-lg px-3 py-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-orange-400 animate-pulse" />
-                  <span>{Math.floor(Math.random() * 5) + 3} {t('templateDetailViewing')}</span>
+                  {/* ETHIQUE: compteur live supprime — aucun chiffre simule */}
+                  <span>{t('templateDetailViewing')}</span>
                 </div>
 
                 <BuyButton templateId={template.id} templateName={template.name} price={template.price} downloads={template.downloads} />

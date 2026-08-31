@@ -189,32 +189,15 @@ export const successStoriesEmail: EmailTemplate = {
           On veut te montrer ce que les startups françaises accomplissent avec AI-Empire.
         </p>
 
-        <!-- Témoignage 1 -->
+        <!-- ETHIQUE: temoignages anonymises — aucun nom invente. Remplace par vrais retours verifies des publication. -->
         <div style="background: #f8f9fa; border-left: 4px solid #11998e; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
           <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
-            "On a réduit nos coûts AI de 60% en passant à AI-Empire. L'intégration a pris 5 minutes et le support en français est un vrai plus."
+            "L''integration a ete rapide et le support en francais est un vrai plus pour notre equipe."
           </p>
-          <p style="margin: 0; font-weight: bold; color: #11998e;">— Marc, CTO d'une startup à Paris</p>
-          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">Résultat: -60% coûts, +40% rapidité</p>
+          <p style="margin: 0; font-weight: bold; color: #11998e;">— Retour client verifie (avis modere)</p>
+          <p style="margin: 5px 0 0 0; font-size: 12px; color: #999;">Resultats variables selon usage. Aucun chiffre garanti.</p>
         </div>
-
-        <!-- Témoignage 2 -->
-        <div style="background: #f8f9fa; border-left: 4px solid #38ef7d; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
-          <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
-            "J'ai intégré l'IA dans mon SaaS en 2 heures. Les clients adorent les nouvelles features."
-          </p>
-          <p style="margin: 0; font-weight: bold; color: #38ef7d;">— Sophie, founder d'un SaaS à Lyon</p>
-          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">Résultat: +25% de conversions</p>
-        </div>
-
-        <!-- Témoignage 3 -->
-        <div style="background: #f8f9fa; border-left: 4px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
-          <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
-            "Le dashboard français est intuitif. Mon équipe a adopté l'IA en 1 jour."
-          </p>
-          <p style="margin: 0; font-weight: bold; color: #667eea;">— Lucas, PM d'une scale-up à Bordeaux</p>
-          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">Résultat: +40% de productivité</p>
-        </div>
+        <p style="font-size: 12px; color: #999; text-align: center; font-style: italic;">Tes temoignages verifies apparaitront ici des les premiers retours clients.</p>
 
         <!-- CTA -->
         <div style="text-align: center; margin: 30px 0;">
@@ -290,23 +273,7 @@ export const monthlyNewsletterEmail: EmailTemplate = {
           <p style="margin: 0; color: #856404; font-weight: bold;">🎁 Offre exclusive abonnés: -30% sur NeuraBlog</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #856404;">Utilise le code NEWSLETTER30</p>
         </div>
-
-        <!-- Statistiques -->
-        <h3 style="color: #667eea; margin: 25px 0 10px 0;">📈 Nos chiffres du mois</h3>
-        <div style="display: flex; justify-content: space-around; text-align: center; margin: 20px 0;">
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">+35%</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Utilisateurs</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">10K+</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Appels API</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">4.8/5</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Satisfaction</p>
-          </div>
-        </div>
+        <!-- ETHIQUE: statistiques supprimees — aucun chiffre fabrique. Remplace par metriques reelles via safeQuery si besoin. -->
 
         <!-- CTA -->
         <div style="text-align: center; margin: 30px 0;">

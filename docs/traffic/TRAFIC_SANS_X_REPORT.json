@@ -1,0 +1,49 @@
+{
+  "strategy": "Top-1 sans X = SEO 48 articles + IndexNow enrichi (80 URLs) + Gumroad Discover passive (15 tags) en moat durable ; amplificateurs Reddit 9 subs value-first + IndieHackers en J0-J7 ; PH/HN en pics. UTM central (src/lib/utm.ts, /api/utm/links, CtaLink preserve) trace tout sans X. Lead magnet /free (NeuraStarter) + BlogLeadMagnet + EcosystemBanner cross-sell capturent et upsellent. IndexNow déjà câblé, enrichi ce jour de 5 à 80 URLs via daily-seo cron. 48 articles hreflang 10 langues = barrière inimitable.",
+  "immediate_actions": [
+    {
+      "id": 1,
+      "title": "UTM central + tracking propre sans X",
+      "what": "src/lib/utm.ts (withUtm, buildAllUtmLinks, REDDIT_SUBS 9, LAUNCH_URLS), /api/utm/links endpoint public, HomeInteractive CtaLink preserve UTM en navigation interne, analytics.ts capture UTM first-touch, docs/traffic/utm-links.csv (13 liens prêts à coller)",
+      "commands": [
+        "cat src/lib/utm.ts",
+        "curl https://ai-empire-steel.vercel.app/api/utm/links",
+        "cat docs/traffic/utm-links.csv"
+      ],
+      "verify": "npx tsc --noEmit --skipLibCheck (0 erreur sur utm.ts), python scripts/traffic-gumroad-sync.py (dry-run OK)",
+      "status": "done"
+    },
+    {
+      "id": 2,
+      "title": "SEO amplification: lead magnet + cross-sell + IndexNow 80 URLs",
+      "what": "BlogLeadMagnet.tsx (Gift CTA /free + cross-sell 3 sites, utm_content=blog_lead_magnet/blog_cross_*), daily-seo route patchée: getBlogUrls() dynamique (80 URLs au lieu de 5) + INDEXNOW_KEY corrigée aiempire-indexnow-9f3c2a7e8b1d4f60a5c2e9b7d3f1a8c4, docs/traffic/TRAFIC_SANS_X.md",
+      "commands": [
+        "cat src/components/BlogLeadMagnet.tsx",
+        "cat src/app/api/cron/daily-seo/route.ts | grep -A2 getBlogUrls",
+        "cat docs/traffic/TRAFIC_SANS_X.md"
+      ],
+      "verify": "ls src/components/BlogLeadMagnet.tsx + daily-seo enrichi 80 URLs ; à intégrer via 1 import par article: import {BlogLeadMagnet, BlogCrossSell} from '@/components/BlogLeadMagnet'",
+      "status": "done"
+    },
+    {
+      "id": 3,
+      "title": "Gumroad Discover + Reddit 9 subs + IH/PH kits (postables J0)",
+      "what": "scripts/traffic-gumroad-sync.py (15 tags/API, dry-run OK, --apply quand token), docs/traffic/reddit-queue.md (9 subs + angles + planning anti-shadowban 5:1), docs/traffic/launch-kits.md (IH 4 produits + PH + HN Show HN titres), ~/backlinks-content/01-08 drafts déjà prêts",
+      "commands": [
+        "python scripts/traffic-gumroad-sync.py",
+        "cat docs/traffic/reddit-queue.md",
+        "cat docs/traffic/launch-kits.md",
+        "ls ~/backlinks-content/"
+      ],
+      "verify": "python scripts/traffic-gumroad-sync.py -> dry-run OK (bloqué par GUMROAD_ACCESS_TOKEN, cf blocked_by_user)",
+      "status": "done"
+    }
+  ],
+  "blocked_by_user": [
+    "GUMROAD_ACCESS_TOKEN manquant dans .env.local (bloque PUT /v2/products tags via API — dry-run OK, --apply impossible)",
+    "Reddit posting manuel requis (pas d'API auto — éthique value-first, 5 commentaires sans lien avant post avec lien, token humain)",
+    "Product Hunt launch manuel (mardi/mercredi 00:01 PST, nécessite compte PH humain, pas automatisable côté API)",
+    "Hacker News Show HN manuel (1/semaine max, compte HN humain)",
+    "X auto-posting bloqué (pas de tokens — contourné par stratégie sans X, aucun besoin)"
+  ]
+}

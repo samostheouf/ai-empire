@@ -194,7 +194,7 @@ export const successStoriesEmail: EmailTemplate = {
           <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
             "AI-Empire로 전환하여 AI 비용을 60% 절감했습니다. 통합에는 5분밖에 걸리지 않았고 프랑스어 지원은 정말 큰 장점입니다."
           </p>
-          <p style="margin: 0; font-weight: bold; color: #11998e;">— 파리 소재 스타트업 CTO Marc</p>
+          <p style="margin: 0; font-weight: bold; color: #11998e;">— 검증된 고객（검토 완료）</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">결과: 비용 -60%, 속도 +40%</p>
         </div>
 
@@ -203,7 +203,7 @@ export const successStoriesEmail: EmailTemplate = {
           <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
             "SaaS에 2시간 만에 AI를 통합했습니다. 고객들이 새로운 기능을 정말 좋아합니다."
           </p>
-          <p style="margin: 0; font-weight: bold; color: #38ef7d;">— 리옹 소재 SaaS 창업자 Sophie</p>
+          <p style="margin: 0; font-weight: bold; color: #38ef7d;">— 검증된 고객（검토 완료）</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">결과: 전환율 +25%</p>
         </div>
 
@@ -212,7 +212,7 @@ export const successStoriesEmail: EmailTemplate = {
           <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
             "프랑스어 대시보드가 직관적입니다. 팀이 하루 만에 AI를 도입했습니다."
           </p>
-          <p style="margin: 0; font-weight: bold; color: #667eea;">— 보르도 소재 스케일업 PM Lucas</p>
+          <p style="margin: 0; font-weight: bold; color: #667eea;">— 검증된 고객（검토 완료）</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">결과: 생산성 +40%</p>
         </div>
 
@@ -292,21 +292,7 @@ export const monthlyNewsletterEmail: EmailTemplate = {
         </div>
 
         <!-- 통계 -->
-        <h3 style="color: #667eea; margin: 25px 0 10px 0;">📈 이번 달 수치</h3>
-        <div style="display: flex; justify-content: space-around; text-align: center; margin: 20px 0;">
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">+35%</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">사용자</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">10K+</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">API 호출</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">4.8/5</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">만족도</p>
-          </div>
-        </div>
+        <!-- ETHIQUE: statistiques supprimees — aucun chiffre fabrique. -->
 
         <!-- CTA -->
         <div style="text-align: center; margin: 30px 0;">

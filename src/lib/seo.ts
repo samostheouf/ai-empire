@@ -168,6 +168,9 @@ export interface ProductSchemaData {
 }
 
 export function generateProductSchema(data: ProductSchemaData): object {
+  // ETHIQUE: aggregateRating UNIQUEMENT si donnees reelles verifiees (rating + reviewCount fournis et >0).
+  // Sans vrais avis, aucun rating n'est emis -> 0 fabrication, conforme Google Structured Data.
+  const hasRealRating = typeof data.rating === 'number' && typeof data.reviewCount === 'number' && data.reviewCount > 0
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -183,12 +186,12 @@ export function generateProductSchema(data: ProductSchemaData): object {
       availability: 'https://schema.org/InStock',
       seller: { '@type': 'Organization', name: 'NeuraAPI' },
     },
-    ...(data.rating
+    ...(hasRealRating
       ? {
           aggregateRating: {
             '@type': 'AggregateRating',
             ratingValue: data.rating,
-            reviewCount: data.reviewCount || 100,
+            reviewCount: data.reviewCount,
           },
         }
       : {}),

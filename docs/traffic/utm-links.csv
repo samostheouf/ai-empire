@@ -1,0 +1,14 @@
+canal,url_utm,usage
+gumroad_discover,https://ai-empire-steel.vercel.app/?utm_source=gumroad&utm_medium=marketplace&utm_campaign=sans_x_20260831&utm_content=discover,Gumroad Discover listing
+gumroad_product,https://ai-empire-steel.vercel.app/templates?utm_source=gumroad&utm_medium=marketplace&utm_campaign=sans_x_20260831&utm_content=product_page,Fiche produit Gumroad
+reddit_saas,https://ai-empire-steel.vercel.app/?utm_source=reddit&utm_medium=community&utm_campaign=sans_x_20260831&utm_content=r_saas,r/SaaS post
+reddit_webdev,https://ai-empire-steel.vercel.app/?utm_source=reddit&utm_medium=community&utm_campaign=sans_x_20260831&utm_content=r_webdev,r/webdev
+reddit_sideproject,https://ai-empire-steel.vercel.app/?utm_source=reddit&utm_medium=community&utm_campaign=sans_x_20260831&utm_content=r_sideproject,r/SideProject
+indiehackers,https://ai-empire-steel.vercel.app/?utm_source=indiehackers&utm_medium=community&utm_campaign=sans_x_20260831&utm_content=post,IndieHackers post
+producthunt,https://ai-empire-steel.vercel.app/?utm_source=producthunt&utm_medium=launch&utm_campaign=sans_x_20260831&utm_content=launch,Product Hunt
+hackernews,https://ai-empire-steel.vercel.app/?utm_source=hackernews&utm_medium=launch&utm_campaign=sans_x_20260831&utm_content=show_hn,HN Show
+devto,https://ai-empire-steel.vercel.app/?utm_source=devto&utm_medium=social&utm_campaign=sans_x_20260831&utm_content=article,Dev.to article
+hashnode,https://ai-empire-steel.vercel.app/?utm_source=hashnode&utm_medium=social&utm_campaign=sans_x_20260831&utm_content=article,Hashnode
+newsletter_free,https://ai-empire-steel.vercel.app/free?utm_source=newsletter&utm_medium=email&utm_campaign=sans_x_20260831&utm_content=lead_magnet,Email lead magnet
+cross_sell,https://ai-empire-steel.vercel.app/?utm_source=cross_sell&utm_medium=referral&utm_campaign=sans_x_20260831&utm_content=ecosystem_banner,Ecosystem banner
+blog_lead,https://ai-empire-steel.vercel.app/free?utm_source=blog&utm_medium=content&utm_campaign=sans_x_20260831&utm_content=blog_lead_magnet,Blog CTA lead magnet

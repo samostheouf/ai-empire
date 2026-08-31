@@ -255,11 +255,7 @@ export const schemaMarkups: SchemaMarkup[] = [
         priceCurrency: 'EUR',
         description: 'Plano gratuito disponível',
       },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.8',
-        ratingCount: '150',
-      },
+      // ETHIQUE: aggregateRating supprime — aucun avis fabrique (ajouter uniquement avec vrais avis verifies),
     },
   },
   {

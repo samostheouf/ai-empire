@@ -387,10 +387,6 @@ export function generateSoftwareApplicationSchema(): object {
       priceCurrency: 'EUR',
       offerCount: '3'
     },
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.8',
-      ratingCount: '5000'
-    }
+    // ETHIQUE: aucun aggregateRating fabrique — ajoute uniquement avec vrais avis verifies
   }
 }

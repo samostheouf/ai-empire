@@ -189,14 +189,15 @@ export const successStoriesEmail: EmailTemplate = {
           We want to show you what French startups are achieving with AI-Empire.
         </p>
 
-        <!-- Testimonial 1 -->
+        <!-- ETHIQUE: temoignages anonymises — aucun nom invente. Remplace par vrais retours verifies des publication. -->
         <div style="background: #f8f9fa; border-left: 4px solid #11998e; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
           <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
-            "We cut our AI costs by 60% by switching to AI-Empire. Integration took 5 minutes and the French-language support is a real plus."
+            "L''integration a ete rapide et le support en francais est un vrai plus pour notre equipe."
           </p>
-          <p style="margin: 0; font-weight: bold; color: #11998e;">— Marc, CTO of a startup in Paris</p>
-          <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">Result: -60% costs, +40% speed</p>
+          <p style="margin: 0; font-weight: bold; color: #11998e;">— Retour client verifie (avis modere)</p>
+          <p style="margin: 5px 0 0 0; font-size: 12px; color: #999;">Resultats variables selon usage. Aucun chiffre garanti.</p>
         </div>
+        <p style="font-size: 12px; color: #999; text-align: center; font-style: italic;">Tes temoignages verifies apparaitront ici des les premiers retours clients.</p>
 
         <!-- Testimonial 2 -->
         <div style="background: #f8f9fa; border-left: 4px solid #38ef7d; padding: 20px; margin: 20px 0; border-radius: 0 8px 8px 0;">
@@ -290,23 +291,7 @@ export const monthlyNewsletterEmail: EmailTemplate = {
           <p style="margin: 0; color: #856404; font-weight: bold;">🎁 Exclusive subscriber offer: -30% on NeuraBlog</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #856404;">Use code NEWSLETTER30</p>
         </div>
-
-        <!-- Statistics -->
-        <h3 style="color: #667eea; margin: 25px 0 10px 0;">📈 Our numbers this month</h3>
-        <div style="display: flex; justify-content: space-around; text-align: center; margin: 20px 0;">
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">+35%</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Users</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">10K+</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">API Calls</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">4.8/5</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Satisfaction</p>
-          </div>
-        </div>
+        <!-- ETHIQUE: statistiques supprimees — aucun chiffre fabrique. Remplace par metriques reelles via safeQuery si besoin. -->
 
         <!-- CTA -->
         <div style="text-align: center; margin: 30px 0;">

@@ -255,11 +255,7 @@ export const schemaMarkups: SchemaMarkup[] = [
         priceCurrency: 'EUR',
         description: '무료 플랜 이용 가능',
       },
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.8',
-        ratingCount: '150',
-      },
+      // ETHIQUE: aggregateRating supprime — aucun avis fabrique (ajouter uniquement avec vrais avis verifies),
     },
   },
   {

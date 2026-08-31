@@ -59,6 +59,8 @@ async function getTemplateData(slug: string) {
 export default async function TemplateDetailLayout({ children, params }: TemplateDetailLayoutProps) {
   const template = await getTemplateData(params.slug)
 
+  // ETHIQUE: aucun AggregateRating fabrique. productSchema sans avis inventes.
+  // Ajouter rating/reviewCount UNIQUEMENT quand branche sur vrais avis verifies (ex: prisma.review.aggregate).
   const productSchema = template
     ? generateProductSchema({
         name: template.name,
@@ -66,8 +68,6 @@ export default async function TemplateDetailLayout({ children, params }: Templat
         image: template.screenshot,
         price: 'price' in template ? (template as { price: number }).price / 100 : 0,
         category: 'Digital Product',
-        rating: 4.8,
-        reviewCount: 100,
       })
     : null
 

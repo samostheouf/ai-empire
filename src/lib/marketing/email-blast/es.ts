@@ -292,21 +292,7 @@ export const monthlyNewsletterEmail: EmailTemplate = {
         </div>
 
         <!-- Estadísticas -->
-        <h3 style="color: #667eea; margin: 25px 0 10px 0;">📈 Nuestras cifras del mes</h3>
-        <div style="display: flex; justify-content: space-around; text-align: center; margin: 20px 0;">
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">+35%</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Usuarios</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">10K+</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Llamadas API</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">4.8/5</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Satisfacción</p>
-          </div>
-        </div>
+        <!-- ETHIQUE: statistiques supprimees — aucun chiffre fabrique. -->
 
         <!-- CTA -->
         <div style="text-align: center; margin: 30px 0;">

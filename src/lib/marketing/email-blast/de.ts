@@ -290,23 +290,7 @@ export const monthlyNewsletterEmail: EmailTemplate = {
           <p style="margin: 0; color: #856404; font-weight: bold;">🎁 Exklusives Abonnenten-Angebot: -30% auf NeuraBlog</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #856404;">Verwende den Code NEWSLETTER30</p>
         </div>
-
-        <!-- Statistiken -->
-        <h3 style="color: #667eea; margin: 25px 0 10px 0;">📈 Unsere Zahlen diesen Monat</h3>
-        <div style="display: flex; justify-content: space-around; text-align: center; margin: 20px 0;">
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">+35%</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Nutzer</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">10K+</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">API-Aufrufe</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">4.8/5</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">Zufriedenheit</p>
-          </div>
-        </div>
+        <!-- ETHIQUE: statistiques supprimees — aucun chiffre fabrique. Remplace par metriques reelles via safeQuery si besoin. -->
 
         <!-- CTA -->
         <div style="text-align: center; margin: 30px 0;">

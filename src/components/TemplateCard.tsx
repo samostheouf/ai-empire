@@ -102,10 +102,7 @@ const TemplateCard = memo(function TemplateCardInner({ id, name, slug, descripti
               <Download className="w-3 h-3" />
               {downloadCount}
             </div>
-            <div className="flex items-center gap-0.5 rounded-md bg-black/50 backdrop-blur-sm px-2 py-1 text-xs text-yellow-400">
-              <Star className="w-3 h-3 fill-current" />
-              {ratingWhole.toFixed(1)}
-            </div>
+            {/* ETHIQUE: note masquee — aucun avis fabrique */}
           </div>
         </div>
 
@@ -138,10 +135,7 @@ const TemplateCard = memo(function TemplateCardInner({ id, name, slug, descripti
               <Download className="w-3 h-3" aria-hidden="true" />
               {downloadCount}
             </span>
-            <span className="flex items-center gap-0.5">
-              <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" aria-hidden="true" />
-              {ratingWhole.toFixed(1)}
-            </span>
+            {/* ETHIQUE: note masquee — affichage conditionnel sur vrais avis uniquement */}
           </div>
           <Link
             href={`/templates/${slug}`}
@@ -171,10 +165,7 @@ const TemplateCard = memo(function TemplateCardInner({ id, name, slug, descripti
                 <span className="inline-flex items-center rounded-lg bg-gradient-to-r from-indigo-500 to-purple-500 px-3 py-1 text-sm font-bold text-white shadow-sm">
                   {formatPrice(price)}
                 </span>
-                <div className="flex items-center gap-1 text-sm text-yellow-500">
-                  <Star className="w-4 h-4 fill-current" aria-hidden="true" />
-                  {ratingWhole.toFixed(1)} ({reviewCount} {t('templateReviews')})
-                </div>
+                {/* ETHIQUE: note masquee — aucun avis fabrique */}
               </div>
               <h3 className="text-xl font-bold text-gray-900">{name}</h3>
               <p className="mt-2 text-sm text-gray-600 leading-relaxed">{description}</p>

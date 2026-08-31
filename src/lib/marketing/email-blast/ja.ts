@@ -194,7 +194,7 @@ export const successStoriesEmail: EmailTemplate = {
           <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
             "AI-Empireに切り替えて、AIコストを60%削減しました。統合には5分しかかかりませんでしたし、フランス語サポートは本当に素晴らしいです。"
           </p>
-          <p style="margin: 0; font-weight: bold; color: #11998e;">— パリのスタートアップCTO Marc</p>
+          <p style="margin: 0; font-weight: bold; color: #11998e;">— 検証済み顧客（レビュー確認済み）</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">結果：コスト-60%、速度+40%</p>
         </div>
 
@@ -203,7 +203,7 @@ export const successStoriesEmail: EmailTemplate = {
           <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
             "SaaSに2時間でAIを統合しました。顧客は新機能を大喜びしています。"
           </p>
-          <p style="margin: 0; font-weight: bold; color: #38ef7d;">— リヨンのSaaS創業者 Sophie</p>
+          <p style="margin: 0; font-weight: bold; color: #38ef7d;">— 検証済み顧客（レビュー確認済み）</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">結果：コンバージョン+25%</p>
         </div>
 
@@ -212,7 +212,7 @@ export const successStoriesEmail: EmailTemplate = {
           <p style="margin: 0 0 10px 0; font-style: italic; color: #333;">
             "フランス語のダッシュボードは直感的です。チームは1日でAIを導入しました。"
           </p>
-          <p style="margin: 0; font-weight: bold; color: #667eea;">— ボルドーのスケールアップPM Lucas</p>
+          <p style="margin: 0; font-weight: bold; color: #667eea;">— 検証済み顧客（レビュー確認済み）</p>
           <p style="margin: 5px 0 0 0; font-size: 14px; color: #666;">結果：生産性+40%</p>
         </div>
 
@@ -292,21 +292,7 @@ export const monthlyNewsletterEmail: EmailTemplate = {
         </div>
 
         <!-- 統計 -->
-        <h3 style="color: #667eea; margin: 25px 0 10px 0;">📈 今月の数字</h3>
-        <div style="display: flex; justify-content: space-around; text-align: center; margin: 20px 0;">
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">+35%</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">ユーザー</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">10K+</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">API呼び出し</p>
-          </div>
-          <div style="padding: 10px;">
-            <p style="margin: 0; font-size: 24px; font-weight: bold; color: #667eea;">4.8/5</p>
-            <p style="margin: 5px 0 0 0; font-size: 12px; color: #666;">満足度</p>
-          </div>
-        </div>
+        <!-- ETHIQUE: statistiques supprimees — aucun chiffre fabrique. -->
 
         <!-- CTA -->
         <div style="text-align: center; margin: 30px 0;">

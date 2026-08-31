@@ -5,6 +5,8 @@ import { safeQuery } from '@/lib/db'
 export const dynamic = 'force-dynamic'
 
 const appUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
+import { promises as fs } from 'fs'
+import path from 'path'
 
 export async function GET(request: NextRequest) {
   try {
@@ -60,18 +62,34 @@ async function submitSitemapToGoogle() {
   }
 }
 
+async function getBlogUrls(): Promise<string[]> {
+  try {
+    const blogDir = path.join(process.cwd(), 'src', 'app', 'blog')
+    const entries = await fs.readdir(blogDir, { withFileTypes: true })
+    const urls: string[] = []
+    for (const e of entries) {
+      if (!e.isDirectory()) continue
+      if (await fs.access(path.join(blogDir, e.name, 'page.tsx')).then(()=>true).catch(()=>false)) {
+        urls.push(`${appUrl}/blog/${e.name}`)
+      }
+    }
+    return urls.slice(0, 80)
+  } catch { return [] }
+}
+
 async function submitSitemapToBing() {
   const sitemapUrl = `${appUrl}/sitemap.xml`
-  const indexNowKey = process.env.INDEXNOW_KEY || 'ai-empire-key'
-
+  const indexNowKey = process.env.INDEXNOW_KEY || 'aiempire-indexnow-9f3c2a7e8b1d4f60a5c2e9b7d3f1a8c4'
+  const blogUrls = await getBlogUrls()
   const payload = {
     host: new URL(appUrl).hostname,
     urlList: [
       `${appUrl}/`,
       `${appUrl}/templates`,
       `${appUrl}/pricing`,
-      `${appUrl}/docs`,
+      `${appUrl}/api-docs`,
       `${appUrl}/blog`,
+      ...blogUrls,
     ],
     key: indexNowKey,
     keyLocation: `${appUrl}/${indexNowKey}.txt`,

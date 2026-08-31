@@ -48,11 +48,34 @@ export function CtaLink({
   children: React.ReactNode
   dataTrack?: string
 }) {
+  // Préserve UTM params sur navigation interne (sans X, tracking propre)
+  const getHrefWithUtm = () => {
+    if (typeof window === 'undefined') return href
+    if (href.startsWith('http')) return href
+    const params = new URLSearchParams(window.location.search)
+    const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+    const hasUtm = utmKeys.some(k => params.get(k))
+    if (!hasUtm) return href
+    const sep = href.includes('?') ? '&' : '?'
+    const qs = utmKeys.filter(k => params.get(k)).map(k => `${k}=${encodeURIComponent(params.get(k) || '')}`).join('&')
+    return `${href}${sep}${qs}`
+  }
   return (
     <Link
       href={href}
       data-track={dataTrack}
-      onClick={() => trackCtaClick(label, location)}
+      onClick={() => {
+        trackCtaClick(label, location)
+        // set href with UTM before navigation
+        if (typeof window !== 'undefined' && !href.startsWith('http')) {
+          const params = new URLSearchParams(window.location.search)
+          const utmKeys = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term']
+          const hasUtm = utmKeys.some(k => params.get(k))
+          if (hasUtm) {
+            try { sessionStorage.setItem('neura_pending_utm', window.location.search) } catch {}
+          }
+        }
+      }}
       className={className}
     >
       {children}
