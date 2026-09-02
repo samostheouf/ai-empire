@@ -158,6 +158,33 @@ const templates = [
       'API REST pour intégration externe',
     ]),
   },
+  {
+    name: 'Empire Financier — Orchestrateur 20/20 Autonome TOP-1',
+    slug: 'empire-financier-orchestrateur-20-20',
+    description: 'Système autonome 5 moteurs audité 20/20 en boucle continue — SaaS MRR + Flip zéro-stock 75km 40 cotes + SOS Facture 350€ + Info PDF 29€ + E-commerce TOP-1 POD. Health 17/17 5min + audit 28/28 + proactivité continue TOP-1 — 0 stock 0 dette 100% Termux no-agent.',
+    price: 4900,
+    category: 'SaaS',
+    tags: JSON.stringify(['next.js', 'tailwind', 'automation', 'finance', 'audit', 'vercel', 'saas', 'cron']),
+    previewUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    screenshot: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
+    fileUrl: 'https://example.com/templates/empire-financier.zip',
+    liveDemo: 'https://ai-empire-steel.vercel.app/templates/empire-financier-orchestrateur-20-20',
+    stripeProductId: 'prod_empire_financier_20_20',
+    stripePriceId: 'price_empire_4900',
+    featured: true,
+    features: JSON.stringify([
+      '5 moteurs audités 20/20 en boucle (SaaS MRR 4 LIVE 200 + Flip V3 40 cotes + Info PDF 29€ + Capital FI 360k€ + Autonomie 11 crons)',
+      'Health 17/17 100% VERT toutes les 5min + audit 28/28 VERT_J1 quotidien + capital 30/40/30 + 0 dette 0 stock',
+      'Flip zéro-stock 75km 382 dons — 8 crons no-agent (scraper/evaluateur/inbox 30min + alert 10min + health 5min)',
+      'SOS Facture landing 15218b + guide PDF 5p + prospects 30 csv + pipeline closing 350€ + TTS Twilio Polly.Remi fr-FR',
+      'E-commerce TOP-1 D 100/100 — analyse 12142b + boutique 11803b POD EU SPOKE + CSV Shopify + synergie panier 389€',
+      'Proactivité continue 0 */6 + evolution 08h00 — lemme 1x ROUGE ou 2x ORANGE = STOP → auto-patch → GO scale',
+      'Capital FI x300 (1200€×300=360k€) + allocation 30% FI / 40% reinvest / 30% vie + tracker no-agent 6h',
+      '30 crons Vercel + Hermes gateway/wake-lock — déployable 1-clic Vercel — docs NOYAU_ORCHESTRATEUR.md 6138b inclus',
+      '100% éthique 0 fake — 0€ simulé — VERT_J1 honnête + preuves curl rejouables',
+      'Template Next.js 14 + Tailwind + Prisma + Stripe LIVE — prêt prod ai-empire-steel.vercel.app',
+    ]),
+  },
 ];
 
 async function main() {

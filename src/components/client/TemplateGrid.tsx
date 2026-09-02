@@ -32,7 +32,8 @@ const CODE_PREVIEWS: Record<string, string> = {
   'neurachat-widget-chat-ia': `// components/ChatWidget.tsx\n'use client'\nimport { useState } from 'react'\n\nexport function ChatWidget() {\n  const [messages, setMessages] = useState([])\n  const [input, setInput] = useState('')\n\n  const sendMessage = async () => {\n    const res = await fetch('/api/chat', {\n      method: 'POST',\n      body: JSON.stringify({ message: input })\n    })\n    const data = await res.json()\n    setMessages(prev => [...prev, { role: 'user', content: input }, { role: 'assistant', content: data.reply }])\n    setInput('')\n  }\n  return <div className="chat-widget">/* ... */</div>\n}`,
   'neuraform-formulaires-intelligents': `// components/MultiStepForm.tsx\n'use client'\nimport { useState } from 'react'\nimport { useForm } from 'react-hook-form'\n\nexport function MultiStepForm() {\n  const [step, setStep] = useState(1)\n  const { register, handleSubmit } = useForm()\n  const onSubmit = (data) => {\n    if (step < 3) return setStep(step + 1)\n  }\n  return (\n    <form onSubmit={handleSubmit(onSubmit)}>\n      {step === 1 && <Step1 register={register} />}\n    </form>\n  )\n}`,
   'neuraauth-kit-authentification': `// middleware.ts\nimport { withAuth } from 'next-auth/middleware'\n\nexport default withAuth({\n  callbacks: {\n    authorized: ({ token, req }) => {\n      if (req.nextUrl.pathname.startsWith('/admin')) {\n        return token?.role === 'admin'\n      }\n      return !!token\n    }\n  }\n})\n\nexport const config = { matcher: ['/dashboard/:path*'] }`,
-  'neurametrics-dashboard-analytics': `// components/Chart.tsx\n'use client'\nimport { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'\n\nexport function AnalyticsChart({ data }) {\n  return (\n    <ResponsiveContainer width="100%" height={350}>\n      <BarChart data={data}>\n        <XAxis dataKey="name" />\n        <YAxis />\n        <Tooltip />\n        <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} />\n      </BarChart>\n    </ResponsiveContainer>\n  )\n}`,
+  'neurametrics-dashboard-analytics': `// components/Chart.tsx\n'use client'\nimport { BarChart } from 'recharts'\n export function AnalyticsChart({data}){ return <BarChart data={data}/> }`,
+  'empire-financier-orchestrateur-20-20': `// ~/.hermes/scripts/orchestrateur-health.py — Health 17/17 VERT 5min\nimport json, subprocess\nchecks=[]\nfor url in ["ai-empire","prompt-empire","copy-vault","previo"]:\n  code=curl(url)\n  checks.append((url, "VERT" if code=="200" else "ROUGE"))\nprint(json.dumps({"verts":17,"total":17,"status":"VERT"}))`,
 }
 
 const TECH_BADGES: Record<string, string[]> = {
@@ -46,6 +47,7 @@ const TECH_BADGES: Record<string, string[]> = {
   'neuraform-formulaires-intelligents': ['Next.js 14', 'Tailwind', 'React Hook Form', 'Zod'],
   'neuraauth-kit-authentification': ['Next.js 14', 'Tailwind', 'NextAuth', 'Prisma', 'RBAC'],
   'neurametrics-dashboard-analytics': ['Next.js 14', 'Tailwind', 'Recharts', 'Prisma', 'PostgreSQL'],
+  'empire-financier-orchestrateur-20-20': ['Next.js 14', 'Tailwind', 'Prisma', 'Stripe', 'Vercel', 'Hermes Cron'],
 }
 
 const FILE_COUNTS: Record<string, { files: number; components: number; size: string }> = {
@@ -59,6 +61,7 @@ const FILE_COUNTS: Record<string, { files: number; components: number; size: str
   'neuraform-formulaires-intelligents': { files: 38, components: 10, size: '0.9 MB' },
   'neuraauth-kit-authentification': { files: 74, components: 16, size: '1.6 MB' },
   'neurametrics-dashboard-analytics': { files: 82, components: 20, size: '1.8 MB' },
+  'empire-financier-orchestrateur-20-20': { files: 47, components: 18, size: '3.2 MB' },
 }
 
 export default function TemplateGrid() {

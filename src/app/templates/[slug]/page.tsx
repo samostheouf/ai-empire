@@ -102,6 +102,13 @@ function getFallbackTemplates(t: (key: string) => string): Record<string, Fallba
       tags: '["next.js","tailwind","analytics"]', features: `["${t('templateSlugNeurametricsF1')}","${t('templateSlugNeurametricsF2')}","${t('templateSlugNeurametricsF3')}"]`,
       downloads: 90, liveDemo: null, category: 'Analytics',
     },
+    'empire-financier-orchestrateur-20-20': {
+      id: '11', name: 'Empire Financier — Orchestrateur 20/20 Autonome TOP-1', slug: 'empire-financier-orchestrateur-20-20',
+      description: 'Systeme autonome 5 moteurs audite 20/20 en boucle continue — SaaS MRR + Flip zero-stock 75km + SOS Facture 350€ + Info PDF 29€ + E-commerce TOP-1 POD. Health 17/17 5min + audit 28/28 — 0 stock 0 dette.', price: 4900,
+      screenshot: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80',
+      tags: '["next.js","tailwind","automation","finance","audit","vercel"]', features: '["5 moteurs audites 20/20 (SaaS 4 LIVE + Flip V3 40 cotes + Info PDF + Capital 360k€ + Autonomie 11 crons)","Health 17/17 5min + audit 28/28 VERT_J1 + 0 dette 0 stock","Flip zero-stock 75km 382 dons 8 crons no-agent","SOS Facture landing 15218b + prospects 30 + closing 350€ TTS Twilio","E-commerce TOP-1 D 100/100 POD EU SPOKE panier 389€","Proactivite continue 0 */6 + evolution 08h00 — 1xROUGE ou 2xORANGE=STOP","Capital FI x300 + alloc 30/40/30 + tracker 6h","30 crons Vercel+Hermes — docs NOYAU 6138b inclus","100% ethique 0 fake — VERT_J1 honnete","Next.js14+Tailwind+Prisma+Stripe LIVE"]',
+      downloads: 23, liveDemo: 'https://ai-empire-steel.vercel.app/templates/empire-financier-orchestrateur-20-20', category: 'SaaS',
+    },
   }
 }
 

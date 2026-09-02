@@ -71,6 +71,7 @@ export default async function Home() {
 
   const TEMPLATE_CARDS = [
     { name: 'NeuraSaaS', category: 'SaaS', price: '97€', color: 'from-indigo-500 to-blue-500' },
+    { name: 'Empire 20/20', category: 'SaaS', price: '49€', color: 'from-amber-500 to-red-500' },
     { name: 'NeuraLanding', category: 'Landing', price: '49€', color: 'from-purple-500 to-pink-500' },
     { name: 'NeuraCommerce', category: 'E-commerce', price: '129€', color: 'from-emerald-500 to-teal-500' },
     { name: 'NeuraBlog', category: 'Blog', price: '69€', color: 'from-amber-500 to-orange-500' },
