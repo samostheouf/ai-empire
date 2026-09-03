@@ -10,3 +10,4 @@ credentials.txt
 credentials.json
 social-keys.json
 .env*
+tsconfig.tsbuildinfo
