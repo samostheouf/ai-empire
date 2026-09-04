@@ -11,3 +11,4 @@ credentials.json
 social-keys.json
 .env*
 tsconfig.tsbuildinfo
+.vercel_env_test
