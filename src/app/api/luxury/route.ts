@@ -32,7 +32,9 @@ export async function POST(request: NextRequest) {
       const { prisma } = await import('@/lib/db')
       const sale = await prisma.luxurySale.findUnique({ where: { sku } })
       if (!sale) return null
-      return prisma.luxurySale.update({ where: { sku }, data: { status: 'sold', platform: platform || 'unknown' } })
+      const u = await prisma.luxurySale.update({ where: { sku }, data: { status: 'sold', platform: platform || 'unknown' } })
+      await prisma.luxuryLog.create({ data: { saleId: sale.id, type: 'sold', message: `SOLD marque par humain — plateforme: ${platform || 'unknown'} — NE PAS REINVENTER VENTE`, data: { platform: platform || 'unknown', sku } as any } })
+      return u
     }, null)
     return NextResponse.json({ success: !!updated, updated })
   }
