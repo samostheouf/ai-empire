@@ -13,7 +13,19 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const body = await request.json().catch(() => ({}))
-  const { action, sku, platform, price } = body
+  const { action, sku, platform, price, title } = body
+
+  if (action === 'create') {
+    const created = await safeQuery(async () => {
+      const { prisma } = await import('@/lib/db')
+      return prisma.luxurySale.upsert({
+        where: { sku },
+        update: { title: title || sku, price: price || 4999, status: 'active', metadata: body.metadata || {} },
+        create: { sku, title: title || sku, price: price || 4999, currency: 'EUR', status: 'active', metadata: body.metadata || {} },
+      })
+    }, null)
+    return NextResponse.json({ success: !!created, created })
+  }
 
   if (action === 'sold') {
     const updated = await safeQuery(async () => {
@@ -39,5 +51,5 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: !!updated })
   }
 
-  return NextResponse.json({ error: 'action inconnue: sold, view, watcher, offer' }, { status: 400 })
+  return NextResponse.json({ error: 'action inconnue: create, sold, view, watcher, offer' }, { status: 400 })
 }
