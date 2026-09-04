@@ -50,7 +50,7 @@
     },
     {
       "path": "/api/cron/automation-hub",
-      "schedule": "0 */6 * * *"
+      "schedule": "0 6 * * *"
     },
     {
       "path": "/api/cron/luxury-hub",
