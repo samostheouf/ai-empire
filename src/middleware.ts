@@ -29,6 +29,7 @@ const PUBLIC_POST_ENDPOINTS = [
   '/api/analytics/web-vitals',
   '/api/analytics/ab-test',
   '/api/ai/chat',
+  '/api/luxury',
 ]
 
 // i18n locale cookie name and supported locales
