@@ -16,6 +16,12 @@ const ALLOWED_ORIGINS = [
 ]
 
 const PUBLIC_POST_ENDPOINTS = [
+  '/api/ebay/publish',
+  '/api/ebay/callback',
+  '/api/ebay/auth',
+  '/api/cron/luxury-pricing',
+  '/api/cron/luxury-hub',
+  '/api/cron/ebay-sync',
   '/api/auth/register',
   '/api/auth/login',
   '/api/newsletter',
@@ -188,7 +194,8 @@ export async function middleware(request: NextRequest) {
 
     if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method)) {
       const isPublic = PUBLIC_POST_ENDPOINTS.some(ep => pathname.startsWith(ep))
-      if (!isPublic) {
+      const hasCron = request.headers.get('authorization')?.startsWith('Bearer ')
+      if (!isPublic && !hasCron) {
         const apiKey = request.headers.get('x-api-key')
         if (!apiKey) {
           return new NextResponse(JSON.stringify({ error: 'Authentification requise' }), {
