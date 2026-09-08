@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const results: Record<string, unknown> = {}
 
   // 1. HEALTH
-  results.health = { status: 'ok', timestamp: now, crons: 6, mode: 'FAST 4999€ 3j' }
+  results.health = { status: 'ok', timestamp: now, crons: 6, mode: 'FAST 4500€ floor — 4 plateformes' }
 
   // 2. MONITOR — lit LuxurySale depuis DB
   const sales = await safeQuery(async () => {
@@ -39,7 +39,7 @@ export async function GET(request: NextRequest) {
   if (Array.isArray(sold) && sold.length > 0) {
     results.crosslist = { alert: 'VENTE DETECTEE', sold: sold.map((s: any) => ({ sku: s.sku, platform: s.platform })), action: 'désactiver autres plateformes <1h' }
   } else {
-    results.crosslist = { status: 'ok', stock: 1, platforms: ['eBay', 'Grailed', 'Vestiaire'] }
+    results.crosslist = { status: 'ok', stock: 1, platforms: ['eBay', 'Grailed', 'Vestiaire', 'Vinted'] }
   }
 
   // Log hub run

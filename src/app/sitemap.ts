@@ -120,6 +120,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/dpa`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/offre-lancement`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/offre-lancement') },
     { url: `${baseUrl}/compare`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/compare') },
+    { url: `${baseUrl}/luxury`, lastModified: now, changeFrequency: 'daily', priority: 0.95, alternates: { languages: { 'fr-FR': `${baseUrl}/luxury`, 'en-US': `${baseUrl}/luxury?hl=en`, 'de-DE': `${baseUrl}/luxury?hl=de`, 'it-IT': `${baseUrl}/luxury?hl=it`, 'ja-JP': `${baseUrl}/luxury?hl=ja`, 'x-default': `${baseUrl}/luxury` } } },
 
     // Regional pages
     { url: `${baseUrl}/en/usa`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: buildAlternates('/en/usa') },
