@@ -162,7 +162,6 @@ export default function LuxuryPage() {
         }}
       >
         {[
-{url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/02_face.jpg",label:"Face entiere HD"},
         {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/03_dos.jpg",label:"Dos HD"},
         {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/04_profil.jpg",label:"Profil 3/4"},
         {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/05_lv_brode.jpg",label:"LV brode"},
@@ -170,12 +169,7 @@ export default function LuxuryPage() {
         {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/07_patchs_manches.jpg",label:"Patchs manches"},
         {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/08_boutons.jpg",label:"Boutons graves"},
         {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/09_doublure.jpg",label:"Doublure satin"},
-        {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/10_etiquette_face.jpg",label:"Etiquette VCCM09"},
-        {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/11_etiquette_verso_JP.jpg",label:"Verso Japan K.K."},
-        {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/12_Etiquette_Couture_Macro.jpg",label:"Couture etiquette"},
-        {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/13_Etiquette_Col_Tissage.jpg",label:"Tissage col M"},
-        {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/14_Etiquette_Globale_Contexte.jpg",label:"Contexte veste"},
-        {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/19_Mesures_a_Plat.png",label:"Mesures 265K"}
+        {url:"https://jyjp02vaprlkyxab.public.blob.vercel-storage.com/10_etiquette_face.jpg",label:"Etiquette VCCM09"}
         ].map((img,i)=>(
           <a key={i} href={img.url} target="_blank" rel="noopener" style={{display:"block",border:"1px solid #222",borderRadius:12,overflow:"hidden",background:"#0a0a0a"}}>
             <img src={img.url} alt={img.label} loading="lazy" style={{width:"100%",height:180,objectFit:"cover",display:"block"}}/>
