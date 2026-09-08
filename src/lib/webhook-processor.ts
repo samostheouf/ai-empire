@@ -24,7 +24,30 @@ export async function processStripeWebhookEvent(stripeEvent: Record<string, unkn
   switch (evtType) {
     case 'checkout.session.completed': {
       const session = evtObject;
-      const { templateId, email } = (session.metadata || {}) as Record<string, string>;
+      const meta = (session.metadata || {}) as Record<string, string>;
+      // --- LUXURY DIRECT 4500 autonomous (no eBay) ---
+      if (meta.type === 'luxury_direct' && meta.sku) {
+        const luxurySku = meta.sku
+        const luxuryEmail = meta.email || (session.customer_details as any)?.email || (session.customer_email as string) || ''
+        await safeQuery(async()=>{
+          const {prisma}=await import('@/lib/db')
+          const sale=await prisma.luxurySale.findUnique({where:{sku:luxurySku}})
+          if(sale && sale.status!=='sold'){
+            await prisma.luxurySale.update({where:{sku:luxurySku}, data:{status:'sold', platform:'direct_stripe'}})
+            await prisma.luxuryLog.create({data:{saleId:sale.id, type:'sold', message:`SOLD direct Stripe 4500 — acheteur ${luxuryEmail} — session ${session.id} — crosslist auto <5m`, data:{sku:luxurySku, email:luxuryEmail, sessionId:session.id, amount: (session.amount_total as number)} as any}})
+          }
+        }, null)
+        // send confirmation email for luxury
+        try{
+          const {Resend}=await import('resend')
+          const resend = process.env.RESEND_API_KEY ? new (await import('resend')).Resend(process.env.RESEND_API_KEY) : null
+          if(resend && luxuryEmail){
+            await resend.emails.send({from: process.env.EMAIL_FROM || 'noreply@ai-empire-steel.vercel.app', to: luxuryEmail, subject: 'Commande confirmee — LV x NBA M — DHL tracking sous 24h', html: `<p>Merci ! Votre LV x NBA Varsity M FW21 Virgil Abloh (4500€) est confirme. Nous preparons l'envoi DHL Express assure + signature. Tracking sous 24h.</p><p>SKU: ${luxurySku} — Session: ${session.id}</p>`})
+          }
+        }catch(e){}
+        break;
+      }
+      const { templateId, email } = meta as Record<string,string>;
 
       if (templateId && email) {
         const dbResult = await safeQuery(async () => {
@@ -436,3 +459,5 @@ async function scheduleUpsellEmail(email: string) {
     }
   }, null);
 }
+
+// Luxury direct checkout handler — added 2026-09-08 for 100% autonomous sale without eBay
