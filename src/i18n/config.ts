@@ -3378,4 +3378,37 @@ export type TranslationKeys = {
   cookieSaveAria: string
   cookieAcceptAllAria: string
   cookieRejectAllAria: string
+
+  // Luxury — HERMES LV x NBA M FW21 Virgil Abloh 4500€ — 10 langues émotionnelles
+  luxuryMetaTitle: string
+  luxuryMetaDesc: string
+  luxuryTitle: string
+  luxurySubtitle: string
+  luxuryDescription: string
+  luxuryWhyTitle: string
+  luxuryPoint1: string
+  luxuryPoint2: string
+  luxuryPoint3: string
+  luxuryPoint4: string
+  luxuryPoint5: string
+  luxuryPoint6: string
+  luxuryPoint7: string
+  luxuryPoint8: string
+  luxuryPoint9: string
+  luxuryPoint10: string
+  luxuryFaqQ1: string; luxuryFaqA1: string
+  luxuryFaqQ2: string; luxuryFaqA2: string
+  luxuryFaqQ3: string; luxuryFaqA3: string
+  luxuryFaqQ4: string; luxuryFaqA4: string
+  luxuryFaqQ5: string; luxuryFaqA5: string
+  luxuryCtaTitle: string
+  luxuryCtaButton: string
+  luxuryCtaNote: string
+  luxuryCtaEmailPlaceholder: string
+  luxuryBadgeAuth: string
+  luxuryBadgeVirgil: string
+  luxuryBadgeDhl: string
+  luxuryBadgePrice: string
+  luxuryOgTitle: string
+  luxuryOgDesc: string
 }
