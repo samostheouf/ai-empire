@@ -261,19 +261,19 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
 
         {/* EMBALLAGE LUXE — reponse a "emballage absent" */}
         <section aria-labelledby="emballage-heading" className="mt-8 rounded-2xl border border-zinc-200 bg-white p-5 md:p-6">
-          <h2 id="emballage-heading" className="text-[18px] font-extrabold tracking-tight">Emballage — niveau boutique, scelle + video 60s</h2>
+          <h2 id="emballage-heading" className="text-[18px] font-extrabold tracking-tight">Emballage — veste uniquement (sans coffret d'origine)</h2>
           <div className="mt-3 grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
             <div className="space-y-2 text-[13px] leading-relaxed text-zinc-700">
-              <p><strong>Triple protection:</strong> housse LV anti-poussiere + papier de soie acide-free + carton double cannelure renforce. Anti-humidite sachet silice.</p>
-              <p><strong>Scelle inviolable:</strong> ruban securite numerote + signature marqueur sur joint + pesee 1.8kg photo + bordereau DHL Express assure 5000€ + signature obligatoire.</p>
+              <p><strong>Veste uniquement:</strong> aucun coffret LV d'origine fourni — la veste est livree seule avec housse simple anti-poussiere. Pas de boite boutique.</p>
+              <p><strong>Envoi securise:</strong> carton neutre renforce + papier de soie + pesee 1.8kg photo + bordereau DHL Express assure 4500€ + signature obligatoire + video 60s sans coupe avant envoi.</p>
               <p className="rounded-xl bg-zinc-50 p-3 text-[12px] border border-zinc-200">Video 60-90s sans coupe avant envoi: pliage → housse → carton → fermeture → pesee → etiquette DHL → upload prive 13 mois (preuve chargeback). Vous recevez le lien video + photos pesee/scellé.</p>
             </div>
             <div className="rounded-xl bg-zinc-50 p-4 border border-zinc-200">
-              <p className="text-[11px] font-bold tracking-widest text-zinc-500 uppercase">Contenu colis</p>
+              <p className="text-[11px] font-bold tracking-widest text-zinc-500 uppercase">Contenu colis — veste uniquement</p>
               <ul className="mt-2 space-y-1 text-[12px] text-zinc-700">
-                <li>• Veste sur cintre bois large + housse</li>
-                <li>• Carte authenticite VCCM09/CA36929</li>
-                <li>• Facture 4500€ + certificat DHL 5000€</li>
+                <li>• Veste seule (sans coffret LV d'origine)</li>
+                <li>• Carte note VCCM09/CA36929 (photos HD)</li>
+                <li>• Facture 4500€ + bordereau DHL assure 4500€</li>
                 <li>• Sachet anti-humidite + ruban luxe</li>
                 <li>• 14 photos pesee/scellé + lien video</li>
               </ul>
