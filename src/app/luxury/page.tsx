@@ -259,6 +259,29 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
           <p className="mt-2 text-[11px] text-zinc-500">Alt longs descriptifs WCAG + SEO images • LCP image #01 en priority eager, 7 autres en lazy + sizes AVIF/WebP Blob • CLS 0 via aspect-ratio • Lightbox clavier ← → Esc</p>
         </section>
 
+        {/* EMBALLAGE LUXE — reponse a "emballage absent" */}
+        <section aria-labelledby="emballage-heading" className="mt-8 rounded-2xl border border-zinc-200 bg-white p-5 md:p-6">
+          <h2 id="emballage-heading" className="text-[18px] font-extrabold tracking-tight">Emballage — niveau boutique, scelle + video 60s</h2>
+          <div className="mt-3 grid gap-4 md:grid-cols-[1.1fr_0.9fr]">
+            <div className="space-y-2 text-[13px] leading-relaxed text-zinc-700">
+              <p><strong>Triple protection:</strong> housse LV anti-poussiere + papier de soie acide-free + carton double cannelure renforce. Anti-humidite sachet silice.</p>
+              <p><strong>Scelle inviolable:</strong> ruban securite numerote + signature marqueur sur joint + pesee 1.8kg photo + bordereau DHL Express assure 5000€ + signature obligatoire.</p>
+              <p className="rounded-xl bg-zinc-50 p-3 text-[12px] border border-zinc-200">Video 60-90s sans coupe avant envoi: pliage → housse → carton → fermeture → pesee → etiquette DHL → upload prive 13 mois (preuve chargeback). Vous recevez le lien video + photos pesee/scellé.</p>
+            </div>
+            <div className="rounded-xl bg-zinc-50 p-4 border border-zinc-200">
+              <p className="text-[11px] font-bold tracking-widest text-zinc-500 uppercase">Contenu colis</p>
+              <ul className="mt-2 space-y-1 text-[12px] text-zinc-700">
+                <li>• Veste sur cintre bois large + housse</li>
+                <li>• Carte authenticite VCCM09/CA36929</li>
+                <li>• Facture 4500€ + certificat DHL 5000€</li>
+                <li>• Sachet anti-humidite + ruban luxe</li>
+                <li>• 14 photos pesee/scellé + lien video</li>
+              </ul>
+              <p className="mt-3 text-[11px] text-zinc-500">DHL Express 24-72h monde • 45€ FR/UE 50$ hors UE inclus • Remise main propre Paris possible</p>
+            </div>
+          </div>
+        </section>
+
         {/* STORY VIRGIL ABLOH */}
         <section aria-labelledby="virgil-heading" className="mt-8 rounded-2xl border border-zinc-200 bg-white p-5 md:p-6">
           <h2 id="virgil-heading" className="text-[18px] font-extrabold tracking-tight">L’histoire — Virgil Abloh FW21, le varsity qui a fermé une époque</h2>
