@@ -6,7 +6,9 @@ import { usePathname } from 'next/navigation'
 declare global {
   interface Window {
     gtag?: (...args: unknown[]) => void
-    dataLayer?: Array<unknown[] | Record<string, unknown>>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    dataLayer?: any
+    fbq?: (...args: unknown[]) => void
   }
 }
 
