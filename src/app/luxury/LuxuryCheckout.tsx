@@ -1,14 +1,33 @@
 'use client'
 import { useState } from 'react'
 
+declare global {
+  interface Window {
+    gtag?: (...args: unknown[]) => void
+    fbq?: (...args: unknown[]) => void
+    // dataLayer typed in Analytics.tsx — keep any to avoid TS2717
+    dataLayer?: any
+  }
+}
+
 export default function LuxuryCheckout() {
   const [email, setEmail] = useState('')
   const [msg, setMsg] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const fireGtag = (event: string, params: Record<string, unknown>) => {
+    try {
+      if (typeof window !== 'undefined' && window.gtag) window.gtag('event', event, params)
+      if (typeof window !== 'undefined' && window.dataLayer) (window.dataLayer as unknown[]).push({ event, ...params })
+    } catch {}
+  }
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setMsg('Email invalide.'); return }
+    // GA4 + Meta begin_checkout before Stripe redirect
+    fireGtag('begin_checkout', { currency: 'EUR', value: 4500, items: [{ item_id: 'HERMES-LV-NBA-M-1A8WU8', item_name: 'Louis Vuitton x NBA Varsity M FW21', price: 4500, quantity: 1 }] })
+    try { if (typeof window !== 'undefined' && window.fbq) window.fbq('track', 'InitiateCheckout', { content_ids: ['HERMES-LV-NBA-M-1A8WU8'], value: 4500, currency: 'EUR' }) } catch {}
     setLoading(true); setMsg('Création de la session sécurisée…')
     try {
       const r = await fetch('/api/luxury/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email }) })

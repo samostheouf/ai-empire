@@ -163,6 +163,21 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
       <link rel="alternate" hrefLang="ko-KR" href={`${CANONICAL}?hl=ko`} />
       <link rel="alternate" hrefLang="ar-SA" href={`${CANONICAL}?hl=ar`} />
       <link rel="alternate" hrefLang="x-default" href={CANONICAL} />
+      {/* LUXURY PIXELS: GA4 view_item + Meta ViewContent — UTM already captured by AnalyticsTracker */}
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-LUXURY" />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `(function(){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=window.gtag||gtag;gtag('js',new Date());var id='';try{id=process.env.NEXT_PUBLIC_GA_ID||''}catch(e){}if(!id)try{id=window.__GA_ID__||''}catch(e){}if(id)gtag('config',id,{send_page_view:false});var p={currency:'EUR',value:4500,items:[{item_id:'HERMES-LV-NBA-M-1A8WU8',item_name:'Louis Vuitton x NBA Varsity M FW21 Virgil Abloh',price:4500,quantity:1}]};try{gtag('event','view_item',p);dataLayer.push({event:'view_item',ecommerce:p});if(window.fbq)fbq('track','ViewContent',{content_ids:['HERMES-LV-NBA-M-1A8WU8'],content_type:'product',value:4500,currency:'EUR'})}catch(e){}window.__LUXURY_GTAG_PAYLOAD__=p;})();`,
+        }}
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');try{var PIXEL='';try{PIXEL=process.env.NEXT_PUBLIC_META_PIXEL_ID||''}catch(e){}if(PIXEL)fbq('init',PIXEL);fbq('track','PageView');fbq('track','ViewContent',{content_ids:['HERMES-LV-NBA-M-1A8WU8'],content_type:'product',value:4500,currency:'EUR'});}catch(e){}`,
+        }}
+      />
+      <noscript>
+        <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=0&ev=PageView&noscript=1" alt="" />
+      </noscript>
 
       <div className="mx-auto max-w-[1080px] px-4 pt-3 md:px-6">
         <nav aria-label="Langues" className="flex flex-wrap items-center gap-1.5 text-[11px]">

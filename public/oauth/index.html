@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>eBay OAuth Auto - Hermes Luxury</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: system-ui, -apple-system, sans-serif; max-width: 480px; margin: 0 auto; padding: 20px; background: #0a0a0a; color: #fff; }
+    .card { background: #1a1a1a; border-radius: 12px; padding: 24px; margin-bottom: 16px; border: 1px solid #333; }
+    .btn { display: block; width: 100%; padding: 16px; background: #0066ff; color: #fff; border: none; border-radius: 8px; font-size: 16px; font-weight: 600; text-decoration: none; text-align: center; cursor: pointer; }
+    .btn:disabled { background: #333; color: #888; cursor: not-allowed; }
+    .code-box { background: #0d0d0d; border: 1px solid #0066ff; border-radius: 8px; padding: 16px; font-family: monospace; font-size: 14px; word-break: break-all; margin: 16px 0; }
+    .code-box.success { border-color: #00cc66; }
+    .status { padding: 12px; border-radius: 8px; margin: 12px 0; font-size: 14px; }
+    .status.waiting { background: #1a1a2e; border: 1px solid #0066ff; }
+    .status.success { background: #0d1a0d; border: 1px solid #00cc66; }
+    .status.error { background: #1a0d0d; border: 1px solid #ff3333; }
+    .small { font-size: 12px; color: #888; margin-top: 8px; }
+    h1 { font-size: 20px; margin-bottom: 8px; }
+    h2 { font-size: 16px; margin: 16px 0 8px; color: #00cc66; }
+    .step { padding: 8px 0; border-bottom: 1px solid #222; font-size: 14px; }
+    .step:last-child { border-bottom: none; }
+    .step-num { display: inline-block; width: 24px; height: 24px; background: #0066ff; color: #fff; border-radius: 50%; text-align: center; line-height: 24px; margin-right: 12px; font-size: 12px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>🔐 eBay OAuth Auto — Hermes Luxury</h1>
+  <p class="small">LV x NBA M — FAST 4 999€ — Publication 10 slots auto</p>
+
+  <div class="card">
+    <h2>Étape 1 : Autoriser l'application</h2>
+    <div class="step"><span class="step-num">1</span>Appuie sur le bouton → Chrome ouvre eBay</div>
+    <div class="step"><span class="step-num">2</span>Connecte-toi si besoin → clique <strong>"Accepter"</strong></div>
+    <div class="step"><span class="step-num">3</span>Redirection auto → le code apparaît ici</div>
+    <a id="oauthBtn" class="btn" href="#" onclick="startOAuth()">🚀 Ouvrir eBay OAuth</a>
+  </div>
+
+  <div class="card" id="statusCard" style="display:none;">
+    <h2>Étape 2 : Code capturé</h2>
+    <div id="status" class="status waiting">En attente du code OAuth...</div>
+    <div id="codeBox" class="code-box"></div>
+    <button id="copyBtn" class="btn" onclick="copyCode()" style="display:none;">📋 Copier le code</button>
+    <button id="exchangeBtn" class="btn" onclick="exchangeCode()" style="display:none; background: #00cc66;">⚡ Échanger & Publier Auto</button>
+    <div class="small">Le code expire dans 10 min. Ne rafraîchis pas la page.</div>
+  </div>
+
+  <div class="card">
+    <h2>Fallback manuel (si OAuth échoue)</h2>
+    <p class="small">Seller Hub direct : <a href="https://www.ebay.com/sh/lst/active" target="_blank" style="color:#0066ff">ebay.com/sh/lst/active</a></p>
+    <p class="small">Guide complet : <code>~/hermes-luxury-sale/listing/eBay_PER_PHOTO_PUBLICATION.md</code></p>
+  </div>
+
+  <script>
+    const CLIENT_ID = 'AlfonsoL-HERMESLU-PRD-95fd3092f-17ab8556';
+    const REDIRECT_URI = 'AlfonsoL-HERMESLU-PRD-95fd3092f-17ab8556://oauth';
+    const SCOPE = 'https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.analytics.readonly';
+    const STATE = 'hermes_luxury_auto';
+    let capturedCode = null;
+
+    function startOAuth() {
+      const url = `https://auth.ebay.com/oauth2/authorize?client_id=${encodeURIComponent(CLIENT_ID)}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=${encodeURIComponent(SCOPE)}&state=${STATE}`;
+      document.getElementById('oauthBtn').disabled = true;
+      document.getElementById('oauthBtn').textContent = 'Redirection...';
+      document.getElementById('statusCard').style.display = 'block';
+
+      // Tentative intent:// Android pour retour auto
+      const intentUrl = `intent://oauth?code=PLACEHOLDER&state=${STATE}#Intent;scheme=${CLIENT_ID};package=com.android.chrome;end`;
+      window.location.href = url;
+
+      // Polling pour détecter le retour via custom scheme (ne marche que si app gère le scheme)
+      pollForCode();
+    }
+
+    function pollForCode() {
+      // Sur Android, le retour via custom scheme ne revient pas sur cette page.
+      // On utilise un fallback : l'utilisateur copie le code depuis l'URL de redirection.
+      // Mais on peut essayer de lire via sessionStorage si même onglet.
+      checkUrlForCode();
+    }
+
+    function checkUrlForCode() {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get('code');
+      const state = params.get('state');
+      const error = params.get('error');
+
+      if (error) {
+        showError(`Erreur eBay: ${error} - ${params.get('error_description') || ''}`);
+        return;
+      }
+
+      if (code && state === STATE) {
+        capturedCode = code;
+        showSuccess(code);
+        return;
+      }
+
+      // Vérifie aussi le hash (certains redirects)
+      const hashParams = new URLSearchParams(window.location.hash.slice(1));
+      const hashCode = hashParams.get('code');
+      if (hashCode && hashParams.get('state') === STATE) {
+        capturedCode = hashCode;
+        showSuccess(hashCode);
+        return;
+      }
+
+      // Re-vérifie toutes les 500ms pendant 2 min
+      setTimeout(checkUrlForCode, 500);
+    }
+
+    function showSuccess(code) {
+      const status = document.getElementById('status');
+      status.className = 'status success';
+      status.textContent = '✅ Code OAuth capturé avec succès !';
+      document.getElementById('codeBox').className = 'code-box success';
+      document.getElementById('codeBox').textContent = code;
+      document.getElementById('copyBtn').style.display = 'block';
+      document.getElementById('exchangeBtn').style.display = 'block';
+    }
+
+    function showError(msg) {
+      const status = document.getElementById('status');
+      status.className = 'status error';
+      status.textContent = '❌ ' + msg;
+      document.getElementById('oauthBtn').disabled = false;
+      document.getElementById('oauthBtn').textContent = '🔄 Réessayer';
+    }
+
+    function copyCode() {
+      if (capturedCode) {
+        navigator.clipboard.writeText(capturedCode).then(() => {
+          const btn = document.getElementById('copyBtn');
+          btn.textContent = '✅ Copié !';
+          setTimeout(() => btn.textContent = '📋 Copier le code', 2000);
+        });
+      }
+    }
+
+    function exchangeCode() {
+      if (!capturedCode) return;
+      const btn = document.getElementById('exchangeBtn');
+      btn.disabled = true;
+      btn.textContent = '⏳ Échange token + publish...';
+
+      // Lance l'échange via Termux (nécessite Termux:API ou copie manuelle)
+      const cmd = `CODE="${capturedCode}" && source ~/.hermes/env/ebay.env && curl -s -X POST https://api.ebay.com/identity/v1/oauth2/token -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Basic $(echo -n "$EBAY_APP_ID:$EBAY_CERT_ID" | base64 -w 0)" -d "grant_type=authorization_code&code=$CODE&redirect_uri=${encodeURIComponent(REDIRECT_URI)}" > ~/hermes-luxury-sale/evidence/tmp/ebay_token_live.json && bash ~/.hermes/scripts/ebay_oauth_retry.sh`;
+
+      // On ne peut pas exécuter depuis le navigateur -> on donne la commande à copier
+      document.getElementById('codeBox').textContent = cmd;
+      btn.textContent = '📋 Commande prête — Copie et lance dans Termux';
+      btn.onclick = copyCode;
+    }
+
+    // Au chargement, vérifie si code déjà dans URL (retour direct)
+    checkUrlForCode();
+  </script>
+</body>
+</html>

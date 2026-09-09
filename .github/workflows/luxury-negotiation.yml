@@ -1,0 +1,19 @@
+name: HERMES Luxury — Negotiation 6h
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+jobs:
+  luxury-negotiation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Call luxury-negotiation
+        run: |
+          set -e
+          CODE=$(curl -s -o /tmp/nego.json -w "%{http_code}" \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "https://ai-empire-steel.vercel.app/api/cron/luxury-negotiation")
+          cat /tmp/nego.json | head -c 3000; echo
+          echo "HTTP $CODE (404 en bootstrap = OK)"
+          test "$CODE" = "200" -o "$CODE" = "404"

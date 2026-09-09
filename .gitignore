@@ -12,3 +12,4 @@ social-keys.json
 .env*
 tsconfig.tsbuildinfo
 .vercel_env_test
+tmp-vercel*.env
