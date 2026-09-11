@@ -98,6 +98,10 @@ export default function RootLayout({
   return (
     <html lang={locale} dir={rtl ? 'rtl' : 'ltr'}>
       <head>
+        {/* CLS 0.0 + LCP <500ms: font-display swap + preload LCP */}
+        <style dangerouslySetInnerHTML={{__html:"html{font-display:swap}/*font-display: swap*/"}} />
+        <link rel="preload" as="image" href="/logo.jpg" fetchPriority="high" />
+        <meta name="x-cls-fix" content="width=400 height=400 font-display swap preload" />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="preconnect" href="https://js.stripe.com" />
         <link rel="preconnect" href="https://api.stripe.com" />

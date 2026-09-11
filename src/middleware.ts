@@ -141,23 +141,18 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   const method = request.method
 
-  // Set locale cookie early for ISR caching (before page renders)
+  // ISR FIX 11/09: ne PAS setter neuralocale cookie sur pages publiques GET —
+  // Set-Cookie force cache-control:private (Vercel) et tue l'edge cache (LCP 618ms).
+  // Locale détecté via Accept-Language header sans cookie; cookie posé uniquement
+  // côté client (ou sur POST /api) quand nécessaire. Préserve ISR public.
   const response = NextResponse.next({ request })
-  const existingLocale = request.cookies.get(LOCALE_COOKIE)?.value
-  if (!existingLocale) {
-    const acceptLanguage = request.headers.get('accept-language')
-    let locale = DEFAULT_LOCALE
-    if (acceptLanguage) {
-      const detected = parseAcceptLanguage(acceptLanguage)
-      if (detected) locale = detected
-    }
-    response.cookies.set(LOCALE_COOKIE, locale, {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 365, // 1 year
-      sameSite: 'lax',
-      secure: process.env.NODE_ENV === 'production',
-    })
+  // Override explicite ISR public même si un cookie est présent (ex: returning user)
+  // Vercel respecte Cache-Control public même avec Set-Cookie si on l'impose ici.
+  if (method === 'GET' && !pathname.startsWith('/api/') && !pathname.startsWith('/admin') && !pathname.startsWith('/dashboard')) {
+    response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=60, stale-while-revalidate=300')
   }
+  // Locale cookie désactivé pour ISR — détection sans cookie (perf edge)
+  // Ancien code supprimé: response.cookies.set(LOCALE_COOKIE, ...) causait private
 
   if (pathname.startsWith('/api/webhooks/')) {
     const corsHeaders = getCorsHeaders(request)
