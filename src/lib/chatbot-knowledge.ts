@@ -21,7 +21,7 @@ function pricingAnswer(locale: string): string {
   if (locale !== 'fr') {
     return `Our pricing plans:\n\n🟢 **Starter** — Free (100 credits/month)\n🔵 **Pro** — €${pro}/month (10,000 credits)\n🟣 **Business** — €${business}/month (unlimited credits)\n\n📦 Templates are sold separately, from €49 to €199, with an automatic -30% launch discount already applied.\n\n👉 /pricing for details`
   }
-  return `Nos tarifs :\n\n🟢 **Starter** — Gratuit (100 crédits/mois)\n🔵 **Pro** — ${pro}€/mois (10 000 crédits)\n🟣 **Business** — ${business}€/mois (crédits illimités)\n\n📦 Les templates sont vendus séparément, de 49€ à 199€, avec la remise de lancement de -30% déjà appliquée automatiquement.\n\n👉 /pricing pour les détails`
+  return `Nos tarifs :\n\n🟢 **Starter** — Gratuit (100 crédits/mois)\n🔵 **Pro** — ${pro}€/mois (10 000 crédits)\n🟣 **Business** — ${business}€/mois (crédits illimités)\n\n📦 Les templates sont vendus séparément, de 39€ à 199€, avec la remise de lancement de -30% déjà appliquée automatiquement.\n\n👉 /pricing pour les détails`
 }
 
 function upgradeAnswer(locale: string): string {
