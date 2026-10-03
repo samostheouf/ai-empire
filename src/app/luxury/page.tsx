@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { cookies } from 'next/headers'
 import LuxuryGallery from './LuxuryGallery'
 import LuxuryCheckout from './LuxuryCheckout'
+import ViewPing from './ViewPing'
 import { luxuryTranslations } from '@/i18n/translations/luxury'
 import { locales, defaultLocale, type Locale } from '@/i18n/config'
 
@@ -147,6 +148,7 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
 
   return (
     <div dir={dir} className="bg-[#fafaf9] text-zinc-900">
+      <ViewPing locale={locale} />
       <link rel="preconnect" href="https://jyjp02vaprlkyxab.public.blob.vercel-storage.com" crossOrigin="" />
       <link rel="dns-prefetch" href="https://jyjp02vaprlkyxab.public.blob.vercel-storage.com" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
