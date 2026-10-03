@@ -3217,10 +3217,10 @@ const de: Record<string, string> = {
   statusCtaPricing: 'Preise ansehen',
   // Luxury — HERMES 4500€ — 10 langues émotionnelles
   luxuryMetaTitle: 'Louis Vuitton x NBA Varsity M FW21 Virgil Abloh — 4500€ | Sicherer Direktkauf',
-  luxuryMetaDesc: 'LV x NBA Varsity M FW21 Virgil Abloh — 3x getragen Top A+, AUTH VCCM09/CA36929, 14 HD-Fotos + Makros • Versichertes DHL Express • Stock 1 • Direkt Stripe 4500€ ohne Gebühren.',
+  luxuryMetaDesc: 'LV x NBA Varsity M FW21 Virgil Abloh — 3x getragen Top A+, AUTH VCCM09/CA36929, 8 HD-Fotos + Makros • Versichertes DHL Express • Stock 1 • Direkt Stripe 4500€ ohne Gebühren.',
   luxuryTitle: 'Louis Vuitton x NBA — Varsity M FW21 Virgil Abloh — 4500€',
-  luxurySubtitle: '3x getragen Top A+ — 14 HD-Fotos + Makros VCCM09/CA36929 — Versichertes DHL Express + Unterschrift — Stock 1',
-  luxuryDescription: 'FW21 Edition von Virgil Abloh — Louis Vuitton x NBA Kollaboration. Leder + Wolle Varsity, ikonische NBA/LV Patches, bedrucktes Satinfutter. Größe M, nur 3x getragen — Top-Zustand A+. Authentifizierungscodes VCCM09 / CA36929 verifiziert. 14 HD-Fotos + Naht/Etikett-Makros. Versichertes DHL Express mit Unterschrift. Direktverkauf 4500€ via Stripe — null eBay/Grailed/Vestiaire Gebühren. Autonomer Webhook: deaktiviert Cross-Listings <5 Min nach Zahlung.',
+  luxurySubtitle: '3x getragen Top A+ — 8 HD-Fotos + Makros VCCM09/CA36929 — Versichertes DHL Express + Unterschrift — Stock 1',
+  luxuryDescription: 'FW21 Edition von Virgil Abloh — Louis Vuitton x NBA Kollaboration. Leder + Wolle Varsity, ikonische NBA/LV Patches, bedrucktes Satinfutter. Größe M, nur 3x getragen — Top-Zustand A+. Authentifizierungscodes VCCM09 / CA36929 verifiziert. 8 HD-Fotos + Naht/Etikett-Makros. Versichertes DHL Express mit Unterschrift. Direktverkauf 4500€ via Stripe — null eBay/Grailed/Vestiaire Gebühren. Autonomer Webhook: deaktiviert Cross-Listings <5 Min nach Zahlung.',
   luxuryWhyTitle: 'Warum diese LV x NBA M selten ist',
   luxuryPoint1: '✦ Virgil Abloh FW21 — Letzter Kult-Drop vor seinem Tod, 90s NBA Tribute, Streetwear-Museumsstück.',
   luxuryPoint2: '✦ Top A+ — Nur 3x getragen, makellos, weiches Leder intakt, Wolle ohne Pilling, Bündchen straff.',
@@ -3251,7 +3251,7 @@ const de: Record<string, string> = {
   luxuryBadgeDhl: 'Versichertes DHL Express',
   luxuryBadgePrice: '4500€ Floor • Stock 1',
   luxuryOgTitle: 'Louis Vuitton x NBA — Varsity M FW21 Virgil Abloh — 4500€',
-  luxuryOgDesc: '3x getragen Top • AUTH VCCM09/CA36929 • 14 HD-Fotos • Versichertes DHL • Stock 1 • Direkt Stripe',
+  luxuryOgDesc: '3x getragen Top • AUTH VCCM09/CA36929 • 8 HD-Fotos • Versichertes DHL • Stock 1 • Direkt Stripe',
 }
 
 export default de

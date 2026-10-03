@@ -72,6 +72,48 @@ function buildAlternates(path: string): { languages: Record<string, string> } | 
   return { languages }
 }
 
+/**
+ * Pages traduites reellement rendues sous /<locale>/<slug>.
+ * Chaque entree correspond a un fichier src/app/[locale]/<slug>/page.tsx
+ * qui existe : generateStaticParams produit 9 URL par entree (une par langue
+ * hors FR). La version FR est la racine du site, pas une URL /fr/...
+ */
+const LOCALIZED_ROUTES: string[] = [
+  'pricing',
+  'templates',
+  'agents',
+  'blog',
+  'api-docs',
+  'guide',
+  'contact',
+  'faq',
+  'about',
+]
+
+const NON_DEFAULT_LOCALES = ['en', 'es', 'de', 'it', 'pt', 'ja', 'ko', 'zh', 'ar'] as const
+
+function localizedEntries() {
+  const now = new Date()
+  const out: SitemapEntry[] = []
+  for (const slug of LOCALIZED_ROUTES) {
+    for (const locale of NON_DEFAULT_LOCALES) {
+      const frUrl = slug === '' ? baseUrl : `${baseUrl}/${slug}`
+      const url = `${baseUrl}/${locale}/${slug}`
+      const languages: Record<string, string> = { 'fr-FR': frUrl }
+      languages[LOCALE_CODE_MAP[locale]] = url
+      languages['x-default'] = frUrl
+      out.push({
+        url,
+        lastModified: now,
+        changeFrequency: 'weekly',
+        priority: slug === 'pricing' || slug === 'templates' ? 0.8 : 0.6,
+        alternates: { languages },
+      })
+    }
+  }
+  return out
+}
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date()
 
@@ -143,5 +185,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/pt/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3, alternates: buildAlternates('/pt/cookie-policy') },
   ]
 
-  return mainPages
+  return [...mainPages, ...localizedEntries()]
 }

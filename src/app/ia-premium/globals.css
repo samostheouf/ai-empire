@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg-dark: #0c0818;
+  --color-bg-card: rgba(255, 255, 255, 0.03);
+  --color-border: rgba(255, 255, 255, 0.06);
+  --color-amber: #f5a623;
+  --color-amber-light: #f7c35a;
+  --color-amber-dark: #b8780a;
+  --color-silver: #c8c4c0;
+  --color-ink: #1a1628;
+  --gradient-amber: linear-gradient(135deg, #f5a623, #f7c35a, #b8780a);
+  --font-serif: 'Playfair Display', serif;
+  --font-serif-alt: 'Cormorant Garamond', serif;
+}
+
+html {
+  background-color: #0c0818;
+  color-scheme: dark;
+}
+
+body {
+  background-color: #0c0818;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Louis Vuitton inspired typography */
+.font-serif-display {
+  font-family: var(--font-serif);
+  font-weight: 400;
+}
+
+.font-serif-body {
+  font-family: var(--font-serif-alt);
+  font-weight: 300;
+}
+
+/* Gold gradient text */
+.text-amber-gradient {
+  background: var(--gradient-amber);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glass card premium */
+.glass-premium {
+  background: var(--color-bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--color-border);
+}
+
+.glass-premium:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(245, 166, 35, 0.2);
+}
+
+/* Gold border accent */
+.border-amber-thin {
+  border-color: rgba(245, 166, 35, 0.3);
+}
+
+/* Premium input */
+.input-premium {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #f0ece6;
+  transition: all 0.3s ease;
+}
+
+.input-premium:focus {
+  border-color: rgba(245, 166, 35, 0.5);
+  background: rgba(255, 255, 255, 0.06);
+  outline: none;
+  box-shadow: 0 0 0 1px rgba(245, 166, 35, 0.2);
+}
+
+.input-premium::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0c0818;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(245, 166, 35, 0.3);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(245, 166, 35, 0.5);
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(245, 166, 35, 0.3);
+  color: #f0ece6;
+}
+
+/* Focus */
+*:focus-visible {
+  outline: 1px solid rgba(245, 166, 35, 0.5);
+  outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-premium-in {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.05) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+/* Divider line */
+.divider-premium {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(245, 166, 35, 0.3), transparent);
+}
+
+/* Hero background */
+.hero-bg {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(245, 166, 35, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 50%, rgba(245, 166, 35, 0.03) 0%, transparent 50%),
+    linear-gradient(180deg, #0c0818 0%, #0f0a1e 50%, #0c0818 100%);
+}
+
+/* Pricing card featured */
+.pricing-featured {
+  background: linear-gradient(180deg, rgba(245, 166, 35, 0.08) 0%, rgba(245, 166, 35, 0.02) 100%);
+  border: 1px solid rgba(245, 166, 35, 0.3);
+  box-shadow: 0 0 40px rgba(245, 166, 35, 0.1), inset 0 1px 0 rgba(245, 166, 35, 0.1);
+}
+
+/* Button premium */
+.btn-premium {
+  background: var(--gradient-amber);
+  color: #0c0818;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-premium:hover {
+  box-shadow: 0 0 30px rgba(245, 166, 35, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-premium:active {
+  transform: scale(0.98);
+}
+
+/* Mobile menu */
+.mobile-menu-open {
+  overflow: hidden;
+}

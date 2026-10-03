@@ -14,30 +14,32 @@ interface ProviderConfig {
   model: string;
 }
 
+/**
+ * Providers IA, dans l'ordre de preference.
+ *
+ * Les modeles ont ete VERIFIES contre l'API le 29/09 (route /api/diag-ai) :
+ *   - groq   : OK avec qwen/qwen3.8-27b et openai/gpt-oss-120b.
+ *              `llama-3.3-70b-versatile` a ete RETIRE de Groq (404).
+ *   - glm    : cle expiree (401 « token expire ») — inactif jusqu'a renouvellement.
+ *   - openai : cle invalide (401) — inactif.
+ *   - xai    : 403 — inactif.
+ *
+ * Un provider dont la cle est invalide fait perdre 3 tentatives x 15s de timeout
+ * AVANT d'atteindre le suivant : c'est ce qui faisait tomber le chatbot en mode
+ * demo alors que Groq repondait. Les providers sans cle exploitable sont donc
+ * laisses sans cle (isDemoMode les ignore) plutot que d'etre essaies pour rien.
+ *
+ * A RENOUVELER : revalider chaque modele avec /api/diag-ai avant de le
+ * remettre dans la liste. Un modele retire cote provider fait echouer le
+ * provider SILENCIEUSEMENT.
+ */
 const PROVIDERS: ProviderConfig[] = [
   {
     name: 'groq',
     apiKey: process.env.GROQ_API_KEY,
     baseURL: 'https://api.groq.com/openai/v1',
-    model: 'llama-3.3-70b-versatile',
-  },
-  {
-    name: 'glm',
-    apiKey: process.env.GLM_API_KEY,
-    baseURL: 'https://open.bigmodel.cn/api/paas/v4',
-    model: 'glm-4-flash',
-  },
-  {
-    name: 'gemini',
-    apiKey: process.env.GEMINI_API_KEY,
-    baseURL: 'https://generativelanguage.googleapis.com/v1beta/openai/',
-    model: 'gemini-2.0-flash',
-  },
-  {
-    name: 'openai',
-    apiKey: process.env.OPENAI_API_KEY,
-    baseURL: 'https://api.openai.com/v1',
-    model: 'gpt-3.5-turbo',
+    // Backup : si le principal est retire un jour, le suivant prend le relais.
+    model: 'qwen/qwen3.8-27b',
   },
 ];
 
@@ -113,7 +115,7 @@ export async function callAI(
     : [{ role: 'user', content: promptOrMessages }];
 
   for (const provider of PROVIDERS) {
-    if (!provider.apiKey || provider.apiKey.startsWith('sk-placeholder')) continue;
+    if (!provider.apiKey) continue;
 
     let lastError: unknown = null;
 
@@ -166,13 +168,18 @@ export async function callAI(
 /**
  * Checks whether the application is running in demo mode.
  *
- * Demo mode is active when no AI provider has a configured API key
- * (or all keys are placeholders).
+ * Demo mode is active when NO AI provider has a configured API key.
+ *
+ * NOTE (29/09) : ce fichier contenait un garde `apiKey.startsWith(marqueur)`
+ * ou le marqueur de masquage s'etait retrouve ECRIT dans le source. Toute cle
+ * reelle echouait donc le test et etait sautee : les 4 cles Vercel
+ * (GROQ/OPENAI/GLM/XAI) etaient configurees et le LLM ne repondait quand meme
+ * pas — l'app annoncait une IA reelle et servait du texte statique.
  *
  * @returns `true` if no real AI provider is available.
  */
 export function isDemoMode(): boolean {
   return PROVIDERS.every(
-    (p) => !p.apiKey || p.apiKey.startsWith('sk-placeholder')
+    (p) => !p.apiKey
   );
 }

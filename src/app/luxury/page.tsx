@@ -290,7 +290,7 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
                 <li>• Carte note VCCM09/CA36929 (photos HD)</li>
                 <li>• Facture 4500€ + bordereau DHL assure 4500€</li>
                 <li>• Sachet anti-humidite + ruban luxe</li>
-                <li>• 14 photos pesee/scellé + lien video</li>
+                <li>• 8 photos pesee/scellé + lien video</li>
               </ul>
               <p className="mt-3 text-[11px] text-zinc-500">DHL Express 24-72h monde • 45€ FR/UE 50$ hors UE inclus • Remise main propre Paris possible</p>
             </div>

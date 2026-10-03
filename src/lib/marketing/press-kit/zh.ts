@@ -102,9 +102,9 @@ export const pressKitBundle: PressKitBundle = {
     ],
   },
   contactInfo: {
-    press: 'press@ai-empire.dev',
-    partnerships: 'partners@ai-empire.dev',
-    general: 'hello@ai-empire.dev',
+    press: 'samilaboulette21@gmail.com',
+    partnerships: 'samilaboulette21@gmail.com',
+    general: 'samilaboulette21@gmail.com',
     website: 'https://ai-empire-steel.vercel.app',
   },
   boilerplate:

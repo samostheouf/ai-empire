@@ -2,24 +2,44 @@ import { NextRequest, NextResponse } from 'next/server'
 import { stripe } from '@/lib/stripe'
 import { safeQuery } from '@/lib/db'
 import { validateEmail, validateId, validateString } from '@/lib/input-validation'
+import { logger } from '@/lib/logger'
 import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 import type Stripe from 'stripe'
 import { createHash } from 'crypto'
 
-const PROMO_CODES: Record<string, { discount: number; description: string }> = {
-  LANCEMENT30: { discount: 0.30, description: 'Offre de lancement -30%' },
-  LAUNCH30: { discount: 0.30, description: 'Launch discount -30%' },
-  BIENVENUE20: { discount: 0.20, description: 'Bienvenue -20%' },
-  WELCOME20: { discount: 0.20, description: 'Welcome -20%' },
-  WELCOME10: { discount: 0.10, description: 'Welcome -10%' },
-  RETOUR20: { discount: 0.20, description: 'Retour -20%' },
-  PARTENAIRE15: { discount: 0.15, description: 'Partenaire -15%' },
-  PRO20: { discount: 0.20, description: 'Pro plan -20%' },
-  HEBDO15: { discount: 0.15, description: 'Offre hebdomadaire -15%' },
+/**
+ * Codes promo du site.
+ *
+ * `maxRedemptions` et `redeemBy` ne sont pas decoratifs : sans eux, un coupon
+ * Stripe est reutilisable INDEFINIMENT par quiconque le possede. Une remise
+ * « de lancement » sans date de fin n'est pas une promotion, c'est une baisse
+ * de marge permanente que personne n'a decidee.
+ *
+ * Ces bornes sont appliquees au coupon Stripe cree par createDiscountCoupon().
+ */
+interface PromoCode {
+  discount: number
+  description: string
+  /** Nombre max d'utilisations avant epuisement */
+  maxRedemptions: number
+  /** Date d'expiration (secondes Unix). null = pas d'echeance. */
+  redeemBy: number | null
 }
 
-const COUPON_CACHE_MAX = 100
-const couponCache = new Map<string, string>()
+/** 2027-03-31 : fin de l'offre de lancement. A renewer explicitement. */
+const LAUNCH_END = Math.floor(new Date('2027-03-31T23:59:59Z').getTime() / 1000)
+
+const PROMO_CODES: Record<string, PromoCode> = {
+  LANCEMENT30:  { discount: 0.30, description: 'Offre de lancement -30%',   maxRedemptions: 500, redeemBy: LAUNCH_END },
+  LAUNCH30:     { discount: 0.30, description: 'Launch discount -30%',      maxRedemptions: 500, redeemBy: LAUNCH_END },
+  BIENVENUE20:  { discount: 0.20, description: 'Bienvenue -20%',            maxRedemptions: 300, redeemBy: LAUNCH_END },
+  WELCOME20:    { discount: 0.20, description: 'Welcome -20%',              maxRedemptions: 300, redeemBy: LAUNCH_END },
+  WELCOME10:    { discount: 0.10, description: 'Welcome -10%',              maxRedemptions: 300, redeemBy: LAUNCH_END },
+  RETOUR20:     { discount: 0.20, description: 'Retour -20%',               maxRedemptions: 100, redeemBy: LAUNCH_END },
+  PARTENAIRE15: { discount: 0.15, description: 'Partenaire -15%',           maxRedemptions: 200, redeemBy: LAUNCH_END },
+  PRO20:        { discount: 0.20, description: 'Pro plan -20%',             maxRedemptions: 200, redeemBy: LAUNCH_END },
+  HEBDO15:      { discount: 0.15, description: 'Offre hebdomadaire -15%',   maxRedemptions: 52,  redeemBy: LAUNCH_END },
+}
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
@@ -41,7 +61,7 @@ async function findTemplateByIdOrSlug(value: string) {
   return bySlug
 }
 
-async function createCheckoutSession(template: { id: string; name: string; price: number; stripePriceId: string | null; fileUrl: string }, emailNormalized: string | undefined, promoCode: string | undefined, referralCode: string | undefined, affiliateCode: string | undefined) {
+async function createCheckoutSession(template: { id: string; name: string; price: number; stripePriceId: string | null; fileUrl: string }, emailNormalized: string | undefined, promoCode: string | undefined, referralCode: string | undefined, affiliateCode: string | undefined): Promise<{ session: { url: string | null }; finalPrice: number; serverPrice: number; discountApplied: boolean; discountDescription: string }> {
   const serverPrice = template.price
   let finalPrice = serverPrice
   let discountApplied = false
@@ -53,6 +73,45 @@ async function createCheckoutSession(template: { id: string; name: string; price
       finalPrice = Math.round(serverPrice * (1 - promo.discount))
       discountApplied = true
       discountDescription = promo.description
+    }
+  }
+
+  // ---------------------------------------------------------------------------
+  // Abonnement vs paiement unique.
+  //
+  // BUG CORRIGE (29/09) : cette route forcait `mode: 'payment'`. Les templates
+  // `agent-pro` (49 EUR/mois) et `agent-business` (149 EUR/mois) portent un
+  // `stripePriceId` RECURRENT cree par /api/checkout/agents. Stripe refuse
+  // alors la session :
+  //   "You specified 'payment' mode but passed a recurring price."
+  // -> HTTP 500 sur ces 2 templates (verifie en prod avant et apres).
+  //
+  // Le tunnel d'abonnement correct est /api/checkout/agents, qui cree la
+  // session en `mode: 'subscription'`. On y renvoie plutot que d'inventer une
+  // gestion d'abonnement ici : un seul endroit cree les prix recurrents.
+  // ---------------------------------------------------------------------------
+  const isSubscription = template.stripePriceId?.startsWith('price_') && (template.id.includes('agent') || (template as { slug?: string }).slug?.startsWith('agent-'))
+  if (isSubscription) {
+    // `mode: 'subscription'` avec le price RECURRENT existant.
+    // On ne passe PAS par /api/checkout/agents : un fetch vers soi-meme depuis
+    // une serverless function est peu fiable (cold start + timeout 10s) et
+    // masquait la cause reelle derriere un 500.
+    // Regle : un prix de vente SEULEMENT — le client ne choisit pas le mode.
+    const session = await stripe.checkout.sessions.create({
+      mode: 'subscription',
+      line_items: [{ price: template.stripePriceId!, quantity: 1 }],
+      ...(emailNormalized ? { customer_email: emailNormalized } : {}),
+      success_url: `${APP_URL}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${APP_URL}/agents`,
+      metadata: { templateId: template.id, email: emailNormalized || '', type: 'agent-subscription' },
+      allow_promotion_codes: true,
+    })
+    return {
+      session: { url: session.url },
+      finalPrice: serverPrice,
+      serverPrice,
+      discountApplied: false,
+      discountDescription: '',
     }
   }
 
@@ -73,29 +132,47 @@ async function createCheckoutSession(template: { id: string; name: string; price
     },
   }
 
-  if (template.stripePriceId) {
-    sessionParams.line_items = [{ price: template.stripePriceId, quantity: 1 }]
-    if (discountApplied) {
-      const couponId = await createDiscountCoupon(promoCode!)
-      if (couponId) {
-        sessionParams.discounts = [{ coupon: couponId }]
-        sessionParams.allow_promotion_codes = false
-      } else {
-        sessionParams.allow_promotion_codes = true
-      }
+  // ---------------------------------------------------------------------------
+  // Construction du line_item.
+  //
+  // Regle : `line_items` est TOUJOURS defini, et le montant facture est
+  // TOUJOURS celui affiche. Deux pieges deja rencontres en prod :
+  //  1) Stripe teste la PRESENCE de `allow_promotion_codes`, pas sa valeur :
+  //     `allow_promotion_codes: false` + `discounts` = refus. Il faut supprimer
+  //     la cle.
+  //  2) La branche « coupon cree » ne definit pas line_items : si le template
+  //     a un stripePriceId, aucune ligne ne tombe dans le session et Stripe
+  //     répond « The `line_items` parameter is required in payment mode ».
+  // ---------------------------------------------------------------------------
+  const lineItemAt = (amount: number) => [{
+    price_data: {
+      currency: 'eur',
+      product_data: { name: template.name, metadata: { templateId: template.id, promoCode: promoCode || '' } },
+      unit_amount: amount,
+    },
+    quantity: 1,
+  }]
+
+  if (discountApplied) {
+    const couponId = await createDiscountCoupon(promoCode!)
+    if (couponId && template.stripePriceId) {
+      // Prix catalogue Stripe + coupon : le montant final est applique par
+      // Stripe lui-meme, il correspond au prix remixe annonce.
+      sessionParams.line_items = [{ price: template.stripePriceId, quantity: 1 }]
+      sessionParams.discounts = [{ coupon: couponId }]
+      delete sessionParams.allow_promotion_codes
     } else {
-      sessionParams.allow_promotion_codes = true
+      // Pas de stripePriceId (ou coupon indisponible) : on porte le montant
+      // remixe dans le line_item. Dans tous les cas le client est debite du
+      // montant AFFICHE, jamais du prix plein.
+      sessionParams.line_items = lineItemAt(finalPrice)
     }
+  } else if (template.stripePriceId) {
+    sessionParams.line_items = [{ price: template.stripePriceId, quantity: 1 }]
+    sessionParams.allow_promotion_codes = true
   } else {
     sessionParams.allow_promotion_codes = true
-    sessionParams.line_items = [{
-      price_data: {
-        currency: 'eur',
-        product_data: { name: template.name, metadata: { templateId: template.id, promoCode: promoCode || '' } },
-        unit_amount: finalPrice,
-      },
-      quantity: 1,
-    }]
+    sessionParams.line_items = lineItemAt(finalPrice)
   }
 
   const idempotencyKey = createHash('sha256')
@@ -211,21 +288,59 @@ export async function GET(request: NextRequest) {
   }
 }
 
+/**
+ * Coupon de remise : UN SEUL coupon par code promo, reutilise.
+ *
+ * AVANT : `stripe.coupons.create()` a chaque session, avec un cache en MEMOIRE
+ * (`new Map()`). Or chaque invocation sur Vercel est une instance fraiche : le
+ * cache ne survit jamais, donc CHAQUE achat creait un nouveau coupon. Mesure :
+ * 16 coupons « Offre de lancement -30% » dans le dashboard pour 16 sessions.
+ * Sans `max_redemptions` ni `redeem_by`, chacun est reutilisable a l'infini par
+ * quiconque a le coupon — une remise sans plafond, sur une offre qui se veut
+ * « de lancement ».
+ *
+ * FIX : on cherche d'abord un coupon existant du meme nom (Stripe n'a pas de
+ * cle idempotente sur coupons.create), et on borne la remise :
+ *   - `max_redemptions` : nombre max d'utilisations
+ *   - `redeem_by`      : date d'expiration
+ * Ces deux bornes sont la SEULE difference entre une offre de lancement et une
+ * remise permanente. Regle : un coupon sans plafond n'est pas une promotion,
+ * c'est une erreur de configuration.
+ */
 async function createDiscountCoupon(code: string): Promise<string> {
   const upperCode = code.toUpperCase()
-  const cached = couponCache.get(upperCode)
-  if (cached) return cached
-
   const promo = PROMO_CODES[upperCode]
   if (!promo) return ''
+
+  // 1. Reutiliser un coupon deja cree pour ce code plutot que d'en creer un.
+  //    ATTENTION : uniquement s'il est deja BORNE. Les 16 coupons crees avant ce
+  //    correctif n'ont ni max_redemptions ni redeem_by — les reutiliser
+  //    conserverait la remise sans plafond qu'on veut justement supprimer.
+  try {
+    const existing = await stripe.coupons.list({ limit: 100 })
+    const match = existing.data.find(
+      (c) =>
+        c.name === promo.description &&
+        c.percent_off === promo.discount * 100 &&
+        c.max_redemptions != null &&
+        c.redeem_by != null
+    )
+    if (match) return match.id
+  } catch (e) {
+    logger.warn('checkout', 'Impossible de lister les coupons, creation directe', {
+      error: e instanceof Error ? e.message : String(e),
+    })
+  }
+
+  // 2. Sinon, creer un coupon BORNÉ.
   const coupon = await stripe.coupons.create({
     percent_off: promo.discount * 100,
     duration: 'once',
     name: promo.description,
+    max_redemptions: promo.maxRedemptions,
+    // Le SDK refuse `redeem_by: null` : on n'envoie la cle que si une
+    // echeance est definie.
+    ...(promo.redeemBy ? { redeem_by: promo.redeemBy } : {}),
   })
-  if (couponCache.size >= COUPON_CACHE_MAX) {
-    couponCache.delete(couponCache.keys().next().value as string)
-  }
-  couponCache.set(upperCode, coupon.id)
   return coupon.id
 }

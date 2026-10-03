@@ -14,21 +14,11 @@ export const metadata: Metadata = {
     images: [{ url: 'https://ai-empire-steel.vercel.app/api/og?title=Contact+NeuraAPI&subtitle=Support+technique+et+partenariats', width: 1200, height: 630, alt: 'Contact NeuraAPI' }],
   },
   twitter: { card: 'summary_large_image', title: 'Contact NeuraAPI', description: "Support technique et questions commerciales." },
+  // Pas de variante linguistique : les routes /xx/* de ces pages sont en 404.
+  // Un hreflang vers une 404 est lu comme du spam par Google et penalise le
+  // domaine entier. Seul le canonical est declare.
   alternates: {
     canonical: 'https://ai-empire-steel.vercel.app/contact',
-    languages: {
-      'fr-FR': 'https://ai-empire-steel.vercel.app/contact',
-      'en-US': 'https://ai-empire-steel.vercel.app/en/contact',
-      'es-ES': 'https://ai-empire-steel.vercel.app/es/contact',
-      'de-DE': 'https://ai-empire-steel.vercel.app/de/contact',
-      'it-IT': 'https://ai-empire-steel.vercel.app/it/contact',
-      'pt-BR': 'https://ai-empire-steel.vercel.app/pt/contact',
-      'ja-JP': 'https://ai-empire-steel.vercel.app/ja/contact',
-      'ko-KR': 'https://ai-empire-steel.vercel.app/ko/contact',
-      'zh-CN': 'https://ai-empire-steel.vercel.app/zh/contact',
-      'ar-SA': 'https://ai-empire-steel.vercel.app/ar/contact',
-      'x-default': 'https://ai-empire-steel.vercel.app/contact',
-    },
   },
 }
 

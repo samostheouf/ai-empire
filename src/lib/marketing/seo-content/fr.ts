@@ -349,7 +349,7 @@ export function generateLocalBusinessSchema(): object {
     description: 'Templates Next.js 14 + APIs IA pour créer des SaaS rapidement.',
     url: 'https://ai-empire-steel.vercel.app',
     telephone: '+33-1-00-00-00-00',
-    email: 'contact@ai-empire.com',
+    email: 'samilaboulette21@gmail.com',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'À compléter',

@@ -3271,16 +3271,16 @@ const it: Record<string, string> = {
   statusCtaPricing: 'Vedi i prezzi',
   // Luxury — HERMES 4500€ — 10 langues émotionnelles
   luxuryMetaTitle: 'Louis Vuitton x NBA Varsity M FW21 Virgil Abloh — 4500€ | Acquisto Diretto Sicuro',
-  luxuryMetaDesc: 'LV x NBA Varsity M FW21 Virgil Abloh — Indossata 3x Perfetta A+, AUTH VCCM09/CA36929, 14 foto HD + macro • DHL Express assicurato • Stock 1 • Stripe diretto 4500€ senza commissioni.',
+  luxuryMetaDesc: 'LV x NBA Varsity M FW21 Virgil Abloh — Indossata 3x Perfetta A+, AUTH VCCM09/CA36929, 8 foto HD + macro • DHL Express assicurato • Stock 1 • Stripe diretto 4500€ senza commissioni.',
   luxuryTitle: 'Louis Vuitton x NBA — Varsity M FW21 Virgil Abloh — 4500€',
-  luxurySubtitle: 'Indossata 3x Perfetta A+ — 14 foto HD + macro VCCM09/CA36929 — DHL Express assicurato + firma — Stock 1',
-  luxuryDescription: 'Edizione FW21 disegnata da Virgil Abloh — collab Louis Vuitton x NBA. Pelle + lana varsity, patch NBA/LV iconiche, fodera satinata stampata. Taglia M, indossata solo 3 volte — stato perfetto A+. Codici autenticazione VCCM09 / CA36929 verificati. 14 foto HD + macro cuciture/etichette. Spedizione DHL Express assicurata con firma. Vendita diretta 4500€ via Stripe — zero commissioni eBay/Grailed/Vestiaire. Webhook autonomo: disattiva cross-listing <5 min dopo pagamento.',
+  luxurySubtitle: 'Indossata 3x Perfetta A+ — 8 foto HD + macro VCCM09/CA36929 — DHL Express assicurato + firma — Stock 1',
+  luxuryDescription: 'Edizione FW21 disegnata da Virgil Abloh — collab Louis Vuitton x NBA. Pelle + lana varsity, patch NBA/LV iconiche, fodera satinata stampata. Taglia M, indossata solo 3 volte — stato perfetto A+. Codici autenticazione VCCM09 / CA36929 verificati. 8 foto HD + macro cuciture/etichette. Spedizione DHL Express assicurata con firma. Vendita diretta 4500€ via Stripe — zero commissioni eBay/Grailed/Vestiaire. Webhook autonomo: disattiva cross-listing <5 min dopo pagamento.',
   luxuryWhyTitle: 'Perché questa LV x NBA M è rara',
   luxuryPoint1: '✦ Virgil Abloh FW21 — Ultimo drop cult prima della sua scomparsa, tributo NBA 90s, pezzo da museo streetwear.',
   luxuryPoint2: '✦ Perfetta A+ — Indossata solo 3x, nessun difetto, pelle morbida intatta, lana senza pilling, bordi tesi.',
   luxuryPoint3: '✦ Autenticata VCCM09 / CA36929 — Codici atelier verificati doppio OCR, Japan K.K. + Made in Italy.',
   luxuryPoint4: '✦ Materiale nobile — 50% pelle, 49% lana, 1% seta: la varsity più lussuosa mai prodotta da LV.',
-  luxuryPoint5: '✦ 14 foto HD forensi — Fronte, retro, profilo, LV ricamato, patch NBA VVN, bottoni incisi, fodera satinata, etichette macro.',
+  luxuryPoint5: '✦ 8 foto HD forensi — Fronte, retro, profilo, LV ricamato, patch NBA VVN, bottoni incisi, fodera satinata, etichette macro.',
   luxuryPoint6: '✦ Taglia M vestibilità reale — Misure in piano fornite, taglio varsity oversize cult, ambita in Asia/US.',
   luxuryPoint7: '✦ DHL Express assicurato + firma — Spedizione mondiale FR/DE/IT/GB/US/JP, assicurazione ad valorem, foto prova prima di spedire.',
   luxuryPoint8: '✦ Prezzo giusto 4500€ floor — Sotto StockX $7.564 / Vestiaire 6.020€: -30% flash sale 3 giorni.',
@@ -3305,7 +3305,7 @@ const it: Record<string, string> = {
   luxuryBadgeDhl: 'DHL Express assicurato',
   luxuryBadgePrice: '4500€ floor • Stock 1',
   luxuryOgTitle: 'Louis Vuitton x NBA — Varsity M FW21 Virgil Abloh — 4500€',
-  luxuryOgDesc: 'Indossata 3x Perfetta • AUTH VCCM09/CA36929 • 14 foto HD • DHL assicurato • Stock 1 • Stripe diretto',
+  luxuryOgDesc: 'Indossata 3x Perfetta • AUTH VCCM09/CA36929 • 8 foto HD • DHL assicurato • Stock 1 • Stripe diretto',
 }
 
 export default it

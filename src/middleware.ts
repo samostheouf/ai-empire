@@ -141,6 +141,29 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   const method = request.method
 
+  // ---------------------------------------------------------------------
+  // i18n PAR URL : /en/pricing, /de/agents, /ja/blog...
+  //
+  // La locale de l'URL est injectee dans un header de requete (x-neuralocale)
+  // et rien de plus : PAS de reecriture. Les routes [locale]/* existent
+  // reellement (src/app/[locale]/<slug>/page.tsx) et rendent la page traduite
+  // indexable. Une reecriture vers /<slug> court-circuiterait ces routes et
+  // renverrait le HTML FR — c'est-a-dire 9 fois la meme page pour Google.
+  //
+  // Le header est prioritaire sur le cookie du visiteur (voir
+  // getLocaleFromCookies) : un cookie est propre au navigateur, il ne dit rien
+  // au crawler.
+  //
+  // ATTENTION — ne pas reecrire /en/usa, /de/de, /ja/jp, /en/launch... :
+  // ce sont des pages reelles du projet, sans prefixe de locale a traduire.
+  // ---------------------------------------------------------------------
+  const localeMatch = pathname.match(/^\/(en|es|de|it|pt|ja|ko|zh|ar)\/([a-z0-9-]+)\/?$/)
+  if (localeMatch) {
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('x-neuralocale', localeMatch[1])
+    return NextResponse.next({ request: { headers: requestHeaders } })
+  }
+
   // ISR FIX 11/09: ne PAS setter neuralocale cookie sur pages publiques GET —
   // Set-Cookie force cache-control:private (Vercel) et tue l'edge cache (LCP 618ms).
   // Locale détecté via Accept-Language header sans cookie; cookie posé uniquement
@@ -167,7 +190,12 @@ export async function middleware(request: NextRequest) {
     return new NextResponse(null, { status: 204, headers: corsHeaders })
   }
 
-  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin') || pathname.startsWith('/dashboard')) {
+  // `/dashboard` est l'espace CLIENT (commandes par email + clé API locale),
+  // pas l'administration. Le gateait comme une route admin le rendait
+  // inaccessible a tout le monde : 401 sur un lien de pied de page.
+  // La DONNEE reste protegee : /api/user exige x-api-key et refuse tout email
+  // different de celui de la clé (voir src/app/api/user/route.ts).
+  if (pathname.startsWith('/admin') || pathname.startsWith('/api/admin')) {
     const adminError = await verifyAdminSession(request)
     if (adminError) return adminError
   }

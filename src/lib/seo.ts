@@ -1,4 +1,6 @@
 import { Metadata } from 'next'
+import { SUBSCRIPTION_PLANS } from '@/lib/plans'
+import { stripBrand } from '@/lib/branding'
 
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
@@ -48,14 +50,69 @@ function normalizePath(p: string): string {
   return p.startsWith('/') && !p.startsWith('//') ? p.replace(/^\/+/, '/') : p
 }
 
+/**
+ * Pages reellement traduites qui existent sur le disque, hors racine.
+ * Ex: 'en' -> { 'launch', 'usa', 'uk', 'legal-notice', ... }
+ *
+ * On ne peut PAS deduire l'existence d'une route traduite du simple fait
+ * qu'une locale existe : /en/pricing, /es/agents, /de/templates... sont
+ * tous en 404. Emettre un hreflang vers une 404 est lu comme du spam par
+ * Google et penalise le domaine entier — meme sanction qu'un sitemap
+ * qui promet des URL mortes.
+ */
+const EXISTING_LOCALIZED_PAGES: Record<string, Set<string>> | null = (() => {
+  if (typeof process === 'undefined' || !process.cwd) return null
+  const NON_LOCALE_DIRS = ['en', 'es', 'de', 'it', 'pt', 'ja', 'ko', 'zh', 'ar']
+  const result: Record<string, Set<string>> = {}
+  try {
+    const fs = require('fs') as typeof import('fs')
+    const path = require('path') as typeof import('path')
+    const appDir = path.join(process.cwd(), 'src', 'app')
+    for (const locale of NON_LOCALE_DIRS) {
+      const localeDir = path.join(appDir, locale)
+      const pages = new Set<string>()
+      try {
+        for (const entry of fs.readdirSync(localeDir, { withFileTypes: true })) {
+          if (!entry.isDirectory()) continue
+          if (fs.existsSync(path.join(localeDir, entry.name, 'page.tsx'))) {
+            pages.add(entry.name)
+          }
+        }
+      } catch {
+        // repertoire absent : locale sans page traduite
+      }
+      result[locale] = pages
+    }
+    return result
+  } catch {
+    return null
+  }
+})()
+
+function localizedPageExists(locale: string, page: string): boolean {
+  if (!EXISTING_LOCALIZED_PAGES) return false
+  const pages = EXISTING_LOCALIZED_PAGES[locale]
+  if (!pages) return false
+  if (page === '' || page === '/') return pages.has('') || pages.size > 0
+  return pages.has(page.replace(/^\//, ''))
+}
+
 function buildHreflangAlternates(currentPath: string): Record<string, string> {
   currentPath = normalizePath(currentPath)
   const languages: Record<string, string> = {}
   for (const [locale, localeStr] of Object.entries(LOCALE_MAP)) {
+    // La version FR existe toujours : c'est la page canonique.
+    if (locale === 'fr') {
+      languages[localeStr] = `${baseUrl}${currentPath}`
+      continue
+    }
+    // N'emettre une variante que si la page traduite existe reellement.
+    if (!localizedPageExists(locale, currentPath)) continue
     const basePath = LOCALE_PATHS[locale]
     const joined = `${basePath}${currentPath}`.replace(/\/{2,}/g, '/')
     languages[localeStr] = `${baseUrl}${joined}`
   }
+  // x-default pointe toujours sur la version FR, qui existe.
   languages['x-default'] = `${baseUrl}${currentPath}`
   return languages
 }
@@ -78,7 +135,20 @@ export function generateMetadata(config: SEOConfig): Metadata {
   const locale = config.locale || 'fr_FR'
 
   return {
-    title: `${config.title} | NeuraAPI`,
+    // Pas de `${title} | NeuraAPI` ici : le layout racine declare deja
+    // `title.template = '%s | NeuraAPI'`. Concatener les deux produisait
+    // « Tarifs — API IA | NeuraAPI | NeuraAPI » sur TOUTES les pages, donc
+    // aussi sur les 81 nouvelles pages /<locale>/<slug>. Un titre duplique
+    // est un signal de faible qualite pour le SEO et gaspille les premiers
+    // caracteres dans le SERP.
+    //
+    // Certains dictionnaires portent la marque DANS le texte du titre
+    // (« Blog NeuraAPI », « FAQ — Questions sur NeuraAPI »). Le layout racine
+    // ajoute ensuite « | NeuraAPI » → « Blog NeuraAPI | NeuraAPI ».
+    // On retire toute mention finale de la marque, qu'elle soit precedee d'un
+    // separateur ou non. Nettoyage unique : vaut pour les 10 langues, presentes
+    // et futures.
+    title: stripBrand(config.title),
     description: config.description,
     keywords: config.keywords || TARGET_KEYWORDS,
     authors: [{ name: 'NeuraAPI' }],
@@ -122,27 +192,24 @@ export function generateSoftwareApplicationSchema(): object {
     operatingSystem: 'Web',
     description: "APIs d'intelligence artificielle et templates premium Next.js pour développeurs.",
     url: baseUrl,
+    // Prix lus depuis src/lib/plans.ts — la meme source que le checkout Stripe
+    // et que l'affichage. Un JSON-LD fige a 19/69 EUR alors que Stripe debite
+    // 49/149 EUR est une declaration de prix fausse dans les donnees structurees
+    // (art. L. 121-2 C. conso.), et c'est ce que Google lit pour les rich snippets.
     offers: [
       {
         '@type': 'Offer',
-        price: '0',
-        priceCurrency: 'EUR',
-        name: 'Starter',
-        description: 'Plan gratuit avec 100 crédits/mois',
-      },
-      {
-        '@type': 'Offer',
-        price: '19',
+        price: String(SUBSCRIPTION_PLANS.pro.price / 100),
         priceCurrency: 'EUR',
         name: 'Pro',
         description: 'Plan Pro avec 10 000 crédits/mois',
       },
       {
         '@type': 'Offer',
-        price: '69',
+        price: String(SUBSCRIPTION_PLANS.business.price / 100),
         priceCurrency: 'EUR',
-        name: 'Enterprise',
-        description: 'Plan Enterprise avec crédits illimités',
+        name: 'Business',
+        description: 'Plan Business avec crédits illimités',
       },
     ],
     featureList: [

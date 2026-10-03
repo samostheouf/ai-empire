@@ -14,21 +14,11 @@ export const metadata: Metadata = {
     images: [{ url: 'https://ai-empire-steel.vercel.app/api/og?title=Guide+NeuraAPI&subtitle=Tutoriel+complet+pas+à+pas', width: 1200, height: 630, alt: 'Guide NeuraAPI' }],
   },
   twitter: { card: 'summary_large_image', title: 'Guide NeuraAPI', description: "Tutoriel complet pas à pas." },
+  // Pas de variante linguistique : les routes /xx/* de ces pages sont en 404.
+  // Un hreflang vers une 404 est lu comme du spam par Google et penalise le
+  // domaine entier. Seul le canonical est declare.
   alternates: {
     canonical: 'https://ai-empire-steel.vercel.app/guide',
-    languages: {
-      'fr-FR': 'https://ai-empire-steel.vercel.app/guide',
-      'en-US': 'https://ai-empire-steel.vercel.app/en/guide',
-      'es-ES': 'https://ai-empire-steel.vercel.app/es/guide',
-      'de-DE': 'https://ai-empire-steel.vercel.app/de/guide',
-      'it-IT': 'https://ai-empire-steel.vercel.app/it/guide',
-      'pt-BR': 'https://ai-empire-steel.vercel.app/pt/guide',
-      'ja-JP': 'https://ai-empire-steel.vercel.app/ja/guide',
-      'ko-KR': 'https://ai-empire-steel.vercel.app/ko/guide',
-      'zh-CN': 'https://ai-empire-steel.vercel.app/zh/guide',
-      'ar-SA': 'https://ai-empire-steel.vercel.app/ar/guide',
-      'x-default': 'https://ai-empire-steel.vercel.app/guide',
-    },
   },
 }
 

@@ -31,6 +31,15 @@ function parseAcceptLanguage(header: string): Locale | null {
 }
 
 export function getLocaleFromCookies(): Locale {
+  // 1) Locale portee par l'URL (/en/pricing, /de/agents...). C'est ce que les
+  //    robots indexent : elle doit primer sur le cookie du visiteur, sinon
+  //    Google recupererait 9 fois la meme page FR.
+  const headerStore = headers()
+  const fromUrl = headerStore.get('x-neuralocale')
+  if (fromUrl && locales.includes(fromUrl as Locale)) {
+    return fromUrl as Locale
+  }
+  // 2) Cookie pose par le LanguageSwitcher (navigation cliente).
   const cookieStore = cookies()
   const stored = cookieStore.get(COOKIE_NAME)?.value
   if (stored && locales.includes(stored as Locale)) {

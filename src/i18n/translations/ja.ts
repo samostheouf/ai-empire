@@ -3219,16 +3219,16 @@ const ja: Record<string, string> = {
   statusCtaPricing: '料金を見る',
   // Luxury — HERMES 4500€ — 10 langues émotionnelles
   luxuryMetaTitle: 'ルイ・ヴィトン x NBA バーシティ M FW21 ヴァージル・アブロー — 4500€ | 安全な直接購入',
-  luxuryMetaDesc: 'LV x NBA バーシティ M FW21 ヴァージル・アブロー — 着用3回 極美品A+、鑑定VCCM09/CA36929、14枚HD写真+マクロ • 保険付DHL Express • 在庫1 • 手数料なし直接Stripe 4500€。',
+  luxuryMetaDesc: 'LV x NBA バーシティ M FW21 ヴァージル・アブロー — 着用3回 極美品A+、鑑定VCCM09/CA36929、8枚HD写真+マクロ • 保険付DHL Express • 在庫1 • 手数料なし直接Stripe 4500€。',
   luxuryTitle: 'ルイ・ヴィトン x NBA — バーシティ M FW21 ヴァージル・アブロー — 4500€',
-  luxurySubtitle: '着用3回 極美品A+ — 14枚HD写真 + マクロ VCCM09/CA36929 — 保険付DHL Express + サイン — 在庫1',
-  luxuryDescription: 'ヴァージル・アブローが手掛けたFW21エディション — ルイ・ヴィトン x NBAコラボ。レザー×ウールバーシティ、アイコニックなNBA/LVパッチ、プリントサテン裏地。サイズM、着用わずか3回 — 極美品A+。鑑定コードVCCM09 / CA36929を二重OCRで検証済み。14枚のHD写真 + 縫製/タグのマクロ。サイン付き保険付DHL Expressで発送。直接販売4500€ Stripe決済 — eBay/Grailed/Vestiaire手数料ゼロ。自律webhook：支払い後5分以内に他モール出品を自動停止。',
+  luxurySubtitle: '着用3回 極美品A+ — 8枚HD写真 + マクロ VCCM09/CA36929 — 保険付DHL Express + サイン — 在庫1',
+  luxuryDescription: 'ヴァージル・アブローが手掛けたFW21エディション — ルイ・ヴィトン x NBAコラボ。レザー×ウールバーシティ、アイコニックなNBA/LVパッチ、プリントサテン裏地。サイズM、着用わずか3回 — 極美品A+。鑑定コードVCCM09 / CA36929を二重OCRで検証済み。8枚のHD写真 + 縫製/タグのマクロ。サイン付き保険付DHL Expressで発送。直接販売4500€ Stripe決済 — eBay/Grailed/Vestiaire手数料ゼロ。自律webhook：支払い後5分以内に他モール出品を自動停止。',
   luxuryWhyTitle: 'なぜこのLV x NBA Mは希少なのか',
   luxuryPoint1: '✦ ヴァージル・アブロー FW21 — 逝去前最後のカルトドロップ、90年代NBAへのオマージュ、ストリートウェアの美術品。',
   luxuryPoint2: '✦ 極美品A+ — 着用3回のみ、欠点なし、柔らかなレザー無傷、ウール毛玉なし、リブのテンション完璧。',
   luxuryPoint3: '✦ 鑑定済 VCCM09 / CA36929 — アトリエコードを二重OCRで検証、Japan K.K. + Made in Italy。',
   luxuryPoint4: '✦ 高貴な素材 — 50%レザー、49%ウール、1%シルク：LVが作った最もラグジュアリーなバーシティ。',
-  luxuryPoint5: '✦ 14枚の法医学的HD写真 — 正面、背面、斜め、刺繍LV、NBA VVNパッチ、刻印ボタン、サテン裏地、タグマクロ。',
+  luxuryPoint5: '✦ 8枚の法医学的HD写真 — 正面、背面、斜め、刺繍LV、NBA VVNパッチ、刻印ボタン、サテン裏地、タグマクロ。',
   luxuryPoint6: '✦ サイズM 正規 — 平置き実寸付き、カルチャー的オーバーサイズVarsityシルエット、アジア/USで熱望。',
   luxuryPoint7: '✦ 保険付DHL Express + サイン — 世界配送 FR/DE/IT/GB/US/JP、従価保険、発送前の写真証明。',
   luxuryPoint8: '✦ 適正価格 4500€ フロア — StockX $7,564 / Vestiaire €6,020より-30%：3日間フラッシュセール。',
@@ -3253,7 +3253,7 @@ const ja: Record<string, string> = {
   luxuryBadgeDhl: '保険付DHL Express',
   luxuryBadgePrice: '4500€ フロア • 在庫1',
   luxuryOgTitle: 'ルイ・ヴィトン x NBA — バーシティ M FW21 ヴァージル・アブロー — 4500€',
-  luxuryOgDesc: '着用3回 極美品 • 鑑定VCCM09/CA36929 • 14枚HD • 保険付DHL • 在庫1 • 直接Stripe',
+  luxuryOgDesc: '着用3回 極美品 • 鑑定VCCM09/CA36929 • 8枚HD • 保険付DHL • 在庫1 • 直接Stripe',
 }
 
 export default ja

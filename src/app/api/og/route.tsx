@@ -59,12 +59,12 @@ export async function GET(request: Request) {
             background: 'radial-gradient(circle, rgba(168,85,247,0.2) 0%, transparent 70%)',
           }}
         />
+        {/* satori ne supporte pas `transform` : positionnement en pixels. */}
         <div
           style={{
             position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
+            top: '-35px',
+            left: '250px',
             width: '700px',
             height: '700px',
             borderRadius: '50%',
@@ -74,15 +74,17 @@ export async function GET(request: Request) {
         <div
           style={{
             position: 'absolute',
-            top: '30%',
-            left: '40%',
+            top: '65px',
+            left: '350px',
             width: '500px',
             height: '500px',
             borderRadius: '50%',
             border: '1px solid rgba(168,85,247,0.1)',
           }}
         />
-        <div style={{ position: 'relative', zIndex: 1 }}>
+        {/* satori: tout <div> avec plusieurs enfants DOIT avoir display:flex
+            explicite, sinon la generation throw et Vercel renvoie 200 + 0 octet. */}
+        <div style={{ display: 'flex', flexDirection: 'column', position: 'relative', zIndex: 1 }}>
           <div
             style={{
               display: 'flex',

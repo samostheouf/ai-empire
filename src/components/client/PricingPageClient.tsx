@@ -8,8 +8,41 @@ import Breadcrumb from '@/components/Breadcrumb'
 import { trackPricingPlanSelect, trackCheckoutStart, trackCheckoutComplete } from '@/lib/analytics'
 import dynamic from 'next/dynamic'
 import SocialProof from '@/components/client/SocialProof'
+import { SUBSCRIPTION_PLANS } from '@/lib/plans'
 
 const HomeCountdown = dynamic(() => import('@/components/HomeCountdown'))
+
+// PRIX = source unique src/lib/plans.ts (le meme objet que la route Stripe).
+// Avant : Pro affiche 19 EUR alors que /api/checkout/agents debitait 49 EUR.
+const plans = [
+  {
+    name: 'Starter',
+    price: '0',
+    credits: '100',
+    descriptionKey: 'pricingStarterDesc' as const,
+    featuresKeys: ['pricingStarterF1', 'pricingStarterF2', 'pricingStarterF3', 'pricingStarterF4', 'pricingStarterF5', 'pricingStarterF6'] as const,
+    ctaKey: 'pricingStarterCta' as const,
+    popular: false,
+  },
+  {
+    name: 'Pro',
+    price: String(SUBSCRIPTION_PLANS.pro.price / 100),
+    credits: '10 000',
+    descriptionKey: 'pricingProDesc' as const,
+    featuresKeys: ['pricingProF1', 'pricingProF2', 'pricingProF3', 'pricingProF4', 'pricingProF5', 'pricingProF6', 'pricingProF7'] as const,
+    ctaKey: 'pricingProCta' as const,
+    popular: true,
+  },
+  {
+    name: 'Enterprise',
+    price: String(SUBSCRIPTION_PLANS.business.price / 100),
+    creditsKey: 'pricingIllimited' as const,
+    descriptionKey: 'pricingEnterpriseDesc' as const,
+    featuresKeys: ['pricingEnterpriseF1', 'pricingEnterpriseF2', 'pricingEnterpriseF3', 'pricingEnterpriseF4', 'pricingEnterpriseF5', 'pricingEnterpriseF6', 'pricingEnterpriseF7'] as const,
+    ctaKey: 'pricingEnterpriseCta' as const,
+    popular: false,
+  },
+]
 
 const COMPARISON_FEATURES = [
   { nameKey: 'pricingCompMonthlyCredits' as const, starter: 'pricingCompStarterCredits' as const, pro: 'pricingCompProCredits' as const, enterprise: 'pricingCompEnterpriseCredits' as const },
@@ -24,36 +57,6 @@ const COMPARISON_FEATURES = [
   { nameKey: 'pricingCompSla' as const, starter: false, pro: false, enterprise: 'pricingComp999' as const },
   { nameKey: 'pricingCompCustomIntegration' as const, starter: false, pro: false, enterprise: true },
   { nameKey: 'pricingCompAccountManager' as const, starter: false, pro: false, enterprise: true },
-]
-
-const plans = [
-  {
-    name: 'Starter',
-    price: '0',
-    credits: '100',
-    descriptionKey: 'pricingStarterDesc' as const,
-    featuresKeys: ['pricingStarterF1', 'pricingStarterF2', 'pricingStarterF3', 'pricingStarterF4', 'pricingStarterF5', 'pricingStarterF6'] as const,
-    ctaKey: 'pricingStarterCta' as const,
-    popular: false,
-  },
-  {
-    name: 'Pro',
-    price: '19',
-    credits: '10 000',
-    descriptionKey: 'pricingProDesc' as const,
-    featuresKeys: ['pricingProF1', 'pricingProF2', 'pricingProF3', 'pricingProF4', 'pricingProF5', 'pricingProF6', 'pricingProF7'] as const,
-    ctaKey: 'pricingProCta' as const,
-    popular: true,
-  },
-  {
-    name: 'Enterprise',
-    price: '69',
-    creditsKey: 'pricingIllimited' as const,
-    descriptionKey: 'pricingEnterpriseDesc' as const,
-    featuresKeys: ['pricingEnterpriseF1', 'pricingEnterpriseF2', 'pricingEnterpriseF3', 'pricingEnterpriseF4', 'pricingEnterpriseF5', 'pricingEnterpriseF6', 'pricingEnterpriseF7'] as const,
-    ctaKey: 'pricingEnterpriseCta' as const,
-    popular: false,
-  },
 ]
 
 export default function PricingPageClient() {
@@ -75,7 +78,7 @@ export default function PricingPageClient() {
       const data = await res.json()
       if (data.url) {
         window.open(data.url, '_blank')
-        trackCheckoutComplete(plan, plans.find(p => p.name.toLowerCase() === plan)?.price === '0' ? 0 : 19)
+        trackCheckoutComplete(plan, Number(plans.find(p => p.name.toLowerCase() === plan)?.price ?? 0))
       } else {
         alert(data.error || 'Erreur lors de la création du paiement')
       }
@@ -133,9 +136,9 @@ export default function PricingPageClient() {
                     <span className="text-4xl font-bold text-white">{t('pricingFree')}</span>
                   ) : (
                     <div className="flex items-baseline gap-1">
-                      {plan.name === 'Pro' && (
-                        <span className="mr-2 text-lg text-indigo-400/50 line-through">27€</span>
-                      )}
+                      {/* Ancien prix barre « 27 € » SUPPRIME : un prix de reference
+                          fictif n'a jamais ete facture, c'est une pratique
+                          commerciale trompeuse (art. L. 121-2 C. conso.). */}
                       <span className="text-4xl font-bold text-white">{plan.price}€</span>
                       <span className="text-sm text-indigo-400">{t('pricingPerMonth2')}</span>
                     </div>

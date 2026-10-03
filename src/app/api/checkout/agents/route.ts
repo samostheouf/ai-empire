@@ -5,25 +5,12 @@ import { validateEmail, validateString } from '@/lib/input-validation'
 import { rateLimit, getRateLimitHeaders } from '@/lib/rate-limit'
 import { createHash } from 'crypto'
 import { logger } from '@/lib/logger'
+import { SUBSCRIPTION_PLANS } from '@/lib/plans'
 
-const AGENT_PLANS = {
-  pro: {
-    name: 'NeuraAPI AI Agents Pro',
-    description: '3 AI Agents — Support, Lead Gen, Content — 5000 conversations/mois',
-    price: 4900,
-    interval: 'month',
-    agents: 3,
-    conversations: 5000,
-  },
-  business: {
-    name: 'NeuraAPI AI Agents Business',
-    description: 'Unlimited AI Agents — All 6 agents — Unlimited conversations',
-    price: 14900,
-    interval: 'month',
-    agents: 999,
-    conversations: 999999,
-  },
-}
+// Prix, noms et quotas proviennent de la source unique src/lib/plans.ts :
+// c'est ce meme objet qui alimente l'affichage client et la session Stripe.
+// Ne jamais reintroduire de montant en dur ici (cf. bug 19 EUR affiche / 49 EUR debite).
+const AGENT_PLANS = SUBSCRIPTION_PLANS
 
 export async function POST(request: NextRequest) {
   try {
@@ -78,10 +65,22 @@ export async function POST(request: NextRequest) {
 
         stripePriceId = price.id
 
+        // `create` echoue si le slug existe deja (contrainte unique). Cas
+        // reel : le template est present SANS stripePriceId (creation
+        // interrompue, ancien import), ou deux requetes arrivent en meme
+        // temps. Dans les deux cas l'echec faisait repondre 500 au client
+        // alors que la session Stripe etait deja creee. On tente un upsert :
+        // la session est deja usable, seule la ligne de cache manquait.
         await safeQuery(async () => {
           const { prisma } = await import('@/lib/db')
-          return prisma.template.create({
-            data: {
+          return prisma.template.upsert({
+            where: { slug: `agent-${plan}` },
+            update: {
+              stripeProductId: product.id,
+              stripePriceId: price.id,
+              price: selectedPlan.price,
+            },
+            create: {
               name: selectedPlan.name,
               slug: `agent-${plan}`,
               description: selectedPlan.description,
@@ -123,8 +122,22 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // AVANT : la clé ne contenait que email:plan:promo — donc elle était
+    // DÉFINITIVE. Un client dont le paiement a échoué (session abandonnée,
+    // refus banque) ne pouvait plus jamais recommencer : Stripe renvoyait
+    // « Keys for idempotent requests can only be used with the same
+    // parameters ». La clé doit tourner : chaque heure donne une clé neuve,
+    // un double-clic dans la même heure reste protégé.
+    //
+    // `stripePriceId` entre dans la clé parce que le montant facturé EN DÉPEND
+    // de lui : si le Price Stripe est recréé (plan modifié, Price régénéré à la
+    // main), la même clé présenterait des paramètres différents et Stripe
+    // refuserait la session. Sans lui, un simple changement de Price bloque un
+    // client qui avait déjà tenté un achat sur ce plan.
     const idempotencyKey = createHash('sha256')
-      .update(`${email}:${plan}:${promoCode || ''}`)
+      .update(
+        `${email}:${plan}:${promoCode || ''}:${stripePriceId}:${Math.floor(Date.now() / 3600000)}`
+      )
       .digest('hex')
 
     const session = await stripe.checkout.sessions.create(

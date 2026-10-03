@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Templates Premium Next.js & Tailwind — NeuraAPI',
-    template: '%s | Templates NeuraAPI',
-  },
+  // PAS de `title.template` ici : le layout racine declare deja
+  // `title.template = '%s | NeuraAPI'`. Un template local se cumule avec lui
+  // et produit « ... — NeuraAPI | NeuraAPI ». Le titre de la page (genMeta)
+  // suffit, avec le suffixe du layout racine.
   description: "Découvrez nos templates premium Next.js + Tailwind CSS. SaaS, e-commerce, blog, portfolio. Code propre, prêt à déployer. À partir de 49€.",
   keywords: ['template next.js', 'templates premium', 'SaaS template', 'Next.js', 'Tailwind CSS', 'templates professionnels'],
   openGraph: {
@@ -17,21 +17,11 @@ export const metadata: Metadata = {
     images: [{ url: 'https://ai-empire-steel.vercel.app/api/og?title=Templates+Premium+Next.js&subtitle=Code+propre,+prêt+à+déployer', width: 1200, height: 630, alt: 'Templates Premium NeuraAPI' }],
   },
   twitter: { card: 'summary_large_image', title: 'Templates Premium Next.js', description: "Templates professionnels Next.js + Tailwind. Prêt à déployer." },
+  // Pas de variante linguistique : les routes /xx/* de ces pages sont en 404.
+  // Un hreflang vers une 404 est lu comme du spam par Google et penalise le
+  // domaine entier. Seul le canonical est declare.
   alternates: {
     canonical: 'https://ai-empire-steel.vercel.app/templates',
-    languages: {
-      'fr-FR': 'https://ai-empire-steel.vercel.app/templates',
-      'en-US': 'https://ai-empire-steel.vercel.app/en/templates',
-      'es-ES': 'https://ai-empire-steel.vercel.app/es/templates',
-      'de-DE': 'https://ai-empire-steel.vercel.app/de/templates',
-      'it-IT': 'https://ai-empire-steel.vercel.app/it/templates',
-      'pt-BR': 'https://ai-empire-steel.vercel.app/pt/templates',
-      'ja-JP': 'https://ai-empire-steel.vercel.app/ja/templates',
-      'ko-KR': 'https://ai-empire-steel.vercel.app/ko/templates',
-      'zh-CN': 'https://ai-empire-steel.vercel.app/zh/templates',
-      'ar-SA': 'https://ai-empire-steel.vercel.app/ar/templates',
-      'x-default': 'https://ai-empire-steel.vercel.app/templates',
-    },
   },
 }
 

@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: {
-    default: 'Blog — Conseils IA, Templates & Développement | NeuraAPI',
-    template: '%s | Blog NeuraAPI',
-  },
+  // PAS de `title.template` ici : le layout racine declare deja
+  // `title.template = '%s | NeuraAPI'`. Un template local se cumule avec lui
+  // et produit « ... | Blog NeuraAPI | NeuraAPI ».
   description: "Articles, tutoriels et meilleures pratiques pour développer, automatiser et monétiser vos projets avec l'intelligence artificielle.",
   keywords: ['blog IA', 'tutoriel Next.js', 'développeur web', 'API ia', 'template next.js'],
   openGraph: {
@@ -17,21 +16,11 @@ export const metadata: Metadata = {
     images: [{ url: 'https://ai-empire-steel.vercel.app/api/og?title=Blog+NeuraAPI&subtitle=IA,+Templates+%26+Développement', width: 1200, height: 630, alt: 'Blog NeuraAPI' }],
   },
   twitter: { card: 'summary_large_image', title: 'Blog NeuraAPI', description: "Articles et tutoriels sur l'IA et le développement." },
+  // Pas de variante linguistique : les routes /xx/* de ces pages sont en 404.
+  // Un hreflang vers une 404 est lu comme du spam par Google et penalise le
+  // domaine entier. Seul le canonical est declare.
   alternates: {
     canonical: 'https://ai-empire-steel.vercel.app/blog',
-    languages: {
-      'fr-FR': 'https://ai-empire-steel.vercel.app/blog',
-      'en-US': 'https://ai-empire-steel.vercel.app/en/blog',
-      'es-ES': 'https://ai-empire-steel.vercel.app/es/blog',
-      'de-DE': 'https://ai-empire-steel.vercel.app/de/blog',
-      'it-IT': 'https://ai-empire-steel.vercel.app/it/blog',
-      'pt-BR': 'https://ai-empire-steel.vercel.app/pt/blog',
-      'ja-JP': 'https://ai-empire-steel.vercel.app/ja/blog',
-      'ko-KR': 'https://ai-empire-steel.vercel.app/ko/blog',
-      'zh-CN': 'https://ai-empire-steel.vercel.app/zh/blog',
-      'ar-SA': 'https://ai-empire-steel.vercel.app/ar/blog',
-      'x-default': 'https://ai-empire-steel.vercel.app/blog',
-    },
   },
 }
 
