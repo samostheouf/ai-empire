@@ -139,8 +139,8 @@ const Footer = memo(function Footer() {
             <ul className="space-y-2.5">
               <li>
                 <a href="https://prompt-empire.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm text-indigo-300/70 hover:text-white hover:translate-x-1 transition-all duration-200 inline-block flex items-center gap-2">
-                  <span className="text-xs bg-indigo-500/20 px-1.5 py-0.5 rounded">Prompts</span>
-                  Prompt Empire — 300+ prompts IA testés
+                  <span className="text-xs bg-indigo-500/20 px-1.5 py-0.5 rounded">Audit</span>
+                  Prompt Empire — Audit 20/20 SaaS + zéro-stock
                 </a>
               </li>
               <li>

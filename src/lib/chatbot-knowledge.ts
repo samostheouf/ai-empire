@@ -1,8 +1,35 @@
+import { SUBSCRIPTION_PLANS } from '@/lib/plans'
+
 export interface KnowledgeEntry {
   keywords: string[]
   response: string
   category: string
   priority: number
+}
+
+// Les reponses tarifaires sont generees a partir de src/lib/plans.ts (la source
+// unique aussi bien du checkout Stripe que de l'affichage). Avant, le chatbot
+// annoncait « Pro 19 EUR » alors que Stripe debitait 49 EUR : une declaration
+// de prix fausse dans la bouche du robot de vente (art. L. 121-2 C. conso.).
+//
+// IMPORTANT : la remise -30% (LANCEMENT30) ne s'applique qu'aux TEMPLATES et
+// est appliquee automatiquement par le bouton d'achat. Elle ne s'applique PAS
+// aux abonnements : ne pas l'annoncer sur un plan d'abonnement.
+function pricingAnswer(locale: string): string {
+  const pro = SUBSCRIPTION_PLANS.pro.price / 100
+  const business = SUBSCRIPTION_PLANS.business.price / 100
+  if (locale !== 'fr') {
+    return `Our pricing plans:\n\n🟢 **Starter** — Free (100 credits/month)\n🔵 **Pro** — €${pro}/month (10,000 credits)\n🟣 **Business** — €${business}/month (unlimited credits)\n\n📦 Templates are sold separately, from €49 to €199, with an automatic -30% launch discount already applied.\n\n👉 /pricing for details`
+  }
+  return `Nos tarifs :\n\n🟢 **Starter** — Gratuit (100 crédits/mois)\n🔵 **Pro** — ${pro}€/mois (10 000 crédits)\n🟣 **Business** — ${business}€/mois (crédits illimités)\n\n📦 Les templates sont vendus séparément, de 49€ à 199€, avec la remise de lancement de -30% déjà appliquée automatiquement.\n\n👉 /pricing pour les détails`
+}
+
+function upgradeAnswer(locale: string): string {
+  const pro = SUBSCRIPTION_PLANS.pro.price / 100
+  if (locale !== 'fr') {
+    return `⬆️ Upgrade to **Pro** and unlock full potential:\n\n🔵 **€${pro}/month**\n• 10,000 credits/month\n• All AI endpoints\n• Premium templates included\n• Priority support\n• Advanced analytics\n\n👉 /pricing to compare plans.`
+  }
+  return `⬆️ Passez au plan **Pro** pour débloquer tout le potentiel :\n\n🔵 **${pro}€/mois**\n• 10 000 crédits/mois\n• Tous les endpoints IA\n• Templates premium inclus\n• Support prioritaire\n• Analytics avancés\n\n👉 /pricing pour comparer les plans.`
 }
 
 export const knowledgeBase: KnowledgeEntry[] = [
@@ -57,7 +84,11 @@ export const knowledgeBase: KnowledgeEntry[] = [
   // PRICING — specific
   {
     keywords: ['prix', 'tarif', 'coût', 'combien', 'cher', 'abonnement', 'price', 'pricing', 'cost'],
-    response: 'Nos tarifs :\n\n🟢 **Starter** — Gratuit (100 crédits/mois)\n🔵 **Pro** — 19€/mois (10 000 crédits) — Offre -30% avec code LANCEMENT30\n🟣 **Enterprise** — 69€/mois (illimité)\n\n👉 /pricing pour les détails',
+    // Reponse obsolete conservee pour memoire : elle annoncait « Pro 19 EUR »
+    // alors que Stripe debite 49 EUR. findResponse() intercepte desormais la
+    // categorie 'pricing' et renvoie pricingAnswer() (source plans.ts), donc ce
+    // texte n'est plus servi. Ne pas le reactiver tel quel.
+    response: 'Nos tarifs :\n\n🟢 **Starter** — Gratuit (100 crédits/mois)\n🔵 **Pro** — 49€/mois (10 000 crédits)\n🟣 **Enterprise** — 149€/mois (illimité)\n\n👉 /pricing pour les détails',
     category: 'pricing',
     priority: 88,
   },
@@ -66,14 +97,23 @@ export const knowledgeBase: KnowledgeEntry[] = [
   {
     keywords: ['gratuit', 'free', 'essai', 'trial', 'tester', 'essayer', 'sans payer', 'no cost', 'free tier', 'without paying'],
     response: 'Le plan **Starter est 100% gratuit** :\n• 100 crédits/mois\n• 3 endpoints IA (generate, SEO, code)\n• Documentation complète\n• Support par email\n\n💡 Pas de limite de temps — le tier gratuit est permanent !\n\nInscrivez-vous sur /register — aucune carte bancaire requise.',
-    category: 'pricing',
+    // NE PAS utiliser category: 'pricing' ici : findResponse() intercepte
+    // cette categorie et renvoie pricingAnswer() (le tableau des abonnements)
+    // a la place de la reponse sur le tier gratuit. Question piege :
+    // « c'est gratuit ? » doit repondre sur le gratuit, pas sur les prix.
+    category: 'free-tier',
     priority: 89,
   },
 
   // PROMO
   {
     keywords: ['promo', 'lancement', 'réduction', 'remise', 'offre', 'code promo', 'coupon', 'discount', 'launch offer'],
-    response: '🎉 Offre de lancement !\n\nCode **LANCEMENT30** → -30% sur le premier mois Pro ou Enterprise.\n\n👉 Inscrivez-vous sur /register et utilisez le code.',
+    // Rappel : la remise de lancement porte sur les TEMPLATES, pas sur les
+    // abonnements (cf. commentaire en tete de fichier). Annoncer un -30% sur
+    // « le premier mois Pro » promettait une remise que le checkout n'applique
+    // jamais — promesse commerciale non tenue. On ne vend donc que ce qui
+    // existe reellement, et on renvoie vers la page tarifs pour le detail.
+    response: 'Il n\'y a pas de code promo actif sur les abonnements : les tarifs affichés sur /pricing sont ceux qui sont débités (Starter gratuit, Pro 49 €/mois, Enterprise 149 €/mois).\n\nLa remise de lancement −30 % concerne uniquement les templates Next.js, et elle est déjà appliquée automatiquement sur le prix affiché.\n\n👉 /pricing pour le détail.',
     category: 'promotions',
     priority: 86,
   },
@@ -81,7 +121,7 @@ export const knowledgeBase: KnowledgeEntry[] = [
   // UPGRADE
   {
     keywords: ['upgrade', 'pro', 'premium', 'passer pro', 'upgrader'],
-    response: '⬆️ Passez au plan **Pro** pour débloquer tout le potentiel :\n\n🔵 **19€/mois** au lieu de 27€ (-30% avec le code **LANCEMENT30**)\n• 10 000 crédits/mois\n• Tous les endpoints IA\n• Templates premium inclus\n• Support prioritaire\n• Analytics avancés\n\n👉 /pricing pour comparer les plans et utiliser votre code promo.',
+    response: '⬆️ Passez au plan **Pro** pour débloquer tout le potentiel :\n\n🔵 **49€/mois**\n• 10 000 crédits/mois\n• Tous les endpoints IA\n• Templates premium inclus\n• Support prioritaire\n• Analytics avancés\n\n👉 /pricing pour comparer les plans.',
     category: 'upgrade',
     priority: 88,
   },
@@ -228,16 +268,27 @@ export function findResponse(input: string, locale: string = 'fr'): string {
   // Sort by priority (highest first)
   const sorted = [...knowledgeBase].sort((a, b) => b.priority - a.priority)
 
+  // Prix : toujours generes depuis src/lib/plans.ts, jamais en dur.
+  const dynamicByCategory: Record<string, (locale: string) => string> = {
+    pricing: pricingAnswer,
+    upgrade: upgradeAnswer,
+  }
+
   // Find first matching entry
   for (const entry of sorted) {
     for (const keyword of entry.keywords) {
       if (normalized.includes(keyword)) {
+        const dynamic = dynamicByCategory[entry.category]
+        if (dynamic) return dynamic(locale)
         // Return English response if locale is not French
         if (locale !== 'fr') {
           const enResponses: Record<string, string> = {
             'greeting': 'Hello! Welcome to NeuraAPI. I\'m your intelligent assistant. 👋\n\nI can help you with:\n• 🤖 Our AI APIs (text, code, SEO generation)\n• 📦 Premium Next.js templates\n• 💰 Pricing & subscriptions\n• 🛠 Technical support\n\nHow can I help you?',
             'api': 'Our AI APIs are accessible via 3 endpoints:\n\n1️⃣ **POST /api/ai/generate** — Text generation\n2️⃣ **POST /api/ai/seo** — SEO-optimized content\n3️⃣ **POST /api/ai/code** — Code generation\n\n🔑 Auth: `x-api-key: napi_your_key`\n📊 Rate limits: Starter 10 req/min, Pro 100 req/min, Enterprise unlimited\n\n👉 Check /docs for full documentation.',
-            'pricing': 'Our pricing plans:\n\n🟢 **Starter** — Free (100 credits/month)\n🔵 **Pro** — €19/month (10,000 credits) — Launch offer -30% with code LAUNCH30\n🟣 **Enterprise** — €69/month (unlimited)\n\n👉 /pricing for details',
+            'pricing': 'Our pricing plans:\n\n🟢 **Starter** — Free (100 credits/month)\n🔵 **Pro** — €49/month (10,000 credits)\n🟣 **Enterprise** — €149/month (unlimited credits)\n\n👉 /pricing for details',
+                        // categorie 'free-tier' : sans cette entree, la question
+                        // « is it free? » en anglais retombait sur la reponse FR.
+                        'free-tier': 'The **Starter plan is 100% free**:\n• 100 credits/month\n• 3 AI endpoints (generate, SEO, code)\n• Full documentation\n• Email support\n\n💡 No time limit — the free tier is permanent!\n\nSign up on /register — no credit card required.',
             'templates': 'Our 10 premium templates:\n\n📦 **NeuraSaaS** — €97 (SaaS Starter)\n📦 **NeuraCommerce** — €129 (E-commerce)\n📦 **NeuraBlog** — €59 (Blog)\n📦 **NeuraLanding** — €79 (Landing Page)\n📦 **NeuraDashboard** — €99 (Dashboard)\n\n👉 /templates for the full catalog',
             'contact': '📬 Contact us:\n• Email: samilaboulette21@gmail.com\n• Phone: +33 6 29 41 85 24 (Mon-Fri 9am-6pm)\n• Page: /contact\n\nWe respond within 24 business hours.',
             'support': '📬 Contact us:\n• Email: samilaboulette21@gmail.com\n• Phone: +33 6 29 41 85 24 (Mon-Fri 9am-6pm)\n• Page: /contact\n\nWe respond within 24 business hours.',
@@ -247,7 +298,8 @@ export function findResponse(input: string, locale: string = 'fr'): string {
             'monitoring': 'Our monitoring page is live at /status\n\nYou can check:\n• System health\n• API uptime\n• Response times\n\nWe use GitHub Actions for continuous health checks.',
             'bug': 'If you encounter a bug, please report it:\n\n📧 Email: samilaboulette21@gmail.com\n📝 Include: steps to reproduce, browser, expected vs actual behavior\n\nWe respond within 48 hours.',
             'referral': 'Our referral program gives you credits for every friend who signs up.\n\n1. Share your referral link\n2. Friend creates an account\n3. You both get bonus credits\n\nCheck /referral for details.',
-            'upgrade': '⬆️ Upgrade to **Pro** and unlock full potential:\n\n🔵 **€19/month** instead of €27 (-30% with code LAUNCH30)\n• 10,000 credits/month\n• All AI endpoints\n• Premium templates included\n• Priority support\n• Advanced analytics\n\n👉 /pricing to compare plans and use your promo code.',
+            'upgrade': '⬆️ Upgrade to **Pro** and unlock full potential:\n\n🔵 **€49/month**\n• 10,000 credits/month\n• All AI endpoints\n• Premium templates included\n• Priority support\n• Advanced analytics\n\n👉 /pricing to compare plans.',
+            'promotions': 'There is no active promo code on subscriptions: the prices on /pricing are the ones charged (Starter free, Pro €49/month, Enterprise €149/month).\n\nThe −30% launch discount applies to the Next.js templates only, and is already applied to the displayed price.\n\n👉 /pricing for details.',
             'why': '🏆 Why NeuraAPI?\n\n✅ **10 languages** — Multilingual interface and API (FR, EN, ES, DE, IT, PT, JA, ZH, KO, AR)\n✅ **Free tier** — 100 credits/month, no credit card\n✅ **Instant setup** — API key in 30 seconds\n✅ **Premium templates** — 10 ready-to-use Next.js templates\n\n💡 **vs OpenAI direct**:\n• OpenAI = English only, more expensive\n• NeuraAPI = 10 languages, free tier, more affordable\n\n👉 /register to try for free.',
             'guide': '🚀 Getting started in 3 simple steps:\n\n1️⃣ **Sign up** at /register — free, no credit card\n2️⃣ **Get your API key** instantly in the dashboard\n3️⃣ **Make your first call**:\n```\ncurl -X POST https://api.neuraapi.com/generate \\\n  -H "x-api-key: napi_your_key" \\\n  -d \'{"prompt":"Hello"}\'\n```\n\n✅ 100 free credits on signup\n✅ No credit card required\n✅ API key generated instantly\n\n👉 /register to start now!',
           }

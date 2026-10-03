@@ -12,7 +12,7 @@ const SITES: EcosystemSite[] = [
   {
     name: 'Prompt Empire',
     url: 'https://prompt-empire.vercel.app',
-    tagline: '300+ prompts IA testés (ChatGPT, Claude, Gemini)',
+    tagline: 'Audit 20/20 de SaaS + méthode zéro-stock',
   },
   {
     name: 'Copy Vault',
