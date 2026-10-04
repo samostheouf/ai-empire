@@ -7,3 +7,12 @@ node_modules
 docs
 scripts
 *.log
+# Ajouté le 04/10 : les motifs precedents laissaient passer .env.deployed,
+# .env.stripe-copy et .env.vercel-latest. Vercel les bloquait deja cote
+# plateforme (mesure : HTTP 404 sur les 5 artefacts), mais un .bak n'est
+# bloque par personne. On ferme la fenetre explicitement plutot que de
+# compter sur le prestataire.
+.env.*
+*.bak
+*.bak2
+*.orig
