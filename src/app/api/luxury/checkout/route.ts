@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
     } as any, { idempotencyKey })
     await safeQuery(async()=>{
       const {prisma}=await import('@/lib/db')
-      await prisma.luxuryLog.create({ data: { saleId: (sale as any).id, type: 'checkout', message: `checkout direct 4500 pour ${email} session ${session.id}`, data: { sessionId: session.id, email, price } as any }})
+      await prisma.luxuryLog.create({ data: { saleId: (sale as any).id, type: 'checkout', message: `checkout direct ${price} EUR pour ${email} session ${session.id}`, data: { sessionId: session.id, email, price } as any }})
     }, null)
     return NextResponse.json({ success: true, url: session.url, sessionId: session.id, sku, price, currency: currency.toUpperCase() })
   } catch(e:any){

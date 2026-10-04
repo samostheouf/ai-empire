@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyCronAuth } from '@/lib/auth'
 import { safeQuery } from '@/lib/db'
+import { LUXURY_FLOOR } from '@/lib/luxury-intent'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,11 +24,11 @@ export async function GET(request: NextRequest) {
   const views = (sale as any).views || 0
   let action = 'HOLD'
   let newPrice = (sale as any).price
-  let reason = `views=${views} days=${daysActive.toFixed(1)} floor 4500`
+  let reason = `views=${views} days=${daysActive.toFixed(1)} floor ${LUXURY_FLOOR}`
 
   // Règle HERMES DYNAMIC_PRICING: -3% si 0 vues après 48h et jamais <4500
-  if (daysActive >= 2 && views === 0 && newPrice > 4500) {
-    newPrice = Math.max(4500, Math.round(newPrice * 0.97))
+  if (daysActive >= 2 && views === 0 && newPrice > LUXURY_FLOOR) {
+    newPrice = Math.max(LUXURY_FLOOR, Math.round(newPrice * 0.97))
     action = 'ADJUST -3%'
     reason = `0 vues après ${daysActive.toFixed(1)}j → baisse 3% → ${newPrice}€`
     await safeQuery(async () => {

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { cookies } from 'next/headers'
 import LuxuryGallery from './LuxuryGallery'
 import LuxuryCheckout from './LuxuryCheckout'
+import LuxuryIntent from './LuxuryIntent'
 import ViewPing from './ViewPing'
 import { luxuryTranslations } from '@/i18n/translations/luxury'
 import { locales, defaultLocale, type Locale } from '@/i18n/config'
@@ -231,6 +232,9 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
               </div>
               <div className="mt-4">
                 <LuxuryCheckout />
+              </div>
+              <div className="mt-4">
+                <LuxuryIntent />
               </div>
               <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[10px] leading-tight">
                 <div className="rounded-xl border border-zinc-200 bg-zinc-50 p-2.5"><p className="text-lg" aria-hidden>🛡️</p> AUTH<br /><span className="text-zinc-500">VCCM09</span></div>
