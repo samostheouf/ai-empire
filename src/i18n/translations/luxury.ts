@@ -334,10 +334,10 @@ export const luxuryTranslations: Record<Locale, LuxuryDict> = {
   },
   ar: {
     metaTitle: 'لويس فويتون x NBA Varsity M FW21 فيرجيل أبلوه — 4500€ | شراء مباشر آمن',
-    metaDesc: 'LV x NBA Varsity M FW21 فيرجيل أبلوه — ارتُدي 3 مرات ممتاز A+، موثق VCCM09/CA36929، 14 صورة HD + ماكرو • DHL Express مؤمن • مخزون 1 • دفع مباشر Stripe 4500€ بدون عمولات.',
+    metaDesc: 'LV x NBA Varsity M FW21 فيرجيل أبلوه — ارتُدي 3 مرات ممتاز A+، موثق VCCM09/CA36929، 8 صورة HD + ماكرو • DHL Express مؤمن • مخزون 1 • دفع مباشر Stripe 4500€ بدون عمولات.',
     title: 'لويس فويتون x NBA — جاكيت Varsity M FW21 فيرجيل أبلوه — 4500€',
-    subtitle: 'ارتُدي 3 مرات ممتاز A+ — 14 صورة HD + ماكرو VCCM09/CA36929 — DHL Express مؤمن + توقيع — مخزون 1',
-    description: 'إصدار FW21 صممه فيرجيل أبلوه — تعاون لويس فويتون x NBA. جلد + صوف varsity، رقع NBA/LV أيقونية، بطانة ساتان مطبوعة. مقاس M، ارتُدي 3 مرات فقط — حالة ممتازة A+. رموز التوثيق VCCM09 / CA36929 موثقة. 14 صورة HD + ماكرو الدرزات/الملصقات. شحن DHL Express مؤمن مع توقيع. بيع مباشر 4500€ عبر Stripe — صفر عمولات eBay/Grailed/Vestiaire. Webhook ذاتي: تعطيل القوائم المتقاطعة تلقائياً <5 دقائق بعد الدفع.',
+    subtitle: 'ارتُدي 3 مرات ممتاز A+ — 8 صورة HD + ماكرو VCCM09/CA36929 — DHL Express مؤمن + توقيع — مخزون 1',
+    description: 'إصدار FW21 صممه فيرجيل أبلوه — تعاون لويس فويتون x NBA. جلد + صوف varsity، رقع NBA/LV أيقونية، بطانة ساتان مطبوعة. مقاس M، ارتُدي 3 مرات فقط — حالة ممتازة A+. رموز التوثيق VCCM09 / CA36929 موثقة. 8 صورة HD + ماكرو الدرزات/الملصقات. شحن DHL Express مؤمن مع توقيع. بيع مباشر 4500€ عبر Stripe — صفر عمولات eBay/Grailed/Vestiaire. Webhook ذاتي: تعطيل القوائم المتقاطعة تلقائياً <5 دقائق بعد الدفع.',
     whyTitle: 'لماذا هذا LV x NBA M نادر',
     point1: '✦ فيرجيل أبلوه FW21 — آخر إصدار cult قبل رحيله، تحية لـ NBA التسعينيات، قطعة متحف streetwear.',
     point2: '✦ ممتاز A+ — ارتُدي 3 مرات فقط، بلا عيوب، جلد ناعم سليم، صوف بلا وبر، حواف مضلعة مشدودة.',
@@ -363,6 +363,6 @@ export const luxuryTranslations: Record<Locale, LuxuryDict> = {
     badgeDhl: 'DHL Express مؤمن',
     badgePrice: '4500€ حد أدنى • مخزون 1',
     ogTitle: 'لويس فويتون x NBA — Varsity M FW21 فيرجيل أبلوه — 4500€',
-    ogDesc: 'ارتُدي 3 مرات ممتاز • موثق VCCM09/CA36929 • 14 صورة HD • DHL مؤمن • مخزون 1 • Stripe مباشر',
+    ogDesc: 'ارتُدي 3 مرات ممتاز • موثق VCCM09/CA36929 • 8 صورة HD • DHL مؤمن • مخزون 1 • Stripe مباشر',
   },
 }

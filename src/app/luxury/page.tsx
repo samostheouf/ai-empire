@@ -25,10 +25,14 @@ function resolveLocale(hl?: string): Locale {
   return defaultLocale
 }
 
+// SOURCE UNIQUE : une locale = un tag hreflang ET un tag <html lang>.
+// Extraire ce tableau dans une constante empeche les deux listes de diverger.
+const LUXURY_LANG_TAGS: Record<string, string> = { fr:'fr-FR', en:'en-US', es:'es-ES', de:'de-DE', it:'it-IT', pt:'pt-PT', ja:'ja-JP', zh:'zh-CN', ko:'ko-KR', ar:'ar-SA' }
+
 export async function generateMetadata({ searchParams }: { searchParams?: { hl?: string } }): Promise<Metadata> {
   const locale = resolveLocale(searchParams?.hl)
   const t = luxuryTranslations[locale] ?? luxuryTranslations.fr
-  const locMap: Record<string, string> = { fr:'fr-FR', en:'en-US', es:'es-ES', de:'de-DE', it:'it-IT', pt:'pt-PT', ja:'ja-JP', zh:'zh-CN', ko:'ko-KR', ar:'ar-SA' }
+  const locMap = LUXURY_LANG_TAGS
   const languages: Record<string, string> = { 'x-default': CANONICAL }
   for (const l of locales) {
     const hl = locMap[l] ?? l
@@ -73,6 +77,10 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
   const t = luxuryTranslations[locale] ?? luxuryTranslations.fr
   const isRTL = locale === 'ar'
   const dir = isRTL ? 'rtl' : 'ltr'
+  // Meme source unique que les hreflang de generateMetadata() : sans cela le
+  // <html lang> reste "fr" sur les 10 versions et Google classe la page JA/ZH/KO/AR
+  // comme francaise — l'attribut dit ce qu'est la page, pas le <title>.
+  const lang = LUXURY_LANG_TAGS[locale] ?? 'fr-FR'
 
   const points = [t.point1, t.point2, t.point3, t.point4, t.point5, t.point6, t.point7, t.point8, t.point9, t.point10]
   const faqs = [
@@ -147,24 +155,18 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
   }
 
   return (
-    <div dir={dir} className="bg-[#fafaf9] text-zinc-900">
+    <div lang={lang} dir={dir} className="bg-[#fafaf9] text-zinc-900">
       <ViewPing locale={locale} />
       <link rel="preconnect" href="https://jyjp02vaprlkyxab.public.blob.vercel-storage.com" crossOrigin="" />
       <link rel="dns-prefetch" href="https://jyjp02vaprlkyxab.public.blob.vercel-storage.com" />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }} />
-      <link rel="alternate" hrefLang="fr-FR" href={CANONICAL} />
-      <link rel="alternate" hrefLang="en-US" href={`${CANONICAL}?hl=en`} />
-      <link rel="alternate" hrefLang="es-ES" href={`${CANONICAL}?hl=es`} />
-      <link rel="alternate" hrefLang="de-DE" href={`${CANONICAL}?hl=de`} />
-      <link rel="alternate" hrefLang="it-IT" href={`${CANONICAL}?hl=it`} />
-      <link rel="alternate" hrefLang="pt-PT" href={`${CANONICAL}?hl=pt`} />
-      <link rel="alternate" hrefLang="ja-JP" href={`${CANONICAL}?hl=ja`} />
-      <link rel="alternate" hrefLang="zh-CN" href={`${CANONICAL}?hl=zh`} />
-      <link rel="alternate" hrefLang="ko-KR" href={`${CANONICAL}?hl=ko`} />
-      <link rel="alternate" hrefLang="ar-SA" href={`${CANONICAL}?hl=ar`} />
-      <link rel="alternate" hrefLang="x-default" href={CANONICAL} />
+      {/* PAS de <link rel="alternate"> ici : generateMetadata() les emet deja via
+          alternates.languages. Les deux sources se cumulaient et le HTML servi
+          contenait 22 liens hreflang au lieu de 11 (chaque langue en double).
+          Google lit un cluster hreflang contradictoire comme une annotation
+          invalide et ignore les 10 versions traduites. Source unique = metadata. */}
       {/* LUXURY PIXELS: GA4 view_item + Meta ViewContent — UTM already captured by AnalyticsTracker */}
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-LUXURY" />
       <script

@@ -51,6 +51,34 @@ const existingLocalizedRoutes = new Set<string>(
   })
 )
 
+/**
+ * /luxury est l'UNIQUE page 10-langues du site : le rendu se fait par query
+ * `?hl=` (routes /[locale]/luxury inexistantes), pas par prefixe d'URL.
+ *
+ * L'entry DOIT donc lister les 10 hreflang que la page emet via
+ * generateMetadata, sinon Google recoit deux clusters contradictoires (6
+ * langues dans le sitemap, 11 dans le <head>) et n'en retient aucun. Mesure :
+ * avant correction le sitemap annoncait fr/en/de/it/ja seulement, soit les
+ * 6 versions es/pt/zh/ko/ar invisibles a l'indexation.
+ *
+ * pt est declare pt-PT ici pour coller a locMap de page.tsx (le reste du
+ * sitemap utilise pt-BR pour les routes prefixees : deux systemes distincts,
+ * on ne les melange pas).
+ */
+const LUXURY_LANGUAGES: Record<string, string> = {
+  'fr-FR': `${baseUrl}/luxury`,
+  'en-US': `${baseUrl}/luxury?hl=en`,
+  'es-ES': `${baseUrl}/luxury?hl=es`,
+  'de-DE': `${baseUrl}/luxury?hl=de`,
+  'it-IT': `${baseUrl}/luxury?hl=it`,
+  'pt-PT': `${baseUrl}/luxury?hl=pt`,
+  'ja-JP': `${baseUrl}/luxury?hl=ja`,
+  'zh-CN': `${baseUrl}/luxury?hl=zh`,
+  'ko-KR': `${baseUrl}/luxury?hl=ko`,
+  'ar-SA': `${baseUrl}/luxury?hl=ar`,
+  'x-default': `${baseUrl}/luxury`,
+}
+
 interface SitemapEntry {
   url: string
   lastModified: Date
@@ -162,7 +190,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/dpa`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/offre-lancement`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/offre-lancement') },
     { url: `${baseUrl}/compare`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/compare') },
-    { url: `${baseUrl}/luxury`, lastModified: now, changeFrequency: 'daily', priority: 0.95, alternates: { languages: { 'fr-FR': `${baseUrl}/luxury`, 'en-US': `${baseUrl}/luxury?hl=en`, 'de-DE': `${baseUrl}/luxury?hl=de`, 'it-IT': `${baseUrl}/luxury?hl=it`, 'ja-JP': `${baseUrl}/luxury?hl=ja`, 'x-default': `${baseUrl}/luxury` } } },
+    { url: `${baseUrl}/luxury`, lastModified: now, changeFrequency: 'daily', priority: 0.95, alternates: { languages: LUXURY_LANGUAGES } },
 
     // Regional pages
     { url: `${baseUrl}/en/usa`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: buildAlternates('/en/usa') },
