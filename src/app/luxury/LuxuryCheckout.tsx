@@ -26,7 +26,7 @@ export default function LuxuryCheckout() {
     e.preventDefault()
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { setMsg('Email invalide.'); return }
     // GA4 + Meta begin_checkout before Stripe redirect
-    fireGtag('begin_checkout', { currency: 'EUR', value: 4500, items: [{ item_id: 'HERMES-LV-NBA-M-1A8WU8', item_name: 'Louis Vuitton x NBA Varsity M FW21', price: 4500, quantity: 1 }] })
+    fireGtag('begin_checkout', { currency: 'EUR', value: 4500, items: [{ item_id: 'HERMES-LV-NBA-M-1A8WU8', item_name: 'Louis Vuitton x NBA Varsity FW21', price: 4500, quantity: 1 }] })
     try { if (typeof window !== 'undefined' && window.fbq) window.fbq('track', 'InitiateCheckout', { content_ids: ['HERMES-LV-NBA-M-1A8WU8'], value: 4500, currency: 'EUR' }) } catch {}
     setLoading(true); setMsg('Création de la session sécurisée…')
     try {

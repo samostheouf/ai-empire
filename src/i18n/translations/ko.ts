@@ -3223,7 +3223,7 @@ const ko: Record<string, string> = {
   luxuryTitle: '루이 비통 x NBA — 바시티 FW21 버질 아블로 — 4500€',
   luxurySubtitle: '3회 착용 극미품 A+ — 8장 HD 사진 + 마크로 VCCM09/CA36929 — 보험 DHL Express + 서명 — 재고 1',
   luxuryDescription: '버질 아블로가 디자인한 FW21 에디션 — 루이 비통 x NBA 콜라보. 가죽 + 울 바시티, 아이코닉 NBA/LV 패치, 프린트 새틴 안감. 사이즈 미기재, 단 3회 착용 — 극미품 A+. 인증 코드 VCCM09 / CA36929 이중 OCR 검증. 8장 HD 사진 + 봉제/라벨 마크로. 서명 포함 보험 DHL Express 배송. Stripe 직거래 4500€ — eBay/Grailed/Vestiaire 수수료 제로. 자율 webhook: 결제 후 5분 내 타 플랫폼 자동 비활성화.',
-  luxuryWhyTitle: '이 LV x NBA M이 희귀한 이유',
+  luxuryWhyTitle: '이 LV x NBA이 희귀한 이유',
   luxuryPoint1: '✦ 버질 아블로 FW21 — 별세 전 마지막 컬트 드롭, 90년대 NBA 오마주, 스트릿웨어 박물관 피스.',
   luxuryPoint2: '✦ 극미품 A+ — 단 3회 착용, 결함 없음, 부드러운 가죽 온전, 울 보풀 없음, 립 탄탄.',
   luxuryPoint3: '✦ 인증 VCCM09 / CA36929 — 공방 코드 이중 OCR 검증, Japan K.K.',

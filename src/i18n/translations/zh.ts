@@ -3114,7 +3114,7 @@ const zh: Record<string, string> = {
   luxuryTitle: '路易威登 x NBA — 棒球夹克 FW21 Virgil Abloh — 4500€',
   luxurySubtitle: '仅穿3次 极新A+ — 8张高清照片 + 微距 VCCM09/CA36929 — 保价DHL Express + 签收 — 库存1',
   luxuryDescription: 'Virgil Abloh设计的FW21系列 — 路易威登 x NBA联名。皮革+羊毛棒球夹克，标志性NBA/LV贴章，印花缎面内衬。尺码未标明，仅穿3次 — 极新A+品相。认证码VCCM09 / CA36929双重OCR验证。8张高清照片 + 缝线/标签微距。保价DHL Express签收派送。Stripe直购4500€ — 零eBay/Grailed/Vestiaire佣金。自动化webhook：付款后5分钟内自动下架全平台。',
-  luxuryWhyTitle: '为何这件LV x NBA M如此稀有',
+  luxuryWhyTitle: '为何这件LV x NBA如此稀有',
   luxuryPoint1: '✦ Virgil Abloh FW21 — 大师离世前最后的 cult 系列，致敬90年代NBA，街头服饰博物馆级藏品。',
   luxuryPoint2: '✦ 极新A+ — 仅穿3次，毫无瑕疵，皮革柔软完好，羊毛无起球，罗纹紧致。',
   luxuryPoint3: '✦ 认证 VCCM09 / CA36929 — 车间码双重OCR验证，Japan K.K. + 。',

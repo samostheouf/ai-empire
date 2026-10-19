@@ -42,7 +42,7 @@ export async function processStripeWebhookEvent(stripeEvent: Record<string, unkn
           const {Resend}=await import('resend')
           const resend = process.env.RESEND_API_KEY ? new (await import('resend')).Resend(process.env.RESEND_API_KEY) : null
           if(resend && luxuryEmail){
-            await resend.emails.send({from: process.env.EMAIL_FROM || 'noreply@ai-empire-steel.vercel.app', to: luxuryEmail, subject: 'Commande confirmee — LV x NBA M — DHL tracking sous 24h', html: `<p>Merci ! Votre LV x NBA Varsity M FW21 Virgil Abloh (4500€) est confirme. Nous preparons l'envoi DHL Express assure + signature. Tracking sous 24h.</p><p>SKU: ${luxurySku} — Session: ${session.id}</p>`})
+            await resend.emails.send({from: process.env.EMAIL_FROM || 'noreply@ai-empire-steel.vercel.app', to: luxuryEmail, subject: 'Commande confirmee — LV x NBA Varsity FW21 — DHL tracking sous 24h', html: `<p>Merci ! Votre LV x NBA Varsity FW21 Virgil Abloh (4500€) est confirme. Nous preparons l'envoi DHL Express assure + signature. Tracking sous 24h.</p><p>SKU: ${luxurySku} — Session: ${session.id}</p>`})
           }
         }catch(e){}
         break;

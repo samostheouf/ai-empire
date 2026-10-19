@@ -3379,7 +3379,7 @@ export type TranslationKeys = {
   cookieAcceptAllAria: string
   cookieRejectAllAria: string
 
-  // Luxury — HERMES LV x NBA M FW21 Virgil Abloh 4500€ — 10 langues émotionnelles
+  // Luxury — HERMES LV x NBA Varsity FW21 Virgil Abloh 4500€ — 10 langues émotionnelles
   luxuryMetaTitle: string
   luxuryMetaDesc: string
   luxuryTitle: string

@@ -3223,7 +3223,7 @@ const ja: Record<string, string> = {
   luxuryTitle: 'ルイ・ヴィトン x NBA — バーシティ M FW21 ヴァージル・アブロー — 4500€',
   luxurySubtitle: '着用3回 極美品A+ — 8枚HD写真 + マクロ VCCM09/CA36929 — 保険付DHL Express + サイン — 在庫1',
   luxuryDescription: 'ヴァージル・アブローが手掛けたFW21エディション — ルイ・ヴィトン x NBAコラボ。レザー×ウールバーシティ、アイコニックなNBA/LVパッチ、プリントサテン裏地。サイズ未記載、着用わずか3回 — 極美品A+。鑑定コードVCCM09 / CA36929を二重OCRで検証済み。8枚のHD写真 + 縫製/タグのマクロ。サイン付き保険付DHL Expressで発送。直接販売4500€ Stripe決済 — eBay/Grailed/Vestiaire手数料ゼロ。自律webhook：支払い後5分以内に他モール出品を自動停止。',
-  luxuryWhyTitle: 'なぜこのLV x NBA Mは希少なのか',
+  luxuryWhyTitle: 'なぜこのLV x NBAは希少なのか',
   luxuryPoint1: '✦ ヴァージル・アブロー FW21 — 逝去前最後のカルトドロップ、90年代NBAへのオマージュ、ストリートウェアの美術品。',
   luxuryPoint2: '✦ 極美品A+ — 着用3回のみ、欠点なし、柔らかなレザー無傷、ウール毛玉なし、リブのテンション完璧。',
   luxuryPoint3: '✦ 鑑定済 VCCM09 / CA36929 — アトリエコードを二重OCRで検証、Japan K.K. + 。',
