@@ -3218,9 +3218,9 @@ const ja: Record<string, string> = {
   statusCtaButton: '無料で始める',
   statusCtaPricing: '料金を見る',
   // Luxury — HERMES 4500€ — 10 langues émotionnelles
-  luxuryMetaTitle: 'ルイ・ヴィトン x NBA バーシティ M FW21 ヴァージル・アブロー — 4500€ | 安全な直接購入',
-  luxuryMetaDesc: 'LV x NBA バーシティ M FW21 ヴァージル・アブロー — 着用3回 極美品A+、鑑定VCCM09/CA36929、8枚HD写真+マクロ • 保険付DHL Express • 在庫1 • 手数料なし直接Stripe 4500€。',
-  luxuryTitle: 'ルイ・ヴィトン x NBA — バーシティ M FW21 ヴァージル・アブロー — 4500€',
+  luxuryMetaTitle: 'ルイ・ヴィトン x NBA バーシティジャケット FW21 ヴァージル・アブロー — 4500€ | 安全な直接購入',
+  luxuryMetaDesc: 'LV x NBA バーシティジャケット FW21 ヴァージル・アブロー — 着用3回 極美品A+、鑑定VCCM09/CA36929、8枚HD写真+マクロ • 保険付DHL Express • 在庫1 • 手数料なし直接Stripe 4500€。',
+  luxuryTitle: 'ルイ・ヴィトン x NBA — バーシティジャケット FW21 ヴァージル・アブロー — 4500€',
   luxurySubtitle: '着用3回 極美品A+ — 8枚HD写真 + マクロ VCCM09/CA36929 — 保険付DHL Express + サイン — 在庫1',
   luxuryDescription: 'ヴァージル・アブローが手掛けたFW21エディション — ルイ・ヴィトン x NBAコラボ。レザー×ウールバーシティ、アイコニックなNBA/LVパッチ、プリントサテン裏地。サイズ未記載、着用わずか3回 — 極美品A+。鑑定コードVCCM09 / CA36929を二重OCRで検証済み。8枚のHD写真 + 縫製/タグのマクロ。サイン付き保険付DHL Expressで発送。直接販売4500€ Stripe決済 — eBay/Grailed/Vestiaire手数料ゼロ。自律webhook：支払い後5分以内に他モール出品を自動停止。',
   luxuryWhyTitle: 'なぜこのLV x NBAは希少なのか',
@@ -3252,7 +3252,7 @@ const ja: Record<string, string> = {
   luxuryBadgeVirgil: 'ヴァージル・アブロー FW21',
   luxuryBadgeDhl: '保険付DHL Express',
   luxuryBadgePrice: '4500€ フロア • 在庫1',
-  luxuryOgTitle: 'ルイ・ヴィトン x NBA — バーシティ M FW21 ヴァージル・アブロー — 4500€',
+  luxuryOgTitle: 'ルイ・ヴィトン x NBA — バーシティジャケット FW21 ヴァージル・アブロー — 4500€',
   luxuryOgDesc: '着用3回 極美品 • 鑑定VCCM09/CA36929 • 8枚HD • 保険付DHL • 在庫1 • 直接Stripe',
 }
 

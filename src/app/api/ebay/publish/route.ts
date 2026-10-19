@@ -95,7 +95,10 @@ function buildInventoryItemPayload(opts: { locale: string; imageUrls: string[]; 
         Brand: [TOP1.brand],
         Type: ['Varsity Jacket'],
         Material: ['Leather', 'Wool'],
-        Size: ['M'],
+        // Taille NON indiquée sur l'étiquette (règle luxury: 0 revendication non prouvée).
+        // eBay exige un aspect Size sur cette catégorie : on déclare l'état réel,
+        // pas une taille inventée. 'Unspecified' est une valeur aspect acceptée.
+        Size: ['Unspecified'],
         Color: ['Black'],
         Designer: ['Virgil Abloh'],
         Collection: ['FW21'],
