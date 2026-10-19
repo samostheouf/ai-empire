@@ -59,7 +59,7 @@ export async function GET() {
     p75: 6978,
     velocity: 'faible (<2/mois)',
     floor: 4500,
-    ask: active ? (active as any).price : 4999,
+    ask: active ? (active as any).price : 4500,
   }
 
   // Source files (for DATA_20_20 traceability)
@@ -78,7 +78,7 @@ export async function GET() {
       activeSales: list.filter((s: any) => s.status === 'active').length,
       totalSales: list.length,
       soldCount: sold.length,
-      mode: 'FAST 4999€ 3j',
+      mode: `FAST ${active ? (active as any).price : 4500}€ floor — 4 plateformes`,
     },
     stats: {
       sku: active ? (active as any).sku : null,
@@ -114,7 +114,7 @@ export async function GET() {
     pricing: {
       current: marketSnapshot,
       history: pricingHistory,
-      journal_hint: 'pricing_journal.jsonl: HOLD 4 999€ depuis 2026-09-04T09:15+02, floor 4500, next_check 2026-09-06T09:00+02',
+      journal_hint: 'HOLD 4500€ depuis 2026-09-04, floor absolu 4500 (jamais dessous sans humain)',
     },
     sources,
   }, { headers: { 'Cache-Control': 'no-store, no-cache, must-revalidate' } })

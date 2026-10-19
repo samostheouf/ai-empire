@@ -56,11 +56,11 @@ async function getAccessTokenFromRefresh(refreshToken: string, appId: string, ce
 const TOP1 = {
   sku: 'LV-NBA-M-001',
   titles: {
-    FR: 'Louis Vuitton x NBA Leather Varsity Jacket M FW21 Virgil Abloh Noir 3x Porté',
-    EN: 'Louis Vuitton x NBA Leather Varsity Jacket M FW21 Virgil Abloh Black Mint',
-    DE: 'Louis Vuitton x NBA Leder Varsity Jacke M FW21 Virgil Abloh Schwarz Top',
-    IT: 'Louis Vuitton x NBA Giacca Varsity Pelle M FW21 Virgil Abloh Nero Perfetta',
-    JP: 'ルイ・ヴィトン x NBA レザー バーシティジャケット M FW21 ヴァージル・アブロー',
+    FR: 'Louis Vuitton x NBA Leather Varsity Jacket FW21 Virgil Abloh Noir 3x Porté',
+    EN: 'Louis Vuitton x NBA Leather Varsity Jacket FW21 Virgil Abloh Black Mint',
+    DE: 'Louis Vuitton x NBA Leder Varsity Jacke FW21 Virgil Abloh Schwarz Top',
+    IT: 'Louis Vuitton x NBA Giacca Varsity Pelle FW21 Virgil Abloh Nero Perfetta',
+    JP: 'ルイ・ヴィトン x NBA レザー バーシティジャケット FW21 ヴァージル・アブロー',
   },
   // 8 photos — ordre TOP1 (face/dos/profil/détails/étiquettes)
   // En prod: URLs Vercel Blob / Cloudinary / Supabase Storage publiques HTTPS
@@ -69,7 +69,7 @@ const TOP1 = {
   brand: 'Louis Vuitton',
   mpn: '1A8WU8',
   condition: 'USED_EXCELLENT', // eBay conditionEnum: NEW, LIKE_NEW, NEW_WITH_DEFECTS, USED_EXCELLENT etc.
-  price: 4999,
+  price: 4500,
   currency: 'EUR',
   quantity: 1,
   // Category eBay FR: 1059 outerwear? Mais LV x NBA varsity = 57988 Jackets? On utilise 57988 par défaut + aspects
@@ -181,11 +181,11 @@ export async function POST(request: NextRequest) {
 
   // Descriptions 5 langues (extraits TOP1_MARKETING_PACK — 10 points condensés)
   const descriptions: Record<string, string> = {
-    FR: `LOUIS VUITTON x NBA — LEATHER BASKETBALL VARSITY JACKET — FW21 VIRGIL ABLOH — TAILLE M\nPorté 3x Parfait A+ — 8 photos HD + macros VCCM09/CA36929/Made in Italy. FAST SALE 3j 4 999€ ferme (StockX Last $7,564). Envoi monde DHL Express assuré 45€ 24h + signature. Voir TOP1_MARKETING_PACK pour 10 points complets.`,
-    EN: `LOUIS VUITTON x NBA — LEATHER BASKETBALL VARSITY JACKET — FW21 VIRGIL ABLOH — SIZE M\nWorn 3x Mint A+ — 8 HD photos + macros VCCM09/CA36929/Made in Italy. FAST SALE 3 days €4,999 firm (StockX Last $7,564). Worldwide DHL Express insured $50 24h + signature.`,
-    DE: `LOUIS VUITTON x NBA — Leder Varsity Jacke — FW21 VIRGIL ABLOH — Gr. M\nNur 3x getragen Top A+ — 8 HD Fotos + Makro VCCM09/CA36929/Made in Italy. FAST SALE 3 Tage 4.999€ fest (StockX Last $7,564). Weltweit DHL Express versichert 24h.`,
-    IT: `LOUIS VUITTON x NBA — Giacca Varsity Pelle — FW21 VIRGIL ABLOH — Taglia M\nIndossata 3 volte Perfetta A+ — 8 foto HD + macro VCCM09/CA36929/Made in Italy. FAST SALE 3 giorni 4.999€ fisso (StockX Last $7,564). Spedizione mondiale DHL Express 24h.`,
-    JP: `ルイ・ヴィトン x NBA レザー バーシティジャケット — FW21 ヴァージル・アブロー — サイズM\n着用3回 美品A+ — 8枚 HD写真 + タグ VCCM09/CA36929/Made in Italy. FAST SALE 3日間 €4,999固定 (StockX Last $7,564). 世界配送 DHL Express 24h。`,
+    FR: `LOUIS VUITTON x NBA — LEATHER BASKETBALL VARSITY JACKET — FW21 VIRGIL ABLOH — \nPorté 3x Parfait A+ — 8 photos HD + macros VCCM09/CA36929. FAST SALE 3j 4500€ ferme (StockX Last $7,564). Envoi monde DHL Express assuré 45€ 24h + signature. Voir TOP1_MARKETING_PACK pour 10 points complets.`,
+    EN: `LOUIS VUITTON x NBA — LEATHER BASKETBALL VARSITY JACKET — FW21 VIRGIL ABLOH — \nWorn 3x Mint A+ — 8 HD photos + macros VCCM09/CA36929. FAST SALE 3 days €4,500 firm (StockX Last $7,564). Worldwide DHL Express insured $50 24h + signature.`,
+    DE: `LOUIS VUITTON x NBA — Leder Varsity Jacke — FW21 VIRGIL ABLOH — \nNur 3x getragen Top A+ — 8 HD Fotos + Makro VCCM09/CA36929. FAST SALE 3 Tage 4500€ fest (StockX Last $7,564). Weltweit DHL Express versichert 24h.`,
+    IT: `LOUIS VUITTON x NBA — Giacca Varsity Pelle — FW21 VIRGIL ABLOH — \nIndossata 3 volte Perfetta A+ — 8 foto HD + macro VCCM09/CA36929. FAST SALE 3 giorni 4500€ fisso (StockX Last $7,564). Spedizione mondiale DHL Express 24h.`,
+    JP: `ルイ・ヴィトン x NBA レザー バーシティジャケット — FW21 ヴァージル・アブロー — \n着用3回 美品A+ — 8枚 HD写真 + タグ VCCM09/CA36929. FAST SALE 3日間 €4,500固定 (StockX Last $7,564). 世界配送 DHL Express 24h。`,
   }
   const description = descriptions[locale] || descriptions.FR
   const titleForLocale = (TOP1.titles as any)[locale] || TOP1.titles.FR

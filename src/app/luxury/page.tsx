@@ -42,7 +42,7 @@ export async function generateMetadata({ searchParams }: { searchParams?: { hl?:
   return {
     title: t.metaTitle,
     description: t.metaDesc,
-    keywords: ['Louis Vuitton NBA', 'LV NBA Virgil Abloh', 'Varsity Jacket M', 'FW21', 'Virgil Abloh', 'cuir laine varsity', 'VCCM09 CA36929', 'DHL assure', 'Stripe direct'],
+    keywords: ['Louis Vuitton NBA', 'LV NBA Virgil Abloh', 'Varsity Jacket FW21', 'FW21', 'Virgil Abloh', 'cuir laine varsity', 'VCCM09 CA36929', 'DHL assure', 'Stripe direct'],
     alternates: { canonical: CANONICAL, languages },
     openGraph: {
       title: t.ogTitle,
@@ -63,14 +63,14 @@ export async function generateMetadata({ searchParams }: { searchParams?: { hl?:
 const BLOB = 'https://jyjp02vaprlkyxab.public.blob.vercel-storage.com'
 
 const gallery = [
-  { url: `${BLOB}/03_dos.jpg`, label: 'Dos HD', alt: 'Dos Louis Vuitton x NBA varsity M FW21 Virgil Abloh — cuir bleu nuit et laine crème, lettres LV géantes au dos, coutures parfaites, porté 3x état neuf', w: 1200, h: 900 },
-  { url: `${BLOB}/04_profil.jpg`, label: 'Profil 3/4', alt: 'Profil trois-quarts veste LV x NBA varsity M — coupe varsity cuir et laine, manches contrastées, boutons pression gravés LV, bord-côte rayé', w: 1200, h: 900 },
+  { url: `${BLOB}/03_dos.jpg`, label: 'Dos HD', alt: 'Dos Louis Vuitton x NBA Varsity FW21 Virgil Abloh — cuir bleu nuit et laine crème, lettres LV géantes au dos, coutures parfaites, porté 3x état neuf', w: 1200, h: 900 },
+  { url: `${BLOB}/04_profil.jpg`, label: 'Profil 3/4', alt: 'Profil trois-quarts veste LV x NBA Varsity FW21 — coupe varsity cuir et laine, manches contrastées, boutons pression gravés LV, bord-côte rayé', w: 1200, h: 900 },
   { url: `${BLOB}/05_lv_brode.jpg`, label: 'LV brodé', alt: 'Broderie LV poitrine Louis Vuitton x NBA — fil blanc haute densité sur cuir bleu, détail Virgil Abloh FW21 macro nette haute définition', w: 1200, h: 900 },
   { url: `${BLOB}/06_patch_nba.jpg`, label: 'Patch NBA', alt: 'Patch NBA brodé manche — logo NBA officiel réversible cousu, couleurs vives, authentification visuelle FW21', w: 1200, h: 900 },
   { url: `${BLOB}/07_patchs_manches.jpg`, label: 'Patchs manches', alt: 'Patchs manches Louis Vuitton x NBA — patchs multiples cuir et textile NBA, finition bord-côte impeccable état A+', w: 1200, h: 900 },
   { url: `${BLOB}/08_boutons.jpg`, label: 'Boutons gravés', alt: 'Boutons pression gravés Louis Vuitton — métal doré gravé LV, fermeture avant varsity, macro haute définition', w: 1200, h: 900 },
-  { url: `${BLOB}/09_doublure.jpg`, label: 'Doublure satin', alt: 'Doublure intérieure satin imprimée LV x NBA — motif monogram et logos NBA, coutures intérieures propres taille M', w: 1200, h: 900 },
-  { url: `${BLOB}/10_etiquette_face.jpg`, label: 'Étiquette VCCM09', alt: 'Étiquette authentification Louis Vuitton face — codes VCCM09 et CA36929 visibles Made in Italy taille M macro lisible', w: 1200, h: 900 },
+  { url: `${BLOB}/09_doublure.jpg`, label: 'Doublure satin', alt: 'Doublure intérieure satin imprimée LV x NBA — motif monogram et logos NBA, coutures intérieures propres', w: 1200, h: 900 },
+  { url: `${BLOB}/10_etiquette_face.jpg`, label: 'Étiquette VCCM09', alt: 'Étiquette authentification Louis Vuitton face — codes VCCM09 et CA36929 visibles, macro lisible', w: 1200, h: 900 },
 ]
 
 export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: string } }) {
@@ -114,7 +114,6 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
     category: 'Apparel > Jackets > Varsity',
     color: 'Bleu / Blanc / Rouge NBA',
     material: 'Cuir + laine + satin doublure',
-    size: 'M',
     pattern: 'Varsity NBA',
     audience: { '@type': 'Audience', audienceType: 'Unisex' },
     condition: 'https://schema.org/UsedCondition',
@@ -125,7 +124,7 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
       { '@type': 'PropertyValue', name: 'Auth Code 1', value: 'VCCM09' },
       { '@type': 'PropertyValue', name: 'Auth Code 2', value: 'CA36929' },
       { '@type': 'PropertyValue', name: 'Etat', value: locale==='fr' ? 'Porte 3x Parfait A+' : locale==='en' ? 'Worn 3x Mint A+' : '3x' },
-      { '@type': 'PropertyValue', name: 'Taille', value: 'M' },
+      { '@type': 'PropertyValue', name: 'Taille', value: 'Non indiquee sur l etiquette — mesures sur demande' },
       { '@type': 'PropertyValue', name: 'Locale', value: locale },
     ],
     image: gallery.map((g) => g.url),
@@ -172,7 +171,7 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-LUXURY" />
       <script
         dangerouslySetInnerHTML={{
-          __html: `(function(){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=window.gtag||gtag;gtag('js',new Date());var id='';try{id=process.env.NEXT_PUBLIC_GA_ID||''}catch(e){}if(!id)try{id=window.__GA_ID__||''}catch(e){}if(id)gtag('config',id,{send_page_view:false});var p={currency:'EUR',value:4500,items:[{item_id:'HERMES-LV-NBA-M-1A8WU8',item_name:'Louis Vuitton x NBA Varsity M FW21 Virgil Abloh',price:4500,quantity:1}]};try{gtag('event','view_item',p);dataLayer.push({event:'view_item',ecommerce:p});if(window.fbq)fbq('track','ViewContent',{content_ids:['HERMES-LV-NBA-M-1A8WU8'],content_type:'product',value:4500,currency:'EUR'})}catch(e){}window.__LUXURY_GTAG_PAYLOAD__=p;})();`,
+          __html: `(function(){window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}window.gtag=window.gtag||gtag;gtag('js',new Date());var id='';try{id=process.env.NEXT_PUBLIC_GA_ID||''}catch(e){}if(!id)try{id=window.__GA_ID__||''}catch(e){}if(id)gtag('config',id,{send_page_view:false});var p={currency:'EUR',value:4500,items:[{item_id:'HERMES-LV-NBA-M-1A8WU8',item_name:'Louis Vuitton x NBA Varsity FW21 Virgil Abloh',price:4500,quantity:1}]};try{gtag('event','view_item',p);dataLayer.push({event:'view_item',ecommerce:p});if(window.fbq)fbq('track','ViewContent',{content_ids:['HERMES-LV-NBA-M-1A8WU8'],content_type:'product',value:4500,currency:'EUR'})}catch(e){}window.__LUXURY_GTAG_PAYLOAD__=p;})();`,
         }}
       />
       <script
@@ -226,7 +225,7 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
                 <span className="ml-auto rounded-full bg-black px-2.5 py-1 text-[11px] font-bold text-white">FLOOR HOLD</span>
               </div>
               <div className="mt-1 flex flex-wrap gap-1.5 text-[11px]">
-                <span className="rounded-full bg-zinc-900 px-2.5 py-1 font-medium text-white">Taille M</span>
+                <span className="rounded-full bg-zinc-900 px-2.5 py-1 font-medium text-white">Taille non indiquée</span>
                 <span className="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1">Etat A+ 3x</span>
                 <span className="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-1">{t.badgeVirgil}</span>
               </div>
@@ -311,7 +310,7 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
           <div className="mt-3 grid gap-5 text-[13px] leading-relaxed text-zinc-700 md:grid-cols-[1.35fr_0.65fr]">
             <div className="space-y-3">
               <p>FW21 : Virgil Abloh signe sa dernière collab <strong>Louis Vuitton x NBA</strong>. Le varsity devient manifeste — cuir bleu nuit, laine crème, patchs NBA brodés, LV au dos comme un scoreboard. Hybridation luxe/street plus jamais rééditée après novembre 2021.</p>
-              <p>Broderie haute densité, boutons pression gravés LV, doublure satin imprimée, bord-côte rayé. Cette taille M : trois sorties, puis conservée. Aucune usure, aucun compromis. Une archive portable.</p>
+              <p>Broderie haute densité, boutons pression gravés LV, doublure satin imprimée, bord-côte rayé. Trois sorties, puis conservée. Aucune usure, aucun compromis. Une archive portable.</p>
               <p className="rounded-xl bg-zinc-50 p-3 text-[12px] leading-relaxed text-zinc-600 border border-zinc-200">Rareté : édition limitée FW21, arrêtée à la disparition de Virgil. Marché tendu, floor 4500€ HOLD. Stock 1 réel — pas de restock.</p>
             </div>
             <div className="rounded-xl bg-black p-4 text-white">
@@ -319,7 +318,7 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
               <dl className="mt-2 space-y-1.5 text-[12px]">
                 <div className="flex justify-between"><dt className="text-zinc-400">Collection</dt><dd className="font-semibold">FW21 Virgil Abloh</dd></div>
                 <div className="flex justify-between"><dt className="text-zinc-400">Matière</dt><dd className="font-semibold">Cuir + laine + satin</dd></div>
-                <div className="flex justify-between"><dt className="text-zinc-400">Taille</dt><dd className="font-semibold">M</dd></div>
+                <div className="flex justify-between"><dt className="text-zinc-400">Taille</dt><dd className="font-semibold">Non indiquée — mesures sur demande</dd></div>
                 <div className="flex justify-between"><dt className="text-zinc-400">Codes</dt><dd className="font-semibold">VCCM09 / CA36929</dd></div>
                 <div className="flex justify-between"><dt className="text-zinc-400">État</dt><dd className="font-semibold">Porté 3x — A+</dd></div>
                 <div className="flex justify-between"><dt className="text-zinc-400">Prix</dt><dd className="font-semibold">4500€ HOLD</dd></div>

@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
         price_data: {
           currency,
           product_data: {
-            name: `LV x NBA Varsity M FW21 Virgil Abloh - ${sku}`,
-            description: 'LV x NBA Leather Basketball Jacket M FW21 Virgil Abloh - Porte 3x Parfait - DHL assure',
+            name: `LV x NBA Varsity FW21 Virgil Abloh - ${sku}`,
+            description: 'LV x NBA Leather Basketball Jacket FW21 Virgil Abloh - Porte 3x Parfait - DHL assure',
             metadata: { sku }
           },
           unit_amount: price * 100,
