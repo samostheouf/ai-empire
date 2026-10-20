@@ -183,12 +183,13 @@ export async function POST(request: NextRequest) {
   }
 
   // Descriptions 5 langues (extraits TOP1_MARKETING_PACK — 10 points condensés)
+  // Prix 4500€ FERME, sans limite de temps (floor absolu — règle 43).
   const descriptions: Record<string, string> = {
-    FR: `LOUIS VUITTON x NBA — LEATHER BASKETBALL VARSITY JACKET — FW21 VIRGIL ABLOH — \nPorté 3x Parfait A+ — 8 photos HD + macros VCCM09/CA36929. FAST SALE 3j 4500€ ferme (StockX Last $7,564). Envoi monde DHL Express assuré 45€ 24h + signature. Voir TOP1_MARKETING_PACK pour 10 points complets.`,
-    EN: `LOUIS VUITTON x NBA — LEATHER BASKETBALL VARSITY JACKET — FW21 VIRGIL ABLOH — \nWorn 3x Mint A+ — 8 HD photos + macros VCCM09/CA36929. FAST SALE 3 days €4,500 firm (StockX Last $7,564). Worldwide DHL Express insured $50 24h + signature.`,
-    DE: `LOUIS VUITTON x NBA — Leder Varsity Jacke — FW21 VIRGIL ABLOH — \nNur 3x getragen Top A+ — 8 HD Fotos + Makro VCCM09/CA36929. FAST SALE 3 Tage 4500€ fest (StockX Last $7,564). Weltweit DHL Express versichert 24h.`,
-    IT: `LOUIS VUITTON x NBA — Giacca Varsity Pelle — FW21 VIRGIL ABLOH — \nIndossata 3 volte Perfetta A+ — 8 foto HD + macro VCCM09/CA36929. FAST SALE 3 giorni 4500€ fisso (StockX Last $7,564). Spedizione mondiale DHL Express 24h.`,
-    JP: `ルイ・ヴィトン x NBA レザー バーシティジャケット — FW21 ヴァージル・アブロー — \n着用3回 美品A+ — 8枚 HD写真 + タグ VCCM09/CA36929. FAST SALE 3日間 €4,500固定 (StockX Last $7,564). 世界配送 DHL Express 24h。`,
+    FR: `LOUIS VUITTON x NBA — LEATHER BASKETBALL VARSITY JACKET — FW21 VIRGIL ABLOH — \nPorté 3x Parfait A+ — 8 photos HD + macros VCCM09/CA36929. Prix ferme 4500€, sans limite de temps (StockX Last $7,564). Envoi monde DHL Express assuré 45€ 24h + signature. Voir TOP1_MARKETING_PACK pour 10 points complets.`,
+    EN: `LOUIS VUITTON x NBA — LEATHER BASKETBALL VARSITY JACKET — FW21 VIRGIL ABLOH — \nWorn 3x Mint A+ — 8 HD photos + macros VCCM09/CA36929. Firm price €4,500, no time limit (StockX Last $7,564). Worldwide DHL Express insured $50 24h + signature.`,
+    DE: `LOUIS VUITTON x NBA — Leder Varsity Jacke — FW21 VIRGIL ABLOH — \nNur 3x getragen Top A+ — 8 HD Fotos + Makro VCCM09/CA36929. Fester Preis 4500€, kein Zeitlimit (StockX Last $7,564). Weltweit DHL Express versichert 24h.`,
+    IT: `LOUIS VUITTON x NBA — Giacca Varsity Pelle — FW21 VIRGIL ABLOH — \nIndossata 3 volte Perfetta A+ — 8 foto HD + macro VCCM09/CA36929. Prezzo fisso 4500€, senza limite di tempo (StockX Last $7,564). Spedizione mondiale DHL Express 24h.`,
+    JP: `ルイ・ヴィトン x NBA レザー バーシティジャケット — FW21 ヴァージル・アブロー — \n着用3回 美品A+ — 8枚 HD写真 + タグ VCCM09/CA36929. 価格固定 €4,500・期間限定なし (StockX Last $7,564). 世界配送 DHL Express 24h。`,
   }
   const description = descriptions[locale] || descriptions.FR
   const titleForLocale = (TOP1.titles as any)[locale] || TOP1.titles.FR

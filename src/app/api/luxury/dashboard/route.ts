@@ -1,11 +1,20 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { safeQuery } from '@/lib/db'
+import { verifyCronAuth } from '@/lib/auth'
 import fs from 'fs'
 import path from 'path'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET() {
+/**
+ * GET /api/luxury/dashboard
+ * Auth: Bearer CRON_SECRET (verifyCronAuth).
+ * Aucun appelant interne et aucun lien de page : la route etait served 200 sans
+ * authentification et exposait publiquement l'historique complet des ventes
+ * (20 logs/vente), les montants d'offres et la posture de negociation.
+ */
+export async function GET(request: NextRequest) {
+  if (!verifyCronAuth(request)) return NextResponse.json({ error: 'Non autorisé' }, { status: 401 })
   const now = new Date().toISOString()
 
   // 1. STATS — toutes ventes + active principale

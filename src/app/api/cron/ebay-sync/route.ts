@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import crypto from 'crypto'
 import { verifyCronAuth } from '@/lib/auth'
 import { safeQuery } from '@/lib/db'
+import { LUXURY_FLOOR } from '@/lib/luxury-intent'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,15 +39,16 @@ async function getAccessToken(refreshToken: string, appId: string, certId: strin
 
 /**
  * GET /api/cron/ebay-sync
- * Cron 5-15min optionnel — sync vues/offres/négociation auto floor 4 999€
+ * Cron 5-15min optionnel — sync vues/offres/négociation auto floor 4 500€
  *
  * Auth: Bearer CRON_SECRET (verifyCronAuth)
  *
- * Floor rules FAST 3j:
- *   - Offre >= 4999 → ACCEPT (ou auto-accept via eBay Best Offer si configuré)
- *   - 4700..4998 → COUNTER 4999 (contre-offre unique)
- *   - < 4700 → DECLINE
- *   Après J+3: floor passe à 4500 (absolute floor), logique identique décalée.
+ * Floor ABSOLU 4500€ (LUXURY_FLOOR), sans échéance:
+ *   - Offre >= 4500 → ACCEPT
+ *   - 4300..4499 → COUNTER 4500 (contre-offre unique)
+ *   - < 4300 → DECLINE
+ * (L'ancienne règle glissante J0-J3 = 4999 a été retirée le 20/10 : le floor
+ *  4500 n'a aucune échéance — luxury-pricing HOLD 4500.)
  *
  * Data sources (si tokens présents):
  *   - Analytics API: GET /sell/analytics/v1/traffic_report (vues)
@@ -74,8 +76,8 @@ export async function GET(request: NextRequest) {
   if (!sale) return NextResponse.json({ success: true, message: 'no active sale', timestamp: now.toISOString() })
 
   const daysActive = (now.getTime() - new Date(sale.createdAt).getTime()) / (1000 * 60 * 60 * 24)
-  const floor = daysActive >= 3 ? 4500 : 4999 // floor glissant J+3
-  const floorLabel = daysActive >= 3 ? '4500 (absolute)' : '4999 (FAST 3j)'
+  const floor = LUXURY_FLOOR // floor ABSOLU, sans échéance (règle 43/39)
+  const floorLabel = `${LUXURY_FLOOR} (absolu)`
 
   // --- Collecte vues/offres ---
   let views: number = sale.views || 0
@@ -158,21 +160,15 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  type Decision = 'ACCEPT' | 'COUNTER_4999' | 'COUNTER_4500' | 'DECLINE' | 'HOLD'
+  type Decision = 'ACCEPT' | 'COUNTER_4500' | 'DECLINE' | 'HOLD'
   const decisions: { amount: number; decision: Decision; reason: string }[] = []
   for (const o of pendingOffers) {
     const a = o.amount
     let dec: Decision
     let reason: string
-    if (floor === 4999) {
-      if (a >= 4999) { dec = 'ACCEPT'; reason = `>= floor FAST 4999 → ACCEPT` }
-      else if (a >= 4700) { dec = 'COUNTER_4999'; reason = `4700-4998 → COUNTER 4999 (1x)` }
-      else { dec = 'DECLINE'; reason = `<4700 → DECLINE` }
-    } else {
-      if (a >= 4500) { dec = 'ACCEPT'; reason = `J+3 floor 4500 → ACCEPT >=4500` }
-      else if (a >= 4300) { dec = 'COUNTER_4500'; reason = `4300-4499 J+3 → COUNTER 4500` }
-      else { dec = 'DECLINE'; reason = `<4300 J+3 → DECLINE` }
-    }
+    if (a >= floor) { dec = 'ACCEPT'; reason = `>= floor ${floor} → ACCEPT` }
+    else if (a >= 4300) { dec = 'COUNTER_4500'; reason = `4300-4499 → COUNTER ${floor} (1x)` }
+    else { dec = 'DECLINE'; reason = `<4300 → DECLINE` }
     decisions.push({ amount: a, decision: dec, reason })
   }
 
@@ -200,12 +196,12 @@ export async function GET(request: NextRequest) {
     timestamp: now.toISOString(),
     source,
     sale: { sku: sale.sku, price: sale.price, views, watchers, daysActive: Number(daysActive.toFixed(2)) },
-    floor: { value: floor, label: floorLabel, rule: 'J0-J3: 4999 / J+3: 4500 absolute — jamais sous floor sans humain' },
+    floor: { value: floor, label: floorLabel, rule: `${LUXURY_FLOOR} absolute — jamais sous floor sans humain` },
     offers: { count: pendingOffers.length, items: pendingOffers.slice(0, 5) },
     decisions,
     action,
     ebayLivePreview: ebayLive ? (JSON.stringify(ebayLive).slice(0, 1200) + (JSON.stringify(ebayLive).length > 1200 ? '...' : '')) : null,
-    next: decisions.length ? `Décision ${action} — ${decisions[0].reason} — ${hasEbayCreds && refreshToken ? 'LIVE: appel Sell Negotiation API pour exécuter' : 'MOCK: simuler via POST /api/luxury {action:"offer", price:4999}'}` : 'HOLD — aucune offre en attente',
+    next: decisions.length ? `Décision ${action} — ${decisions[0].reason} — ${hasEbayCreds && refreshToken ? 'LIVE: appel Sell Negotiation API pour exécuter' : 'MOCK: simuler via POST /api/luxury {action:"offer", price:4500}'}` : 'HOLD — aucune offre en attente',
     cron_hint: 'Ajoute dans vercel.json: { "path": "/api/cron/ebay-sync", "schedule": "0 */6 * * *" } + GitHub Actions 5m fallback',
   })
 }
