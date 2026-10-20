@@ -8,6 +8,16 @@ import Breadcrumb from '@/components/Breadcrumb'
 
 const articles = [
   {
+    slug: 'securiser-api-ia-nextjs-2026',
+    title: 'Sécuriser son API IA Next.js en 2026 : le guide complet',
+    titleEn: 'Secure your Next.js AI API in 2026: the complete guide',
+    excerpt: 'Guide complet pour sécuriser votre API IA Next.js : injections de prompts, rate limiting, validation des entrées, protection des clés, monitoring et checklist production.',
+    excerptEn: 'Complete guide to securing your Next.js AI API: prompt injections, rate limiting, input validation, key protection, monitoring and production checklist.',
+    date: '20 Octobre 2026',
+    readTime: '14 min',
+    category: 'Sécurité',
+  },
+  {
     slug: 'rag-nextjs-groq',
     title: 'RAG avec Next.js et Groq : système de retrieval augmenté',
     titleEn: 'RAG with Next.js and Groq: retrieval-augmented generation',
