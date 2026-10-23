@@ -8,6 +8,16 @@ import Breadcrumb from '@/components/Breadcrumb'
 
 const articles = [
   {
+    slug: 'nextjs-16-migration',
+    title: 'Next.js 16 : Turbopack, Cache Components et proxy, ce qui change vraiment pour votre SaaS',
+    titleEn: 'Next.js 16: Turbopack, Cache Components and proxy — what actually changes for your SaaS',
+    excerpt: 'Next.js 16 en pratique : Turbopack par défaut, Cache Components, proxy.ts, next/image, React Compiler, et la checklist de migration 15 vers 16 sans casser votre production.',
+    excerptEn: 'Next.js 16 in practice: Turbopack by default, Cache Components, proxy.ts, next/image, React Compiler, and a 15-to-16 migration checklist that does not break production.',
+    date: '23 Octobre 2026',
+    readTime: '14 min',
+    category: 'Migration',
+  },
+  {
     slug: 'securiser-api-ia-nextjs-2026',
     title: 'Sécuriser son API IA Next.js en 2026 : le guide complet',
     titleEn: 'Secure your Next.js AI API in 2026: the complete guide',
