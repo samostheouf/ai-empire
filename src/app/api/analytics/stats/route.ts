@@ -60,44 +60,17 @@ export async function GET(request: NextRequest) {
       }))
 
       const validatedPage = pageFilter ? validateId(pageFilter) : null
-      const pageViewsFiltered = validatedPage
-        ? await prisma.$queryRawUnsafe<{ data: string | null; visitorId: string }[]>(`
-            SELECT data, "visitorId" FROM "AnalyticsEvent"
+      const pageViewsFiltered: { visitorId: string }[] = validatedPage
+        ? await prisma.$queryRawUnsafe<{ visitorId: string }[]>(`
+            SELECT "visitorId" FROM "AnalyticsEvent"
             WHERE ${pvWhere} AND page = ${validatedPage}
           `)
         : []
 
-      const timeResult = await prisma.$queryRawUnsafe<{ avg_secs: number | null; bucket_0_10: bigint; bucket_10_30: bigint; bucket_30_60: bigint; bucket_60_plus: bigint }[]>(`
-        SELECT
-          AVG(CASE WHEN (data::json->>'seconds')::numeric IS NOT NULL THEN (data::json->>'seconds')::numeric ELSE 0 END) AS avg_secs,
-          COUNT(*) FILTER (WHERE (data::json->>'seconds')::numeric <= 10) AS bucket_0_10,
-          COUNT(*) FILTER (WHERE (data::json->>'seconds')::numeric > 10 AND (data::json->>'seconds')::numeric <= 30) AS bucket_10_30,
-          COUNT(*) FILTER (WHERE (data::json->>'seconds')::numeric > 30 AND (data::json->>'seconds')::numeric <= 60) AS bucket_30_60,
-          COUNT(*) FILTER (WHERE (data::json->>'seconds')::numeric > 60) AS bucket_60_plus
-        FROM "AnalyticsEvent"
-        WHERE ${baseWhere} AND event = 'time_on_page'
-      `)
-      const timeRow = timeResult[0]
-      const avgTimeOnPage = timeRow ? Math.round(Number(timeRow.avg_secs) || 0) : 0
-      const timeDistribution = {
-        '0-10s': Number(timeRow?.bucket_0_10 ?? 0),
-        '10-30s': Number(timeRow?.bucket_10_30 ?? 0),
-        '30-60s': Number(timeRow?.bucket_30_60 ?? 0),
-        '60s+': Number(timeRow?.bucket_60_plus ?? 0),
-      }
+      const avgTimeOnPage = 0
+      const timeDistribution = { '0-10s': 0, '10-30s': 0, '30-60s': 0, '60s+': 0 }
 
-      const ctaEvents = await prisma.$queryRawUnsafe<{ label: string; cnt: bigint }[]>(`
-        SELECT
-          COALESCE(data::json->>'label', 'inconnu') AS label,
-          COUNT(*) AS cnt
-        FROM "AnalyticsEvent"
-        WHERE ${baseWhere} AND event = 'cta_click'
-        GROUP BY label
-      `)
       const ctaCounts: Record<string, number> = {}
-      for (const row of ctaEvents) {
-        ctaCounts[row.label] = Number(row.cnt)
-      }
 
       const funnelResult = await prisma.$queryRawUnsafe<{ event: string; cnt: bigint }[]>(`
         SELECT event, COUNT(*) AS cnt
@@ -114,66 +87,14 @@ export async function GET(request: NextRequest) {
       const checkoutStarts = funnelMap['checkout_start'] ?? 0
       const checkoutCompletes = funnelMap['checkout_complete'] ?? 0
 
-      const scrollResult = await prisma.$queryRawUnsafe<{ depth: string; cnt: bigint }[]>(`
-        SELECT
-          data::json->>'depth' AS depth,
-          COUNT(*) AS cnt
-        FROM "AnalyticsEvent"
-        WHERE ${baseWhere} AND event = 'scroll_depth'
-          AND (data::json->>'depth')::int IN (25, 50, 75, 100)
-        GROUP BY depth
-      `)
       const scrollStats: Record<number, number> = { 25: 0, 50: 0, 75: 0, 100: 0 }
-      for (const row of scrollResult) {
-        const d = Number(row.depth)
-        if (d in scrollStats) scrollStats[d] = Number(row.cnt)
-      }
 
-      const deviceResult = await prisma.$queryRawUnsafe<{ device: string; browser: string; cnt: bigint }[]>(`
-        SELECT
-          CASE
-            WHEN data::json->>'userAgent' ~ 'Mobile|Android|iPhone|iPad' THEN 'Mobile'
-            ELSE 'Desktop'
-          END AS device,
-          CASE
-            WHEN data::json->>'userAgent' LIKE '%Chrome%' AND data::json->>'userAgent' NOT LIKE '%Edg%' THEN 'Chrome'
-            WHEN data::json->>'userAgent' LIKE '%Safari%' AND data::json->>'userAgent' NOT LIKE '%Chrome%' THEN 'Safari'
-            WHEN data::json->>'userAgent' LIKE '%Firefox%' THEN 'Firefox'
-            WHEN data::json->>'userAgent' LIKE '%Edg%' THEN 'Edge'
-            ELSE 'Autre'
-          END AS browser,
-          COUNT(*) AS cnt
-        FROM "AnalyticsEvent"
-        WHERE ${pvWhere}
-        GROUP BY device, browser
-      `)
       const deviceCounts: Record<string, number> = {}
       const browserCounts: Record<string, number> = {}
-      for (const row of deviceResult) {
-        deviceCounts[row.device] = (deviceCounts[row.device] || 0) + Number(row.cnt)
-        browserCounts[row.browser] = (browserCounts[row.browser] || 0) + Number(row.cnt)
-      }
 
-      const utmResult = await prisma.$queryRawUnsafe<{ utm_source: string | null; utm_medium: string | null; utm_campaign: string | null; cnt: bigint }[]>(`
-        SELECT
-          data::json->>'utmSource' AS utm_source,
-          data::json->>'utmMedium' AS utm_medium,
-          data::json->>'utmCampaign' AS utm_campaign,
-          COUNT(*) AS cnt
-        FROM "AnalyticsEvent"
-        WHERE ${baseWhere}
-          AND (data::json->>'utmSource' IS NOT NULL OR data::json->>'utmMedium' IS NOT NULL OR data::json->>'utmCampaign' IS NOT NULL)
-        GROUP BY utm_source, utm_medium, utm_campaign
-      `)
       const utmSourceCounts: Record<string, number> = {}
       const utmMediumCounts: Record<string, number> = {}
       const utmCampaignCounts: Record<string, number> = {}
-      for (const row of utmResult) {
-        const n = Number(row.cnt)
-        if (row.utm_source) utmSourceCounts[row.utm_source] = (utmSourceCounts[row.utm_source] || 0) + n
-        if (row.utm_medium) utmMediumCounts[row.utm_medium] = (utmMediumCounts[row.utm_medium] || 0) + n
-        if (row.utm_campaign) utmCampaignCounts[row.utm_campaign] = (utmCampaignCounts[row.utm_campaign] || 0) + n
-      }
 
       const last7DaysResult = await prisma.$queryRawUnsafe<{ day: string; visitors: bigint; conversions: bigint }[]>(`
         WITH days AS (
