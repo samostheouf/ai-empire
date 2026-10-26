@@ -150,3 +150,4 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: 'Erreur lors de la récupération des produits' }, { status: 500 })
   }
 }
+export const dynamic = 'force-dynamic'
