@@ -9,15 +9,15 @@
 ## Commands
 ```bash
 npm run dev          # Next.js dev server
-npm run build        # prisma generate → prisma db push → next build
+npm run build        # prisma generate && next build
 npm run lint         # next lint
 npm run test         # jest
 npx vercel --yes --prod  # deploy to production
 ```
 
 ## Build quirk
-`npm run build` chains: `prisma generate && prisma db push --skip-generate && next build`.
-If `prisma db push` fails (no DB connection), the build fails. In CI/Vercel this is fine (prod DB available). Locally you need a running PostgreSQL or set `DATABASE_URL` to a remote DB.
+`npm run build` chains: `prisma generate && next build`.
+Migrations are applied manually or via a one-off endpoint; `prisma db push` is not part of the build to avoid connection limits. Locally you need a running PostgreSQL or set `DATABASE_URL` to a remote DB.
 
 ## Edge runtime (CRITICAL)
 `src/middleware.ts` runs on **Edge**, NOT Node.js. You CANNOT use:
