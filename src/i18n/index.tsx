@@ -28,7 +28,6 @@ export function I18nProvider({
   const [dict, setDict] = useState<Record<string, unknown> | null>(() => {
     if (initialLocale === 'fr') {
       try {
-        // eslint-disable-next-line @typescript-eslint/no-require-imports
         return require('./translations/fr').default as Record<string, unknown>
       } catch {
         return null

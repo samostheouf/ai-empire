@@ -63,14 +63,14 @@ export async function generateMetadata({ searchParams }: { searchParams?: { hl?:
 const BLOB = 'https://jyjp02vaprlkyxab.public.blob.vercel-storage.com'
 
 const gallery = [
-  { url: `${BLOB}/03_dos.jpg`, label: 'Dos HD', alt: 'Dos Louis Vuitton x NBA Varsity FW21 Virgil Abloh — cuir bleu nuit et laine crème, lettres LV géantes au dos, coutures parfaites, porté 3x état neuf', w: 1200, h: 900 },
-  { url: `${BLOB}/04_profil.jpg`, label: 'Profil 3/4', alt: 'Profil trois-quarts veste LV x NBA Varsity FW21 — coupe varsity cuir et laine, manches contrastées, boutons pression gravés LV, bord-côte rayé', w: 1200, h: 900 },
-  { url: `${BLOB}/05_lv_brode.jpg`, label: 'LV brodé', alt: 'Broderie LV poitrine Louis Vuitton x NBA — fil blanc haute densité sur cuir bleu, détail Virgil Abloh FW21 macro nette haute définition', w: 1200, h: 900 },
-  { url: `${BLOB}/06_patch_nba.jpg`, label: 'Patch NBA', alt: 'Patch NBA brodé manche — logo NBA officiel réversible cousu, couleurs vives, authentification visuelle FW21', w: 1200, h: 900 },
-  { url: `${BLOB}/07_patchs_manches.jpg`, label: 'Patchs manches', alt: 'Patchs manches Louis Vuitton x NBA — patchs multiples cuir et textile NBA, finition bord-côte impeccable état A+', w: 1200, h: 900 },
-  { url: `${BLOB}/08_boutons.jpg`, label: 'Boutons gravés', alt: 'Boutons pression gravés Louis Vuitton — métal doré gravé LV, fermeture avant varsity, macro haute définition', w: 1200, h: 900 },
-  { url: `${BLOB}/09_doublure.jpg`, label: 'Doublure satin', alt: 'Doublure intérieure satin imprimée LV x NBA — motif monogram et logos NBA, coutures intérieures propres', w: 1200, h: 900 },
-  { url: `${BLOB}/10_etiquette_face.jpg`, label: 'Étiquette VCCM09', alt: 'Étiquette authentification Louis Vuitton face — codes VCCM09 et CA36929 visibles, macro lisible', w: 1200, h: 900 },
+  { url: `${BLOB}/05_lv_brode.jpg`, label: 'Vue de face', alt: 'Vue de face de la veste LV x NBA Varsity FW21 — grand monogramme LV brodé sur la poitrine, petit patch carré sur le flanc', w: 1200, h: 900 },
+  { url: `${BLOB}/04_profil.jpg`, label: 'Vue de dos', alt: 'Vue de dos — broderie blanche ballon de basket, notes de musique et étoiles, chiffre 1 brodé sur la manche', w: 1200, h: 900 },
+  { url: `${BLOB}/08_boutons.jpg`, label: 'Manche — trophée NBA', alt: 'Vue de profil — trophée Larry O\'Brien de la NBA brodé en blanc sur la manche', w: 1200, h: 900 },
+  { url: `${BLOB}/07_patchs_manches.jpg`, label: 'Manche — lettrage LV', alt: 'Vue de profil — lettrage Louis Vuitton brodé verticalement sur la manche, patch carré près de l\'épaule', w: 1200, h: 900 },
+  { url: `${BLOB}/09_doublure.jpg`, label: '6 vues extérieures', alt: 'Collage de six vues extérieures — face, dos et profils, lumière réelle sans retouche', w: 1200, h: 900 },
+  { url: `${BLOB}/03_dos.jpg`, label: 'Étiquette AUTH', alt: 'Étiquette de composition Louis Vuitton Japan K.K. — codes VCCM09 et CA36929, tableau de tailles sans taille cochée', w: 1200, h: 900 },
+  { url: `${BLOB}/06_patch_nba.jpg`, label: 'Dos — broderie', alt: 'Vue de dos — broderie ballon de basket et panier, notes de musique et étoiles', w: 1200, h: 900 },
+  { url: `${BLOB}/10_etiquette_face.jpg`, label: 'Étiquette AUTH (2e prise)', alt: 'Seconde prise de la même étiquette de composition — VCCM09 / CA36929 / Louis Vuitton Japan K.K.', w: 1200, h: 900 },
 ]
 
 export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: string } }) {
@@ -112,8 +112,8 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
     brand: { '@type': 'Brand', name: 'Louis Vuitton' },
     manufacturer: { '@type': 'Organization', name: 'Louis Vuitton', url: 'https://louisvuitton.com' },
     category: 'Apparel > Jackets > Varsity',
-    color: 'Bleu / Blanc / Rouge NBA',
-    material: 'Cuir + laine + satin doublure',
+    color: 'Noir',
+    material: 'Cuir + laine (composition exacte non lisible sur les photos)',
     pattern: 'Varsity NBA',
     audience: { '@type': 'Audience', audienceType: 'Unisex' },
     condition: 'https://schema.org/UsedCondition',
@@ -273,12 +273,12 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
         </section>
 
         <section id="galerie" aria-labelledby="galerie-heading" className="mt-8">
-          <h2 id="galerie-heading" className="text-[18px] font-extrabold tracking-tight">Galerie 8 HD — macros contractuelles</h2>
+          <h2 id="galerie-heading" className="text-[18px] font-extrabold tracking-tight">Galerie 8 photos — vues réelles vérifiées</h2>
           <p className="mt-1 text-[13px] leading-relaxed text-zinc-600">{t.description.slice(0,160)}...</p>
           <div className="mt-4">
             <LuxuryGallery images={gallery} />
           </div>
-          <p className="mt-2 text-[11px] text-zinc-500">Alt longs descriptifs WCAG + SEO images • LCP image #01 en priority eager, 7 autres en lazy + sizes AVIF/WebP Blob • CLS 0 via aspect-ratio • Lightbox clavier ← → Esc</p>
+          <p className="mt-2 text-[11px] text-zinc-500">Légendes et alt-texts vérifiés par vision sur les photos servies — aucune vue annoncée qui n'existe pas • LCP image #01 en priority eager, 7 autres en lazy + sizes AVIF/WebP Blob • CLS 0 via aspect-ratio • Lightbox clavier ← → Esc</p>
         </section>
 
         {/* EMBALLAGE LUXE — reponse a "emballage absent" */}
@@ -309,15 +309,15 @@ export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: str
           <h2 id="virgil-heading" className="text-[18px] font-extrabold tracking-tight">L’histoire — Virgil Abloh FW21, le varsity qui a fermé une époque</h2>
           <div className="mt-3 grid gap-5 text-[13px] leading-relaxed text-zinc-700 md:grid-cols-[1.35fr_0.65fr]">
             <div className="space-y-3">
-              <p>FW21 : Virgil Abloh signe sa dernière collab <strong>Louis Vuitton x NBA</strong>. Le varsity devient manifeste — cuir bleu nuit, laine crème, patchs NBA brodés, LV au dos comme un scoreboard. Hybridation luxe/street plus jamais rééditée après novembre 2021.</p>
-              <p>Broderie haute densité, boutons pression gravés LV, doublure satin imprimée, bord-côte rayé. Trois sorties, puis conservée. Aucune usure, aucun compromis. Une archive portable.</p>
+              <p>FW21 : Virgil Abloh signe sa dernière collab <strong>Louis Vuitton x NBA</strong>. Le varsity devient manifeste — cuir noir et laine noire, broderies blanches ballon et musique au dos, lettrage et trophée NBA sur les manches. Hybridation luxe/street plus jamais rééditée après novembre 2021.</p>
+              <p>Broderie haute densité et bord-côte rayé noir et blanc. Finitions intérieures non photographiées — photos sur demande. Trois sorties, puis conservée. Aucune usure, aucun compromis. Une archive portable.</p>
               <p className="rounded-xl bg-zinc-50 p-3 text-[12px] leading-relaxed text-zinc-600 border border-zinc-200">Rareté : édition limitée FW21, arrêtée à la disparition de Virgil. Marché tendu, floor 4500€ HOLD. Stock 1 réel — pas de restock.</p>
             </div>
             <div className="rounded-xl bg-black p-4 text-white">
               <p className="text-[11px] font-bold tracking-widest text-zinc-400 uppercase">Fiche archive</p>
               <dl className="mt-2 space-y-1.5 text-[12px]">
                 <div className="flex justify-between"><dt className="text-zinc-400">Collection</dt><dd className="font-semibold">FW21 Virgil Abloh</dd></div>
-                <div className="flex justify-between"><dt className="text-zinc-400">Matière</dt><dd className="font-semibold">Cuir + laine + satin</dd></div>
+                <div className="flex justify-between"><dt className="text-zinc-400">Matière</dt><dd className="font-semibold">Cuir + laine</dd></div>
                 <div className="flex justify-between"><dt className="text-zinc-400">Taille</dt><dd className="font-semibold">Non indiquée — mesures sur demande</dd></div>
                 <div className="flex justify-between"><dt className="text-zinc-400">Codes</dt><dd className="font-semibold">VCCM09 / CA36929</dd></div>
                 <div className="flex justify-between"><dt className="text-zinc-400">État</dt><dd className="font-semibold">Porté 3x — A+</dd></div>

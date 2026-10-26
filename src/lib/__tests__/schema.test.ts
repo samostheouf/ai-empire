@@ -98,7 +98,7 @@ describe('schema helpers', () => {
 
       expect(schema).toHaveProperty('@type', 'BreadcrumbList')
       const list = (schema as Record<string, unknown>).itemListElement as Array<Record<string, unknown>>
-      expect(list).toHaveLength(3)
+      expect(list).toHaveLength(2)
       expect(list[0].name).toBe('Accueil')
       expect(list[1].name).toBe('Blog')
     })

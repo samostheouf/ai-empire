@@ -25,7 +25,7 @@ export default function LuxuryGallery({ images }: { images: LuxuryImage[] }) {
 
   return (
     <>
-      <div role="region" aria-label="Galerie photos HD 8 vues" className="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div role="region" aria-label="Galerie photos 8 vues" className="grid grid-cols-2 md:grid-cols-4 gap-3">
         {images.map((img, i) => (
           <button
             key={i}

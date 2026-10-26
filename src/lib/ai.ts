@@ -179,7 +179,20 @@ export async function callAI(
  * @returns `true` if no real AI provider is available.
  */
 export function isDemoMode(): boolean {
-  return PROVIDERS.every(
-    (p) => !p.apiKey
-  );
+  const placeholderPatterns = [
+    '...', 'pla', 'test', 'xxx', 'example', 'your', 'changeme', 'dummy', 'fake',
+  ]
+  const isPlaceholder = (key: string | undefined): boolean => {
+    if (!key) return true
+    const lower = key.toLowerCase()
+    if (key.length < 12) return true
+    return placeholderPatterns.some((p) => lower.includes(p))
+  }
+  const envKeys = [
+    process.env.GROQ_API_KEY,
+    process.env.GLM_API_KEY,
+    process.env.GEMINI_API_KEY,
+    process.env.OPENAI_API_KEY,
+  ]
+  return envKeys.every(isPlaceholder)
 }

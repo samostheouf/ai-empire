@@ -145,7 +145,7 @@ export function getCircuitBreakerState(): CircuitBreakerState {
  * ```
  */
 export async function safeQuery<T>(queryFn: () => Promise<T>, fallback: T): Promise<T> {
-  if (!prisma) return fallback
+  if (!process.env.DATABASE_URL) return fallback
 
   if (isCircuitOpen()) {
     logger.warn('database', 'Circuit open, returning fallback')

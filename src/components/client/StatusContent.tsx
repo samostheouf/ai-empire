@@ -55,7 +55,6 @@ export default function StatusContent() {
   }, [])
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     void fetchStatus()
     const interval = setInterval(() => {
       void fetchStatus()

@@ -3,7 +3,7 @@
  * Mesure 04/10 : `decideOffer` decide sur une fonction pure — la seule maniere
  * de prouver qu'une offre sous le floor ne peut pas passer, sans deployer.
  */
-import { decideOffer, LUXURY_FLOOR } from './luxury-intent'
+import { decideOffer, LUXURY_FLOOR } from '../src/lib/luxury-intent'
 
 let failed = 0
 function check(label: string, cond: boolean, detail?: unknown) {
@@ -35,4 +35,4 @@ check('aucune decision ne promet un prix sous le floor', [100, 3999, 4000, 4499,
                  decideOffer(n).action.includes(String(LUXURY_FLOOR))))
 
 console.log(failed === 0 ? '\nTOUT PASSE' : `\n${failed} ECHEC(S)`)
-process.exit(failed === 0 ? 0 : 1)
+if (failed > 0) throw new Error(`${failed} ECHEC(S)`)

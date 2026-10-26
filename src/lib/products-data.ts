@@ -27,7 +27,7 @@ export interface ProductData {
 
 export async function getAll(): Promise<ProductData[]> {
   try {
-    return prisma.template.findMany({
+    return await prisma.template.findMany({
       orderBy: { createdAt: 'desc' },
       include: { _count: { select: { orders: true } } },
     })
@@ -38,7 +38,7 @@ export async function getAll(): Promise<ProductData[]> {
 
 export async function getById(slug: string): Promise<ProductData | null> {
   try {
-    return prisma.template.findUnique({
+    return await prisma.template.findUnique({
       where: { slug },
       include: { _count: { select: { orders: true } } },
     })
@@ -59,7 +59,7 @@ export async function getRelated(slug: string, limit = 4): Promise<ProductData[]
       where.category = current.category
     }
 
-    return prisma.template.findMany({
+    return await prisma.template.findMany({
       where,
       orderBy: { downloads: 'desc' },
       take: limit,

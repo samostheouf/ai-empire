@@ -362,15 +362,17 @@ export function generateBreadcrumbSchema(items: BreadcrumbItem[]): object {
       {
         '@type': 'ListItem',
         position: 1,
-        name: 'Home',
+        name: 'Accueil',
         item: baseUrl,
       },
-      ...items.map((item, index) => ({
-        '@type': 'ListItem',
-        position: index + 2,
-        name: item.name,
-        item: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`,
-      })),
+      ...items
+        .filter((item) => !(item.name === 'Home' && (item.url === '/' || item.url === '')))
+        .map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 2,
+          name: item.name,
+          item: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`,
+        })),
     ],
   }
 }
