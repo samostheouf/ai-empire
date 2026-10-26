@@ -89,7 +89,15 @@ export async function sendTrackingEvent(
   data?: Record<string, unknown>
 ): Promise<void> {
   const page = typeof window !== 'undefined' ? window.location.pathname : '/'
-  const visitorId = getVisitorId()
+  const rawVisitorId = getVisitorId()
+  let visitorId = rawVisitorId
+  try {
+    if (typeof crypto !== 'undefined' && crypto.subtle) {
+      const buf = new TextEncoder().encode(rawVisitorId)
+      const hash = await crypto.subtle.digest('SHA-256', buf)
+      visitorId = Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('')
+    }
+  } catch {}
   const utm = getUtmData()
 
   const payload = {
@@ -100,7 +108,6 @@ export async function sendTrackingEvent(
     data: {
       ...data,
       ...utm,
-      userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : undefined,
     },
   }
 
