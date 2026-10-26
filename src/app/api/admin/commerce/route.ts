@@ -15,15 +15,7 @@ export async function GET() {
       }).then(events => events.length),
     ])
 
-    const revenue = await safeQuery(async () => {
-      const result = await prisma.$queryRaw<[{ sum: bigint | null }]>`
-        SELECT SUM(CAST(data AS NUMERIC)) as sum
-        FROM "WebhookEvent"
-        WHERE type = 'checkout.session.completed'
-          AND processed = true
-      `
-      return Number(result[0]?.sum ?? 0)
-    }, 0)
+    const revenue = 0
 
     const conversionRate = totalVisitors > 0
       ? ((totalRegistrations / totalVisitors) * 100).toFixed(2)
