@@ -8,6 +8,17 @@ updates:
     labels:
       - "dependencies"
       - "automated"
+    ignore:
+      - dependency-name: "eslint-config-next"
+        versions: [">=15"]
+      - dependency-name: "eslint"
+        versions: [">=9"]
+      - dependency-name: "next"
+        versions: [">=15"]
+      - dependency-name: "prisma"
+        versions: [">=6"]
+      - dependency-name: "@prisma/client"
+        versions: [">=6"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:

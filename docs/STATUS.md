@@ -1,12 +1,13 @@
 # Project Status — ai-empire
 
-## Production
+- Version: 1.0.0 (finalisée)
+- Documentation: README.md + docs/USER_GUIDE.md (notice d'utilisation complète)
 - URL: https://ai-empire-steel.vercel.app
 - State: READY, promoted
 - Build: clean (0 errors)
 
 ## Stack
-- Next.js 14.2.15, Prisma 5.22.0, React 18.3.1, TypeScript, Tailwind
+- Next.js 14.2.35, Prisma 5.22.0, React 18.3.1, TypeScript, Tailwind
 - PostgreSQL (Vercel Postgres)
 - Stripe LIVE
 
@@ -26,7 +27,7 @@
 - safeQuery wrapper, circuit breaker
 
 ## Tests
-- input-validation, html-escape, utils, seo, luxury-intent (5 files)
+- ai, db, schema, csrf, input-validation, luxury-intent (6 files)
 
 ## CI/CD
 - .github/workflows/ci.yml present
