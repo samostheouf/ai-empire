@@ -7,7 +7,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
 export async function generateMetadata() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>
@@ -27,7 +27,7 @@ export async function generateMetadata() {
 const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://ai-empire-steel.vercel.app'
 
 export default async function StripeBillingNextjsPage() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>

@@ -3,7 +3,7 @@ import { ArrowRight, Check } from 'lucide-react'
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
 export default async function EarlyAdopterBanner() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>

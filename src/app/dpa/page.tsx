@@ -3,7 +3,7 @@ import { FileText, Database, Server, Shield, Globe, Clock, Mail } from 'lucide-r
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const dict = translations as unknown as Record<string, string>
   const t = (key: string) => dict[key] || key
@@ -16,7 +16,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function DPA() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>

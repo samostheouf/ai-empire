@@ -5,7 +5,7 @@ import { generateMetadata as generateSEO, generateProductSchema, TARGET_KEYWORDS
 
 interface TemplateDetailLayoutProps {
   children: React.ReactNode
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 const fallbackTemplates: Record<string, { name: string; description: string; price: number; screenshot: string }> = {
@@ -22,7 +22,7 @@ const fallbackTemplates: Record<string, { name: string; description: string; pri
 }
 
 export async function generateMetadata({ params }: TemplateDetailLayoutProps): Promise<Metadata> {
-  const slug = params.slug
+  const { slug } = await params
 
   const dbTemplate = await safeQuery(
     () => prisma.template.findUnique({ where: { slug }, select: { name: true, description: true, screenshot: true } }),
@@ -57,7 +57,8 @@ async function getTemplateData(slug: string) {
 }
 
 export default async function TemplateDetailLayout({ children, params }: TemplateDetailLayoutProps) {
-  const template = await getTemplateData(params.slug)
+  const { slug } = await params
+  const template = await getTemplateData(slug)
 
   // ETHIQUE: aucun AggregateRating fabrique. productSchema sans avis inventes.
   // Ajouter rating/reviewCount UNIQUEMENT quand branche sur vrais avis verifies (ex: prisma.review.aggregate).

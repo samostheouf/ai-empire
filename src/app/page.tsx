@@ -36,7 +36,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export const revalidate = 300
 
 export default async function Home() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>

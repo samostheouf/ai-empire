@@ -13,7 +13,7 @@ export const metadata = {
 }
 
 export default async function FreelancersLandingPage() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>

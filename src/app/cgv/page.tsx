@@ -5,7 +5,7 @@ import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 export const dynamic = 'force-static'
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const dict = translations as unknown as Record<string, string>
   const t = (key: string) => dict[key] || key
@@ -18,7 +18,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function CGV() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>

@@ -16,15 +16,15 @@ import dynamic from 'next/dynamic'
 
 const Header = dynamic(() => import('@/components/Header'))
 const Footer = dynamic(() => import('@/components/Footer'))
-const Chatbot = dynamic(() => import('@/components/Chatbot'), { ssr: false })
-const CookieConsent = dynamic(() => import('@/components/CookieConsent'), { ssr: false })
-const AnalyticsTracker = dynamic(() => import('@/components/AnalyticsTracker').then(mod => ({ default: mod.AnalyticsTracker })), { ssr: false })
-const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), { ssr: false })
-const StickyCTA = dynamic(() => import('@/components/StickyCTA'), { ssr: false })
-const NewsletterPopup = dynamic(() => import('@/components/NewsletterPopup'), { ssr: false })
-const RealSocialProof = dynamic(() => import('@/components/RealSocialProof'), { ssr: false })
-const CoreWebVitals = dynamic(() => import('@/components/CoreWebVitals'), { ssr: false })
-const ServiceWorkerRegistration = dynamic(() => import('@/components/ServiceWorker'), { ssr: false })
+const Chatbot = dynamic(() => import('@/components/Chatbot'), {})
+const CookieConsent = dynamic(() => import('@/components/CookieConsent'), {})
+const AnalyticsTracker = dynamic(() => import('@/components/AnalyticsTracker').then(mod => ({ default: mod.AnalyticsTracker })), {})
+const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), {})
+const StickyCTA = dynamic(() => import('@/components/StickyCTA'), {})
+const NewsletterPopup = dynamic(() => import('@/components/NewsletterPopup'), {})
+const RealSocialProof = dynamic(() => import('@/components/RealSocialProof'), {})
+const CoreWebVitals = dynamic(() => import('@/components/CoreWebVitals'), {})
+const ServiceWorkerRegistration = dynamic(() => import('@/components/ServiceWorker'), {})
 import SkipLinks from '@/components/SkipLinks'
 import ErrorBoundary from '@/components/ErrorBoundary'
 

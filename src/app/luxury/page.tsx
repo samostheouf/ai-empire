@@ -16,11 +16,12 @@ const SKU = 'HERMES-LV-NBA-M-1A8WU8'
 const PRICE = 4500
 const CURRENCY = 'EUR'
 
-function resolveLocale(hl?: string): Locale {
+async function resolveLocale(hl?: string): Promise<Locale> {
   const fromHl = hl?.toLowerCase()
   if (fromHl && (locales as readonly string[]).includes(fromHl)) return fromHl as Locale
   try {
-    const cookieLocale = cookies().get('neuralocale')?.value
+    const cookieStore = await cookies()
+    const cookieLocale = cookieStore.get('neuralocale')?.value
     if (cookieLocale && (locales as readonly string[]).includes(cookieLocale)) return cookieLocale as Locale
   } catch {}
   return defaultLocale
@@ -30,8 +31,9 @@ function resolveLocale(hl?: string): Locale {
 // Extraire ce tableau dans une constante empeche les deux listes de diverger.
 const LUXURY_LANG_TAGS: Record<string, string> = { fr:'fr-FR', en:'en-US', es:'es-ES', de:'de-DE', it:'it-IT', pt:'pt-PT', ja:'ja-JP', zh:'zh-CN', ko:'ko-KR', ar:'ar-SA' }
 
-export async function generateMetadata({ searchParams }: { searchParams?: { hl?: string } }): Promise<Metadata> {
-  const locale = resolveLocale(searchParams?.hl)
+export async function generateMetadata({ searchParams }: { searchParams?: Promise<{ hl?: string }> }): Promise<Metadata> {
+  const resolved = await searchParams
+  const locale = await resolveLocale(resolved?.hl)
   const t = luxuryTranslations[locale] ?? luxuryTranslations.fr
   const locMap = LUXURY_LANG_TAGS
   const languages: Record<string, string> = { 'x-default': CANONICAL }
@@ -73,8 +75,9 @@ const gallery = [
   { url: `${BLOB}/10_etiquette_face.jpg`, label: 'Étiquette AUTH (2e prise)', alt: 'Seconde prise de la même étiquette de composition — VCCM09 / CA36929 / Louis Vuitton Japan K.K.', w: 1200, h: 900 },
 ]
 
-export default function LuxuryPage({ searchParams }: { searchParams?: { hl?: string } }) {
-  const locale = resolveLocale(searchParams?.hl)
+export default async function LuxuryPage({ searchParams }: { searchParams?: Promise<{ hl?: string }> }) {
+  const resolved = await searchParams
+  const locale = await resolveLocale(resolved?.hl)
   const t = luxuryTranslations[locale] ?? luxuryTranslations.fr
   const isRTL = locale === 'ar'
   const dir = isRTL ? 'rtl' : 'ltr'

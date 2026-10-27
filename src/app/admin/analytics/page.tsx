@@ -34,12 +34,6 @@ export default function AnalyticsPage() {
   const [period, setPeriod] = useState('7d')
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
 
-  useEffect(() => {
-    fetchStats()
-    const interval = setInterval(fetchStats, 15000)
-    return () => clearInterval(interval)
-  }, [period])
-
   const fetchStats = async () => {
     if (!data) setLoading(true)
     const days = period === '30d' ? 30 : period === '90d' ? 90 : 7
@@ -61,6 +55,12 @@ export default function AnalyticsPage() {
       // Analytics stats fetch failed
     }    setLoading(false)
   }
+
+  useEffect(() => {
+    fetchStats()
+    const interval = setInterval(fetchStats, 15000)
+    return () => clearInterval(interval)
+  }, [period])
 
   if (loading) {
     return (

@@ -288,4 +288,4 @@ export default async function ProductPage({ params }: { params: Promise<{ slug: 
 
 // Dynamic import to avoid SSR issues with BuyButton (client component)
 import dynamic from 'next/dynamic'
-const BuyButton = dynamic(() => import('@/components/BuyButton'), { ssr: false })
+const BuyButton = dynamic(() => import('@/components/BuyButton'), {})

@@ -9,7 +9,7 @@ const BuildTimeSaved = dynamic(() => import('@/components/client/BuildTimeSaved'
 const TemplateGrid = dynamic(() => import('@/components/client/TemplateGrid'))
 
 export async function generateMetadata(): Promise<Metadata> {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>
@@ -58,7 +58,7 @@ const API_METRICS = [
 ]
 
 export default async function TemplatesPage() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>

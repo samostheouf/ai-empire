@@ -1,7 +1,7 @@
 import { getLocaleFromCookies, getTranslations } from '@/i18n/server'
 
 export async function generateMetadata() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const dict = translations as unknown as Record<string, string>
   const t = (key: string) => dict[key] || key
@@ -14,7 +14,7 @@ export async function generateMetadata() {
 }
 
 export default async function CookiePolicyPage() {
-  const locale = getLocaleFromCookies()
+  const locale = await getLocaleFromCookies()
   const translations = await getTranslations(locale)
   const t = (key: string) => {
     const dict = translations as unknown as Record<string, string>

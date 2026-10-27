@@ -30,22 +30,22 @@ function parseAcceptLanguage(header: string): Locale | null {
   return null
 }
 
-export function getLocaleFromCookies(): Locale {
+export async function getLocaleFromCookies(): Promise<Locale> {
   // 1) Locale portee par l'URL (/en/pricing, /de/agents...). C'est ce que les
   //    robots indexent : elle doit primer sur le cookie du visiteur, sinon
   //    Google recupererait 9 fois la meme page FR.
-  const headerStore = headers()
+  const headerStore = await headers()
   const fromUrl = headerStore.get('x-neuralocale')
   if (fromUrl && locales.includes(fromUrl as Locale)) {
     return fromUrl as Locale
   }
   // 2) Cookie pose par le LanguageSwitcher (navigation cliente).
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
   const stored = cookieStore.get(COOKIE_NAME)?.value
   if (stored && locales.includes(stored as Locale)) {
     return stored as Locale
   }
-  const acceptLanguage = headers().get('accept-language')
+  const acceptLanguage = (await headers()).get('accept-language')
   if (acceptLanguage) {
     const detected = parseAcceptLanguage(acceptLanguage)
     if (detected) return detected
