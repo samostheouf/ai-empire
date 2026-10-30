@@ -18,7 +18,8 @@ interface TemplateData {
 }
 
 function SuccessContent() {
-  const { t } = useI18n()
+  const { t: rawT } = useI18n()
+  const t = rawT as (key: string) => string
   const searchParams = useSearchParams()
   const sessionId = searchParams.get('session_id')
   const templateId = searchParams.get('template_id')
@@ -37,6 +38,19 @@ function SuccessContent() {
   useEffect(() => {
     async function fetchTemplate() {
       try {
+        // Verify payment status via Stripe before showing success.
+        if (sessionId) {
+          const verifyRes = await fetch(`/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`)
+          if (verifyRes.ok) {
+            const verifyData = await verifyRes.json()
+            if (verifyData.payment_status !== 'paid') {
+              setError(t('checkoutPaymentNotConfirmed') || 'Paiement non confirmé')
+              setLoading(false)
+              return
+            }
+          }
+        }
+
         const res = await fetch('/api/templates')
         if (!res.ok) throw new Error(t('checkoutErrorLoading'))
         const data = await res.json()

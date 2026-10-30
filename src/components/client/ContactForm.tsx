@@ -13,15 +13,30 @@ export default function ContactForm() {
   })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const { t: rawT } = useI18n(); const t = rawT as (key: string) => string
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
-    // Simulate submission
-    await new Promise(r => setTimeout(r, 800))
-    setSubmitted(true)
-    setLoading(false)
+    setError(null)
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+      const data = await res.json().catch(() => ({}))
+      if (!res.ok) {
+        setError(data?.error || t('contactFormError') || 'Erreur lors de l\'envoi')
+        return
+      }
+      setSubmitted(true)
+    } catch {
+      setError('Erreur réseau. Réessayez.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   if (submitted) {
@@ -115,6 +130,12 @@ export default function ContactForm() {
           placeholder={t('contactFormMessagePlaceholder')}
         />
       </div>
+
+      {error && (
+        <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-sm text-red-300">
+          {error}
+        </div>
+      )}
 
       <button
         type="submit"
