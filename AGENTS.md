@@ -1,7 +1,7 @@
 # AGENTS.md — ai-empire
 
 ## Stack
-- Next.js 14.2.15 (App Router), TypeScript, Tailwind CSS
+- Next.js 16.4.3 (App Router), TypeScript, Tailwind CSS
 - Prisma 5.22 + PostgreSQL (Vercel Postgres in prod)
 - Stripe LIVE, Groq/GLM/Gemini/OpenAI AI, Resend email
 - 10 locales: fr, en, es, de, it, pt, ja, zh, ko, ar
@@ -9,8 +9,8 @@
 ## Commands
 ```bash
 npm run dev          # Next.js dev server
-npm run build        # prisma generate && next build
-npm run lint         # next lint
+npm run build        # prisma generate && next build --webpack
+npm run lint         # eslint src --ext .ts,.tsx
 npm run test         # jest
 npx vercel --yes --prod  # deploy to production
 ```

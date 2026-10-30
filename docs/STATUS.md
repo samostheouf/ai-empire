@@ -7,7 +7,7 @@
 - Build: clean (0 errors)
 
 ## Stack
-- Next.js 14.2.35, Prisma 5.22.0, React 18.3.1, TypeScript, Tailwind
+- Stack: Next.js 16.4.3, Prisma 5.22.0, React 18.3.1, TypeScript, Tailwind
 - PostgreSQL (Vercel Postgres)
 - Stripe LIVE
 

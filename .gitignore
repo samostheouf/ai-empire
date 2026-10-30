@@ -13,3 +13,8 @@ social-keys.json
 tsconfig.tsbuildinfo
 .vercel_env_test
 tmp-vercel*.env
+
+# Personal fiscal data (never commit)
+scripts/fiscalite/user-data.json
+scripts/fiscalite/inscription.log
+scripts/fiscalite/*.log
