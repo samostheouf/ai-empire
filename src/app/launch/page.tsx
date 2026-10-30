@@ -197,7 +197,7 @@ export default function ProductHuntPage() {
               <h3 className="text-xl font-semibold text-white">{t('launchPro')}</h3>
               <p className="mt-2 text-indigo-300 text-sm">{t('launchProDesc')}</p>
               <div className="mt-6">
-                <span className="text-4xl font-bold text-white">19€</span>
+                <span className="text-4xl font-bold text-white">49€</span>
                 <span className="text-sm text-indigo-300 ml-1">/{t('launchPerMonth')}</span>
               </div>
               <ul className="mt-6 space-y-3 text-sm text-indigo-200">
@@ -214,7 +214,7 @@ export default function ProductHuntPage() {
             <div className="rounded-2xl border border-indigo-800/50 bg-indigo-900/30 p-8">
               <h3 className="text-xl font-semibold text-white">{t('launchEnterprise')}</h3>
               <p className="mt-2 text-indigo-300 text-sm">{t('launchEnterpriseDesc')}</p>
-              <div className="mt-6"><span className="text-4xl font-bold text-white">99€</span><span className="text-sm text-indigo-300 ml-1">/{t('launchPerMonth')}</span></div>
+              <div className="mt-6"><span className="text-4xl font-bold text-white">149€</span><span className="text-sm text-indigo-300 ml-1">/{t('launchPerMonth')}</span></div>
               <ul className="mt-6 space-y-3 text-sm text-indigo-200">
                 <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchEnterpriseCredits')}</li>
                 <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-400 shrink-0" /> {t('launchEnterpriseSla')}</li>
@@ -284,8 +284,8 @@ export default function ProductHuntPage() {
               <div className="rounded-xl border border-indigo-800/50 bg-indigo-950/50 p-6">
                 <h3 className="font-semibold text-white mb-1">{t('launchEarlyPro') || 'Pro Early Bird'}</h3>
                 <div className="flex items-baseline gap-2 mt-2">
-                  <span className="text-3xl font-bold text-orange-400">19€</span>
-                  <span className="text-sm text-indigo-400 line-through">27€</span>
+                  <span className="text-3xl font-bold text-orange-400">34€</span>
+                  <span className="text-sm text-indigo-400 line-through">49€</span>
                   <span className="text-xs text-green-400 font-medium">-30%</span>
                 </div>
                 <p className="text-sm text-indigo-300 mt-2">{t('launchEarlyProDesc') || '10 000 crédits/mois, tous les endpoints, templates premium'}</p>
