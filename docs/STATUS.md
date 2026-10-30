@@ -4,7 +4,8 @@
 - Documentation: README.md + docs/USER_GUIDE.md (notice d'utilisation complète)
 - URL: https://ai-empire-steel.vercel.app
 - State: READY, promoted
-- Build: clean (0 errors)
+- Contact form: working (POST /api/contact + client handler with success/error feedback)
+- Checkout: payment verified server-side via Stripe before showing success page
 
 ## Stack
 - Stack: Next.js 16.4.3, Prisma 5.22.0, React 18.3.1, TypeScript, Tailwind
@@ -45,4 +46,4 @@
 - Launch campaigns on external platforms
 
 ## Last updated
-2026-10-26
+2026-10-30
