@@ -16,7 +16,9 @@ const translationLoaders: Record<Locale, () => Promise<{ default: Record<string,
 export async function loadTranslations(locale: Locale): Promise<Record<string, string>> {
   const loader = translationLoaders[locale] || translationLoaders.fr
   const mod = await loader()
-  return mod.default
+  if (locale === 'fr') return mod.default
+  const frMod = await translationLoaders.fr()
+  return { ...frMod.default, ...mod.default }
 }
 
 export default translationLoaders
