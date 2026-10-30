@@ -173,8 +173,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/faq`, lastModified: now, changeFrequency: 'monthly', priority: 0.8, alternates: buildAlternates('/faq') },
     { url: `${baseUrl}/about`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/about') },
     { url: `${baseUrl}/changelog`, lastModified: now, changeFrequency: 'weekly', priority: 0.7, alternates: buildAlternates('/changelog') },
-    { url: `${baseUrl}/terms`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/terms') },
-    { url: `${baseUrl}/privacy`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/privacy') },
     { url: `${baseUrl}/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.8, alternates: buildAlternates('/launch') },
     { url: `${baseUrl}/agents`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: buildAlternates('/agents') },
     { url: `${baseUrl}/beta`, lastModified: now, changeFrequency: 'weekly', priority: 0.8, alternates: buildAlternates('/beta') },
@@ -182,12 +180,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/register`, lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/tools/social-launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/free`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/free') },
-    { url: `${baseUrl}/cgv`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
-    { url: `${baseUrl}/mentions-legales`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
-    { url: `${baseUrl}/politique-confidentialite`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
-    { url: `${baseUrl}/politique-cookies`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
-    { url: `${baseUrl}/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
-    { url: `${baseUrl}/dpa`, lastModified: now, changeFrequency: 'monthly', priority: 0.3 },
     { url: `${baseUrl}/offre-lancement`, lastModified: now, changeFrequency: 'monthly', priority: 0.6, alternates: buildAlternates('/offre-lancement') },
     { url: `${baseUrl}/compare`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/compare') },
     { url: `${baseUrl}/luxury`, lastModified: now, changeFrequency: 'daily', priority: 0.95, alternates: { languages: LUXURY_LANGUAGES } },
@@ -201,16 +193,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
     // Regional sub-pages
     { url: `${baseUrl}/en/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.7, alternates: buildAlternates('/en/launch') },
-    { url: `${baseUrl}/en/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3, alternates: buildAlternates('/en/cookie-policy') },
-    { url: `${baseUrl}/en/legal-notice`, lastModified: now, changeFrequency: 'monthly', priority: 0.3, alternates: buildAlternates('/en/legal-notice') },
-    { url: `${baseUrl}/en/privacy-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3, alternates: buildAlternates('/en/privacy-policy') },
-    { url: `${baseUrl}/en/terms-of-service`, lastModified: now, changeFrequency: 'monthly', priority: 0.3, alternates: buildAlternates('/en/terms-of-service') },
     { url: `${baseUrl}/de/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/de/launch') },
-    { url: `${baseUrl}/de/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3, alternates: buildAlternates('/de/cookie-policy') },
     { url: `${baseUrl}/ja/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/ja/launch') },
-    { url: `${baseUrl}/ja/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3, alternates: buildAlternates('/ja/cookie-policy') },
     { url: `${baseUrl}/pt/launch`, lastModified: now, changeFrequency: 'monthly', priority: 0.5, alternates: buildAlternates('/pt/launch') },
-    { url: `${baseUrl}/pt/cookie-policy`, lastModified: now, changeFrequency: 'monthly', priority: 0.3, alternates: buildAlternates('/pt/cookie-policy') },
   ]
 
   return [...mainPages, ...localizedEntries()]
