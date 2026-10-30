@@ -180,7 +180,7 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error('[ai/chat] error', err)
-    const fallback = findResponse('', (typeof body !== 'undefined' ? body?.locale : 'fr') || 'fr')
+    const fallback = findResponse('', 'fr')
     return NextResponse.json({ content: fallback, provider: 'fallback', error: 'Erreur interne' }, { status: 200 })
   }
 }
