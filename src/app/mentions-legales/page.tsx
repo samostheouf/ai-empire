@@ -29,14 +29,10 @@ export default function MentionsLegales() {
               <h2 className="text-2xl font-bold text-white">Éditeur du site</h2>
             </div>
             <div className="space-y-3 text-indigo-200">
-              <p><span className="font-semibold text-white">Dénomination sociale :</span> NeuraAPI SAS</p>
-              <p><span className="font-semibold text-white">Forme juridique :</span> Société par Actions Simplifiée (SAS)</p>
-              <p><span className="font-semibold text-white">Siège social :</span> 61 rue Raymond Poincaré, 57700 Hayange, France</p>
-              <p><span className="font-semibold text-white">SIRET :</span> 931 277 359 00012 (à vérifier sur infogreffe.fr)</p>
-              <p><span className="font-semibold text-white">SIREN :</span> 931 277 359</p>
+              <p><span className="font-semibold text-white">Statut :</span> Auto-entrepreneur (micro-entrepreneur)</p>
+              <p><span className="font-semibold text-white">Siège social :</span> Hayange, France</p>
+              <p><span className="font-semibold text-white">SIRET :</span> À renseigner (immatriculation en cours)</p>
               <p><span className="font-semibold text-white">Code NAF/APE :</span> 6201Z — Programmation informatique</p>
-              <p><span className="font-semibold text-white">Numéro de TVA intracommunautaire :</span> FR00 931277359 (à vérifier)</p>
-              <p><span className="font-semibold text-white">Capital social :</span> 1 000 € (libéré)</p>
               <p><span className="font-semibold text-white">Directeur de la publication :</span> Samy Multiservice</p>
             </div>
           </section>
@@ -70,7 +66,7 @@ export default function MentionsLegales() {
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="h-4 w-4 text-indigo-400" />
-                <p><span className="font-semibold text-white">Téléphone :</span> 06 29 41 85 24</p>
+                <p><span className="font-semibold text-white">Téléphone :</span> 07 46 56 95 70</p>
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 text-indigo-400" />
@@ -86,11 +82,8 @@ export default function MentionsLegales() {
               <h2 className="text-2xl font-bold text-white">Assurances professionnelles</h2>
             </div>
             <div className="space-y-3 text-indigo-200">
-              <p><span className="font-semibold text-white">Assureur :</span> AXA France</p>
-              <p><span className="font-semibold text-white">Police n° :</span> AXA-NEURAPI-2026-001 (à vérifier avec l&apos;assureur)</p>
-              <p><span className="font-semibold text-white">Couverture :</span> Responsabilité civile professionnelle et cyber-risques</p>
-              <p className="text-sm text-indigo-300 mt-4">
-                Conformément aux dispositions légales, NeuraAPI SAS dispose d&apos;une assurance responsabilité civile professionnelle couvrant les dommages causés aux tiers dans le cadre de son activité.
+              <p>
+                Conformément aux dispositions légales, l'éditeur dispose d'une assurance responsabilité civile professionnelle. Les détails de la police d'assurance sont disponibles sur demande.
               </p>
             </div>
           </section>
@@ -103,13 +96,13 @@ export default function MentionsLegales() {
             </div>
             <div className="space-y-3 text-indigo-200">
               <p>
-                L&apos;ensemble du contenu de ce site (textes, images, graphismes, logos, icônes, sons, logiciels) est la propriété exclusive de NeuraAPI SAS ou de ses partenaires et est protégé par les lois françaises et internationales relatives à la propriété intellectuelle.
+                L&apos;ensemble du contenu de ce site (textes, images, graphismes, logos, icônes, sons, logiciels) est la propriété exclusive de NeuraAPI ou de ses partenaires et est protégé par les lois françaises et internationales relatives à la propriété intellectuelle.
               </p>
               <p>
-                Toute reproduction, représentation, modification, publication, transmission ou dénaturation du site ou de son contenu, par quelque procédé que ce soit, est interdite sans autorisation préalable écrite de NeuraAPI SAS.
+                Toute reproduction, représentation, modification, publication, transmission ou dénaturation du site ou de son contenu, par quelque procédé que ce soit, est interdite sans autorisation préalable écrite de NeuraAPI.
               </p>
               <p>
-                Les marques et logos figurant sur ce site sont des marques déposées par NeuraAPI SAS ou ses partenaires. Toute reproduction ou représentation, totale ou partielle, de ces marques ou logos est interdite sans autorisation préalable.
+                Les marques et logos figurant sur ce site sont des marques déposées par NeuraAPI ou ses partenaires. Toute reproduction ou représentation, totale ou partielle, de ces marques ou logos est interdite sans autorisation préalable.
               </p>
             </div>
           </section>

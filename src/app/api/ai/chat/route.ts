@@ -178,7 +178,9 @@ export async function POST(request: Request) {
     }, {
       headers: { 'Cache-Control': 'no-store' },
     });
-  } catch {
-    return NextResponse.json({ error: 'Erreur interne du serveur' }, { status: 500 });
+  } catch (err) {
+    console.error('[ai/chat] error', err)
+    const fallback = findResponse('', (typeof body !== 'undefined' ? body?.locale : 'fr') || 'fr')
+    return NextResponse.json({ content: fallback, provider: 'fallback', error: 'Erreur interne' }, { status: 200 })
   }
 }

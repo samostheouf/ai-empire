@@ -312,7 +312,20 @@ async function createDiscountCoupon(code: string): Promise<string> {
   const promo = PROMO_CODES[upperCode]
   if (!promo) return ''
 
-  // 1. Reutiliser un coupon deja cree pour ce code plutot que d'en creer un.
+  // Verify promo is still active on Stripe side (not exhausted).
+  // We create coupons with max_redemptions and redeem_by; if a coupon
+  // with matching name is already exhausted, do not re-apply.
+  try {
+    const existing = await stripe.coupons.list({ limit: 100 })
+    const match = existing.data.find(
+      (c) => c.name === promo.description && c.percent_off === promo.discount * 100
+    )
+    if (match && match.max_redemptions != null && match.times_redeemed >= match.max_redemptions) {
+      return '' // exhausted
+    }
+  } catch {
+    // ignore, proceed
+  }
   //    ATTENTION : uniquement s'il est deja BORNE. Les 16 coupons crees avant ce
   //    correctif n'ont ni max_redemptions ni redeem_by — les reutiliser
   //    conserverait la remise sans plafond qu'on veut justement supprimer.

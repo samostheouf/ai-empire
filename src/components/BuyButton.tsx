@@ -40,8 +40,6 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
     }
   }, [])
 
-  const discountedPrice = Math.round(price * 0.7)
-
   const handleCheckout = async () => {
     if (!email) return
     setLoading(true)
@@ -56,7 +54,7 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
         templateTitle: templateName,
         price,
         email,
-        promoCode: price > 0 ? 'LANCEMENT30' : undefined,
+        promoCode: undefined,
         referralCode: referralCode || undefined,
         affiliateCode: affiliateCode || undefined,
       }),
@@ -76,16 +74,6 @@ export default function BuyButton({ templateId, templateName, price, previewUrl,
 
   return (
     <div className="space-y-3">
-      {/* Bannière promo lancement */}
-      {price > 0 && (
-        <div className="flex items-center justify-between rounded-lg border border-amber-300 bg-amber-50 px-4 py-2.5">
-          <span className="text-sm font-semibold text-amber-800">🎉 Offre de lancement -30%</span>
-          <span className="text-sm text-amber-900">
-            <s className="mr-1.5 opacity-60">{formatPrice(price)}</s>
-            <strong>{formatPrice(discountedPrice)}</strong>
-          </span>
-        </div>
-      )}
       <input
         type="email"
         placeholder="votre@email.com"
