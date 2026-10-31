@@ -27,22 +27,22 @@ const BEFORE_AFTER_COMPARISONS = [
   {
     id: 1,
     label: 'Authentication Setup',
-    before: `// Without AI Empire — 2-3 days of setup\nimport { createClient } from '@supabase/supabase-js'\nimport { useState, useEffect } from 'react'\n\nexport function useAuth() {\n  const [user, setUser] = useState(null)\n  const [loading, setLoading] = useState(true)\n  \n  useEffect(() => {\n    // ... 50+ lines of auth logic\n    // OAuth providers, session management,\n    // token refresh, middleware, etc.\n  }, [])\n  \n  return { user, loading }`,
-    after: `// With AI Empire — Ready in 5 minutes\nimport { auth } from '@/lib/auth'\nimport { redirect } from 'next/navigation'\n\nexport default async function Dashboard() {\n  const session = await auth()\n  if (!session) redirect('/login')\n  return <DashboardView user={session.user} />`,
+    before: `// Without NeuraAPI — 2-3 days of setup\nimport { createClient } from '@supabase/supabase-js'\nimport { useState, useEffect } from 'react'\n\nexport function useAuth() {\n  const [user, setUser] = useState(null)\n  const [loading, setLoading] = useState(true)\n  \n  useEffect(() => {\n    // ... 50+ lines of auth logic\n    // OAuth providers, session management,\n    // token refresh, middleware, etc.\n  }, [])\n  \n  return { user, loading }`,
+    after: `// With NeuraAPI — Ready in 5 minutes\nimport { auth } from '@/lib/auth'\nimport { redirect } from 'next/navigation'\n\nexport default async function Dashboard() {\n  const session = await auth()\n  if (!session) redirect('/login')\n  return <DashboardView user={session.user} />`,
     timeSaved: '2-3 days',
   },
   {
     id: 2,
     label: 'Stripe Integration',
-    before: `// Without AI Empire — Complex wiring\nimport Stripe from 'stripe'\nimport { PrismaClient } from '@prisma/client'\n\nconst stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)\n\n// Customer creation, subscription handling,\n// webhook verification, invoice generation,\n// portal session, usage metering...\n// 200+ lines of boilerplate`,
-    after: `// With AI Empire — Pre-configured\nimport { createCheckoutSession } from '@/lib/stripe'\n\nexport async function startSubscription(planId: string) {\n  const session = await createCheckoutSession({\n    priceId: planId,\n    successUrl: '/dashboard?upgraded=true',\n    cancelUrl: '/pricing',\n  })\n  redirect(session.url!)`,
+    before: `// Without NeuraAPI — Complex wiring\nimport Stripe from 'stripe'\nimport { PrismaClient } from '@prisma/client'\n\nconst stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)\n\n// Customer creation, subscription handling,\n// webhook verification, invoice generation,\n// portal session, usage metering...\n// 200+ lines of boilerplate`,
+    after: `// With NeuraAPI — Pre-configured\nimport { createCheckoutSession } from '@/lib/stripe'\n\nexport async function startSubscription(planId: string) {\n  const session = await createCheckoutSession({\n    priceId: planId,\n    successUrl: '/dashboard?upgraded=true',\n    cancelUrl: '/pricing',\n  })\n  redirect(session.url!)`,
     timeSaved: '3-5 days',
   },
   {
     id: 3,
     label: 'AI API Integration',
-    before: `// Without AI Empire — Provider management\nimport OpenAI from 'openai'\nimport { GoogleGenerativeAI } from '@google/generative-ai'\n\n// Handle multiple providers, rate limits,\n// error handling, streaming, retries...\nconst openai = new OpenAI()\nconst gemini = new GoogleGenerativeAI(key)\n// 150+ lines of provider-specific code`,
-    after: `// With AI Empire — Unified API\nimport { ai } from '@/lib/ai'\n\nexport async function chat(messages: Message[]) {\n  return ai.chat({\n    model: 'groq-llama-3.1',\n    messages,\n    stream: true,\n  })`,
+    before: `// Without NeuraAPI — Provider management\nimport OpenAI from 'openai'\nimport { GoogleGenerativeAI } from '@google/generative-ai'\n\n// Handle multiple providers, rate limits,\n// error handling, streaming, retries...\nconst openai = new OpenAI()\nconst gemini = new GoogleGenerativeAI(key)\n// 150+ lines of provider-specific code`,
+    after: `// With NeuraAPI — Unified API\nimport { ai } from '@/lib/ai'\n\nexport async function chat(messages: Message[]) {\n  return ai.chat({\n    model: 'groq-llama-3.1',\n    messages,\n    stream: true,\n  })`,
     timeSaved: '2-3 days',
   },
 ]

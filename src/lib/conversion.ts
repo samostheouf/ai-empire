@@ -59,8 +59,43 @@ export function trackCheckoutStartConversion(templateId: string): void {
     startedAt: Date.now(),
     email: null,
   }))
+}
 
-  checkRecoveryEmail()
+export function setRecoveryEmail(email: string): void {
+  try {
+    const pending = JSON.parse(localStorage.getItem(RECOVERY_KEY) || 'null')
+    if (!pending || !pending.templateId) return
+    pending.email = email
+    localStorage.setItem(RECOVERY_KEY, JSON.stringify(pending))
+    captureRecoveryEmail(email, pending.templateId)
+  } catch (e) {
+    console.error('setRecoveryEmail error:', e)
+  }
+}
+
+export async function captureRecoveryEmail(email: string, templateId: string): Promise<{ success: boolean; message?: string }> {
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  if (!isValid) {
+    return { success: false, message: 'Email invalide' }
+  }
+
+  try {
+    const res = await fetch('/api/recovery', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, templateId }),
+      keepalive: true,
+    })
+    const data = await res.json().catch(() => ({}))
+    if (res.ok && data && data.success) {
+      localStorage.removeItem(RECOVERY_KEY)
+      return { success: true, message: data.message }
+    }
+    return { success: false, message: data?.message || data?.error || 'Erreur' }
+  } catch (e) {
+    console.error('captureRecoveryEmail error:', e)
+    return { success: false, message: 'Erreur réseau' }
+  }
 }
 
 export function trackCheckoutCompleteConversion(templateId: string, amount: number): void {

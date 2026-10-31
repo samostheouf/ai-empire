@@ -21,6 +21,7 @@ const CookieConsent = dynamic(() => import('@/components/CookieConsent'), {})
 const AnalyticsTracker = dynamic(() => import('@/components/AnalyticsTracker').then(mod => ({ default: mod.AnalyticsTracker })), {})
 const ExitIntentPopup = dynamic(() => import('@/components/ExitIntentPopup'), {})
 const StickyCTA = dynamic(() => import('@/components/StickyCTA'), {})
+const RecoveryEmailCapture = dynamic(() => import('@/components/RecoveryEmailCapture'), {})
 const NewsletterPopup = dynamic(() => import('@/components/NewsletterPopup'), {})
 const RealSocialProof = dynamic(() => import('@/components/RealSocialProof'), {})
 const CoreWebVitals = dynamic(() => import('@/components/CoreWebVitals'), {})
@@ -145,6 +146,7 @@ export default function RootLayout({
           <AnalyticsTracker />
           <ExitIntentPopup />
           <StickyCTA />
+          <RecoveryEmailCapture />
           <NewsletterPopup />
           <RealSocialProof />
           <CoreWebVitals />
