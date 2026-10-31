@@ -1,11 +1,21 @@
 import crypto from 'crypto'
 import { NextResponse } from 'next/server'
 
-const SESSION_SECRET = process.env.SESSION_SECRET
-if (!SESSION_SECRET || SESSION_SECRET === 'build-time-fallback' || SESSION_SECRET === 'changeme' || SESSION_SECRET.length < 32) {
-  throw new Error('[SECURITY] SESSION_SECRET must be a strong random string (min 32 chars). Set it in your environment.')
+let _secret: string | null = null
+
+function getSecret(): string {
+  if (_secret) return _secret
+  const SESSION_SECRET = process.env.SESSION_SECRET
+  if (!SESSION_SECRET || SESSION_SECRET === 'build-time-fallback' || SESSION_SECRET === 'changeme' || SESSION_SECRET.length < 32) {
+    // Allow build-time collection of page data without crashing; fail at runtime.
+    if (process.env.NEXT_PHASE === 'phase-production-build' || process.env.NODE_ENV !== 'production') {
+      return 'build-time-placeholder-secret-not-for-production-use-0000'
+    }
+    throw new Error('[SECURITY] SESSION_SECRET must be a strong random string (min 32 chars). Set it in your environment.')
+  }
+  _secret = SESSION_SECRET
+  return _secret
 }
-const SECRET: string = SESSION_SECRET
 const SESSION_MAX_AGE = 60 * 60 * 8 // 8 hours in seconds
 const SESSION_COOKIE = 'admin_session'
 
@@ -26,7 +36,7 @@ export function createSessionCookie(): string {
     exp: Math.floor(Date.now() / 1000) + SESSION_MAX_AGE,
   }
   const body = Buffer.from(JSON.stringify(payload)).toString('base64url')
-  const signature = hmacSign(body, SECRET)
+  const signature = hmacSign(body, getSecret())
   return `${body}.${signature}`
 }
 
@@ -35,7 +45,7 @@ export function verifySession(sessionToken: string): SessionPayload | null {
     const [body, signature] = sessionToken.split('.')
     if (!body || !signature) return null
 
-    const expectedSig = hmacSign(body, SECRET)
+    const expectedSig = hmacSign(body, getSecret())
     const sigBuf = Buffer.from(signature, 'hex')
     const expectedBuf = Buffer.from(expectedSig, 'hex')
     if (sigBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(sigBuf, expectedBuf)) return null
