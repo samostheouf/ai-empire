@@ -476,9 +476,9 @@ const ja: Record<string, string> = {
 
   // Templates Page
   templatesImpactTitle: 'インパクト',
-  templatesImpactSubtitle: NeuraAPIテンプレートを使用する開発者からの実際の数字',
+  templatesImpactSubtitle: 'NeuraAPIテンプレートを使用する開発者からの実際の数字',
   templatesBeforeAfterTitle: 'Before vs After',
-  templatesBeforeAfterSubtitle: NeuraAPIでどれだけのボイラープレートが省けるか',
+  templatesBeforeAfterSubtitle: 'NeuraAPIでどれだけのボイラープレートが省けるか',
   templatesPerformanceTitle: 'APIパフォーマンス',
   templatesPerformanceSubtitle: 'Groq経由の超高速推論 — GPU不要',
   templatesDevSayTitle: '開発者の声',

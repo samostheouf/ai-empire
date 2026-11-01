@@ -476,9 +476,9 @@ const ko: Record<string, string> = {
 
   // Templates Page
   templatesImpactTitle: '영향력',
-  templatesImpactSubtitle: NeuraAPI 템플릿을 사용하는 개발자들의 실제 수치',
+  templatesImpactSubtitle: 'NeuraAPI 템플릿을 사용하는 개발자들의 실제 수치',
   templatesBeforeAfterTitle: '이전 vs 이후',
-  templatesBeforeAfterSubtitle: NeuraAPI로 얼마나 많은 보일러플레이트를 절약할 수 있는지 확인하세요',
+  templatesBeforeAfterSubtitle: 'NeuraAPI로 얼마나 많은 보일러플레이트를 절약할 수 있는지 확인하세요',
   templatesPerformanceTitle: 'API 성능',
   templatesPerformanceSubtitle: 'Groq를 통한 초고속 추론 — GPU 불필요',
   templatesDevSayTitle: '개발자들의 의견',
