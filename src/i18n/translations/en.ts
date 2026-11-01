@@ -466,13 +466,13 @@ const en: Record<string, string> = {
 
   // Templates Page
   templatesImpactTitle: 'The Impact',
-  templatesImpactSubtitle: 'Real numbers from developers using AI Empire templates',
+  templatesImpactSubtitle: 'Real numbers from developers using NeuraAPI templates',
   templatesBeforeAfterTitle: 'Before vs After',
-  templatesBeforeAfterSubtitle: 'See how much boilerplate you skip with AI Empire',
+  templatesBeforeAfterSubtitle: 'See how much boilerplate you skip with NeuraAPI',
   templatesPerformanceTitle: 'API Performance',
   templatesPerformanceSubtitle: 'Lightning-fast inference via Groq — no GPU required',
   templatesDevSayTitle: 'What Developers Say',
-  templatesDevSaySubtitle: 'Real feedback from developers shipping with AI Empire',
+  templatesDevSaySubtitle: 'Real feedback from developers shipping with NeuraAPI',
   templatesSearchPlaceholder: 'Search templates...',
   templatesLoading: 'Loading templates...',
   templatesNoResults: 'No templates match your search.',

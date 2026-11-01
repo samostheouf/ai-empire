@@ -476,13 +476,13 @@ const ar: Record<string, string> = {
 
   // Templates Page
   templatesImpactTitle: 'التأثير',
-  templatesImpactSubtitle: 'أرقام حقيقية من مطورين يستخدمون قوالب AI Empire',
+  templatesImpactSubtitle: 'أرقام حقيقية من مطورين يستخدمون قوالب NeuraAPI',
   templatesBeforeAfterTitle: 'قبل vs بعد',
-  templatesBeforeAfterSubtitle: 'شاهد كم من الكود القالبي توفره مع AI Empire',
+  templatesBeforeAfterSubtitle: 'شاهد كم من الكود القالبي توفره مع NeuraAPI',
   templatesPerformanceTitle: 'أداء API',
   templatesPerformanceSubtitle: 'استدلال فائق السرعة عبر Groq — بدون GPU',
   templatesDevSayTitle: 'ماذا يقول المطورون',
-  templatesDevSaySubtitle: 'ملاحظات حقيقية من مطورين يستخدمون AI Empire',
+  templatesDevSaySubtitle: 'ملاحظات حقيقية من مطورين يستخدمون NeuraAPI',
   templatesSearchPlaceholder: 'بحث عن قوالب...',
   templatesLoading: 'جارٍ تحميل القوالب...',
   templatesNoResults: 'لا توجد قوالب تطابق بحثك.',

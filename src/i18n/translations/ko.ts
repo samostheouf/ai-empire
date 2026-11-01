@@ -476,13 +476,13 @@ const ko: Record<string, string> = {
 
   // Templates Page
   templatesImpactTitle: '영향력',
-  templatesImpactSubtitle: 'AI Empire 템플릿을 사용하는 개발자들의 실제 수치',
+  templatesImpactSubtitle: NeuraAPI 템플릿을 사용하는 개발자들의 실제 수치',
   templatesBeforeAfterTitle: '이전 vs 이후',
-  templatesBeforeAfterSubtitle: 'AI Empire로 얼마나 많은 보일러플레이트를 절약할 수 있는지 확인하세요',
+  templatesBeforeAfterSubtitle: NeuraAPI로 얼마나 많은 보일러플레이트를 절약할 수 있는지 확인하세요',
   templatesPerformanceTitle: 'API 성능',
   templatesPerformanceSubtitle: 'Groq를 통한 초고속 추론 — GPU 불필요',
   templatesDevSayTitle: '개발자들의 의견',
-  templatesDevSaySubtitle: 'AI Empire를 사용하는 개발자들의 실제 피드백',
+  templatesDevSaySubtitle: 'NeuraAPI를 사용하는 개발자들의 실제 피드백',
   templatesSearchPlaceholder: '템플릿 검색...',
   templatesLoading: '템플릿 로딩 중...',
   templatesNoResults: '검색과 일치하는 템플릿이 없습니다.',

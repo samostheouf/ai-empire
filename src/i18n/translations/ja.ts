@@ -476,13 +476,13 @@ const ja: Record<string, string> = {
 
   // Templates Page
   templatesImpactTitle: 'インパクト',
-  templatesImpactSubtitle: 'AI Empireテンプレートを使用する開発者からの実際の数字',
+  templatesImpactSubtitle: NeuraAPIテンプレートを使用する開発者からの実際の数字',
   templatesBeforeAfterTitle: 'Before vs After',
-  templatesBeforeAfterSubtitle: 'AI Empireでどれだけのボイラープレートが省けるか',
+  templatesBeforeAfterSubtitle: NeuraAPIでどれだけのボイラープレートが省けるか',
   templatesPerformanceTitle: 'APIパフォーマンス',
   templatesPerformanceSubtitle: 'Groq経由の超高速推論 — GPU不要',
   templatesDevSayTitle: '開発者の声',
-  templatesDevSaySubtitle: 'AI Empireを使用する開発者からのリアルなフィードバック',
+  templatesDevSaySubtitle: 'NeuraAPIを使用する開発者からのリアルなフィードバック',
   templatesSearchPlaceholder: 'テンプレートを検索...',
   templatesLoading: 'テンプレートを読み込み中...',
   templatesNoResults: 'テンプレートが見つかりません。',

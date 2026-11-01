@@ -469,13 +469,13 @@ const es: Record<string, string> = {
 
   // Templates Page
   templatesImpactTitle: 'El Impacto',
-  templatesImpactSubtitle: 'Números reales de desarrolladores usando plantillas AI Empire',
+  templatesImpactSubtitle: 'Números reales de desarrolladores usando plantillas NeuraAPI',
   templatesBeforeAfterTitle: 'Antes vs Después',
-  templatesBeforeAfterSubtitle: 'Mira cuánto boilerplate ahorras con AI Empire',
+  templatesBeforeAfterSubtitle: 'Mira cuánto boilerplate ahorras con NeuraAPI',
   templatesPerformanceTitle: 'Rendimiento API',
   templatesPerformanceSubtitle: 'Inferencia ultra-rápida vía Groq — sin GPU',
   templatesDevSayTitle: 'Lo que dicen los desarrolladores',
-  templatesDevSaySubtitle: 'Feedback real de desarrolladores que usan AI Empire',
+  templatesDevSaySubtitle: 'Feedback real de desarrolladores que usan NeuraAPI',
   templatesSearchPlaceholder: 'Buscar plantilla...',
   templatesLoading: 'Cargando plantillas...',
   templatesNoResults: 'Ninguna plantilla coincide con tu búsqueda.',
