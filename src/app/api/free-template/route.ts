@@ -46,29 +46,34 @@ export async function POST(request: NextRequest) {
       }, null)
     }
 
-    await safeQuery(async () => {
+    let downloadToken = crypto.createHash('sha256').update(`${sanitizedEmail}_${Date.now()}`).digest('hex').slice(0, 32)
+
+    const persistedToken = await safeQuery(async () => {
       const { prisma } = await import('@/lib/db')
       const existing = await prisma.order.findFirst({
         where: { email: sanitizedEmail, templateId: freeTemplate!.id },
       })
-      if (!existing) {
-        await prisma.order.create({
-          data: {
-            templateId: freeTemplate!.id,
-            email: sanitizedEmail,
-            amount: 0,
-            sessionId: `free_${Date.now()}_${Math.random().toString(36).slice(2)}`,
-            status: 'completed',
-          },
-        })
-        await prisma.template.update({
-          where: { id: freeTemplate!.id },
-          data: { downloads: { increment: 1 } },
-        })
+      if (existing) {
+        // Reuse the existing order's sessionId as the download token
+        return existing.sessionId
       }
-    }, null)
+      await prisma.order.create({
+        data: {
+          templateId: freeTemplate!.id,
+          email: sanitizedEmail,
+          amount: 0,
+          sessionId: downloadToken,
+          status: 'completed',
+        },
+      })
+      await prisma.template.update({
+        where: { id: freeTemplate!.id },
+        data: { downloads: { increment: 1 } },
+      })
+      return downloadToken
+    }, downloadToken)
 
-    const downloadToken = crypto.createHash('sha256').update(`${sanitizedEmail}_${Date.now()}`).digest('hex').slice(0, 32)
+    downloadToken = persistedToken || downloadToken
     const downloadUrl = `${appUrl}/api/free-template/download?token=${downloadToken}`
 
     if (!resend) {

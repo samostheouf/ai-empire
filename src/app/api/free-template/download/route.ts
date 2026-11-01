@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { safeQuery } from '@/lib/db'
 
 const STARTER_TEMPLATE = `# NeuraStarter — Template Next.js 14 Gratuit
 
@@ -65,6 +66,16 @@ export async function GET(request: NextRequest) {
 
     if (!token) {
       return new NextResponse('Lien invalide', { status: 400 })
+    }
+
+    // Validate token: must match an existing Order's sessionId
+    const order = await safeQuery(async () => {
+      const { prisma } = await import('@/lib/db')
+      return prisma.order.findUnique({ where: { sessionId: token } })
+    }, null)
+
+    if (!order) {
+      return new NextResponse('Lien invalide ou expiré', { status: 404 })
     }
 
     const encoder = new TextEncoder()
