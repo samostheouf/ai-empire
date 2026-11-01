@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { validateCsrfOrigin } from '@/lib/csrf'
 
-const SESSION_SECRET = process.env.SESSION_SECRET
+const SESSION_SECRET = process.env.SESSION_SECRET || (process.env.NEXT_PHASE === 'phase-production-build' ? 'build-time-placeholder-secret-not-for-production-use-0000' : '')
 if (!SESSION_SECRET) {
   console.error('[SECURITY] SESSION_SECRET is not set')
   throw new Error('SESSION_SECRET must be set in environment variables')
