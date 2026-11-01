@@ -16,7 +16,7 @@ function getDatabaseUrl(): string | undefined {
   if (!url) return undefined
   if (url.includes('connection_limit')) return url
   const separator = url.includes('?') ? '&' : '?'
-  return `${url}${separator}connection_limit=5`
+  return `${url}${separator}connection_limit=1&pool_timeout=10`
 }
 
 /**
