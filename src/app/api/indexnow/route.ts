@@ -58,6 +58,9 @@ const BLOG_SLUGS = [
   "template-saas-nextjs-2026",
   "templates-nextjs-premium",
   "templates-premium-guide",
+  "comment-integrer-api-ia-saas-nextjs-2026",
+  "groq-vs-openai-vs-gemini-comparatif-developpeurs",
+  "templates-nextjs-premium-economiser-200h",
   "vercel-ai-sdk-nextjs-streaming-tool-calling",
   "webhook-stripe-nextjs-tutorial",
 ];
