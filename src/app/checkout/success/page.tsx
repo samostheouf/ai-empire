@@ -4,8 +4,7 @@ import { Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
-import { CheckCircle, Download, Loader2, Share2, Gift, Sparkles, ExternalLink, Check } from 'lucide-react'
-import { trackCheckoutComplete } from '@/lib/analytics'
+import { CheckCircle, XCircle, Download, Loader2, Share2, Gift, Sparkles, ExternalLink, Check } from 'lucide-react'
 import UpsellSection from '@/components/UpsellSection'
 import { useI18n } from '@/i18n'
 
@@ -24,32 +23,35 @@ function SuccessContent() {
   const sessionId = searchParams.get('session_id')
   const templateId = searchParams.get('template_id')
   const [template, setTemplate] = useState<TemplateData | null>(null)
+  const [paidVerified, setPaidVerified] = useState(false)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [referralLink, setReferralLink] = useState('')
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    if (sessionId) {
-      trackCheckoutComplete(sessionId, 0)
-    }
-  }, [sessionId])
-
-  useEffect(() => {
     async function fetchTemplate() {
       try {
-        // Verify payment status via Stripe before showing success.
-        if (sessionId) {
-          const verifyRes = await fetch(`/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`)
-          if (verifyRes.ok) {
-            const verifyData = await verifyRes.json()
-            if (verifyData.payment_status !== 'paid') {
-              setError(t('checkoutPaymentNotConfirmed') || 'Paiement non confirmé')
-              setLoading(false)
-              return
-            }
-          }
+        // Seul Stripe, via /api/checkout/verify, dit si l'argent est passé.
+        // Aucun succès n'est affiché avant cette vérification.
+        if (!sessionId) {
+          setError(t('checkoutPaymentNotConfirmed') || 'Paiement non confirmé')
+          setLoading(false)
+          return
         }
+        const verifyRes = await fetch(`/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`)
+        if (!verifyRes.ok) {
+          setError(t('checkoutPaymentNotConfirmed') || 'Paiement non confirmé')
+          setLoading(false)
+          return
+        }
+        const verifyData = await verifyRes.json()
+        if (verifyData.payment_status !== 'paid') {
+          setError(t('checkoutPaymentNotConfirmed') || 'Paiement non confirmé')
+          setLoading(false)
+          return
+        }
+        setPaidVerified(true)
 
         const res = await fetch('/api/templates')
         if (!res.ok) throw new Error(t('checkoutErrorLoading'))
@@ -76,7 +78,7 @@ function SuccessContent() {
     }
 
     fetchTemplate()
-  }, [templateId])
+  }, [sessionId, templateId, t])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -96,7 +98,7 @@ function SuccessContent() {
       <div className="max-w-lg w-full space-y-8">
 
 
-        {[
+        {paidVerified && [
           { color: '#6366f1', left: '10%', delay: '0s', even: false },
           { color: '#a855f7', left: '25%', delay: '0.3s', even: true },
           { color: '#ec4899', left: '40%', delay: '0.1s', even: false },
@@ -119,6 +121,7 @@ function SuccessContent() {
           />
         ))}
 
+        {paidVerified && !error && (
         <div className="text-center animate-fade-in-up opacity-0 [animation-fill-mode:forwards]">
           <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-green-500/10 border-2 border-green-500/30 animate-success-pulse-glow">
             <CheckCircle className="h-10 w-10 text-green-400" aria-hidden="true" />
@@ -128,6 +131,19 @@ function SuccessContent() {
             {t('checkoutOrderConfirmed')}
           </p>
         </div>
+        )}
+
+        {!paidVerified && !loading && (
+        <div className="text-center animate-fade-in-up opacity-0 [animation-fill-mode:forwards]">
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-red-500/10 border-2 border-red-500/30">
+            <XCircle className="h-10 w-10 text-red-400" aria-hidden="true" />
+          </div>
+          <h1 className="mt-6 text-3xl font-bold text-white">{t('checkoutPaymentNotConfirmed') || 'Paiement non confirmé'}</h1>
+          <p className="mt-3 text-indigo-200">
+            {error}
+          </p>
+        </div>
+        )}
 
         {loading && (
           <div className="flex justify-center animate-fade-in-up" role="status">
@@ -140,7 +156,7 @@ function SuccessContent() {
           <p className="text-center text-red-400 animate-fade-in-up" role="alert">{error}</p>
         )}
 
-        {!loading && template && (
+        {!loading && paidVerified && template && (
           <div className="space-y-6">
             <div className="animate-fade-in-up rounded-2xl border border-indigo-800 bg-indigo-900/50 p-6 opacity-0 [animation-delay:0.1s] [animation-fill-mode:forwards]">
               <p className="text-sm font-medium text-indigo-300 mb-3">{t('checkoutOrderSummary')}</p>

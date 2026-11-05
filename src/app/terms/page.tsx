@@ -94,10 +94,31 @@ export default function TermsPage() {
                 Les présentes CGU sont régies par le droit français. Tout litige sera soumis aux tribunaux compétents de Paris.
               </p>
             </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-3">12. Rétractation</h2>
+              <p>
+                Les templates numériques sont fournis immédiatement après le paiement, avec votre accord exprès et votre renonciation au droit de rétractation. Conformément à l&apos;article L.221-28 du Code de la consommation, le droit de rétractation ne s&apos;applique donc pas à ces contenus numériques. Les abonnements aux agents IA peuvent être résiliés à tout moment depuis votre espace ou par contact ; la résiliation prend effet à la fin de la période déjà payée, sans remboursement prorata.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-3">13. Résiliation</h2>
+              <p>
+                Vous pouvez résilier votre abonnement à tout moment. Vous pouvez également fermer votre compte et demander la suppression de vos données personnelles via notre page contact. NeuraAPI peut suspendre ou fermer un compte en cas de violation des présentes CGU, après notification lorsque la loi l&apos;exige.
+              </p>
+            </div>
+
+            <div>
+              <h2 className="text-xl font-bold text-white mb-3">14. Garantie et défaut de conformité</h2>
+              <p>
+                Les templates et services sont fournis avec une garantie légale de conformité. En cas de défaut de conformité, de fichier illisible ou de service non fourni, contactez-nous à l&apos;adresse indiquée dans les Mentions légales : nous réparerons, remplacerons ou rembourserons selon le cas. Cette garantie ne couvre pas les dommages résultant d&apos;une mauvaise utilisation ou d&apos;une modification du code par l&apos;acheteur.
+              </p>
+            </div>
           </div>
 
           <p className="mt-12 text-sm text-indigo-400">
-            Dernière mise à jour : 23 juin 2026
+            Dernière mise à jour : 5 novembre 2026
           </p>
         </div>
       </section>
