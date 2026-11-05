@@ -105,7 +105,7 @@ export async function processStripeWebhookEvent(stripeEvent: Record<string, unkn
             sessionId: session.id as string,
             amount: (session.amount_total as number) || 0,
             metadata: (session.metadata || {}) as Record<string, string>,
-            downloadUrl: template?.fileUrl || `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id=${session.id}&template_id=${templateId}`,
+            downloadUrl: template ? `${appUrl}/api/templates/download?template_id=${encodeURIComponent(templateId)}&session_id=${encodeURIComponent(session.id as string)}` : `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success?session_id=${session.id}&template_id=${templateId}`,
           };
         }, null as { skipped: true } | { skipped: false; template: { name: string; price: number } | null; newApiKey: string | null; email: string; sessionId: string; amount: number; metadata: Record<string, string>; downloadUrl: string } | null);
 

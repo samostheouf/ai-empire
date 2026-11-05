@@ -177,7 +177,7 @@ function SuccessContent() {
               <p className="text-xl font-bold text-white">{template.name}</p>
               {template.fileUrl && template.fileUrl !== `${typeof window !== 'undefined' ? window.location.origin : ''}/api/free-template/download` ? (
                 <a
-                  href={template.fileUrl}
+                  href={`/api/templates/download?template_id=${encodeURIComponent(template.id)}&session_id=${encodeURIComponent(sessionId ?? '')}`}
                   download
                   className="flex items-center justify-center gap-3 w-full rounded-xl bg-green-600 px-6 py-4 text-base font-semibold text-white hover:bg-green-500 transition-all shadow-lg shadow-green-500/20 hover:shadow-green-500/30 animate-success-pulse-glow hover:scale-[1.02]"
                   aria-label={t('checkoutDownloadAria').replace('{name}', template.name)}

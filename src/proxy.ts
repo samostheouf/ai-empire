@@ -200,6 +200,12 @@ export async function proxy(request: NextRequest) {
     if (adminError) return adminError
   }
 
+  // Livrables payés : aucun accès direct. La livraison passe uniquement par
+  // /api/templates/download, qui vérifie Order completed + non remboursé.
+  if (pathname.endsWith('.tar.gz')) {
+    return new NextResponse('Unauthorized', { status: 401 })
+  }
+
   if (pathname.startsWith('/api/')) {
     const isAnalytics = pathname.startsWith('/api/analytics') || pathname === '/api/ai/chat'
     const isPublicPost = ['POST', 'PUT', 'DELETE', 'PATCH'].includes(method) &&
