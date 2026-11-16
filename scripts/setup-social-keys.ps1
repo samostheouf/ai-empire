@@ -39,7 +39,7 @@ $config = @{
     twitter = @{ apiKey = $twitterApiKey; apiSecret = $twitterApiSecret; accessToken = $twitterAccessToken; accessTokenSecret = $twitterAccessSecret }
     reddit = @{ clientId = $redditClientId; clientSecret = $redditClientSecret; username = $redditUsername; password = $redditPassword; userAgent = "NeuraAPI-Launch/1.0" }
     linkedin = @{ accessToken = $linkedinAccessToken; personUrn = $linkedinPersonId }
-} | ConvertTo-Json -Depth 3
+}
 
 $json = $config | ConvertTo-Json -Depth 3
 [System.IO.File]::WriteAllText($configPath, $json, [System.Text.UTF8Encoding]::new($false))
