@@ -1,7 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
-const CONFIG_PATH = path.join(__dirname, 'social-media/config.json');
+const LOCAL_CONFIG_PATH = path.join(__dirname, 'social-media/config.local.json');
+const TEMPLATE_CONFIG_PATH = path.join(__dirname, 'social-media/config.json');
+const CONFIG_PATH = fs.existsSync(LOCAL_CONFIG_PATH) ? LOCAL_CONFIG_PATH : TEMPLATE_CONFIG_PATH;
 
 function loadConfig() {
   try {
