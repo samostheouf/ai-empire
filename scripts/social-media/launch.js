@@ -20,13 +20,15 @@ const crypto = require('crypto');
 const G = '\x1b[32m', R = '\x1b[31m', Y = '\x1b[33m', BL = '\x1b[34m', P = '\x1b[35m', D = '\x1b[0m', BD = '\x1b[1m';
 
 const BASE = path.join(__dirname);
-const CONFIG_PATH = path.join(BASE, 'config.json');
+const LOCAL_CONFIG_PATH = path.join(BASE, 'config.local.json');
+const TEMPLATE_CONFIG_PATH = path.join(BASE, 'config.json');
+const CONFIG_PATH = fs.existsSync(LOCAL_CONFIG_PATH) ? LOCAL_CONFIG_PATH : TEMPLATE_CONFIG_PATH;
 const CONTENT_DIR = path.join(BASE, '../../docs/product-hunt/content');
 const HISTORY_PATH = path.join(BASE, 'post-history.json');
 
 function loadConfig() {
   try { return JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf8')); }
-  catch { console.log(`${R}❌ config.json introuvable${D}`); process.exit(1); }
+  catch { console.log(`${R}❌ config.local.json ou config.json introuvable${D}`); process.exit(1); }
 }
 
 function loadContent(file) {

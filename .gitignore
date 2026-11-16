@@ -18,3 +18,6 @@ tmp-vercel*.env
 scripts/fiscalite/user-data.json
 scripts/fiscalite/inscription.log
 scripts/fiscalite/*.log
+
+# Social media credentials (local only)
+scripts/social-media/config.local.json

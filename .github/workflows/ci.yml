@@ -16,7 +16,21 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - name: Validate Prisma schema (isolated URL)
+        run: npx prisma validate
+        env:
+          DATABASE_URL: postgresql://ci:ci@127.0.0.1:5432/ci
+      - name: Test local social config and Git exclusion
+        run: |
+          set -euo pipefail
+          trap 'rm -f scripts/social-media/config.local.json' EXIT
+          printf '%s' '{"twitter":{"apiKey":""},"reddit":{"clientId":""},"linkedin":{"accessToken":""}}' > scripts/social-media/config.local.json
+          node scripts/social-media/launch.js status
+          node scripts/social-media/test-connection.js
+          git check-ignore --quiet scripts/social-media/config.local.json
+          test -z "$(git ls-files -- scripts/social-media/config.local.json)"
       - run: npx prisma generate
       - run: npm run lint
       - run: npm test
       - run: npm run build
+# UAMS verified-commit gate check

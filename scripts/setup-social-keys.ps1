@@ -1,104 +1,48 @@
 # ============================================
 # NeuraAPI — Setup Social Media API Keys
 # ============================================
-# Ce script ouvre toutes les pages nécessaires
-# et te guide étape par étape.
+# Credentials are written only to config.local.json (gitignored).
+# Never commit this file or paste credentials into source control.
 # ============================================
 
-Write-Host ""
-Write-Host "========================================" -ForegroundColor Cyan
-Write-Host "  NeuraAPI — Setup Social Media API" -ForegroundColor Cyan
-Write-Host "========================================" -ForegroundColor Cyan
-Write-Host ""
+function Read-SecretText([string]$Prompt) {
+    $secure = Read-Host $Prompt -AsSecureString
+    $ptr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($secure)
+    try { return [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr) }
+    finally { [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr) }
+}
 
-# --- TWITTER ---
-Write-Host "ETAPE 1/3 : TWITTER API" -ForegroundColor Yellow
-Write-Host "------------------------" -ForegroundColor Gray
-Write-Host "1. Ouvre le lien ci-dessous" -ForegroundColor White
-Write-Host "2. Connecte-toi avec ton compte Twitter" -ForegroundColor White
-Write-Host "3. Clique 'Create Project' → nom: NeuraAPI" -ForegroundColor White
-Write-Host "4. Active Read+Write permissions" -ForegroundColor White
-Write-Host "5. Copie les 4 clés ci-dessous" -ForegroundColor White
-Write-Host ""
+Write-Host "NeuraAPI — configuration locale des clés sociales" -ForegroundColor Cyan
+Write-Host "Les valeurs saisies ne seront pas affichées à l'écran." -ForegroundColor Yellow
+
+Write-Host "ETAPE 1/3 : TWITTER/X" -ForegroundColor Yellow
 Start-Process "https://developer.twitter.com/en/portal/dashboard"
-Write-Host "Page ouverte dans le navigateur !" -ForegroundColor Green
-Write-Host ""
-$twitterApiKey = Read-Host "API Key"
-$twitterApiSecret = Read-Host "API Secret"
-$twitterAccessToken = Read-Host "Access Token"
-$twitterAccessSecret = Read-Host "Access Token Secret"
-Write-Host ""
+$twitterApiKey = Read-SecretText "API Key"
+$twitterApiSecret = Read-SecretText "API Secret"
+$twitterAccessToken = Read-SecretText "Access Token"
+$twitterAccessSecret = Read-SecretText "Access Token Secret"
 
-# --- REDDIT ---
-Write-Host "ETAPE 2/3 : REDDIT API" -ForegroundColor Yellow
-Write-Host "------------------------" -ForegroundColor Gray
-Write-Host "1. Ouvre le lien ci-dessous" -ForegroundColor White
-Write-Host "2. Clique 'create another app...'" -ForegroundColor White
-Write-Host "3. Type: script, Name: NeuraAPI-Launch" -ForegroundColor White
-Write-Host "4. Redirect URI: http://localhost:8080" -ForegroundColor White
-Write-Host "5. Copie client_id et client_secret" -ForegroundColor White
-Write-Host ""
+Write-Host "ETAPE 2/3 : REDDIT" -ForegroundColor Yellow
 Start-Process "https://www.reddit.com/prefs/apps"
-Write-Host "Page ouverte dans le navigateur !" -ForegroundColor Green
-Write-Host ""
-$redditClientId = Read-Host "Client ID"
-$redditClientSecret = Read-Host "Client Secret"
+$redditClientId = Read-SecretText "Client ID"
+$redditClientSecret = Read-SecretText "Client Secret"
 $redditUsername = Read-Host "Username Reddit"
-$redditPassword = Read-Host "Password Reddit"
-Write-Host ""
+$redditPassword = Read-SecretText "Password Reddit"
 
-# --- LINKEDIN ---
-Write-Host "ETAPE 3/3 : LINKEDIN API" -ForegroundColor Yellow
-Write-Host "------------------------" -ForegroundColor Gray
-Write-Host "1. Ouvre le lien ci-dessous" -ForegroundColor White
-Write-Host "2. Clique 'Create app' → nom: NeuraAPI" -ForegroundColor White
-Write-Host "3. Active 'Share on LinkedIn'" -ForegroundColor White
-Write-Host "4. Genere OAuth 2.0 access token" -ForegroundColor White
-Write-Host "5. Copie les clés ci-dessous" -ForegroundColor White
-Write-Host ""
+Write-Host "ETAPE 3/3 : LINKEDIN" -ForegroundColor Yellow
 Start-Process "https://www.linkedin.com/developers/apps"
-Write-Host "Page ouverte dans le navigateur !" -ForegroundColor Green
-Write-Host ""
-$linkedinClientId = Read-Host "Client ID"
-$linkedinClientSecret = Read-Host "Client Secret"
-$linkedinAccessToken = Read-Host "Access Token"
+$linkedinAccessToken = Read-SecretText "Access Token"
 $linkedinPersonId = Read-Host "Person ID (urn:li:person:xxxxx)"
-Write-Host ""
 
-# --- SAUVEGARDE ---
-Write-Host "Sauvegarde des clés..." -ForegroundColor Cyan
-
-$configPath = Join-Path $PSScriptRoot "social-media\config.json"
+$configPath = Join-Path $PSScriptRoot "social-media\config.local.json"
 $config = @{
-    twitter = @{
-        apiKey = $twitterApiKey
-        apiSecret = $twitterApiSecret
-        accessToken = $twitterAccessToken
-        accessTokenSecret = $twitterAccessSecret
-    }
-    reddit = @{
-        clientId = $redditClientId
-        clientSecret = $redditClientSecret
-        username = $redditUsername
-        password = $redditPassword
-        userAgent = "NeuraAPI-Launch/1.0"
-    }
-    linkedin = @{
-        clientId = $linkedinClientId
-        clientSecret = $linkedinClientSecret
-        accessToken = $linkedinAccessToken
-        personUrn = $linkedinPersonId
-    }
-} | ConvertTo-Json -Depth 3
+    twitter = @{ apiKey = $twitterApiKey; apiSecret = $twitterApiSecret; accessToken = $twitterAccessToken; accessTokenSecret = $twitterAccessSecret }
+    reddit = @{ clientId = $redditClientId; clientSecret = $redditClientSecret; username = $redditUsername; password = $redditPassword; userAgent = "NeuraAPI-Launch/1.0" }
+    linkedin = @{ accessToken = $linkedinAccessToken; personUrn = $linkedinPersonId }
+}
 
-$config | Out-File -FilePath $configPath -Encoding UTF8
-
-Write-Host ""
-Write-Host "========================================" -ForegroundColor Green
-Write-Host "  CLÉS SAUVEGARDÉES !" -ForegroundColor Green
-Write-Host "  Fichier: $configPath" -ForegroundColor Green
-Write-Host "========================================" -ForegroundColor Green
-Write-Host ""
-Write-Host "Teste maintenant:" -ForegroundColor Cyan
-Write-Host "  node scripts/social-media/launch.js status" -ForegroundColor White
-Write-Host ""
+$json = $config | ConvertTo-Json -Depth 3
+[System.IO.File]::WriteAllText($configPath, $json, [System.Text.UTF8Encoding]::new($false))
+Write-Host "Configuration enregistrée localement dans scripts/social-media/config.local.json" -ForegroundColor Green
+Write-Host "Ce fichier est exclu de Git. Ne le partagez pas et ne le commitez jamais." -ForegroundColor Yellow
+Write-Host "Test : node scripts/social-media/test-connection.js"
