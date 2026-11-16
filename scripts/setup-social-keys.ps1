@@ -41,7 +41,8 @@ $config = @{
     linkedin = @{ accessToken = $linkedinAccessToken; personUrn = $linkedinPersonId }
 } | ConvertTo-Json -Depth 3
 
-$config | Out-File -FilePath $configPath -Encoding utf8
+$json = $config | ConvertTo-Json -Depth 3
+[System.IO.File]::WriteAllText($configPath, $json, [System.Text.UTF8Encoding]::new($false))
 Write-Host "Configuration enregistrée localement dans scripts/social-media/config.local.json" -ForegroundColor Green
 Write-Host "Ce fichier est exclu de Git. Ne le partagez pas et ne le commitez jamais." -ForegroundColor Yellow
 Write-Host "Test : node scripts/social-media/test-connection.js"
